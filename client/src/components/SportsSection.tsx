@@ -136,7 +136,7 @@ export function SportsSection({ onBetClick, selectedSport = 'soccer' }: SportsSe
           <Button
             key={category.id}
             variant={activeCategory === category.id ? "default" : "secondary"}
-            className={`p-3 h-18 flex flex-col items-center justify-center text-center transition-colors ${
+            className={`p-3 min-h-20 flex flex-col items-center justify-center text-center transition-colors ${
               activeCategory === category.id 
                 ? 'bg-primary text-white' 
                 : 'bg-slate-custom hover:bg-slate-light-custom'
@@ -152,7 +152,7 @@ export function SportsSection({ onBetClick, selectedSport = 'soccer' }: SportsSe
             ) : (
               <i className={`${category.icon} text-lg mb-1`}></i>
             )}
-            <div className={`font-medium text-center leading-tight ${
+            <div className={`font-medium text-center leading-tight whitespace-normal ${
               category.name.length > 12 ? 'text-xs' : 'text-sm'
             }`}>{category.name}</div>
           </Button>
