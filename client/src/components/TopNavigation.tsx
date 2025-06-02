@@ -13,22 +13,15 @@ interface TopNavigationProps {
 export function TopNavigation({ activeTab, onTabChange, userBalance, isLoggedIn = false }: TopNavigationProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  const mainNavItems = [
+  const allNavItems = [
     { id: 'home', label: 'Home', icon: 'fas fa-home' },
     { id: 'sports', label: 'Soccer', icon: 'fas fa-futbol' },
     { id: 'basketball', label: 'Basketball', icon: 'fas fa-basketball' },
-    { id: 'aviator', label: 'Aviator', icon: 'fas fa-plane' }
-  ];
-
-  const moreNavItems = [
+    { id: 'aviator', label: 'Aviator', icon: 'fas fa-plane' },
     { id: 'live', label: 'Live Now', icon: 'fas fa-broadcast-tower', hasIndicator: true },
     { id: 'casino', label: 'Casino', icon: 'fas fa-dice' },
-    { id: 'virtual', label: 'Virtual Sports', icon: 'fas fa-robot' },
-    { id: 'tennis', label: 'Tennis', icon: 'fas fa-table-tennis' },
-    { id: 'hockey', label: 'Hockey', icon: 'fas fa-hockey-puck' },
-    { id: 'volleyball', label: 'Volleyball', icon: 'fas fa-volleyball' },
-    { id: 'baseball', label: 'Baseball', icon: 'fas fa-baseball' },
-    { id: 'esports', label: 'Esports', icon: 'fas fa-gamepad' }
+    { id: 'virtual', label: 'Virtual', icon: 'fas fa-robot' },
+    { id: 'tennis', label: 'Tennis', icon: 'fas fa-table-tennis' }
   ];
 
   return (
@@ -86,56 +79,27 @@ export function TopNavigation({ activeTab, onTabChange, userBalance, isLoggedIn 
         </div>
         
         {/* Bottom Row - Navigation Tabs */}
-        <div className="flex items-center justify-between pb-3">
-          <div className="flex items-center space-x-2 md:space-x-4 overflow-x-auto scrollbar-hide flex-1">
-            {mainNavItems.map((item) => (
+        <div className="flex items-center pb-3">
+          <div className="flex items-center space-x-1 md:space-x-2 overflow-x-auto scrollbar-hide w-full">
+            {allNavItems.map((item) => (
               <Button
                 key={item.id}
                 variant="ghost"
-                className={`flex items-center space-x-1 md:space-x-2 px-3 md:px-4 py-2 rounded-lg font-medium transition-all duration-200 whitespace-nowrap min-w-0 ${
+                className={`flex items-center space-x-1 px-2 md:px-3 py-2 rounded-lg font-medium transition-all duration-200 whitespace-nowrap min-w-0 ${
                   activeTab === item.id 
                     ? 'bg-primary text-white' 
                     : 'text-gray-300 hover:bg-slate-light-custom'
                 }`}
                 onClick={() => onTabChange(item.id)}
               >
-                <i className={`${item.icon} text-sm md:text-base flex-shrink-0`}></i>
+                <i className={`${item.icon} text-xs md:text-sm flex-shrink-0`}></i>
                 <span className="text-xs md:text-sm truncate">{item.label}</span>
+                {item.hasIndicator && (
+                  <span className="w-1.5 h-1.5 bg-live rounded-full animate-pulse ml-1"></span>
+                )}
               </Button>
             ))}
           </div>
-          
-          {/* More Dropdown */}
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button
-                variant="ghost"
-                className={`flex items-center space-x-2 px-4 py-2 rounded-lg font-medium transition-all duration-200 ml-3 ${
-                  moreNavItems.some(item => item.id === activeTab)
-                    ? 'bg-primary text-white' 
-                    : 'text-gray-300 hover:bg-slate-light-custom'
-                }`}
-              >
-                <span className="text-sm md:text-base">More</span>
-                <i className="fas fa-chevron-down text-xs"></i>
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="bg-slate-custom border-gray-700 w-56">
-              {moreNavItems.map((item) => (
-                <DropdownMenuItem
-                  key={item.id}
-                  className="flex items-center space-x-3 px-4 py-3 cursor-pointer hover:bg-slate-light-custom transition-colors relative"
-                  onClick={() => onTabChange(item.id)}
-                >
-                  <i className={`${item.icon} text-gray-400`}></i>
-                  <span className="text-gray-200">{item.label}</span>
-                  {item.hasIndicator && (
-                    <span className="absolute right-3 w-2 h-2 bg-live rounded-full animate-pulse"></span>
-                  )}
-                </DropdownMenuItem>
-              ))}
-            </DropdownMenuContent>
-          </DropdownMenu>
         </div>
       </div>
       
