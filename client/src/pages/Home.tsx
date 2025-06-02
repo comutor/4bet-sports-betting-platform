@@ -16,6 +16,7 @@ import { Button } from "@/components/ui/button";
 export default function Home() {
   const [activeTab, setActiveTab] = useState('home');
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const {
     items: betslipItems,
     isOpen: betslipOpen,
@@ -94,7 +95,8 @@ export default function Home() {
       <TopNavigation 
         activeTab={activeTab} 
         onTabChange={setActiveTab} 
-        userBalance="$1,250.00" 
+        userBalance="$1,250.00"
+        isLoggedIn={isLoggedIn}
       />
       
 

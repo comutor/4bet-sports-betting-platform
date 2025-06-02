@@ -7,9 +7,10 @@ interface TopNavigationProps {
   activeTab: string;
   onTabChange: (tab: string) => void;
   userBalance: string;
+  isLoggedIn?: boolean;
 }
 
-export function TopNavigation({ activeTab, onTabChange, userBalance }: TopNavigationProps) {
+export function TopNavigation({ activeTab, onTabChange, userBalance, isLoggedIn = false }: TopNavigationProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const mainNavItems = [
@@ -57,13 +58,30 @@ export function TopNavigation({ activeTab, onTabChange, userBalance }: TopNaviga
             <Button variant="ghost" className="p-1 md:p-2 text-gray-400 hover:text-white">
               <i className="fas fa-search text-lg md:text-xl"></i>
             </Button>
-            <div className="hidden sm:flex items-center bg-slate-light-custom rounded-lg px-2 md:px-3 py-1 md:py-2">
-              <i className="fas fa-wallet text-success mr-1 md:mr-2 text-sm md:text-base"></i>
-              <span className="font-semibold text-sm md:text-base">{userBalance}</span>
-            </div>
-            <Button className="bg-primary hover:bg-primary-blue-dark font-bold text-sm md:text-base px-2 md:px-4 py-1 md:py-2">
-              Deposit
-            </Button>
+            
+            {isLoggedIn ? (
+              <>
+                <div className="hidden sm:flex items-center bg-slate-light-custom rounded-lg px-2 md:px-3 py-1 md:py-2">
+                  <i className="fas fa-wallet text-success mr-1 md:mr-2 text-sm md:text-base"></i>
+                  <span className="font-semibold text-sm md:text-base">{userBalance}</span>
+                </div>
+                <Button className="bg-primary hover:bg-primary-blue-dark font-bold text-sm md:text-base px-2 md:px-4 py-1 md:py-2">
+                  Deposit
+                </Button>
+              </>
+            ) : (
+              <>
+                <Button 
+                  variant="outline" 
+                  className="border-gray-600 text-gray-300 hover:bg-slate-light-custom font-medium text-sm md:text-base px-2 md:px-3 py-1 md:py-2"
+                >
+                  Login
+                </Button>
+                <Button className="bg-primary hover:bg-primary-blue-dark font-bold text-sm md:text-base px-2 md:px-3 py-1 md:py-2">
+                  Sign Up
+                </Button>
+              </>
+            )}
           </div>
         </div>
         
