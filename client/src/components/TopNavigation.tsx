@@ -29,10 +29,13 @@ export function TopNavigation({ activeTab, onTabChange, userBalance }: TopNaviga
   return (
     <nav className="bg-slate-custom border-b border-gray-700 sticky top-0 z-40">
       <div className="max-w-7xl mx-auto px-4">
-        {/* Top Row - Logo, Search, Balance */}
+        {/* Top Row - Hamburger, Logo, Search, Balance */}
         <div className="flex items-center justify-between h-16">
-          {/* Logo */}
+          {/* Left side - Hamburger and Logo */}
           <div className="flex items-center space-x-3">
+            <Button variant="ghost" className="p-2 text-gray-400 hover:text-white">
+              <i className="fas fa-bars text-xl"></i>
+            </Button>
             <div className="bg-gradient-to-r from-blue-600 to-emerald-600 w-10 h-10 rounded-lg flex items-center justify-center">
               <i className="fas fa-dice text-white text-xl"></i>
             </div>
@@ -41,7 +44,7 @@ export function TopNavigation({ activeTab, onTabChange, userBalance }: TopNaviga
             </span>
           </div>
           
-          {/* Search and User Actions */}
+          {/* Right side - Search and User Actions */}
           <div className="flex items-center space-x-4">
             <Button variant="ghost" className="p-2 text-gray-400 hover:text-white">
               <i className="fas fa-search text-xl"></i>
