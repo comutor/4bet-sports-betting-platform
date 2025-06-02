@@ -6,6 +6,7 @@ interface BottomNavigationProps {
   onBetslipOpen: () => void;
   onMenuOpen: () => void;
   betslipCount: number;
+  isLoggedIn?: boolean;
 }
 
 export function BottomNavigation({ 
@@ -13,13 +14,18 @@ export function BottomNavigation({
   onTabChange, 
   onBetslipOpen, 
   onMenuOpen,
-  betslipCount 
+  betslipCount,
+  isLoggedIn = false
 }: BottomNavigationProps) {
   const navItems = [
     { id: 'menu', label: 'Menu', icon: 'fas fa-bars' },
     { id: 'home', label: 'Sports', icon: 'fas fa-futbol' },
     { id: 'betslip', label: 'Betslip', icon: 'fas fa-receipt', count: betslipCount },
-    { id: 'my-bets', label: 'My Bets', icon: 'fas fa-history' },
+    { 
+      id: isLoggedIn ? 'my-bets' : 'sign-up', 
+      label: isLoggedIn ? 'My Bets' : 'Sign Up', 
+      icon: isLoggedIn ? 'fas fa-history' : 'fas fa-user-plus' 
+    },
     { id: 'account', label: 'Account', icon: 'fas fa-user' }
   ];
 

@@ -111,6 +111,7 @@ export default function Home() {
         onBetslipOpen={() => setBetslipOpen(true)}
         onMenuOpen={() => setIsMenuOpen(true)}
         betslipCount={betslipCount}
+        isLoggedIn={isLoggedIn}
       />
 
       <BetslipSidebar 
