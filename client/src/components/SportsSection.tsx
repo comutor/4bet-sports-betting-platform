@@ -147,7 +147,7 @@ export function SportsSection({ onBetClick, selectedSport = 'soccer' }: SportsSe
               <img 
                 src={category.logo} 
                 alt={category.name}
-                className="w-6 h-6 mb-1 object-contain"
+                className="w-8 h-8 mb-1 object-contain"
               />
             ) : (
               <i className={`${category.icon} text-lg mb-1`}></i>
