@@ -100,20 +100,20 @@ export function HamburgerMenu({ isOpen, onClose, onTabChange, activeTab }: Hambu
               <h3 className="text-lg font-bold text-gray-300 mb-4">
                 Popular Sports
               </h3>
-              <div className="space-y-2">
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
                 {sportsCategories.map((sport) => (
                   <Button
                     key={sport.id}
                     variant="ghost"
-                    className={`w-full justify-start p-3 text-left transition-all duration-200 rounded-lg ${
+                    className={`flex flex-col items-center justify-center p-3 h-16 rounded-lg transition-all duration-200 ${
                       activeTab === sport.id
                         ? 'bg-primary text-white'
-                        : 'text-gray-300 hover:bg-slate-700'
+                        : 'text-gray-300 hover:bg-slate-700 bg-slate-900'
                     }`}
                     onClick={() => handleItemClick(sport.id)}
                   >
-                    <i className={`${sport.icon} w-5 mr-3`}></i>
-                    <span className="text-sm font-medium">{sport.label}</span>
+                    <i className={`${sport.icon} text-lg mb-1`}></i>
+                    <span className="text-xs font-medium text-center leading-tight">{sport.label}</span>
                   </Button>
                 ))}
               </div>
