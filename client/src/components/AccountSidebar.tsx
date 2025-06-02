@@ -8,7 +8,7 @@ interface AccountSidebarProps {
 
 export function AccountSidebar({ isOpen, onClose, isLoggedIn = false }: AccountSidebarProps) {
   const accountMenuItems = [
-    { id: 'why-join', label: 'Why Join?', icon: 'fas fa-question-circle', hasArrow: true },
+    { id: 'why-signup', label: 'Why Sign Up?', icon: 'fas fa-question-circle', hasArrow: true },
     { id: 'deposit', label: 'Deposit', icon: 'fas fa-credit-card', hasArrow: true },
     { id: 'help-center', label: 'Help Center', icon: 'fas fa-life-ring', hasDropdown: true },
     { id: 'download-app', label: 'Download the App', icon: 'fas fa-mobile-alt', hasArrow: true },
@@ -52,7 +52,7 @@ export function AccountSidebar({ isOpen, onClose, isLoggedIn = false }: AccountS
               {!isLoggedIn ? (
                 <div className="grid grid-cols-2 gap-3">
                   <Button className="bg-success hover:bg-success/90 text-white font-bold py-3">
-                    JOIN NOW
+                    SIGN UP
                   </Button>
                   <Button variant="outline" className="border-gray-400 text-gray-300 hover:bg-slate-700 font-bold py-3">
                     LOG IN
