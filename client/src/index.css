@@ -133,4 +133,25 @@
   .animate-pulse-fast {
     animation: pulse 1s cubic-bezier(0.4, 0, 0.6, 1) infinite;
   }
+  
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+  
+  @media (max-width: 320px) {
+    .xs\:inline {
+      display: none !important;
+    }
+  }
+  
+  @media (min-width: 321px) {
+    .xs\:inline {
+      display: inline !important;
+    }
+  }
 }
