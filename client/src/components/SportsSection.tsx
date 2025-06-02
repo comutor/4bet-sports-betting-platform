@@ -20,15 +20,15 @@ interface SportsSectionProps {
 }
 
 export function SportsSection({ onBetClick }: SportsSectionProps) {
-  const [activeCategory, setActiveCategory] = useState('football');
+  const [activeCategory, setActiveCategory] = useState('premier-league');
 
   const sportsCategories = [
-    { id: 'football', name: 'Football', icon: 'fas fa-futbol' },
-    { id: 'basketball', name: 'Basketball', icon: 'fas fa-basketball' },
-    { id: 'baseball', name: 'Baseball', icon: 'fas fa-baseball' },
-    { id: 'hockey', name: 'Hockey', icon: 'fas fa-hockey-puck' },
-    { id: 'tennis', name: 'Tennis', icon: 'fas fa-table-tennis' },
-    { id: 'esports', name: 'Esports', icon: 'fas fa-trophy' }
+    { id: 'premier-league', name: 'Premier League', icon: 'fas fa-futbol' },
+    { id: 'la-liga', name: 'La Liga', icon: 'fas fa-futbol' },
+    { id: 'bundesliga', name: 'Bundesliga', icon: 'fas fa-futbol' },
+    { id: 'serie-a', name: 'Serie A', icon: 'fas fa-futbol' },
+    { id: 'ligue-1', name: 'French Ligue 1', icon: 'fas fa-futbol' },
+    { id: 'champions-league', name: 'Champions League', icon: 'fas fa-trophy' }
   ];
 
   const footballMatches: SportsMatch[] = [
@@ -59,7 +59,7 @@ export function SportsSection({ onBetClick }: SportsSectionProps) {
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-8">
-      <h2 className="text-2xl font-bold mb-6">Sports Betting</h2>
+      <h2 className="text-2xl font-bold mb-6">Leagues</h2>
       
       {/* Sports Categories */}
       <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4 mb-8">
@@ -129,7 +129,7 @@ export function SportsSection({ onBetClick }: SportsSectionProps) {
                     <Button
                       variant="secondary"
                       className="bg-slate-light-custom hover:bg-primary text-center py-3 transition-colors"
-                      onClick={() => onBetClick(`${match.homeTeam} vs ${match.awayTeam}`, 'Draw', match.odds.draw)}
+                      onClick={() => onBetClick(`${match.homeTeam} vs ${match.awayTeam}`, 'Draw', match.odds.draw!)}
                     >
                       <div className="text-xs text-gray-400 mb-1">X</div>
                       <div className="font-bold text-lg">{match.odds.draw}</div>
