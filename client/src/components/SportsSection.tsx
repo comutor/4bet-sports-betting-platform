@@ -131,12 +131,12 @@ export function SportsSection({ onBetClick, selectedSport = 'soccer' }: SportsSe
       <h2 className="text-2xl font-bold mb-6">Leagues</h2>
       
       {/* Sports Categories */}
-      <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4 mb-8">
+      <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3 mb-8">
         {sportsCategories.map((category) => (
           <Button
             key={category.id}
             variant={activeCategory === category.id ? "default" : "secondary"}
-            className={`p-4 h-20 flex flex-col items-center justify-center text-center transition-colors ${
+            className={`p-3 h-18 flex flex-col items-center justify-center text-center transition-colors ${
               activeCategory === category.id 
                 ? 'bg-primary text-white' 
                 : 'bg-slate-custom hover:bg-slate-light-custom'
@@ -147,10 +147,10 @@ export function SportsSection({ onBetClick, selectedSport = 'soccer' }: SportsSe
               <img 
                 src={category.logo} 
                 alt={category.name}
-                className="w-8 h-8 mb-2 object-contain"
+                className="w-6 h-6 mb-1 object-contain"
               />
             ) : (
-              <i className={`${category.icon} text-2xl mb-2`}></i>
+              <i className={`${category.icon} text-lg mb-1`}></i>
             )}
             <div className={`font-medium text-center leading-tight ${
               category.name.length > 12 ? 'text-xs' : 'text-sm'
