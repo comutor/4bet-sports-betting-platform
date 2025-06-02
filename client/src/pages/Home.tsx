@@ -11,11 +11,9 @@ import { AviatorSection } from "@/components/AviatorSection";
 import { useBetslip } from "@/hooks/useBetslip";
 import { sampleFeaturedEvents } from "@/lib/betting-data";
 import { Button } from "@/components/ui/button";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 
 export default function Home() {
   const [activeTab, setActiveTab] = useState('home');
-  const [showMoreSports, setShowMoreSports] = useState(false);
   const {
     items: betslipItems,
     isOpen: betslipOpen,
@@ -31,20 +29,6 @@ export default function Home() {
   const handleBetClick = (eventName: string, selection: string, odds: string) => {
     addToBetslip({ eventName, selection, odds });
   };
-
-  const quickAccessSports = [
-    { id: 'football', name: 'Football', icon: 'fas fa-futbol', color: 'text-success' },
-    { id: 'basketball', name: 'Basketball', icon: 'fas fa-basketball', color: 'text-warning' },
-    { id: 'tennis', name: 'Tennis', icon: 'fas fa-table-tennis', color: 'text-primary' },
-    { id: 'hockey', name: 'Hockey', icon: 'fas fa-hockey-puck', color: 'text-live' },
-    { id: 'volleyball', name: 'Volleyball', icon: 'fas fa-volleyball', color: 'text-secondary' }
-  ];
-
-  const additionalOptions = [
-    { id: 'casino', name: 'Casino', icon: 'fas fa-dice', color: 'text-primary' },
-    { id: 'aviator', name: 'Aviator', icon: 'fas fa-plane', color: 'text-live' },
-    { id: 'virtual', name: 'Virtual Sports', icon: 'fas fa-robot', color: 'text-secondary' }
-  ];
 
   const renderMainContent = () => {
     switch (activeTab) {
@@ -72,6 +56,8 @@ export default function Home() {
         );
       case 'sports':
         return <SportsSection onBetClick={handleBetClick} />;
+      case 'basketball':
+        return <SportsSection onBetClick={handleBetClick} />;
       case 'live':
         return <LiveSection onBetClick={handleBetClick} />;
       case 'casino':
@@ -80,6 +66,17 @@ export default function Home() {
         return <VirtualSection onBetClick={handleBetClick} />;
       case 'aviator':
         return <AviatorSection />;
+      case 'tennis':
+      case 'hockey':
+      case 'volleyball':
+      case 'baseball':
+      case 'esports':
+        return (
+          <div className="text-center py-12">
+            <h2 className="text-2xl font-bold mb-4">Coming Soon</h2>
+            <p className="text-gray-400">This section is under development.</p>
+          </div>
+        );
       default:
         return (
           <div className="text-center py-12">
@@ -98,49 +95,7 @@ export default function Home() {
         userBalance="$1,250.00" 
       />
       
-      {/* Quick Access Sports Bar */}
-      <div className="bg-slate-custom border-b border-gray-700 sticky top-16 z-30">
-        <div className="max-w-7xl mx-auto px-4 py-3">
-          <div className="flex items-center space-x-4 overflow-x-auto">
-            {quickAccessSports.map((sport) => (
-              <Button
-                key={sport.id}
-                variant="ghost"
-                className="flex items-center space-x-2 px-4 py-2 rounded-lg transition-all duration-200 whitespace-nowrap hover:bg-slate-light-custom"
-                onClick={() => setActiveTab('sports')}
-              >
-                <i className={`${sport.icon} ${sport.color}`}></i>
-                <span className="text-sm font-medium">{sport.name}</span>
-              </Button>
-            ))}
-            
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button
-                  variant="ghost"
-                  className="flex items-center space-x-2 px-4 py-2 rounded-lg transition-all duration-200 whitespace-nowrap hover:bg-slate-light-custom"
-                >
-                  <i className="fas fa-ellipsis-h text-gray-400"></i>
-                  <span className="text-sm font-medium">More</span>
-                  <i className="fas fa-chevron-down text-xs text-gray-400"></i>
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="bg-slate-custom border-gray-700">
-                {additionalOptions.map((option) => (
-                  <DropdownMenuItem
-                    key={option.id}
-                    className="flex items-center space-x-2 px-3 py-2 cursor-pointer hover:bg-slate-light-custom"
-                    onClick={() => setActiveTab(option.id)}
-                  >
-                    <i className={`${option.icon} ${option.color}`}></i>
-                    <span>{option.name}</span>
-                  </DropdownMenuItem>
-                ))}
-              </DropdownMenuContent>
-            </DropdownMenu>
-          </div>
-        </div>
-      </div>
+
       
       <main className="pb-20 md:pb-4">
         {renderMainContent()}
