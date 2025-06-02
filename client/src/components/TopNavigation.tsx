@@ -87,20 +87,20 @@ export function TopNavigation({ activeTab, onTabChange, userBalance, isLoggedIn 
         
         {/* Bottom Row - Navigation Tabs */}
         <div className="flex items-center justify-between pb-3">
-          <div className="flex items-center space-x-3 md:space-x-6 overflow-x-auto scrollbar-hide flex-1">
+          <div className="flex items-center space-x-2 md:space-x-4 overflow-x-auto scrollbar-hide flex-1">
             {mainNavItems.map((item) => (
               <Button
                 key={item.id}
                 variant="ghost"
-                className={`flex items-center space-x-2 px-4 py-2 rounded-lg font-medium transition-all duration-200 whitespace-nowrap ${
+                className={`flex items-center space-x-1 md:space-x-2 px-3 md:px-4 py-2 rounded-lg font-medium transition-all duration-200 whitespace-nowrap min-w-0 ${
                   activeTab === item.id 
                     ? 'bg-primary text-white' 
                     : 'text-gray-300 hover:bg-slate-light-custom'
                 }`}
                 onClick={() => onTabChange(item.id)}
               >
-                <i className={`${item.icon} text-base`}></i>
-                <span className="text-sm md:text-base">{item.label}</span>
+                <i className={`${item.icon} text-sm md:text-base flex-shrink-0`}></i>
+                <span className="text-xs md:text-sm truncate">{item.label}</span>
               </Button>
             ))}
           </div>
@@ -116,7 +116,6 @@ export function TopNavigation({ activeTab, onTabChange, userBalance, isLoggedIn 
                     : 'text-gray-300 hover:bg-slate-light-custom'
                 }`}
               >
-                <i className="fas fa-ellipsis-h"></i>
                 <span className="text-sm md:text-base">More</span>
                 <i className="fas fa-chevron-down text-xs"></i>
               </Button>
