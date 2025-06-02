@@ -60,44 +60,46 @@ export function TopNavigation({ activeTab, onTabChange, userBalance }: TopNaviga
         </div>
         
         {/* Bottom Row - Navigation Tabs */}
-        <div className="flex items-center space-x-1 sm:space-x-2 md:space-x-6 overflow-x-auto pb-2 md:pb-3 scrollbar-hide">
-          {mainNavItems.map((item) => (
-            <Button
-              key={item.id}
-              variant="ghost"
-              className={`flex items-center space-x-1 md:space-x-2 px-2 md:px-4 py-1.5 md:py-2 rounded-lg font-medium transition-all duration-200 whitespace-nowrap text-xs sm:text-sm md:text-base ${
-                activeTab === item.id 
-                  ? 'bg-primary text-white' 
-                  : 'text-gray-300 hover:bg-slate-light-custom'
-              }`}
-              onClick={() => onTabChange(item.id)}
-            >
-              <i className={`${item.icon} text-sm md:text-base`}></i>
-              <span className="hidden xs:inline">{item.label}</span>
-            </Button>
-          ))}
+        <div className="flex items-center justify-between pb-3">
+          <div className="flex items-center space-x-3 md:space-x-6 overflow-x-auto scrollbar-hide flex-1">
+            {mainNavItems.map((item) => (
+              <Button
+                key={item.id}
+                variant="ghost"
+                className={`flex items-center space-x-2 px-4 py-2 rounded-lg font-medium transition-all duration-200 whitespace-nowrap ${
+                  activeTab === item.id 
+                    ? 'bg-primary text-white' 
+                    : 'text-gray-300 hover:bg-slate-light-custom'
+                }`}
+                onClick={() => onTabChange(item.id)}
+              >
+                <i className={`${item.icon} text-base`}></i>
+                <span className="text-sm md:text-base">{item.label}</span>
+              </Button>
+            ))}
+          </div>
           
           {/* More Dropdown */}
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button
                 variant="ghost"
-                className={`flex items-center space-x-1 md:space-x-2 px-2 md:px-4 py-1.5 md:py-2 rounded-lg font-medium transition-all duration-200 whitespace-nowrap text-xs sm:text-sm md:text-base ${
+                className={`flex items-center space-x-2 px-4 py-2 rounded-lg font-medium transition-all duration-200 ml-3 ${
                   moreNavItems.some(item => item.id === activeTab)
                     ? 'bg-primary text-white' 
                     : 'text-gray-300 hover:bg-slate-light-custom'
                 }`}
               >
-                <i className="fas fa-ellipsis-h text-sm md:text-base"></i>
-                <span className="hidden xs:inline">More</span>
+                <i className="fas fa-ellipsis-h"></i>
+                <span className="text-sm md:text-base">More</span>
                 <i className="fas fa-chevron-down text-xs"></i>
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="bg-slate-custom border-gray-700 w-48 sm:w-56">
+            <DropdownMenuContent align="end" className="bg-slate-custom border-gray-700 w-56">
               {moreNavItems.map((item) => (
                 <DropdownMenuItem
                   key={item.id}
-                  className="flex items-center space-x-3 px-3 sm:px-4 py-2 sm:py-3 cursor-pointer hover:bg-slate-light-custom transition-colors relative text-sm sm:text-base"
+                  className="flex items-center space-x-3 px-4 py-3 cursor-pointer hover:bg-slate-light-custom transition-colors relative"
                   onClick={() => onTabChange(item.id)}
                 >
                   <i className={`${item.icon} text-gray-400`}></i>
