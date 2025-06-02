@@ -29,6 +29,7 @@ export function TopNavigation({ activeTab, onTabChange, userBalance }: TopNaviga
   return (
     <nav className="bg-slate-custom border-b border-gray-700 sticky top-0 z-40">
       <div className="max-w-7xl mx-auto px-4">
+        {/* Top Row - Logo, Search, Balance */}
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <div className="flex items-center space-x-3">
@@ -40,71 +41,71 @@ export function TopNavigation({ activeTab, onTabChange, userBalance }: TopNaviga
             </span>
           </div>
           
-          {/* Desktop Navigation */}
-          <div className="flex space-x-2 md:space-x-6 overflow-x-auto">
-            {mainNavItems.map((item) => (
-              <Button
-                key={item.id}
-                variant="ghost"
-                className={`flex items-center space-x-1 md:space-x-2 px-2 md:px-4 py-2 rounded-lg font-medium transition-all duration-200 whitespace-nowrap ${
-                  activeTab === item.id 
-                    ? 'bg-primary text-white' 
-                    : 'text-gray-300 hover:bg-slate-light-custom'
-                }`}
-                onClick={() => onTabChange(item.id)}
-              >
-                <i className={item.icon}></i>
-                <span className="text-sm md:text-base">{item.label}</span>
-              </Button>
-            ))}
-            
-            {/* More Dropdown */}
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button
-                  variant="ghost"
-                  className={`flex items-center space-x-1 md:space-x-2 px-2 md:px-4 py-2 rounded-lg font-medium transition-all duration-200 whitespace-nowrap ${
-                    moreNavItems.some(item => item.id === activeTab)
-                      ? 'bg-primary text-white' 
-                      : 'text-gray-300 hover:bg-slate-light-custom'
-                  }`}
-                >
-                  <i className="fas fa-ellipsis-h"></i>
-                  <span className="text-sm md:text-base">More</span>
-                  <i className="fas fa-chevron-down text-xs"></i>
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="bg-slate-custom border-gray-700 w-56">
-                {moreNavItems.map((item) => (
-                  <DropdownMenuItem
-                    key={item.id}
-                    className="flex items-center space-x-3 px-4 py-3 cursor-pointer hover:bg-slate-light-custom transition-colors relative"
-                    onClick={() => onTabChange(item.id)}
-                  >
-                    <i className={`${item.icon} text-gray-400`}></i>
-                    <span className="text-gray-200">{item.label}</span>
-                    {item.hasIndicator && (
-                      <span className="absolute right-3 w-2 h-2 bg-live rounded-full animate-pulse"></span>
-                    )}
-                  </DropdownMenuItem>
-                ))}
-              </DropdownMenuContent>
-            </DropdownMenu>
-          </div>
-          
-          {/* User Actions */}
+          {/* Search and User Actions */}
           <div className="flex items-center space-x-4">
-            <div className="hidden md:flex items-center bg-slate-light-custom rounded-lg px-3 py-2">
+            <Button variant="ghost" className="p-2 text-gray-400 hover:text-white">
+              <i className="fas fa-search text-xl"></i>
+            </Button>
+            <div className="flex items-center bg-slate-light-custom rounded-lg px-3 py-2">
               <i className="fas fa-wallet text-success mr-2"></i>
               <span className="font-semibold">{userBalance}</span>
             </div>
-            <Button className="bg-primary hover:bg-primary-blue-dark hidden md:block">
+            <Button className="bg-primary hover:bg-primary-blue-dark font-bold">
               Deposit
             </Button>
-            <Button variant="ghost" className="p-2 md:hidden">
-              <i className="fas fa-bars text-xl"></i>
-            </Button>
           </div>
+        </div>
+        
+        {/* Bottom Row - Navigation Tabs */}
+        <div className="flex items-center space-x-2 md:space-x-6 overflow-x-auto pb-3">
+          {mainNavItems.map((item) => (
+            <Button
+              key={item.id}
+              variant="ghost"
+              className={`flex items-center space-x-1 md:space-x-2 px-2 md:px-4 py-2 rounded-lg font-medium transition-all duration-200 whitespace-nowrap ${
+                activeTab === item.id 
+                  ? 'bg-primary text-white' 
+                  : 'text-gray-300 hover:bg-slate-light-custom'
+              }`}
+              onClick={() => onTabChange(item.id)}
+            >
+              <i className={item.icon}></i>
+              <span className="text-sm md:text-base">{item.label}</span>
+            </Button>
+          ))}
+          
+          {/* More Dropdown */}
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button
+                variant="ghost"
+                className={`flex items-center space-x-1 md:space-x-2 px-2 md:px-4 py-2 rounded-lg font-medium transition-all duration-200 whitespace-nowrap ${
+                  moreNavItems.some(item => item.id === activeTab)
+                    ? 'bg-primary text-white' 
+                    : 'text-gray-300 hover:bg-slate-light-custom'
+                }`}
+              >
+                <i className="fas fa-ellipsis-h"></i>
+                <span className="text-sm md:text-base">More</span>
+                <i className="fas fa-chevron-down text-xs"></i>
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end" className="bg-slate-custom border-gray-700 w-56">
+              {moreNavItems.map((item) => (
+                <DropdownMenuItem
+                  key={item.id}
+                  className="flex items-center space-x-3 px-4 py-3 cursor-pointer hover:bg-slate-light-custom transition-colors relative"
+                  onClick={() => onTabChange(item.id)}
+                >
+                  <i className={`${item.icon} text-gray-400`}></i>
+                  <span className="text-gray-200">{item.label}</span>
+                  {item.hasIndicator && (
+                    <span className="absolute right-3 w-2 h-2 bg-live rounded-full animate-pulse"></span>
+                  )}
+                </DropdownMenuItem>
+              ))}
+            </DropdownMenuContent>
+          </DropdownMenu>
         </div>
       </div>
     </nav>
