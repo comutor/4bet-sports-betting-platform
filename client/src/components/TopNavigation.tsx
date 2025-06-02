@@ -1,5 +1,7 @@
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import { HamburgerMenu } from "./HamburgerMenu";
 
 interface TopNavigationProps {
   activeTab: string;
@@ -8,6 +10,8 @@ interface TopNavigationProps {
 }
 
 export function TopNavigation({ activeTab, onTabChange, userBalance }: TopNavigationProps) {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
   const mainNavItems = [
     { id: 'home', label: 'Home', icon: 'fas fa-home' },
     { id: 'sports', label: 'Soccer', icon: 'fas fa-futbol' },
@@ -33,7 +37,11 @@ export function TopNavigation({ activeTab, onTabChange, userBalance }: TopNaviga
         <div className="flex items-center justify-between h-14 md:h-16">
           {/* Left side - Hamburger and Logo */}
           <div className="flex items-center space-x-2 md:space-x-3">
-            <Button variant="ghost" className="p-1 md:p-2 text-gray-400 hover:text-white">
+            <Button 
+              variant="ghost" 
+              className="p-1 md:p-2 text-gray-400 hover:text-white"
+              onClick={() => setIsMenuOpen(true)}
+            >
               <i className="fas fa-bars text-lg md:text-xl"></i>
             </Button>
             <div className="bg-gradient-to-r from-blue-600 to-emerald-600 w-8 h-8 md:w-10 md:h-10 rounded-lg flex items-center justify-center">
@@ -113,6 +121,14 @@ export function TopNavigation({ activeTab, onTabChange, userBalance }: TopNaviga
           </DropdownMenu>
         </div>
       </div>
+      
+      {/* Hamburger Menu */}
+      <HamburgerMenu 
+        isOpen={isMenuOpen}
+        onClose={() => setIsMenuOpen(false)}
+        onTabChange={onTabChange}
+        activeTab={activeTab}
+      />
     </nav>
   );
 }
