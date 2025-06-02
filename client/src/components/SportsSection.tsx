@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
+import championsLeagueLogo from "@assets/IMG_4087.png";
+import ligue1Logo from "@assets/IMG_4086.png";
 
 interface SportsMatch {
   id: number;
@@ -23,12 +25,12 @@ export function SportsSection({ onBetClick }: SportsSectionProps) {
   const [activeCategory, setActiveCategory] = useState('premier-league');
 
   const sportsCategories = [
-    { id: 'premier-league', name: 'Premier League', icon: 'fas fa-crown' },
-    { id: 'la-liga', name: 'La Liga', icon: 'fas fa-sun' },
-    { id: 'bundesliga', name: 'Bundesliga', icon: 'fas fa-eagle' },
-    { id: 'serie-a', name: 'Serie A', icon: 'fas fa-mountain' },
-    { id: 'ligue-1', name: 'French Ligue 1', icon: 'fas fa-flag-checkered' },
-    { id: 'champions-league', name: 'Champions League', icon: 'fas fa-star' }
+    { id: 'premier-league', name: 'Premier League', icon: 'fas fa-crown', logo: null },
+    { id: 'la-liga', name: 'La Liga', icon: 'fas fa-sun', logo: null },
+    { id: 'bundesliga', name: 'Bundesliga', icon: 'fas fa-eagle', logo: null },
+    { id: 'serie-a', name: 'Serie A', icon: 'fas fa-mountain', logo: null },
+    { id: 'ligue-1', name: 'French Ligue 1', icon: null, logo: ligue1Logo },
+    { id: 'champions-league', name: 'Champions League', icon: null, logo: championsLeagueLogo }
   ];
 
   const footballMatches: SportsMatch[] = [
@@ -74,7 +76,15 @@ export function SportsSection({ onBetClick }: SportsSectionProps) {
             }`}
             onClick={() => setActiveCategory(category.id)}
           >
-            <i className={`${category.icon} text-2xl mb-2`}></i>
+            {category.logo ? (
+              <img 
+                src={category.logo} 
+                alt={category.name}
+                className="w-8 h-8 mb-2 object-contain"
+              />
+            ) : (
+              <i className={`${category.icon} text-2xl mb-2`}></i>
+            )}
             <div className="text-sm font-medium">{category.name}</div>
           </Button>
         ))}
