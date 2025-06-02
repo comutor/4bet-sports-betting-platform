@@ -41,12 +41,12 @@ export function TopNavigation({ activeTab, onTabChange, userBalance }: TopNaviga
           </div>
           
           {/* Desktop Navigation */}
-          <div className="hidden md:flex space-x-6">
+          <div className="flex space-x-2 md:space-x-6 overflow-x-auto">
             {mainNavItems.map((item) => (
               <Button
                 key={item.id}
                 variant="ghost"
-                className={`flex items-center space-x-2 px-4 py-2 rounded-lg font-medium transition-all duration-200 ${
+                className={`flex items-center space-x-1 md:space-x-2 px-2 md:px-4 py-2 rounded-lg font-medium transition-all duration-200 whitespace-nowrap ${
                   activeTab === item.id 
                     ? 'bg-primary text-white' 
                     : 'text-gray-300 hover:bg-slate-light-custom'
@@ -54,7 +54,7 @@ export function TopNavigation({ activeTab, onTabChange, userBalance }: TopNaviga
                 onClick={() => onTabChange(item.id)}
               >
                 <i className={item.icon}></i>
-                <span>{item.label}</span>
+                <span className="text-sm md:text-base">{item.label}</span>
               </Button>
             ))}
             
@@ -63,14 +63,14 @@ export function TopNavigation({ activeTab, onTabChange, userBalance }: TopNaviga
               <DropdownMenuTrigger asChild>
                 <Button
                   variant="ghost"
-                  className={`flex items-center space-x-2 px-4 py-2 rounded-lg font-medium transition-all duration-200 ${
+                  className={`flex items-center space-x-1 md:space-x-2 px-2 md:px-4 py-2 rounded-lg font-medium transition-all duration-200 whitespace-nowrap ${
                     moreNavItems.some(item => item.id === activeTab)
                       ? 'bg-primary text-white' 
                       : 'text-gray-300 hover:bg-slate-light-custom'
                   }`}
                 >
                   <i className="fas fa-ellipsis-h"></i>
-                  <span>More</span>
+                  <span className="text-sm md:text-base">More</span>
                   <i className="fas fa-chevron-down text-xs"></i>
                 </Button>
               </DropdownMenuTrigger>
