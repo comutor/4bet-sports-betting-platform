@@ -96,36 +96,41 @@ export function TopNavigation({ activeTab, onTabChange, userBalance, isLoggedIn 
         
         {/* Bottom Row - Navigation Tabs */}
         <div className="pb-3 relative">
-          <div className="flex items-center gap-1 overflow-x-auto scrollbar-hide">
-            {allNavItems.map((item) => (
+          <div className="flex items-center">
+            {/* Scrollable Navigation Pills */}
+            <div className="flex items-center gap-1 overflow-x-auto scrollbar-hide flex-1 pr-12">
+              {allNavItems.map((item) => (
+                <Button
+                  key={item.id}
+                  variant="ghost"
+                  size="sm"
+                  className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full font-medium transition-all duration-200 whitespace-nowrap shrink-0 ${
+                    activeTab === item.id 
+                      ? 'bg-primary text-white shadow-sm' 
+                      : 'text-gray-300 hover:bg-slate-light-custom hover:text-white'
+                  }`}
+                  onClick={() => onTabChange(item.id)}
+                >
+                  <i className={`${item.icon} text-sm`}></i>
+                  <span className="text-sm font-medium">{item.label}</span>
+                  {item.hasIndicator && (
+                    <span className="w-1.5 h-1.5 bg-live rounded-full animate-pulse"></span>
+                  )}
+                </Button>
+              ))}
+            </div>
+            
+            {/* Fixed Dropdown Button */}
+            <div className="absolute right-0 top-0 bottom-0 flex items-center bg-gradient-to-l from-slate-custom via-slate-custom to-transparent pl-8">
               <Button
-                key={item.id}
                 variant="ghost"
                 size="sm"
-                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full font-medium transition-all duration-200 whitespace-nowrap shrink-0 ${
-                  activeTab === item.id 
-                    ? 'bg-primary text-white shadow-sm' 
-                    : 'text-gray-300 hover:bg-slate-light-custom hover:text-white'
-                }`}
-                onClick={() => onTabChange(item.id)}
+                className="flex items-center justify-center w-8 h-8 rounded-full font-medium transition-all duration-200 shrink-0 text-gray-300 hover:bg-slate-light-custom hover:text-white"
+                onClick={() => setIsServicesDropdownOpen(!isServicesDropdownOpen)}
               >
-                <i className={`${item.icon} text-sm`}></i>
-                <span className="text-sm font-medium">{item.label}</span>
-                {item.hasIndicator && (
-                  <span className="w-1.5 h-1.5 bg-live rounded-full animate-pulse"></span>
-                )}
+                <i className={`fas fa-chevron-down text-xs transition-transform duration-200 ${isServicesDropdownOpen ? 'rotate-180' : ''}`}></i>
               </Button>
-            ))}
-            
-            {/* Services Dropdown Button */}
-            <Button
-              variant="ghost"
-              size="sm"
-              className="flex items-center justify-center w-8 h-8 rounded-full font-medium transition-all duration-200 shrink-0 text-gray-300 hover:bg-slate-light-custom hover:text-white"
-              onClick={() => setIsServicesDropdownOpen(!isServicesDropdownOpen)}
-            >
-              <i className={`fas fa-chevron-down text-xs transition-transform duration-200 ${isServicesDropdownOpen ? 'rotate-180' : ''}`}></i>
-            </Button>
+            </div>
           </div>
           
           {/* Services Dropdown */}
