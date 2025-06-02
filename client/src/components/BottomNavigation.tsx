@@ -46,17 +46,17 @@ export function BottomNavigation({
           <Button
             key={item.id}
             variant="ghost"
-            className={`flex flex-col items-center py-3 px-2 transition-colors relative ${
+            className={`flex flex-col items-center justify-center py-2 px-2 h-16 transition-colors relative ${
               activeTab === item.id || (item.id === 'home' && activeTab === 'sports')
                 ? 'text-primary' 
                 : 'text-gray-400 hover:bg-slate-light-custom'
             }`}
             onClick={() => handleTabClick(item.id)}
           >
-            <i className={`${item.icon} text-xl mb-1`}></i>
-            <span className="text-xs">{item.label}</span>
+            <i className={`${item.icon} text-lg mb-1`}></i>
+            <span className="text-xs leading-tight">{item.label}</span>
             {item.count && item.count > 0 && (
-              <span className="absolute -top-1 -right-1 bg-live text-white text-xs w-5 h-5 rounded-full flex items-center justify-center">
+              <span className="absolute top-1 right-1 bg-live text-white text-xs w-5 h-5 rounded-full flex items-center justify-center">
                 {item.count}
               </span>
             )}
