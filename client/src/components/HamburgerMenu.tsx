@@ -70,28 +70,31 @@ export function HamburgerMenu({ isOpen, onClose, onTabChange, activeTab }: Hambu
           {/* Content */}
           <div className="flex-1 overflow-y-auto p-6 space-y-6">
             {/* Main Sections */}
-            <div>
-              <div className="grid grid-cols-2 gap-3 mb-6">
+            <div className="bg-slate-800 rounded-xl p-4 border border-gray-700">
+              <h3 className="text-lg font-bold text-gray-300 mb-4">
+                Main Menu
+              </h3>
+              <div className="grid grid-cols-2 gap-3">
                 {mainSections.map((section) => (
                   <Button
                     key={section.id}
                     variant="ghost"
-                    className={`flex flex-col items-center justify-center p-6 h-20 rounded-xl transition-all duration-200 ${
+                    className={`flex flex-col items-center justify-center p-4 h-20 rounded-lg transition-all duration-200 ${
                       activeTab === section.id
                         ? 'bg-primary text-white'
-                        : 'text-gray-300 hover:bg-slate-light-custom bg-slate-800'
+                        : 'text-gray-300 hover:bg-slate-700 bg-slate-900'
                     }`}
                     onClick={() => handleItemClick(section.id)}
                   >
-                    <i className={`${section.icon} text-2xl mb-2`}></i>
-                    <span className="text-sm font-medium text-center">{section.label}</span>
+                    <i className={`${section.icon} text-xl mb-2`}></i>
+                    <span className="text-xs font-medium text-center">{section.label}</span>
                   </Button>
                 ))}
               </div>
             </div>
             
             {/* Sports Categories */}
-            <div>
+            <div className="bg-slate-800 rounded-xl p-4 border border-gray-700">
               <h3 className="text-lg font-bold text-gray-300 mb-4">
                 Popular Sports
               </h3>
@@ -100,22 +103,22 @@ export function HamburgerMenu({ isOpen, onClose, onTabChange, activeTab }: Hambu
                   <Button
                     key={sport.id}
                     variant="ghost"
-                    className={`w-full justify-start p-4 text-left transition-all duration-200 rounded-lg ${
+                    className={`w-full justify-start p-3 text-left transition-all duration-200 rounded-lg ${
                       activeTab === sport.id
                         ? 'bg-primary text-white'
-                        : 'text-gray-300 hover:bg-slate-light-custom'
+                        : 'text-gray-300 hover:bg-slate-700'
                     }`}
                     onClick={() => handleItemClick(sport.id)}
                   >
-                    <i className={`${sport.icon} w-6 mr-4`}></i>
-                    <span className="text-base font-medium">{sport.label}</span>
+                    <i className={`${sport.icon} w-5 mr-3`}></i>
+                    <span className="text-sm font-medium">{sport.label}</span>
                   </Button>
                 ))}
               </div>
             </div>
             
             {/* Quick Links */}
-            <div>
+            <div className="bg-slate-800 rounded-xl p-4 border border-gray-700">
               <h3 className="text-lg font-bold text-gray-300 mb-4">
                 Quick Links
               </h3>
@@ -124,11 +127,11 @@ export function HamburgerMenu({ isOpen, onClose, onTabChange, activeTab }: Hambu
                   <Button
                     key={link.id}
                     variant="ghost"
-                    className="w-full justify-start p-4 text-left text-gray-300 hover:bg-slate-light-custom transition-all duration-200 rounded-lg"
+                    className="w-full justify-start p-3 text-left text-gray-300 hover:bg-slate-700 transition-all duration-200 rounded-lg"
                     onClick={() => handleItemClick(link.id)}
                   >
-                    <i className={`${link.icon} w-6 mr-4 text-gray-400`}></i>
-                    <span className="text-base font-medium">{link.label}</span>
+                    <i className={`${link.icon} w-5 mr-3 text-gray-400`}></i>
+                    <span className="text-sm font-medium">{link.label}</span>
                   </Button>
                 ))}
               </div>
