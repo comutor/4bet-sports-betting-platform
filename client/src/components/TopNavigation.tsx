@@ -12,6 +12,7 @@ interface TopNavigationProps {
 
 export function TopNavigation({ activeTab, onTabChange, userBalance, isLoggedIn = false }: TopNavigationProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isServicesDropdownOpen, setIsServicesDropdownOpen] = useState(false);
 
   const allNavItems = [
     { id: 'home', label: 'Home', icon: 'fas fa-home' },
@@ -22,6 +23,21 @@ export function TopNavigation({ activeTab, onTabChange, userBalance, isLoggedIn 
     { id: 'casino', label: 'Casino', icon: 'fas fa-dice' },
     { id: 'virtual', label: 'Virtual', icon: 'fas fa-robot' },
     { id: 'tennis', label: 'Tennis', icon: 'fas fa-table-tennis' }
+  ];
+
+  const allServices = [
+    { id: 'sports', label: 'Sports', icon: 'fas fa-futbol', color: 'bg-green-600' },
+    { id: 'live', label: 'In-Play', icon: 'fas fa-broadcast-tower', color: 'bg-red-600' },
+    { id: 'casino', label: 'Casino', icon: 'fas fa-dice', color: 'bg-purple-600' },
+    { id: 'virtual', label: 'Virtual', icon: 'fas fa-robot', color: 'bg-blue-600' },
+    { id: 'aviator', label: 'Aviator', icon: 'fas fa-plane', color: 'bg-orange-600' },
+    { id: 'promotions', label: 'Promotions', icon: 'fas fa-gift', color: 'bg-pink-600' },
+    { id: 'football', label: 'Football', icon: 'fas fa-futbol', color: 'bg-green-500' },
+    { id: 'basketball', label: 'Basketball', icon: 'fas fa-basketball', color: 'bg-orange-500' },
+    { id: 'tennis', label: 'Tennis', icon: 'fas fa-table-tennis', color: 'bg-yellow-600' },
+    { id: 'hockey', label: 'Ice Hockey', icon: 'fas fa-hockey-puck', color: 'bg-blue-500' },
+    { id: 'baseball', label: 'Baseball', icon: 'fas fa-baseball', color: 'bg-red-500' },
+    { id: 'volleyball', label: 'Volleyball', icon: 'fas fa-volleyball', color: 'bg-indigo-600' }
   ];
 
   return (
@@ -79,7 +95,7 @@ export function TopNavigation({ activeTab, onTabChange, userBalance, isLoggedIn 
         </div>
         
         {/* Bottom Row - Navigation Tabs */}
-        <div className="pb-3">
+        <div className="pb-3 relative">
           <div className="flex items-center gap-1 overflow-x-auto scrollbar-hide">
             {allNavItems.map((item) => (
               <Button
@@ -100,7 +116,42 @@ export function TopNavigation({ activeTab, onTabChange, userBalance, isLoggedIn 
                 )}
               </Button>
             ))}
+            
+            {/* Services Dropdown Button */}
+            <Button
+              variant="ghost"
+              size="sm"
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-full font-medium transition-all duration-200 whitespace-nowrap shrink-0 text-gray-300 hover:bg-slate-light-custom hover:text-white"
+              onClick={() => setIsServicesDropdownOpen(!isServicesDropdownOpen)}
+            >
+              <i className="fas fa-th text-sm"></i>
+              <span className="text-sm font-medium">All Services</span>
+              <i className={`fas fa-chevron-down text-xs transition-transform duration-200 ${isServicesDropdownOpen ? 'rotate-180' : ''}`}></i>
+            </Button>
           </div>
+          
+          {/* Services Dropdown */}
+          {isServicesDropdownOpen && (
+            <div className="absolute top-full left-0 right-0 mt-2 bg-slate-800 border border-gray-700 rounded-xl p-4 z-50 shadow-lg">
+              <h3 className="text-lg font-bold text-gray-300 mb-4">All Services</h3>
+              <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3">
+                {allServices.map((service) => (
+                  <Button
+                    key={service.id}
+                    variant="ghost"
+                    className={`flex flex-col items-center justify-center p-4 h-20 rounded-lg transition-all duration-200 ${service.color} hover:opacity-80`}
+                    onClick={() => {
+                      onTabChange(service.id);
+                      setIsServicesDropdownOpen(false);
+                    }}
+                  >
+                    <i className={`${service.icon} text-xl mb-2 text-white`}></i>
+                    <span className="text-xs font-medium text-center text-white">{service.label}</span>
+                  </Button>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
       </div>
       
