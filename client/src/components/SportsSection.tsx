@@ -23,12 +23,11 @@ interface SportsMatch {
 
 interface SportsSectionProps {
   onBetClick: (eventName: string, selection: string, odds: string) => void;
+  selectedSport?: string;
 }
 
-export function SportsSection({ onBetClick }: SportsSectionProps) {
-  const [activeCategory, setActiveCategory] = useState('premier-league');
-
-  const sportsCategories = [
+export function SportsSection({ onBetClick, selectedSport = 'soccer' }: SportsSectionProps) {
+  const footballCategories = [
     { id: 'premier-league', name: 'Premier League', icon: null, logo: premierLeagueLogo },
     { id: 'la-liga', name: 'La Liga', icon: null, logo: laLigaLogo },
     { id: 'bundesliga', name: 'Bundesliga', icon: null, logo: bundesligaLogo },
@@ -36,6 +35,28 @@ export function SportsSection({ onBetClick }: SportsSectionProps) {
     { id: 'ligue-1', name: 'French Ligue 1', icon: null, logo: ligue1Logo },
     { id: 'champions-league', name: 'Champions League', icon: null, logo: championsLeagueLogo }
   ];
+
+  const basketballCategories = [
+    { id: 'nba', name: 'NBA', icon: 'fas fa-basketball-ball', logo: null },
+    { id: 'euroleague', name: 'EuroLeague', icon: 'fas fa-basketball-ball', logo: null },
+    { id: 'liga-acb', name: 'Liga ACB', icon: 'fas fa-basketball-ball', logo: null },
+    { id: 'turkish-bsl', name: 'Turkish Basketball Super League', icon: 'fas fa-basketball-ball', logo: null },
+    { id: 'vtb-league', name: 'Russian VTB United League', icon: 'fas fa-basketball-ball', logo: null },
+    { id: 'pro-a', name: 'Pro A', icon: 'fas fa-basketball-ball', logo: null }
+  ];
+
+  const getSportsCategories = () => {
+    switch (selectedSport) {
+      case 'basketball':
+        return basketballCategories;
+      case 'soccer':
+      default:
+        return footballCategories;
+    }
+  };
+
+  const sportsCategories = getSportsCategories();
+  const [activeCategory, setActiveCategory] = useState(sportsCategories[0]?.id || 'premier-league');
 
   const footballMatches: SportsMatch[] = [
     {
@@ -58,10 +79,52 @@ export function SportsSection({ onBetClick }: SportsSectionProps) {
     }
   ];
 
+  const basketballMatches: SportsMatch[] = [
+    {
+      id: 1,
+      homeTeam: "Los Angeles Lakers",
+      awayTeam: "Boston Celtics",
+      league: "NBA",
+      time: "Today 20:00",
+      odds: { home: "1.85", away: "1.95" },
+      marketsCount: 38
+    },
+    {
+      id: 2,
+      homeTeam: "Real Madrid",
+      awayTeam: "Barcelona",
+      league: "EuroLeague",
+      time: "Tomorrow 19:30",
+      odds: { home: "1.75", away: "2.05" },
+      marketsCount: 28
+    },
+    {
+      id: 3,
+      homeTeam: "Anadolu Efes",
+      awayTeam: "Fenerbahce",
+      league: "Turkish Basketball Super League",
+      time: "Tomorrow 18:00",
+      odds: { home: "1.65", away: "2.20" },
+      marketsCount: 22
+    }
+  ];
+
   const getSportIcon = (sport: string) => {
     const category = sportsCategories.find(cat => cat.id === sport);
     return category?.icon || 'fas fa-trophy';
   };
+
+  const getCurrentMatches = () => {
+    switch (selectedSport) {
+      case 'basketball':
+        return basketballMatches;
+      case 'soccer':
+      default:
+        return footballMatches;
+    }
+  };
+
+  const currentMatches = getCurrentMatches();
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-8">
@@ -94,10 +157,9 @@ export function SportsSection({ onBetClick }: SportsSectionProps) {
         ))}
       </div>
 
-      {/* Football Matches */}
-      {activeCategory === 'football' && (
-        <div className="space-y-4">
-          {footballMatches.map((match) => (
+      {/* Current Sport Matches */}
+      <div className="space-y-4">
+        {currentMatches.map((match) => (
             <div key={match.id} className="bg-slate-custom rounded-xl p-6 border border-gray-700">
               <div className="flex items-center justify-between mb-4">
                 <div>
@@ -161,11 +223,10 @@ export function SportsSection({ onBetClick }: SportsSectionProps) {
               </div>
             </div>
           ))}
-        </div>
-      )}
+      </div>
 
-      {/* Other sports placeholder */}
-      {activeCategory !== 'football' && (
+      {/* No matches placeholder when no matches available */}
+      {currentMatches.length === 0 && (
         <div className="text-center py-12">
           <i className={`${getSportIcon(activeCategory)} text-6xl text-gray-600 mb-4`}></i>
           <h3 className="text-xl font-bold mb-2">
