@@ -26,11 +26,7 @@ export function HamburgerMenu({ isOpen, onClose, onTabChange, activeTab }: Hambu
     { id: 'volleyball', label: 'Volleyball', icon: 'fas fa-volleyball' }
   ];
 
-  const quickLinks = [
-    { id: 'help', label: 'Help & Support', icon: 'fas fa-question-circle' },
-    { id: 'settings', label: 'Settings', icon: 'fas fa-cog' },
-    { id: 'about', label: 'About Us', icon: 'fas fa-info-circle' }
-  ];
+
 
   const handleItemClick = (tabId: string) => {
     onTabChange(tabId);
@@ -117,25 +113,7 @@ export function HamburgerMenu({ isOpen, onClose, onTabChange, activeTab }: Hambu
               </div>
             </div>
             
-            {/* Quick Links */}
-            <div className="bg-slate-800 rounded-xl p-4 border border-gray-700">
-              <h3 className="text-lg font-bold text-gray-300 mb-4">
-                Quick Links
-              </h3>
-              <div className="space-y-2">
-                {quickLinks.map((link) => (
-                  <Button
-                    key={link.id}
-                    variant="ghost"
-                    className="w-full justify-start p-3 text-left text-gray-300 hover:bg-slate-700 transition-all duration-200 rounded-lg"
-                    onClick={() => handleItemClick(link.id)}
-                  >
-                    <i className={`${link.icon} w-5 mr-3 text-gray-400`}></i>
-                    <span className="text-sm font-medium">{link.label}</span>
-                  </Button>
-                ))}
-              </div>
-            </div>
+
           </div>
         </div>
       </div>
