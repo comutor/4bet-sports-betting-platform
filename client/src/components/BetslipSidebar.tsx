@@ -22,8 +22,8 @@ export function BetslipSidebar({
   totalPotentialReturn
 }: BetslipSidebarProps) {
   return (
-    <div className={`fixed top-0 right-0 h-full w-80 bg-slate-custom transform transition-transform duration-300 z-50 border-l border-gray-700 ${
-      isOpen ? 'translate-x-0' : 'translate-x-full'
+    <div className={`fixed inset-0 bg-slate-custom transform transition-transform duration-300 z-50 ${
+      isOpen ? 'translate-x-0' : '-translate-x-full'
     }`}>
       <div className="p-6 h-full flex flex-col">
         <div className="flex items-center justify-between mb-6">
