@@ -14,7 +14,7 @@ export function HamburgerMenu({ isOpen, onClose, onTabChange, activeTab }: Hambu
     { id: 'casino', label: 'Casino', icon: 'fas fa-dice' },
     { id: 'virtual', label: 'Virtual', icon: 'fas fa-robot' },
     { id: 'aviator', label: 'Aviator', icon: 'fas fa-plane' },
-    { id: 'promotions', label: 'Promotions', icon: 'fas fa-gift' }
+    { id: 'aviator-crash', label: 'Aviator', icon: 'fas fa-plane' }
   ];
 
   const sportsCategories = [
@@ -24,6 +24,12 @@ export function HamburgerMenu({ isOpen, onClose, onTabChange, activeTab }: Hambu
     { id: 'hockey', label: 'Ice Hockey', icon: 'fas fa-hockey-puck' },
     { id: 'baseball', label: 'Baseball', icon: 'fas fa-baseball' },
     { id: 'volleyball', label: 'Volleyball', icon: 'fas fa-volleyball' }
+  ];
+
+  const countryCategories = [
+    { id: 'top-countries', label: 'Top Countries', icon: 'fas fa-flag' },
+    { id: 'international', label: 'International', icon: 'fas fa-globe' },
+    { id: 'other-countries', label: 'Other Countries', icon: 'fas fa-map' }
   ];
 
 
@@ -112,7 +118,29 @@ export function HamburgerMenu({ isOpen, onClose, onTabChange, activeTab }: Hambu
                 ))}
               </div>
             </div>
-            
+
+            {/* Countries */}
+            <div className="bg-slate-800 rounded-xl p-4 border border-gray-700">
+              <h3 className="text-lg font-bold text-gray-300 mb-4">
+                Countries
+              </h3>
+              <div className="space-y-2">
+                {countryCategories.map((country) => (
+                  <Button
+                    key={country.id}
+                    variant="ghost"
+                    className="w-full justify-between p-3 text-left text-gray-300 hover:bg-slate-700 transition-all duration-200 rounded-lg"
+                    onClick={() => handleItemClick(country.id)}
+                  >
+                    <div className="flex items-center">
+                      <i className={`${country.icon} w-5 mr-3`}></i>
+                      <span className="text-sm font-medium">{country.label}</span>
+                    </div>
+                    <i className="fas fa-chevron-down text-gray-400 text-sm"></i>
+                  </Button>
+                ))}
+              </div>
+            </div>
 
           </div>
         </div>
