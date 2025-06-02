@@ -122,14 +122,16 @@ export function TopNavigation({ activeTab, onTabChange, userBalance, isLoggedIn 
             
             {/* Fixed Dropdown Button */}
             <div className="absolute right-0 top-0 bottom-0 flex items-center bg-gradient-to-l from-slate-custom via-slate-custom to-transparent pl-8">
-              <Button
-                variant="ghost"
-                size="sm"
-                className="flex items-center justify-center w-8 h-8 rounded-full font-medium transition-all duration-200 shrink-0 text-gray-300 hover:bg-slate-light-custom hover:text-white"
-                onClick={() => setIsServicesDropdownOpen(!isServicesDropdownOpen)}
-              >
-                <i className={`fas fa-chevron-down text-xs transition-transform duration-200 ${isServicesDropdownOpen ? 'rotate-180' : ''}`}></i>
-              </Button>
+              <div className="bg-slate-800 border border-gray-700 rounded-lg p-1">
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="flex items-center justify-center w-8 h-8 rounded-md font-medium transition-all duration-200 shrink-0 text-gray-300 hover:bg-slate-700 hover:text-white"
+                  onClick={() => setIsServicesDropdownOpen(!isServicesDropdownOpen)}
+                >
+                  <i className={`fas fa-chevron-down text-xs transition-transform duration-200 ${isServicesDropdownOpen ? 'rotate-180' : ''}`}></i>
+                </Button>
+              </div>
             </div>
           </div>
           
