@@ -132,21 +132,31 @@ export function TopNavigation({ activeTab, onTabChange, userBalance, isLoggedIn 
           
           {/* Services Dropdown */}
           {isServicesDropdownOpen && (
-            <div className="absolute top-full left-0 right-0 mt-2 bg-slate-800 border border-gray-700 rounded-xl p-4 z-50 shadow-lg">
-              <h3 className="text-lg font-bold text-gray-300 mb-4">All Services</h3>
-              <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3">
+            <div className="absolute top-full left-4 right-4 mt-2 bg-slate-800 border border-gray-700 rounded-xl p-4 z-50 shadow-lg max-w-4xl mx-auto">
+              <div className="flex items-center justify-between mb-4">
+                <h3 className="text-lg font-bold text-gray-300">All Services</h3>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="text-gray-400 hover:text-white"
+                  onClick={() => setIsServicesDropdownOpen(false)}
+                >
+                  <i className="fas fa-times"></i>
+                </Button>
+              </div>
+              <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-3 max-h-64 overflow-y-auto">
                 {allServices.map((service) => (
                   <Button
                     key={service.id}
                     variant="ghost"
-                    className={`flex flex-col items-center justify-center p-4 h-20 rounded-lg transition-all duration-200 ${service.color} hover:opacity-80`}
+                    className={`flex flex-col items-center justify-center p-3 h-16 rounded-lg transition-all duration-200 ${service.color} hover:opacity-80`}
                     onClick={() => {
                       onTabChange(service.id);
                       setIsServicesDropdownOpen(false);
                     }}
                   >
-                    <i className={`${service.icon} text-xl mb-2 text-white`}></i>
-                    <span className="text-xs font-medium text-center text-white">{service.label}</span>
+                    <i className={`${service.icon} text-lg mb-1 text-white`}></i>
+                    <span className="text-xs font-medium text-center text-white leading-tight">{service.label}</span>
                   </Button>
                 ))}
               </div>
