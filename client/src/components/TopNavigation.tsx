@@ -79,23 +79,24 @@ export function TopNavigation({ activeTab, onTabChange, userBalance, isLoggedIn 
         </div>
         
         {/* Bottom Row - Navigation Tabs */}
-        <div className="flex items-center pb-3">
-          <div className="flex items-center space-x-1 md:space-x-2 overflow-x-auto scrollbar-hide w-full">
+        <div className="pb-3">
+          <div className="flex items-center gap-1 overflow-x-auto scrollbar-hide">
             {allNavItems.map((item) => (
               <Button
                 key={item.id}
                 variant="ghost"
-                className={`flex items-center space-x-1 px-2 md:px-3 py-2 rounded-lg font-medium transition-all duration-200 whitespace-nowrap min-w-0 ${
+                size="sm"
+                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full font-medium transition-all duration-200 whitespace-nowrap shrink-0 ${
                   activeTab === item.id 
-                    ? 'bg-primary text-white' 
-                    : 'text-gray-300 hover:bg-slate-light-custom'
+                    ? 'bg-primary text-white shadow-sm' 
+                    : 'text-gray-300 hover:bg-slate-light-custom hover:text-white'
                 }`}
                 onClick={() => onTabChange(item.id)}
               >
-                <i className={`${item.icon} text-xs md:text-sm flex-shrink-0`}></i>
-                <span className="text-xs md:text-sm truncate">{item.label}</span>
+                <i className={`${item.icon} text-sm`}></i>
+                <span className="text-sm font-medium">{item.label}</span>
                 {item.hasIndicator && (
-                  <span className="w-1.5 h-1.5 bg-live rounded-full animate-pulse ml-1"></span>
+                  <span className="w-1.5 h-1.5 bg-live rounded-full animate-pulse"></span>
                 )}
               </Button>
             ))}
