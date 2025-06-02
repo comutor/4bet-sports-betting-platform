@@ -4,6 +4,7 @@ interface BottomNavigationProps {
   activeTab: string;
   onTabChange: (tab: string) => void;
   onBetslipOpen: () => void;
+  onMenuOpen: () => void;
   betslipCount: number;
 }
 
@@ -11,6 +12,7 @@ export function BottomNavigation({
   activeTab, 
   onTabChange, 
   onBetslipOpen, 
+  onMenuOpen,
   betslipCount 
 }: BottomNavigationProps) {
   const navItems = [
@@ -24,6 +26,8 @@ export function BottomNavigation({
   const handleTabClick = (tabId: string) => {
     if (tabId === 'betslip') {
       onBetslipOpen();
+    } else if (tabId === 'menu') {
+      onMenuOpen();
     } else {
       onTabChange(tabId);
     }

@@ -2,6 +2,7 @@ import { useState } from "react";
 import { TopNavigation } from "@/components/TopNavigation";
 import { BottomNavigation } from "@/components/BottomNavigation";
 import { BetslipSidebar } from "@/components/BetslipSidebar";
+import { HamburgerMenu } from "@/components/HamburgerMenu";
 import { FeaturedEvents } from "@/components/FeaturedEvents";
 import { SportsSection } from "@/components/SportsSection";
 import { LiveSection } from "@/components/LiveSection";
@@ -14,6 +15,7 @@ import { Button } from "@/components/ui/button";
 
 export default function Home() {
   const [activeTab, setActiveTab] = useState('home');
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const {
     items: betslipItems,
     isOpen: betslipOpen,
@@ -105,6 +107,7 @@ export default function Home() {
         activeTab={activeTab} 
         onTabChange={setActiveTab}
         onBetslipOpen={() => setBetslipOpen(true)}
+        onMenuOpen={() => setIsMenuOpen(true)}
         betslipCount={betslipCount}
       />
 
@@ -116,6 +119,13 @@ export default function Home() {
         onUpdateStake={updateStake}
         totalStake={totalStake}
         totalPotentialReturn={totalPotentialReturn}
+      />
+
+      <HamburgerMenu 
+        isOpen={isMenuOpen}
+        onClose={() => setIsMenuOpen(false)}
+        onTabChange={setActiveTab}
+        activeTab={activeTab}
       />
     </div>
   );
