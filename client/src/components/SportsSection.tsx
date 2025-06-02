@@ -23,12 +23,12 @@ export function SportsSection({ onBetClick }: SportsSectionProps) {
   const [activeCategory, setActiveCategory] = useState('premier-league');
 
   const sportsCategories = [
-    { id: 'premier-league', name: 'Premier League', icon: 'fas fa-futbol' },
-    { id: 'la-liga', name: 'La Liga', icon: 'fas fa-futbol' },
-    { id: 'bundesliga', name: 'Bundesliga', icon: 'fas fa-futbol' },
-    { id: 'serie-a', name: 'Serie A', icon: 'fas fa-futbol' },
-    { id: 'ligue-1', name: 'French Ligue 1', icon: 'fas fa-futbol' },
-    { id: 'champions-league', name: 'Champions League', icon: 'fas fa-trophy' }
+    { id: 'premier-league', name: 'Premier League', icon: 'fas fa-crown' },
+    { id: 'la-liga', name: 'La Liga', icon: 'fas fa-sun' },
+    { id: 'bundesliga', name: 'Bundesliga', icon: 'fas fa-eagle' },
+    { id: 'serie-a', name: 'Serie A', icon: 'fas fa-mountain' },
+    { id: 'ligue-1', name: 'French Ligue 1', icon: 'fas fa-flag-checkered' },
+    { id: 'champions-league', name: 'Champions League', icon: 'fas fa-star' }
   ];
 
   const footballMatches: SportsMatch[] = [
