@@ -1,0 +1,136 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: 240 10% 3.9%;
+  --foreground: 0 0% 98%;
+  --muted: 240 3.7% 15.9%;
+  --muted-foreground: 240 5% 64.9%;
+  --popover: 240 10% 3.9%;
+  --popover-foreground: 0 0% 98%;
+  --card: 240 10% 3.9%;
+  --card-foreground: 0 0% 98%;
+  --border: 240 3.7% 15.9%;
+  --input: 240 3.7% 15.9%;
+  --primary: 224 71% 36%;
+  --primary-foreground: 210 40% 98%;
+  --secondary: 160 60% 45%;
+  --secondary-foreground: 160 60% 98%;
+  --accent: 240 3.7% 15.9%;
+  --accent-foreground: 0 0% 98%;
+  --destructive: 0 62.8% 30.6%;
+  --destructive-foreground: 0 0% 98%;
+  --ring: 240 4.9% 83.9%;
+  --radius: 0.5rem;
+  
+  /* Custom betting platform colors */
+  --primary-blue: 224 71% 36%; /* #1E40AF */
+  --primary-blue-dark: 224 76% 32%; /* #1E3A8A */
+  --secondary-green: 160 60% 45%; /* #059669 */
+  --secondary-green-dark: 160 64% 39%; /* #047857 */
+  --dark-bg: 222 84% 5%; /* #0F172A */
+  --slate-bg: 215 28% 17%; /* #1E293B */
+  --slate-light: 215 20% 25%; /* #334155 */
+  --success-green: 142 76% 36%; /* #10B981 */
+  --danger-red: 0 84% 60%; /* #EF4444 */
+  --warning-yellow: 43 96% 56%; /* #F59E0B */
+  --live-orange: 14 100% 57%; /* #FF6B35 */
+}
+
+.dark {
+  --background: 240 10% 3.9%;
+  --foreground: 0 0% 98%;
+  --muted: 240 3.7% 15.9%;
+  --muted-foreground: 240 5% 64.9%;
+  --popover: 240 10% 3.9%;
+  --popover-foreground: 0 0% 98%;
+  --card: 240 10% 3.9%;
+  --card-foreground: 0 0% 98%;
+  --border: 240 3.7% 15.9%;
+  --input: 240 3.7% 15.9%;
+  --primary: 224 71% 36%;
+  --primary-foreground: 210 40% 98%;
+  --secondary: 160 60% 45%;
+  --secondary-foreground: 160 60% 98%;
+  --accent: 240 3.7% 15.9%;
+  --accent-foreground: 0 0% 98%;
+  --destructive: 0 62.8% 30.6%;
+  --destructive-foreground: 0 0% 98%;
+  --ring: 240 4.9% 83.9%;
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply font-sans antialiased bg-background text-foreground;
+    font-family: 'Inter', sans-serif;
+    background-color: hsl(var(--dark-bg));
+    color: hsl(var(--foreground));
+  }
+}
+
+@layer utilities {
+  .bg-primary-blue {
+    background-color: hsl(var(--primary-blue));
+  }
+  
+  .bg-primary-blue-dark {
+    background-color: hsl(var(--primary-blue-dark));
+  }
+  
+  .bg-secondary-green {
+    background-color: hsl(var(--secondary-green));
+  }
+  
+  .bg-secondary-green-dark {
+    background-color: hsl(var(--secondary-green-dark));
+  }
+  
+  .bg-slate-custom {
+    background-color: hsl(var(--slate-bg));
+  }
+  
+  .bg-slate-light-custom {
+    background-color: hsl(var(--slate-light));
+  }
+  
+  .text-success {
+    color: hsl(var(--success-green));
+  }
+  
+  .bg-success {
+    background-color: hsl(var(--success-green));
+  }
+  
+  .text-danger {
+    color: hsl(var(--danger-red));
+  }
+  
+  .bg-danger {
+    background-color: hsl(var(--danger-red));
+  }
+  
+  .text-warning {
+    color: hsl(var(--warning-yellow));
+  }
+  
+  .bg-warning {
+    background-color: hsl(var(--warning-yellow));
+  }
+  
+  .text-live {
+    color: hsl(var(--live-orange));
+  }
+  
+  .bg-live {
+    background-color: hsl(var(--live-orange));
+  }
+  
+  .animate-pulse-fast {
+    animation: pulse 1s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+}
