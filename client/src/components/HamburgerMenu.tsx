@@ -125,11 +125,14 @@ export function HamburgerMenu({ isOpen, onClose, onTabChange, activeTab }: Hambu
                   <Button
                     key={category.id}
                     variant="ghost"
-                    className="w-full justify-start p-4 text-left text-gray-300 hover:bg-slate-light-custom transition-all duration-200"
+                    className="w-full justify-between p-4 text-left text-gray-300 hover:bg-slate-light-custom transition-all duration-200"
                     onClick={() => handleItemClick(category.id)}
                   >
-                    <i className={`${category.icon} w-6 mr-4 text-warning`}></i>
-                    <span className="text-base font-medium">{category.label}</span>
+                    <div className="flex items-center">
+                      <i className={`${category.icon} w-6 mr-4 text-warning`}></i>
+                      <span className="text-base font-medium">{category.label}</span>
+                    </div>
+                    <i className="fas fa-chevron-down text-gray-400 text-sm"></i>
                   </Button>
                 ))}
               </div>
