@@ -5,6 +5,7 @@ import ligue1Logo from "@assets/IMG_4086.png";
 import premierLeagueLogo from "@assets/Z.jpeg";
 import serieALogo from "@assets/9k=.jpeg";
 import bundesligaLogo from "@assets/IMG_4089.png";
+import laLigaLogo from "@assets/IMG_4090.png";
 
 interface SportsMatch {
   id: number;
@@ -29,7 +30,7 @@ export function SportsSection({ onBetClick }: SportsSectionProps) {
 
   const sportsCategories = [
     { id: 'premier-league', name: 'Premier League', icon: null, logo: premierLeagueLogo },
-    { id: 'la-liga', name: 'La Liga', icon: 'fas fa-sun', logo: null },
+    { id: 'la-liga', name: 'La Liga', icon: null, logo: laLigaLogo },
     { id: 'bundesliga', name: 'Bundesliga', icon: null, logo: bundesligaLogo },
     { id: 'serie-a', name: 'Serie A', icon: null, logo: serieALogo },
     { id: 'ligue-1', name: 'French Ligue 1', icon: null, logo: ligue1Logo },
