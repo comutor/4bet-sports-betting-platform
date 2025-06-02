@@ -68,11 +68,9 @@ export function BottomNavigation({
                 <div className="flex flex-col items-center -mt-6">
                   <div className="w-14 h-14 bg-primary rounded-full flex items-center justify-center mb-2 relative shadow-lg border-2 border-slate-custom">
                     <i className={`${item.icon} text-white text-lg`}></i>
-                    {item.count && item.count > 0 && (
-                      <span className="absolute -top-1 -right-1 bg-live text-white text-xs w-5 h-5 rounded-full flex items-center justify-center">
-                        {item.count}
-                      </span>
-                    )}
+                    <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs w-5 h-5 rounded-full flex items-center justify-center font-bold">
+                      {item.count || 0}
+                    </span>
                   </div>
                   <span className="text-xs leading-tight">{item.label}</span>
                 </div>
