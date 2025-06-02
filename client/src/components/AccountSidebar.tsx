@@ -17,17 +17,9 @@ export function AccountSidebar({ isOpen, onClose, isLoggedIn = false }: AccountS
 
   return (
     <>
-      {/* Overlay */}
-      {isOpen && (
-        <div
-          className="fixed inset-0 bg-black bg-opacity-50 z-40"
-          onClick={onClose}
-        ></div>
-      )}
-
-      {/* Sidebar */}
+      {/* Full Screen Overlay */}
       <div
-        className={`fixed top-0 right-0 h-full w-80 bg-slate-custom transform transition-transform duration-300 ease-in-out z-50 ${
+        className={`fixed inset-0 bg-slate-custom transform transition-transform duration-300 ease-in-out z-50 ${
           isOpen ? "translate-x-0" : "translate-x-full"
         }`}
       >
