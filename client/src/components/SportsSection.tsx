@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import championsLeagueLogo from "@assets/IMG_4087.png";
 import ligue1Logo from "@assets/IMG_4086.png";
+import premierLeagueLogo from "@assets/Z.jpeg";
 
 interface SportsMatch {
   id: number;
@@ -25,7 +26,7 @@ export function SportsSection({ onBetClick }: SportsSectionProps) {
   const [activeCategory, setActiveCategory] = useState('premier-league');
 
   const sportsCategories = [
-    { id: 'premier-league', name: 'Premier League', icon: 'fas fa-crown', logo: null },
+    { id: 'premier-league', name: 'Premier League', icon: null, logo: premierLeagueLogo },
     { id: 'la-liga', name: 'La Liga', icon: 'fas fa-sun', logo: null },
     { id: 'bundesliga', name: 'Bundesliga', icon: 'fas fa-eagle', logo: null },
     { id: 'serie-a', name: 'Serie A', icon: 'fas fa-mountain', logo: null },
