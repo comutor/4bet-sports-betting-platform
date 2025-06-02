@@ -9,6 +9,7 @@ import { LiveSection } from "@/components/LiveSection";
 import { CasinoSection } from "@/components/CasinoSection";
 import { VirtualSection } from "@/components/VirtualSection";
 import { AviatorSection } from "@/components/AviatorSection";
+import { ScratchCardsSection } from "@/components/ScratchCardsSection";
 import { useBetslip } from "@/hooks/useBetslip";
 import { sampleFeaturedEvents } from "@/lib/betting-data";
 import { Button } from "@/components/ui/button";
@@ -69,6 +70,8 @@ export default function Home() {
         return <VirtualSection onBetClick={handleBetClick} />;
       case 'aviator':
         return <AviatorSection />;
+      case 'scratch-cards':
+        return <ScratchCardsSection />;
       case 'tennis':
       case 'hockey':
       case 'volleyball':
