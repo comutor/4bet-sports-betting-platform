@@ -2,14 +2,17 @@ import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import { oddsApiService } from "./services/oddsApi";
+import { DataTransformer } from "./services/dataTransformer";
 import { insertBetslipItemSchema } from "@shared/schema";
 
 export async function registerRoutes(app: Express): Promise<Server> {
-  // Sports events endpoints
+  // Sports events endpoints - now serving real data
   app.get("/api/sports-events", async (req, res) => {
     try {
-      const events = await storage.getSportsEvents();
-      res.json(events);
+      const upcomingGames = await oddsApiService.getUpcomingGames();
+      const allEvents = Object.values(upcomingGames).flat();
+      const transformedEvents = DataTransformer.transformToFeaturedEvents(allEvents);
+      res.json(transformedEvents);
     } catch (error) {
       res.status(500).json({ message: "Failed to fetch sports events" });
     }
@@ -17,8 +20,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   app.get("/api/live-events", async (req, res) => {
     try {
-      const events = await storage.getLiveEvents();
-      res.json(events);
+      const upcomingGames = await oddsApiService.getUpcomingGames();
+      const allEvents = Object.values(upcomingGames).flat();
+      const transformedEvents = DataTransformer.transformToFeaturedEvents(allEvents);
+      const liveEvents = DataTransformer.getLiveEvents(transformedEvents);
+      res.json(liveEvents);
     } catch (error) {
       res.status(500).json({ message: "Failed to fetch live events" });
     }
@@ -27,8 +33,30 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.get("/api/sports-events/:sport", async (req, res) => {
     try {
       const { sport } = req.params;
-      const events = await storage.getEventsByCategory(sport);
-      res.json(events);
+      
+      // Map frontend sport names to API sport keys
+      const sportKeyMap: { [key: string]: string[] } = {
+        'basketball': ['basketball_nba', 'basketball_wnba'],
+        'football': ['soccer_epl', 'soccer_spain_la_liga', 'soccer_germany_bundesliga', 'soccer_italy_serie_a'],
+        'american_football': ['americanfootball_nfl'],
+        'baseball': ['baseball_mlb'],
+        'hockey': ['icehockey_nhl']
+      };
+
+      const sportKeys = sportKeyMap[sport] || [];
+      let allEvents: any[] = [];
+
+      for (const sportKey of sportKeys) {
+        try {
+          const events = await oddsApiService.getOdds(sportKey);
+          allEvents = allEvents.concat(events);
+        } catch (error) {
+          console.log(`Failed to fetch ${sportKey}, continuing...`);
+        }
+      }
+
+      const transformedEvents = DataTransformer.transformToFeaturedEvents(allEvents);
+      res.json(transformedEvents);
     } catch (error) {
       res.status(500).json({ message: "Failed to fetch events by category" });
     }
