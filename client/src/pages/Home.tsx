@@ -11,6 +11,7 @@ import { VirtualSection } from "@/components/VirtualSection";
 import { AviatorSection } from "@/components/AviatorSection";
 import { ScratchCardsSection } from "@/components/ScratchCardsSection";
 import { AccountPage } from "@/components/AccountPage";
+import { LoginPrompt } from "@/components/LoginPrompt";
 import { useBetslip } from "@/hooks/useBetslip";
 import { sampleFeaturedEvents } from "@/lib/betting-data";
 import { Button } from "@/components/ui/button";
@@ -19,6 +20,7 @@ export default function Home() {
   const [activeTab, setActiveTab] = useState('home');
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [showLoginPrompt, setShowLoginPrompt] = useState(false);
   const {
     items: betslipItems,
     isOpen: betslipOpen,
@@ -32,7 +34,23 @@ export default function Home() {
   } = useBetslip();
 
   const handleBetClick = (eventName: string, selection: string, odds: string) => {
+    if (!isLoggedIn) {
+      setShowLoginPrompt(true);
+      return;
+    }
     addToBetslip({ eventName, selection, odds });
+  };
+
+  const handleLogin = () => {
+    setIsLoggedIn(true);
+    setShowLoginPrompt(false);
+    setActiveTab('account');
+  };
+
+  const handleSignup = () => {
+    setIsLoggedIn(true);
+    setShowLoginPrompt(false);
+    setActiveTab('account');
   };
 
   const renderMainContent = () => {
@@ -138,6 +156,13 @@ export default function Home() {
         onClose={() => setIsMenuOpen(false)}
         onTabChange={setActiveTab}
         activeTab={activeTab}
+      />
+
+      <LoginPrompt 
+        isOpen={showLoginPrompt}
+        onClose={() => setShowLoginPrompt(false)}
+        onLogin={handleLogin}
+        onSignup={handleSignup}
       />
     </div>
   );
