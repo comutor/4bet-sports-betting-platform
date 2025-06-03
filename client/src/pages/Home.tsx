@@ -23,6 +23,7 @@ export default function Home() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [showLoginPrompt, setShowLoginPrompt] = useState(false);
+  const [showSignupPage, setShowSignupPage] = useState(false);
   const {
     items: betslipItems,
     isOpen: betslipOpen,
@@ -47,12 +48,30 @@ export default function Home() {
   const handleLogin = () => {
     setIsLoggedIn(true);
     setShowLoginPrompt(false);
+    setShowSignupPage(false);
     setActiveTab('account');
   };
 
   const handleSignup = () => {
     setIsLoggedIn(true);
     setShowLoginPrompt(false);
+    setShowSignupPage(false);
+    setActiveTab('account');
+  };
+
+  const handleOpenSignupPage = () => {
+    setShowSignupPage(true);
+    setShowLoginPrompt(false);
+    setIsMenuOpen(false);
+  };
+
+  const handleCloseSignupPage = () => {
+    setShowSignupPage(false);
+  };
+
+  const handleSignupSuccess = () => {
+    setIsLoggedIn(true);
+    setShowSignupPage(false);
     setActiveTab('account');
   };
 
@@ -136,6 +155,8 @@ export default function Home() {
         isLoggedIn={isLoggedIn}
         isMenuOpen={isMenuOpen}
         onMenuToggle={() => setIsMenuOpen(!isMenuOpen)}
+        onSignupClick={handleOpenSignupPage}
+        onLoginClick={handleOpenSignupPage}
       />
       
 
@@ -149,6 +170,7 @@ export default function Home() {
         onTabChange={setActiveTab}
         onBetslipOpen={() => setBetslipOpen(true)}
         onMenuOpen={() => setIsMenuOpen(true)}
+        onSignupClick={handleOpenSignupPage}
         betslipCount={betslipCount}
         isLoggedIn={isLoggedIn}
         isMenuOpen={isMenuOpen}

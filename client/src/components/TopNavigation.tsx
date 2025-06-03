@@ -10,9 +10,11 @@ interface TopNavigationProps {
   isLoggedIn?: boolean;
   isMenuOpen?: boolean;
   onMenuToggle?: () => void;
+  onSignupClick?: () => void;
+  onLoginClick?: () => void;
 }
 
-export function TopNavigation({ activeTab, onTabChange, userBalance, isLoggedIn = false, isMenuOpen = false, onMenuToggle }: TopNavigationProps) {
+export function TopNavigation({ activeTab, onTabChange, userBalance, isLoggedIn = false, isMenuOpen = false, onMenuToggle, onSignupClick, onLoginClick }: TopNavigationProps) {
   const [isServicesDropdownOpen, setIsServicesDropdownOpen] = useState(false);
 
   const allNavItems = [
