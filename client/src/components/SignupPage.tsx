@@ -11,21 +11,34 @@ interface SignupPageProps {
 export function SignupPage({ onClose, onSuccess }: SignupPageProps) {
   const [isLogin, setIsLogin] = useState(false);
   const [formData, setFormData] = useState({
+    country: 'South Sudan', // Default to South Sudan
+    phoneNumber: '',
     firstName: '',
     lastName: '',
     password: '',
     confirmPassword: '',
-    phoneNumber: '',
     promoCode: ''
   });
 
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
+
+  const countries = [
+    { name: 'South Sudan', code: '+211', flag: '🇸🇸' },
+    { name: 'Uganda', code: '+256', flag: '🇺🇬' }
+  ];
+
+  const getPhonePrefix = () => {
+    const country = countries.find(c => c.name === formData.country);
+    return country ? country.code : '+211';
+  };
 
 
 
   const validateForm = () => {
     const newErrors: { [key: string]: string } = {};
 
+    if (!formData.country) newErrors.country = 'Country is required';
+    if (!formData.phoneNumber) newErrors.phoneNumber = 'Phone number is required';
     if (!formData.firstName) newErrors.firstName = 'First name is required';
     if (!formData.lastName) newErrors.lastName = 'Last name is required';
     if (!formData.password) newErrors.password = 'Password is required';
@@ -98,6 +111,43 @@ export function SignupPage({ onClose, onSuccess }: SignupPageProps) {
           </Button>
         </div>
 
+        {/* Country Selection */}
+        <div className="space-y-2">
+          <Label htmlFor="country" className="text-white">Phone</Label>
+          <select
+            id="country"
+            value={formData.country}
+            onChange={(e) => handleInputChange('country', e.target.value)}
+            className="w-full bg-slate-700 border border-gray-600 text-white rounded-md px-3 py-2"
+          >
+            {countries.map(country => (
+              <option key={country.name} value={country.name}>
+                {country.flag} {country.name} ({country.code})
+              </option>
+            ))}
+          </select>
+          {errors.country && <p className="text-red-400 text-sm">{errors.country}</p>}
+        </div>
+
+        {/* Mobile Number */}
+        <div className="space-y-2">
+          <Label htmlFor="phoneNumber" className="text-white">Mobile</Label>
+          <div className="flex">
+            <div className="bg-slate-700 border border-gray-600 border-r-0 rounded-l-md px-3 py-2 text-white font-medium">
+              {getPhonePrefix()}
+            </div>
+            <Input
+              id="phoneNumber"
+              type="tel"
+              value={formData.phoneNumber}
+              onChange={(e) => handleInputChange('phoneNumber', e.target.value)}
+              className="bg-slate-700 border-gray-600 text-white rounded-l-none border-l-0"
+              placeholder="Enter your mobile number"
+            />
+          </div>
+          {errors.phoneNumber && <p className="text-red-400 text-sm">{errors.phoneNumber}</p>}
+        </div>
+
         {/* First Name */}
         <div className="space-y-2">
           <Label htmlFor="firstName" className="text-white">First Name</Label>
@@ -157,17 +207,7 @@ export function SignupPage({ onClose, onSuccess }: SignupPageProps) {
 
 
 
-            {/* Phone and Date of Birth */}
-            <div className="space-y-2">
-              <Label htmlFor="phoneNumber" className="text-white">Phone Number</Label>
-              <Input
-                id="phoneNumber"
-                value={formData.phoneNumber}
-                onChange={(e) => handleInputChange('phoneNumber', e.target.value)}
-                className="bg-slate-700 border-gray-600 text-white"
-                placeholder="Your phone number"
-              />
-            </div>
+
 
 
 
