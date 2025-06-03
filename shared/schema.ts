@@ -9,9 +9,6 @@ export const users = pgTable("users", {
   username: text("username").notNull().unique(), // auto-generated from firstName_lastName
   password: text("password").notNull(),
   phoneNumber: text("phone_number"),
-  dateOfBirth: text("date_of_birth"),
-  country: text("country"),
-  currency: text("currency").default("USD"),
   promoCode: text("promo_code"),
   balance: decimal("balance", { precision: 10, scale: 2 }).default("0.00"),
 });
@@ -64,9 +61,6 @@ export const insertUserSchema = createInsertSchema(users).pick({
   lastName: true,
   password: true,
   phoneNumber: true,
-  dateOfBirth: true,
-  country: true,
-  currency: true,
   promoCode: true,
 });
 

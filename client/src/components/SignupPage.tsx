@@ -16,21 +16,12 @@ export function SignupPage({ onClose, onSuccess }: SignupPageProps) {
     password: '',
     confirmPassword: '',
     phoneNumber: '',
-    dateOfBirth: '',
-    country: '',
-    currency: 'USD',
     promoCode: ''
   });
 
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
 
-  const countries = [
-    'United States', 'United Kingdom', 'Canada', 'Australia', 'Germany',
-    'France', 'Spain', 'Italy', 'Netherlands', 'Sweden', 'Norway',
-    'Brazil', 'Argentina', 'Mexico', 'Japan', 'South Korea'
-  ];
 
-  const currencies = ['USD', 'EUR', 'GBP', 'CAD', 'AUD', 'BRL', 'JPY'];
 
   const validateForm = () => {
     const newErrors: { [key: string]: string } = {};
@@ -43,8 +34,6 @@ export function SignupPage({ onClose, onSuccess }: SignupPageProps) {
       if (formData.password !== formData.confirmPassword) {
         newErrors.confirmPassword = 'Passwords do not match';
       }
-      if (!formData.dateOfBirth) newErrors.dateOfBirth = 'Date of birth is required';
-      if (!formData.country) newErrors.country = 'Country is required';
     }
 
     setErrors(newErrors);
@@ -180,48 +169,7 @@ export function SignupPage({ onClose, onSuccess }: SignupPageProps) {
               />
             </div>
 
-            <div className="space-y-2">
-              <Label htmlFor="dateOfBirth" className="text-white">Date of Birth</Label>
-              <Input
-                id="dateOfBirth"
-                type="date"
-                value={formData.dateOfBirth}
-                onChange={(e) => handleInputChange('dateOfBirth', e.target.value)}
-                className="bg-slate-700 border-gray-600 text-white"
-              />
-              {errors.dateOfBirth && <p className="text-red-400 text-sm">{errors.dateOfBirth}</p>}
-            </div>
 
-            {/* Country and Currency */}
-            <div className="space-y-2">
-              <Label htmlFor="country" className="text-white">Country</Label>
-              <select
-                id="country"
-                value={formData.country}
-                onChange={(e) => handleInputChange('country', e.target.value)}
-                className="w-full bg-slate-700 border border-gray-600 text-white rounded-md px-3 py-2"
-              >
-                <option value="">Select your country</option>
-                {countries.map(country => (
-                  <option key={country} value={country}>{country}</option>
-                ))}
-              </select>
-              {errors.country && <p className="text-red-400 text-sm">{errors.country}</p>}
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="currency" className="text-white">Currency</Label>
-              <select
-                id="currency"
-                value={formData.currency}
-                onChange={(e) => handleInputChange('currency', e.target.value)}
-                className="w-full bg-slate-700 border border-gray-600 text-white rounded-md px-3 py-2"
-              >
-                {currencies.map(currency => (
-                  <option key={currency} value={currency}>{currency}</option>
-                ))}
-              </select>
-            </div>
 
             {/* Promo Code */}
             <div className="space-y-2">
