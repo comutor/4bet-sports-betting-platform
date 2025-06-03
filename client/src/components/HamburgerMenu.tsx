@@ -81,14 +81,14 @@ export function HamburgerMenu({ isOpen, onClose, onTabChange, activeTab }: Hambu
                   <Button
                     key={section.id}
                     variant="ghost"
-                    className={`flex flex-col items-center justify-center p-3 md:p-4 h-18 md:h-20 rounded-lg transition-all duration-300 touch-manipulation ${
+                    className={`flex flex-col items-center justify-center p-2 md:p-3 h-12 md:h-14 rounded-lg transition-all duration-300 touch-manipulation ${
                       activeTab === section.id
                         ? 'bg-primary text-white scale-95'
                         : 'text-gray-300 hover:bg-slate-700 bg-slate-900 active:scale-95'
                     }`}
                     onClick={() => handleItemClick(section.id)}
                   >
-                    <i className={`${section.icon} text-lg md:text-xl mb-1 md:mb-2`}></i>
+                    <i className={`${section.icon} text-base md:text-lg mb-1`}></i>
                     <span className="text-xs font-medium text-center leading-tight">{section.label}</span>
                   </Button>
                 ))}
@@ -105,14 +105,14 @@ export function HamburgerMenu({ isOpen, onClose, onTabChange, activeTab }: Hambu
                   <Button
                     key={sport.id}
                     variant="ghost"
-                    className={`flex flex-col items-center justify-center p-2 md:p-3 h-14 md:h-16 rounded-lg transition-all duration-300 touch-manipulation ${
+                    className={`flex flex-col items-center justify-center p-2 md:p-3 h-10 md:h-12 rounded-lg transition-all duration-300 touch-manipulation ${
                       activeTab === sport.id
                         ? 'bg-primary text-white scale-95'
                         : 'text-gray-300 hover:bg-slate-700 bg-slate-900 active:scale-95'
                     }`}
                     onClick={() => handleItemClick(sport.id)}
                   >
-                    <i className={`${sport.icon} text-base md:text-lg mb-1`}></i>
+                    <i className={`${sport.icon} text-sm md:text-base mb-1`}></i>
                     <span className="text-xs font-medium text-center leading-tight">{sport.label}</span>
                   </Button>
                 ))}
@@ -129,7 +129,7 @@ export function HamburgerMenu({ isOpen, onClose, onTabChange, activeTab }: Hambu
                   <Button
                     key={country.id}
                     variant="ghost"
-                    className="w-full justify-between p-3 md:p-4 text-left text-gray-300 hover:bg-slate-700 active:bg-slate-600 transition-all duration-300 rounded-lg touch-manipulation"
+                    className="w-full justify-between p-2 md:p-3 text-left text-gray-300 hover:bg-slate-700 active:bg-slate-600 transition-all duration-300 rounded-lg touch-manipulation"
                     onClick={() => handleItemClick(country.id)}
                   >
                     <div className="flex items-center">
