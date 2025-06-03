@@ -57,7 +57,7 @@ export function TopNavigation({ activeTab, onTabChange, userBalance, isLoggedIn 
             <div className="bg-gradient-to-r from-blue-600 to-emerald-600 w-8 h-8 md:w-10 md:h-10 rounded-lg flex items-center justify-center">
               <i className="fas fa-dice text-white text-lg md:text-xl"></i>
             </div>
-            <span className="text-lg md:text-2xl font-bold bg-gradient-to-r from-blue-400 to-emerald-400 bg-clip-text text-transparent">
+            <span className="text-xl md:text-3xl font-black tracking-tight bg-gradient-to-r from-blue-400 to-emerald-400 bg-clip-text text-transparent">
               NileBet
             </span>
           </div>
