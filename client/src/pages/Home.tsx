@@ -73,6 +73,8 @@ export default function Home() {
         return <AviatorSection />;
       case 'scratch-cards':
         return <ScratchCardsSection />;
+      case 'account':
+        return <AccountPage isLoggedIn={isLoggedIn} />;
       case 'tennis':
       case 'hockey':
       case 'volleyball':
