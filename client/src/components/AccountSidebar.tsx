@@ -17,9 +17,17 @@ export function AccountSidebar({ isOpen, onClose, isLoggedIn = false }: AccountS
 
   return (
     <>
-      {/* Full Screen Overlay */}
+      {/* Backdrop */}
+      <div 
+        className={`fixed inset-0 bg-black/50 z-[59] transition-opacity duration-300 ${
+          isOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'
+        }`}
+        onClick={onClose}
+      />
+      
+      {/* Sidebar Panel */}
       <div
-        className={`fixed inset-0 bg-slate-custom transform transition-transform duration-300 ease-in-out z-[60] ${
+        className={`fixed top-0 right-0 h-full w-full bg-slate-custom transform transition-transform duration-300 ease-in-out z-[60] ${
           isOpen ? "translate-x-0" : "translate-x-full"
         }`}
       >
