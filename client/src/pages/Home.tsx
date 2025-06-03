@@ -34,10 +34,11 @@ export default function Home() {
   } = useBetslip();
 
   const handleBetClick = (eventName: string, selection: string, odds: string) => {
-    if (!isLoggedIn) {
-      setShowLoginPrompt(true);
-      return;
-    }
+    // Temporarily disabled for betslip development
+    // if (!isLoggedIn) {
+    //   setShowLoginPrompt(true);
+    //   return;
+    // }
     addToBetslip({ eventName, selection, odds });
   };
 
