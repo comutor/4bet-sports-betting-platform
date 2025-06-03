@@ -111,6 +111,61 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Basketball games by league priority
+  app.get("/api/basketball/leagues", async (req, res) => {
+    try {
+      const basketballData = await oddsApiService.getBasketballGamesByPriority();
+      res.json(basketballData);
+    } catch (error) {
+      console.error("Error fetching basketball data:", error);
+      res.status(500).json({ error: "Failed to fetch basketball data" });
+    }
+  });
+
+  // Ice Hockey games by league priority
+  app.get("/api/hockey/leagues", async (req, res) => {
+    try {
+      const hockeyData = await oddsApiService.getIceHockeyGamesByPriority();
+      res.json(hockeyData);
+    } catch (error) {
+      console.error("Error fetching hockey data:", error);
+      res.status(500).json({ error: "Failed to fetch hockey data" });
+    }
+  });
+
+  // Tennis games by tournament priority
+  app.get("/api/tennis/tournaments", async (req, res) => {
+    try {
+      const tennisData = await oddsApiService.getTennisGamesByPriority();
+      res.json(tennisData);
+    } catch (error) {
+      console.error("Error fetching tennis data:", error);
+      res.status(500).json({ error: "Failed to fetch tennis data" });
+    }
+  });
+
+  // Baseball games by league priority
+  app.get("/api/baseball/leagues", async (req, res) => {
+    try {
+      const baseballData = await oddsApiService.getBaseballGamesByPriority();
+      res.json(baseballData);
+    } catch (error) {
+      console.error("Error fetching baseball data:", error);
+      res.status(500).json({ error: "Failed to fetch baseball data" });
+    }
+  });
+
+  // Volleyball games by league priority
+  app.get("/api/volleyball/leagues", async (req, res) => {
+    try {
+      const volleyballData = await oddsApiService.getVolleyballGamesByPriority();
+      res.json(volleyballData);
+    } catch (error) {
+      console.error("Error fetching volleyball data:", error);
+      res.status(500).json({ error: "Failed to fetch volleyball data" });
+    }
+  });
+
   app.get("/api/odds/basketball/leagues", async (req, res) => {
     try {
       const leagues = await oddsApiService.getBasketballLeagues();

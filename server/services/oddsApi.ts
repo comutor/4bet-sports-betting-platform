@@ -160,6 +160,208 @@ export class OddsApiService {
     return results;
   }
 
+  // Get basketball games organized by league priority
+  async getBasketballGamesByPriority() {
+    const basketballLeagues = [
+      { name: 'NBA', key: 'basketball_nba', country: 'USA', flag: '🇺🇸', priority: 1 },
+      { name: 'WNBA', key: 'basketball_wnba', country: 'USA', flag: '🇺🇸', priority: 2 },
+      { name: 'NBL', key: 'basketball_nbl', country: 'Australia', flag: '🇦🇺', priority: 3 },
+      { name: 'EuroLeague', key: 'basketball_euroleague', country: 'Europe', flag: '🇪🇺', priority: 4 }
+    ];
+
+    const allGames = [];
+
+    for (const league of basketballLeagues) {
+      try {
+        const games = await this.getOdds(league.key);
+        console.log(`Fetched ${games.length} events for ${league.key}`);
+        
+        const transformedGames = games.map(game => ({
+          ...game,
+          league_name: league.name,
+          country: league.country,
+          country_flag: league.flag,
+          priority: league.priority
+        }));
+
+        if (transformedGames.length > 0) {
+          allGames.push({
+            league: league.name,
+            country: league.country,
+            flag: league.flag,
+            games: transformedGames,
+            priority: league.priority
+          });
+        }
+      } catch (error) {
+        console.error(`Error fetching ${league.key}:`, error);
+      }
+    }
+
+    return allGames.sort((a, b) => a.priority - b.priority);
+  }
+
+  // Get ice hockey games organized by league priority
+  async getIceHockeyGamesByPriority() {
+    const hockeyLeagues = [
+      { name: 'NHL', key: 'icehockey_nhl', country: 'North America', flag: '🏒', priority: 1 },
+      { name: 'KHL', key: 'icehockey_khl', country: 'Russia', flag: '🇷🇺', priority: 2 },
+      { name: 'SHL', key: 'icehockey_sweden_hockey_league', country: 'Sweden', flag: '🇸🇪', priority: 3 },
+      { name: 'Finnish Liiga', key: 'icehockey_finland_liiga', country: 'Finland', flag: '🇫🇮', priority: 4 }
+    ];
+
+    const allGames = [];
+
+    for (const league of hockeyLeagues) {
+      try {
+        const games = await this.getOdds(league.key);
+        console.log(`Fetched ${games.length} events for ${league.key}`);
+        
+        const transformedGames = games.map(game => ({
+          ...game,
+          league_name: league.name,
+          country: league.country,
+          country_flag: league.flag,
+          priority: league.priority
+        }));
+
+        if (transformedGames.length > 0) {
+          allGames.push({
+            league: league.name,
+            country: league.country,
+            flag: league.flag,
+            games: transformedGames,
+            priority: league.priority
+          });
+        }
+      } catch (error) {
+        console.error(`Error fetching ${league.key}:`, error);
+      }
+    }
+
+    return allGames.sort((a, b) => a.priority - b.priority);
+  }
+
+  // Get tennis games organized by tournament priority
+  async getTennisGamesByPriority() {
+    const tennisLeagues = [
+      { name: 'ATP', key: 'tennis_atp', country: 'International', flag: '🎾', priority: 1 },
+      { name: 'WTA', key: 'tennis_wta', country: 'International', flag: '🎾', priority: 2 },
+      { name: 'ITF Men', key: 'tennis_itf_men', country: 'International', flag: '🎾', priority: 3 },
+      { name: 'ITF Women', key: 'tennis_itf_women', country: 'International', flag: '🎾', priority: 4 }
+    ];
+
+    const allGames = [];
+
+    for (const league of tennisLeagues) {
+      try {
+        const games = await this.getOdds(league.key);
+        console.log(`Fetched ${games.length} events for ${league.key}`);
+        
+        const transformedGames = games.map(game => ({
+          ...game,
+          league_name: league.name,
+          country: league.country,
+          country_flag: league.flag,
+          priority: league.priority
+        }));
+
+        if (transformedGames.length > 0) {
+          allGames.push({
+            league: league.name,
+            country: league.country,
+            flag: league.flag,
+            games: transformedGames,
+            priority: league.priority
+          });
+        }
+      } catch (error) {
+        console.error(`Error fetching ${league.key}:`, error);
+      }
+    }
+
+    return allGames.sort((a, b) => a.priority - b.priority);
+  }
+
+  // Get baseball games organized by league priority
+  async getBaseballGamesByPriority() {
+    const baseballLeagues = [
+      { name: 'MLB', key: 'baseball_mlb', country: 'USA', flag: '🇺🇸', priority: 1 },
+      { name: 'NPB', key: 'baseball_npb', country: 'Japan', flag: '🇯🇵', priority: 2 },
+      { name: 'KBO', key: 'baseball_kbo', country: 'South Korea', flag: '🇰🇷', priority: 3 }
+    ];
+
+    const allGames = [];
+
+    for (const league of baseballLeagues) {
+      try {
+        const games = await this.getOdds(league.key);
+        console.log(`Fetched ${games.length} events for ${league.key}`);
+        
+        const transformedGames = games.map(game => ({
+          ...game,
+          league_name: league.name,
+          country: league.country,
+          country_flag: league.flag,
+          priority: league.priority
+        }));
+
+        if (transformedGames.length > 0) {
+          allGames.push({
+            league: league.name,
+            country: league.country,
+            flag: league.flag,
+            games: transformedGames,
+            priority: league.priority
+          });
+        }
+      } catch (error) {
+        console.error(`Error fetching ${league.key}:`, error);
+      }
+    }
+
+    return allGames.sort((a, b) => a.priority - b.priority);
+  }
+
+  // Get volleyball games organized by league priority
+  async getVolleyballGamesByPriority() {
+    const volleyballLeagues = [
+      { name: 'FIVB World Championship', key: 'volleyball_fivb_world_championship', country: 'International', flag: '🏐', priority: 1 },
+      { name: 'FIVB Nations League', key: 'volleyball_fivb_nations_league', country: 'International', flag: '🏐', priority: 2 }
+    ];
+
+    const allGames = [];
+
+    for (const league of volleyballLeagues) {
+      try {
+        const games = await this.getOdds(league.key);
+        console.log(`Fetched ${games.length} events for ${league.key}`);
+        
+        const transformedGames = games.map(game => ({
+          ...game,
+          league_name: league.name,
+          country: league.country,
+          country_flag: league.flag,
+          priority: league.priority
+        }));
+
+        if (transformedGames.length > 0) {
+          allGames.push({
+            league: league.name,
+            country: league.country,
+            flag: league.flag,
+            games: transformedGames,
+            priority: league.priority
+          });
+        }
+      } catch (error) {
+        console.error(`Error fetching ${league.key}:`, error);
+      }
+    }
+
+    return allGames.sort((a, b) => a.priority - b.priority);
+  }
+
   // Get football games organized by country priority
   async getFootballGamesByCountryPriority() {
     try {

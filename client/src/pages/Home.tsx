@@ -16,6 +16,7 @@ import { CountriesSection } from "@/components/CountriesSection";
 import { SignupPage } from "@/components/SignupPage";
 import { LoginModal } from "@/components/LoginModal";
 import { FootballSection } from "@/components/FootballSection";
+import { SportSection } from "@/components/SportSection";
 import { useBetslip } from "@/hooks/useBetslip";
 import { sampleFeaturedEvents } from "@/lib/betting-data";
 import { Button } from "@/components/ui/button";
@@ -125,7 +126,15 @@ export default function Home() {
       case 'football':
         return <FootballSection onBetClick={handleBetClick} />;
       case 'basketball':
-        return <SportsSection onBetClick={handleBetClick} selectedSport="basketball" />;
+        return <SportSection sport="basketball" onBetClick={handleBetClick} />;
+      case 'tennis':
+        return <SportSection sport="tennis" onBetClick={handleBetClick} />;
+      case 'hockey':
+        return <SportSection sport="hockey" onBetClick={handleBetClick} />;
+      case 'baseball':
+        return <SportSection sport="baseball" onBetClick={handleBetClick} />;
+      case 'volleyball':
+        return <SportSection sport="volleyball" onBetClick={handleBetClick} />;
       case 'live':
         return <LiveSection onBetClick={handleBetClick} />;
       case 'casino':
@@ -148,10 +157,6 @@ export default function Home() {
       case 'international':
       case 'other-countries':
         return <CountriesSection selectedCategory={activeTab} onBetClick={handleBetClick} />;
-      case 'tennis':
-      case 'hockey':
-      case 'volleyball':
-      case 'baseball':
       case 'esports':
         return (
           <div className="text-center py-12">
