@@ -187,7 +187,8 @@ export class MemStorage implements IStorage {
         lastName: "Smith",
         username: "john_smith",
         password: "password123",
-        phoneNumber: "+1-555-0123",
+        country: "South Sudan",
+        phoneNumber: "912345678",
         promoCode: null,
         balance: "1250.00"
       },
@@ -197,7 +198,8 @@ export class MemStorage implements IStorage {
         lastName: "Garcia",
         username: "maria_garcia",
         password: "password123",
-        phoneNumber: "+1-555-0456",
+        country: "Uganda",
+        phoneNumber: "701234567",
         promoCode: "WELCOME",
         balance: "850.00"
       },
@@ -207,7 +209,8 @@ export class MemStorage implements IStorage {
         lastName: "Hassan",
         username: "ahmed_hassan",
         password: "password123",
-        phoneNumber: "+44-20-7123-4567",
+        country: "South Sudan",
+        phoneNumber: "955123456",
         promoCode: null,
         balance: "2100.00"
       }
@@ -236,6 +239,7 @@ export class MemStorage implements IStorage {
       lastName: insertUser.lastName,
       username,
       password: insertUser.password,
+      country: insertUser.country,
       phoneNumber: insertUser.phoneNumber || null,
       promoCode: insertUser.promoCode || null,
       balance: "1250.00" 
