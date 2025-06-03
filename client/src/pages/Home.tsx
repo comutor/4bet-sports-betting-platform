@@ -100,6 +100,8 @@ export default function Home() {
         onTabChange={setActiveTab} 
         userBalance="$1,250.00"
         isLoggedIn={isLoggedIn}
+        isMenuOpen={isMenuOpen}
+        onMenuToggle={() => setIsMenuOpen(!isMenuOpen)}
       />
       
 
@@ -109,12 +111,13 @@ export default function Home() {
       </main>
 
       <BottomNavigation 
-        activeTab={activeTab} 
+        activeTab={isMenuOpen ? 'menu' : activeTab} 
         onTabChange={setActiveTab}
         onBetslipOpen={() => setBetslipOpen(true)}
         onMenuOpen={() => setIsMenuOpen(true)}
         betslipCount={betslipCount}
         isLoggedIn={isLoggedIn}
+        isMenuOpen={isMenuOpen}
       />
 
       <BetslipSidebar 

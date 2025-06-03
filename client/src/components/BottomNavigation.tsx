@@ -9,6 +9,7 @@ interface BottomNavigationProps {
   onMenuOpen: () => void;
   betslipCount: number;
   isLoggedIn?: boolean;
+  isMenuOpen?: boolean;
 }
 
 export function BottomNavigation({ 

@@ -8,10 +8,11 @@ interface TopNavigationProps {
   onTabChange: (tab: string) => void;
   userBalance: string;
   isLoggedIn?: boolean;
+  isMenuOpen?: boolean;
+  onMenuToggle?: () => void;
 }
 
-export function TopNavigation({ activeTab, onTabChange, userBalance, isLoggedIn = false }: TopNavigationProps) {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+export function TopNavigation({ activeTab, onTabChange, userBalance, isLoggedIn = false, isMenuOpen = false, onMenuToggle }: TopNavigationProps) {
   const [isServicesDropdownOpen, setIsServicesDropdownOpen] = useState(false);
 
   const allNavItems = [
@@ -50,7 +51,7 @@ export function TopNavigation({ activeTab, onTabChange, userBalance, isLoggedIn 
             <Button 
               variant="ghost" 
               className="p-1 md:p-2 text-gray-400 hover:text-white"
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              onClick={onMenuToggle}
             >
               <i className="fas fa-bars text-lg md:text-xl"></i>
             </Button>
@@ -173,7 +174,7 @@ export function TopNavigation({ activeTab, onTabChange, userBalance, isLoggedIn 
       {/* Hamburger Menu */}
       <HamburgerMenu 
         isOpen={isMenuOpen}
-        onClose={() => setIsMenuOpen(false)}
+        onClose={() => onMenuToggle && onMenuToggle()}
         onTabChange={onTabChange}
         activeTab={activeTab}
       />
