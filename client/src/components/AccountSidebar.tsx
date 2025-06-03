@@ -27,18 +27,18 @@ export function AccountSidebar({ isOpen, onClose, isLoggedIn = false }: AccountS
       
       {/* Sidebar Panel */}
       <div
-        className={`fixed top-0 right-0 h-full w-full bg-slate-custom transform transition-transform duration-300 ease-in-out z-[60] ${
+        className={`fixed top-0 right-0 h-full w-full bg-gray-100 transform transition-transform duration-300 ease-in-out z-[60] ${
           isOpen ? "translate-x-0" : "translate-x-full"
         }`}
       >
         <div className="flex flex-col h-full">
           {/* Header */}
-          <div className="flex items-center justify-between p-6 border-b border-gray-700">
-            <h2 className="text-xl font-bold text-white">Account</h2>
+          <div className="flex items-center justify-between p-6 border-b border-gray-300">
+            <h2 className="text-xl font-bold text-black">Account</h2>
             <Button
               variant="ghost"
               size="sm"
-              className="text-gray-400 hover:text-white"
+              className="text-gray-600 hover:text-black"
               onClick={onClose}
             >
               <i className="fas fa-times text-2xl"></i>
@@ -76,17 +76,17 @@ export function AccountSidebar({ isOpen, onClose, isLoggedIn = false }: AccountS
                 <Button
                   key={item.id}
                   variant="ghost"
-                  className="w-full justify-between p-4 text-left text-gray-300 hover:bg-slate-light-custom transition-all duration-200 rounded-lg"
+                  className="w-full justify-between p-4 text-left text-gray-700 hover:bg-gray-200 transition-all duration-200 rounded-lg"
                 >
                   <div className="flex items-center">
-                    <i className={`${item.icon} w-5 mr-3 text-gray-400`}></i>
+                    <i className={`${item.icon} w-5 mr-3 text-gray-500`}></i>
                     <span className="text-base font-medium">{item.label}</span>
                   </div>
                   {item.hasArrow && (
-                    <i className="fas fa-chevron-right text-gray-400 text-sm"></i>
+                    <i className="fas fa-chevron-right text-gray-500 text-sm"></i>
                   )}
                   {item.hasDropdown && (
-                    <i className="fas fa-chevron-down text-gray-400 text-sm"></i>
+                    <i className="fas fa-chevron-down text-gray-500 text-sm"></i>
                   )}
                 </Button>
               ))}
