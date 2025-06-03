@@ -88,8 +88,8 @@ export function HamburgerMenu({ isOpen, onClose, onTabChange, activeTab }: Hambu
                     }`}
                     onClick={() => handleItemClick(section.id)}
                   >
-                    <i className={`${section.icon} text-base mb-1`}></i>
-                    <div className="font-medium text-center leading-tight whitespace-normal text-xs">{section.label}</div>
+                    <i className={`${section.icon} text-xl mb-1`}></i>
+                    <div className="font-medium text-center leading-tight whitespace-normal text-sm">{section.label}</div>
                   </Button>
                 ))}
               </div>
@@ -112,10 +112,8 @@ export function HamburgerMenu({ isOpen, onClose, onTabChange, activeTab }: Hambu
                     }`}
                     onClick={() => handleItemClick(sport.id)}
                   >
-                    <i className={`${sport.icon} text-base mb-1`}></i>
-                    <div className={`font-medium text-center leading-tight whitespace-normal ${
-                      sport.label.length > 12 ? 'text-xs' : 'text-xs'
-                    }`}>{sport.label}</div>
+                    <i className={`${sport.icon} text-xl mb-1`}></i>
+                    <div className={`font-medium text-center leading-tight whitespace-normal text-sm`}>{sport.label}</div>
                   </Button>
                 ))}
               </div>
