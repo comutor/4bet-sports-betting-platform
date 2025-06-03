@@ -121,6 +121,37 @@
   .bg-warning {
     background-color: hsl(var(--warning-yellow));
   }
+
+  /* Custom scrollbar styles for hamburger menu */
+  .hamburger-scroll {
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
+  }
+
+  .hamburger-scroll::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  .hamburger-scroll::-webkit-scrollbar-track {
+    background: #1e293b;
+    border-radius: 3px;
+  }
+
+  .hamburger-scroll::-webkit-scrollbar-thumb {
+    background: #475569;
+    border-radius: 3px;
+    transition: background 0.2s ease;
+  }
+
+  .hamburger-scroll::-webkit-scrollbar-thumb:hover {
+    background: #64748b;
+  }
+
+  /* Firefox scrollbar */
+  .hamburger-scroll {
+    scrollbar-width: thin;
+    scrollbar-color: #475569 #1e293b;
+  }
   
   .text-live {
     color: hsl(var(--live-orange));
