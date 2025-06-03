@@ -68,6 +68,73 @@ export const sampleFeaturedEvents: FeaturedEvent[] = [
     }
   },
   {
+    id: 4,
+    homeTeam: "Real Madrid",
+    awayTeam: "Barcelona",
+    sport: "basketball",
+    league: "Liga ACB",
+    status: "upcoming",
+    time: "2h 15min",
+    odds: {
+      home: "1.75",
+      away: "2.05"
+    }
+  },
+  {
+    id: 5,
+    homeTeam: "Fenerbahçe",
+    awayTeam: "Anadolu Efes",
+    sport: "basketball",
+    league: "Turkish Basketball Super League",
+    status: "live",
+    time: "Q3 8:45",
+    homeScore: 68,
+    awayScore: 71,
+    odds: {
+      home: "2.15",
+      away: "1.70"
+    }
+  },
+  {
+    id: 6,
+    homeTeam: "CSKA Moscow",
+    awayTeam: "Zenit St. Petersburg",
+    sport: "basketball",
+    league: "Russian VTB United League",
+    status: "upcoming",
+    time: "1h 30min",
+    odds: {
+      home: "1.55",
+      away: "2.40"
+    }
+  },
+  {
+    id: 7,
+    homeTeam: "Monaco",
+    awayTeam: "Strasbourg",
+    sport: "basketball",
+    league: "Pro A",
+    status: "upcoming",
+    time: "3h 45min",
+    odds: {
+      home: "1.65",
+      away: "2.25"
+    }
+  },
+  {
+    id: 8,
+    homeTeam: "Panathinaikos",
+    awayTeam: "Olympiacos",
+    sport: "basketball",
+    league: "EuroLeague",
+    status: "upcoming",
+    time: "Tomorrow 20:00",
+    odds: {
+      home: "1.90",
+      away: "1.90"
+    }
+  },
+  {
     id: 3,
     homeTeam: "Chiefs",
     awayTeam: "Bills",
