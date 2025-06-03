@@ -121,7 +121,7 @@ export default function Home() {
           </>
         );
       case 'sports':
-        return <SportsSection onBetClick={handleBetClick} selectedSport="soccer" />;
+        return <FootballSection onBetClick={handleBetClick} />;
       case 'basketball':
         return <SportsSection onBetClick={handleBetClick} selectedSport="basketball" />;
       case 'live':
