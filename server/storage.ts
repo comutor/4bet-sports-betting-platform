@@ -178,6 +178,51 @@ export class MemStorage implements IStorage {
     ];
 
     games.forEach(game => this.casinoGames.set(game.id, game));
+
+    // Initialize demo users
+    const demoUsers: User[] = [
+      {
+        id: this.currentUserId++,
+        firstName: "John",
+        lastName: "Smith",
+        username: "john_smith",
+        password: "password123",
+        phoneNumber: "+1-555-0123",
+        dateOfBirth: "1990-05-15",
+        country: "United States",
+        currency: "USD",
+        promoCode: null,
+        balance: "1250.00"
+      },
+      {
+        id: this.currentUserId++,
+        firstName: "Maria",
+        lastName: "Garcia",
+        username: "maria_garcia",
+        password: "password123",
+        phoneNumber: "+1-555-0456",
+        dateOfBirth: "1985-08-22",
+        country: "Spain",
+        currency: "EUR",
+        promoCode: "WELCOME",
+        balance: "850.00"
+      },
+      {
+        id: this.currentUserId++,
+        firstName: "Ahmed",
+        lastName: "Hassan",
+        username: "ahmed_hassan",
+        password: "password123",
+        phoneNumber: "+44-20-7123-4567",
+        dateOfBirth: "1992-12-03",
+        country: "United Kingdom",
+        currency: "GBP",
+        promoCode: null,
+        balance: "2100.00"
+      }
+    ];
+
+    demoUsers.forEach(user => this.users.set(user.id, user));
   }
 
   async getUser(id: number): Promise<User | undefined> {
@@ -192,9 +237,19 @@ export class MemStorage implements IStorage {
 
   async createUser(insertUser: InsertUser): Promise<User> {
     const id = this.currentUserId++;
+    // Auto-generate username from first and last name
+    const username = `${insertUser.firstName.toLowerCase()}_${insertUser.lastName.toLowerCase()}`;
     const user: User = { 
-      ...insertUser, 
-      id, 
+      id,
+      firstName: insertUser.firstName,
+      lastName: insertUser.lastName,
+      username,
+      password: insertUser.password,
+      phoneNumber: insertUser.phoneNumber || null,
+      dateOfBirth: insertUser.dateOfBirth || null,
+      country: insertUser.country || null,
+      currency: insertUser.currency || "USD",
+      promoCode: insertUser.promoCode || null,
       balance: "1250.00" 
     };
     this.users.set(id, user);
