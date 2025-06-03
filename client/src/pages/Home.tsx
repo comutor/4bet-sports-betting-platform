@@ -74,7 +74,7 @@ export default function Home() {
       case 'scratch-cards':
         return <ScratchCardsSection />;
       case 'account':
-        return <AccountPage isLoggedIn={isLoggedIn} />;
+        return <AccountPage isLoggedIn={isLoggedIn} onClose={() => setActiveTab('home')} />;
       case 'tennis':
       case 'hockey':
       case 'volleyball':

@@ -2,9 +2,10 @@ import { Button } from "@/components/ui/button";
 
 interface AccountPageProps {
   isLoggedIn?: boolean;
+  onClose?: () => void;
 }
 
-export function AccountPage({ isLoggedIn = false }: AccountPageProps) {
+export function AccountPage({ isLoggedIn = false, onClose }: AccountPageProps) {
   const menuItems = [
     { id: 'why-join', label: 'Why Join?', icon: 'fas fa-question-circle' },
     { id: 'deposit', label: 'Deposit', icon: 'fas fa-credit-card' },
@@ -16,8 +17,18 @@ export function AccountPage({ isLoggedIn = false }: AccountPageProps) {
   return (
     <div className="min-h-screen bg-slate-custom text-white pb-20">
       {/* Header */}
-      <div className="bg-slate-800 p-6 border-b border-gray-700">
+      <div className="bg-slate-800 p-6 border-b border-gray-700 flex items-center justify-between">
         <h1 className="text-2xl font-bold text-white">Account</h1>
+        {onClose && (
+          <Button
+            variant="ghost"
+            size="sm"
+            className="text-gray-400 hover:text-white"
+            onClick={onClose}
+          >
+            <i className="fas fa-times text-2xl"></i>
+          </Button>
+        )}
       </div>
       
       {/* Content */}
@@ -26,7 +37,7 @@ export function AccountPage({ isLoggedIn = false }: AccountPageProps) {
         <div className="space-y-3">
           {!isLoggedIn ? (
             <div className="grid grid-cols-2 gap-3">
-              <Button className="bg-lime-500 hover:bg-lime-600 text-black font-bold py-4 text-sm">
+              <Button className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 text-sm">
                 SIGN UP
               </Button>
               <Button variant="outline" className="border-2 border-gray-400 text-gray-300 hover:bg-slate-700 font-bold py-4 text-sm">
