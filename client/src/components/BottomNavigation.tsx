@@ -72,7 +72,10 @@ export function BottomNavigation({
                   ? 'text-primary' 
                   : 'text-gray-400 hover:bg-slate-light-custom'
               }`}
-              onClick={() => handleTabClick(item.id)}
+              onClick={(e) => {
+                e.stopPropagation();
+                handleTabClick(item.id);
+              }}
             >
               {index === 2 ? (
                 // Special circular design for betslip button

@@ -23,7 +23,10 @@ export function AccountSidebar({ isOpen, onClose, isLoggedIn = false }: AccountS
         className={`fixed inset-0 bg-black/50 z-[59] transition-opacity duration-300 ${
           isOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'
         }`}
-        onClick={onClose}
+        onClick={(e) => {
+          e.stopPropagation();
+          onClose();
+        }}
       />
       
       {/* Sidebar Panel */}
@@ -31,6 +34,7 @@ export function AccountSidebar({ isOpen, onClose, isLoggedIn = false }: AccountS
         className={`fixed top-0 right-0 h-full w-full bg-slate-custom transform transition-transform duration-300 ease-in-out z-[60] ${
           isOpen ? "translate-x-0" : "translate-x-full"
         }`}
+        onClick={(e) => e.stopPropagation()}
       >
         <div className="flex flex-col h-full">
           {/* Header */}
