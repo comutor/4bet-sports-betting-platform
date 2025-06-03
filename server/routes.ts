@@ -166,6 +166,117 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Authentication endpoints
+  app.post("/api/auth/signup", async (req, res) => {
+    try {
+      const result = insertUserSchema.safeParse(req.body);
+      
+      if (!result.success) {
+        return res.status(400).json({ 
+          message: "Invalid input", 
+          errors: result.error.errors 
+        });
+      }
+
+      const userData = result.data;
+
+      // Check if user already exists
+      const existingUser = await storage.getUserByPhoneNumber(userData.phoneNumber || '');
+      if (existingUser) {
+        return res.status(409).json({ message: "User with this phone number already exists" });
+      }
+
+      // Create new user
+      const newUser = await storage.createUser(userData);
+      
+      // Set user session
+      (req.session as any).userId = newUser.id;
+      
+      res.status(201).json({ 
+        message: "User created successfully", 
+        user: { 
+          id: newUser.id, 
+          firstName: newUser.firstName,
+          lastName: newUser.lastName,
+          username: newUser.username,
+          balance: newUser.balance
+        } 
+      });
+    } catch (error) {
+      console.error("Signup error:", error);
+      res.status(500).json({ message: "Internal server error" });
+    }
+  });
+
+  app.post("/api/auth/login", async (req, res) => {
+    try {
+      const { phoneNumber, password } = req.body;
+
+      if (!phoneNumber || !password) {
+        return res.status(400).json({ message: "Phone number and password are required" });
+      }
+
+      const user = await storage.getUserByPhoneNumber(phoneNumber);
+      if (!user || user.password !== password) {
+        return res.status(401).json({ message: "Invalid credentials" });
+      }
+
+      // Set user session
+      (req.session as any).userId = user.id;
+      
+      res.json({ 
+        message: "Login successful", 
+        user: { 
+          id: user.id, 
+          firstName: user.firstName,
+          lastName: user.lastName,
+          username: user.username,
+          balance: user.balance
+        } 
+      });
+    } catch (error) {
+      console.error("Login error:", error);
+      res.status(500).json({ message: "Internal server error" });
+    }
+  });
+
+  app.post("/api/auth/logout", (req, res) => {
+    req.session.destroy((err) => {
+      if (err) {
+        return res.status(500).json({ message: "Could not log out" });
+      }
+      res.clearCookie('connect.sid');
+      res.json({ message: "Logout successful" });
+    });
+  });
+
+  app.get("/api/auth/me", async (req, res) => {
+    try {
+      const userId = (req.session as any)?.userId;
+      if (!userId) {
+        return res.status(401).json({ message: "Not authenticated" });
+      }
+
+      const user = await storage.getUser(userId);
+      if (!user) {
+        return res.status(404).json({ message: "User not found" });
+      }
+
+      res.json({ 
+        user: { 
+          id: user.id, 
+          firstName: user.firstName,
+          lastName: user.lastName,
+          username: user.username,
+          balance: user.balance
+        } 
+      });
+    } catch (error) {
+      console.error("Auth check error:", error);
+      res.status(500).json({ message: "Internal server error" });
+    }
+  });
+
   app.get("/api/odds/basketball/leagues", async (req, res) => {
     try {
       const leagues = await oddsApiService.getBasketballLeagues();

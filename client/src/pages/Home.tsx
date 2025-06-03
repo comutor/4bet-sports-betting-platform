@@ -169,6 +169,7 @@ export default function Home() {
           isLoggedIn={isLoggedIn} 
           onClose={() => setActiveTab('home')} 
           onSignupClick={() => setActiveTab('signup')}
+          onLogout={handleLogout}
         />;
       case 'signup':
         return <SignupPage onClose={() => setActiveTab('home')} onSuccess={() => { setIsLoggedIn(true); setActiveTab('account'); }} />;
