@@ -8,18 +8,18 @@ interface AccountSidebarProps {
 
 export function AccountSidebar({ isOpen, onClose, isLoggedIn = false }: AccountSidebarProps) {
   const accountMenuItems = [
-    { id: 'why-signup', label: 'Why Sign Up?', icon: 'fas fa-question-circle', hasArrow: true },
+    { id: 'why-join', label: 'Why Join?', icon: 'fas fa-question-circle', hasArrow: true },
     { id: 'deposit', label: 'Deposit', icon: 'fas fa-credit-card', hasArrow: true },
     { id: 'help-center', label: 'Help Center', icon: 'fas fa-life-ring', hasDropdown: true },
     { id: 'download-app', label: 'Download the App', icon: 'fas fa-mobile-alt', hasArrow: true },
-    { id: 'more-nilebet', label: 'More on NileBet', icon: 'fas fa-info-circle', hasDropdown: true }
+    { id: 'more-betpawa', label: 'More on betPawa', icon: 'fas fa-info-circle', hasDropdown: true }
   ];
 
   return (
     <>
       {/* Full Screen Overlay */}
       <div
-        className={`fixed inset-0 bg-slate-custom transform transition-transform duration-300 ease-in-out z-50 ${
+        className={`fixed inset-0 bg-slate-custom transform transition-transform duration-300 ease-in-out z-[60] ${
           isOpen ? "translate-x-0" : "translate-x-full"
         }`}
       >
@@ -43,19 +43,19 @@ export function AccountSidebar({ isOpen, onClose, isLoggedIn = false }: AccountS
             <div className="space-y-3">
               {!isLoggedIn ? (
                 <div className="grid grid-cols-2 gap-3">
-                  <Button className="bg-success hover:bg-success/90 text-white font-bold py-3">
-                    SIGN UP
+                  <Button className="bg-lime-500 hover:bg-lime-600 text-black font-bold py-4 text-sm">
+                    JOIN NOW
                   </Button>
-                  <Button variant="outline" className="border-gray-400 text-gray-300 hover:bg-slate-700 font-bold py-3">
+                  <Button variant="outline" className="border-2 border-gray-400 text-gray-300 hover:bg-slate-700 font-bold py-4 text-sm">
                     LOG IN
                   </Button>
                 </div>
               ) : (
                 <div className="grid grid-cols-2 gap-3">
-                  <Button className="bg-primary hover:bg-primary/90 text-white font-bold py-3">
+                  <Button className="bg-primary hover:bg-primary/90 text-white font-bold py-4">
                     DEPOSIT
                   </Button>
-                  <Button variant="outline" className="border-gray-400 text-gray-300 hover:bg-slate-700 font-bold py-3">
+                  <Button variant="outline" className="border-gray-400 text-gray-300 hover:bg-slate-700 font-bold py-4">
                     MY BETS
                   </Button>
                 </div>
