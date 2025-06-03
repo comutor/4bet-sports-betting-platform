@@ -15,6 +15,7 @@ import { LoginPrompt } from "@/components/LoginPrompt";
 import { CountriesSection } from "@/components/CountriesSection";
 import { SignupPage } from "@/components/SignupPage";
 import { LoginModal } from "@/components/LoginModal";
+import { FootballSection } from "@/components/FootballSection";
 import { useBetslip } from "@/hooks/useBetslip";
 import { sampleFeaturedEvents } from "@/lib/betting-data";
 import { Button } from "@/components/ui/button";

@@ -100,6 +100,17 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Football games by country priority
+  app.get("/api/football/countries", async (req, res) => {
+    try {
+      const footballData = await oddsApiService.getFootballGamesByCountryPriority();
+      res.json(footballData);
+    } catch (error) {
+      console.error("Error fetching football data:", error);
+      res.status(500).json({ error: "Failed to fetch football data" });
+    }
+  });
+
   app.get("/api/odds/basketball/leagues", async (req, res) => {
     try {
       const leagues = await oddsApiService.getBasketballLeagues();

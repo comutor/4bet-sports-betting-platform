@@ -159,6 +159,127 @@ export class OddsApiService {
 
     return results;
   }
+
+  // Get football games organized by country priority
+  async getFootballGamesByCountryPriority() {
+    try {
+      // Popular countries first (6 countries)
+      const popularCountries = [
+        { name: 'England', leagues: ['soccer_epl', 'soccer_england_league_one', 'soccer_england_league_two'] },
+        { name: 'Spain', leagues: ['soccer_spain_la_liga', 'soccer_spain_segunda_division'] },
+        { name: 'Germany', leagues: ['soccer_germany_bundesliga', 'soccer_germany_bundesliga2'] },
+        { name: 'Italy', leagues: ['soccer_italy_serie_a', 'soccer_italy_serie_b'] },
+        { name: 'France', leagues: ['soccer_france_ligue_one', 'soccer_france_ligue_two'] },
+        { name: 'Brazil', leagues: ['soccer_brazil_campeonato', 'soccer_brazil_serie_b'] }
+      ];
+
+      // Additional countries A-Z
+      const additionalCountries = [
+        { name: 'Argentina', leagues: ['soccer_argentina_primera_division'] },
+        { name: 'Australia', leagues: ['soccer_australia_aleague'] },
+        { name: 'Austria', leagues: ['soccer_austria_bundesliga'] },
+        { name: 'Belgium', leagues: ['soccer_belgium_first_div'] },
+        { name: 'Chile', leagues: ['soccer_chile_campeonato'] },
+        { name: 'Denmark', leagues: ['soccer_denmark_superliga'] },
+        { name: 'Netherlands', leagues: ['soccer_netherlands_eredivisie'] },
+        { name: 'Norway', leagues: ['soccer_norway_eliteserien'] },
+        { name: 'Poland', leagues: ['soccer_poland_ekstraklasa'] },
+        { name: 'Portugal', leagues: ['soccer_portugal_primeira_liga'] },
+        { name: 'Sweden', leagues: ['soccer_sweden_allsvenskan'] },
+        { name: 'Switzerland', leagues: ['soccer_switzerland_superleague'] },
+        { name: 'Turkey', leagues: ['soccer_turkey_super_league'] },
+        { name: 'USA', leagues: ['soccer_usa_mls'] }
+      ];
+
+      const allCountries = [...popularCountries, ...additionalCountries];
+      const allGames = [];
+
+      // Fetch games for each country (limit to first few for initial load)
+      for (const country of allCountries.slice(0, 8)) {
+        const countryGames = [];
+        
+        for (const league of country.leagues.slice(0, 1)) { // Get main league first
+          try {
+            const games = await this.getOdds(league);
+            countryGames.push(...games.map(game => ({
+              ...game,
+              country: country.name,
+              league_name: this.getLeagueName(league),
+              country_flag: this.getCountryFlag(country.name)
+            })));
+          } catch (error) {
+            log(`Error fetching ${league}: ${error}`);
+          }
+        }
+
+        if (countryGames.length > 0) {
+          allGames.push({
+            country: country.name,
+            flag: this.getCountryFlag(country.name),
+            games: countryGames,
+            isPopular: popularCountries.some(pc => pc.name === country.name)
+          });
+        }
+      }
+
+      return allGames;
+    } catch (error) {
+      log(`Error in getFootballGamesByCountryPriority: ${error}`);
+      throw error;
+    }
+  }
+
+  private getLeagueName(sportKey: string): string {
+    const leagueNames: { [key: string]: string } = {
+      'soccer_epl': 'Premier League',
+      'soccer_spain_la_liga': 'La Liga',
+      'soccer_germany_bundesliga': 'Bundesliga',
+      'soccer_italy_serie_a': 'Serie A',
+      'soccer_france_ligue_one': 'Ligue 1',
+      'soccer_brazil_campeonato': 'Serie A',
+      'soccer_argentina_primera_division': 'Primera División',
+      'soccer_australia_aleague': 'A-League',
+      'soccer_austria_bundesliga': 'Bundesliga',
+      'soccer_belgium_first_div': 'First Division A',
+      'soccer_chile_campeonato': 'Primera División',
+      'soccer_denmark_superliga': 'Superliga',
+      'soccer_netherlands_eredivisie': 'Eredivisie',
+      'soccer_norway_eliteserien': 'Eliteserien',
+      'soccer_poland_ekstraklasa': 'Ekstraklasa',
+      'soccer_portugal_primeira_liga': 'Primeira Liga',
+      'soccer_sweden_allsvenskan': 'Allsvenskan',
+      'soccer_switzerland_superleague': 'Super League',
+      'soccer_turkey_super_league': 'Süper Lig',
+      'soccer_usa_mls': 'MLS'
+    };
+    return leagueNames[sportKey] || sportKey.replace('soccer_', '').replace(/_/g, ' ');
+  }
+
+  private getCountryFlag(countryName: string): string {
+    const flags: { [key: string]: string } = {
+      'England': '🏴󠁧󠁢󠁥󠁮󠁧󠁿',
+      'Spain': '🇪🇸',
+      'Germany': '🇩🇪',
+      'Italy': '🇮🇹',
+      'France': '🇫🇷',
+      'Brazil': '🇧🇷',
+      'Argentina': '🇦🇷',
+      'Australia': '🇦🇺',
+      'Austria': '🇦🇹',
+      'Belgium': '🇧🇪',
+      'Chile': '🇨🇱',
+      'Denmark': '🇩🇰',
+      'Netherlands': '🇳🇱',
+      'Norway': '🇳🇴',
+      'Poland': '🇵🇱',
+      'Portugal': '🇵🇹',
+      'Sweden': '🇸🇪',
+      'Switzerland': '🇨🇭',
+      'Turkey': '🇹🇷',
+      'USA': '🇺🇸'
+    };
+    return flags[countryName] || '⚽';
+  }
 }
 
 export const oddsApiService = new OddsApiService();
