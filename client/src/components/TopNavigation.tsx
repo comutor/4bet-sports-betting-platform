@@ -86,10 +86,14 @@ export function TopNavigation({ activeTab, onTabChange, userBalance, isLoggedIn 
                 <Button 
                   variant="outline" 
                   className="border-gray-600 text-gray-300 hover:bg-slate-light-custom font-medium text-sm md:text-base px-2 md:px-3 py-1 md:py-2"
+                  onClick={onLoginClick}
                 >
                   Login
                 </Button>
-                <Button className="bg-primary hover:bg-primary-blue-dark font-bold text-sm md:text-base px-2 md:px-3 py-1 md:py-2">
+                <Button 
+                  className="bg-primary hover:bg-primary-blue-dark font-bold text-sm md:text-base px-2 md:px-3 py-1 md:py-2"
+                  onClick={onSignupClick}
+                >
                   Sign Up
                 </Button>
               </>

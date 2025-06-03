@@ -199,6 +199,13 @@ export default function Home() {
         onLogin={handleLogin}
         onSignup={handleSignup}
       />
+
+      {showSignupPage && (
+        <SignupPage 
+          onClose={handleCloseSignupPage}
+          onSuccess={handleSignupSuccess}
+        />
+      )}
     </div>
   );
 }

@@ -5,6 +5,7 @@ interface BottomNavigationProps {
   onTabChange: (tab: string) => void;
   onBetslipOpen: () => void;
   onMenuOpen: () => void;
+  onSignupClick?: () => void;
   betslipCount: number;
   isLoggedIn?: boolean;
   isMenuOpen?: boolean;
@@ -15,6 +16,7 @@ export function BottomNavigation({
   onTabChange, 
   onBetslipOpen, 
   onMenuOpen,
+  onSignupClick,
   betslipCount,
   isLoggedIn = false,
   isMenuOpen = false
@@ -36,6 +38,8 @@ export function BottomNavigation({
       onBetslipOpen();
     } else if (tabId === 'menu') {
       onMenuOpen();
+    } else if (tabId === 'sign-up' && !isLoggedIn && onSignupClick) {
+      onSignupClick();
     } else {
       onTabChange(tabId);
     }
