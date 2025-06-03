@@ -80,16 +80,16 @@ export function HamburgerMenu({ isOpen, onClose, onTabChange, activeTab }: Hambu
                 {mainSections.map((section) => (
                   <Button
                     key={section.id}
-                    variant="ghost"
-                    className={`flex flex-col items-center justify-center p-2 md:p-3 h-12 md:h-14 rounded-lg transition-all duration-300 touch-manipulation ${
-                      activeTab === section.id
-                        ? 'bg-primary text-white scale-95'
-                        : 'text-gray-300 hover:bg-slate-700 bg-slate-900 active:scale-95'
+                    variant={activeTab === section.id ? "default" : "secondary"}
+                    className={`p-3 min-h-20 flex flex-col items-center justify-center text-center transition-colors ${
+                      activeTab === section.id 
+                        ? 'bg-primary text-white' 
+                        : 'bg-slate-custom hover:bg-slate-light-custom'
                     }`}
                     onClick={() => handleItemClick(section.id)}
                   >
-                    <i className={`${section.icon} text-base md:text-lg mb-1`}></i>
-                    <span className="text-xs font-medium text-center leading-tight">{section.label}</span>
+                    <i className={`${section.icon} text-lg mb-1`}></i>
+                    <div className="font-medium text-center leading-tight whitespace-normal text-sm">{section.label}</div>
                   </Button>
                 ))}
               </div>
@@ -104,16 +104,18 @@ export function HamburgerMenu({ isOpen, onClose, onTabChange, activeTab }: Hambu
                 {sportsCategories.map((sport) => (
                   <Button
                     key={sport.id}
-                    variant="ghost"
-                    className={`flex flex-col items-center justify-center p-2 md:p-3 h-10 md:h-12 rounded-lg transition-all duration-300 touch-manipulation ${
-                      activeTab === sport.id
-                        ? 'bg-primary text-white scale-95'
-                        : 'text-gray-300 hover:bg-slate-700 bg-slate-900 active:scale-95'
+                    variant={activeTab === sport.id ? "default" : "secondary"}
+                    className={`p-3 min-h-20 flex flex-col items-center justify-center text-center transition-colors ${
+                      activeTab === sport.id 
+                        ? 'bg-primary text-white' 
+                        : 'bg-slate-custom hover:bg-slate-light-custom'
                     }`}
                     onClick={() => handleItemClick(sport.id)}
                   >
-                    <i className={`${sport.icon} text-sm md:text-base mb-1`}></i>
-                    <span className="text-xs font-medium text-center leading-tight">{sport.label}</span>
+                    <i className={`${sport.icon} text-lg mb-1`}></i>
+                    <div className={`font-medium text-center leading-tight whitespace-normal ${
+                      sport.label.length > 12 ? 'text-xs' : 'text-sm'
+                    }`}>{sport.label}</div>
                   </Button>
                 ))}
               </div>
