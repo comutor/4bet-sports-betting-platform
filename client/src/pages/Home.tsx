@@ -12,6 +12,8 @@ import { AviatorSection } from "@/components/AviatorSection";
 import { ScratchCardsSection } from "@/components/ScratchCardsSection";
 import { AccountPage } from "@/components/AccountPage";
 import { LoginPrompt } from "@/components/LoginPrompt";
+import { CountriesSection } from "@/components/CountriesSection";
+import { SignupPage } from "@/components/SignupPage";
 import { useBetslip } from "@/hooks/useBetslip";
 import { sampleFeaturedEvents } from "@/lib/betting-data";
 import { Button } from "@/components/ui/button";
@@ -93,7 +95,17 @@ export default function Home() {
       case 'scratch-cards':
         return <ScratchCardsSection />;
       case 'account':
-        return <AccountPage isLoggedIn={isLoggedIn} onClose={() => setActiveTab('home')} />;
+        return <AccountPage 
+          isLoggedIn={isLoggedIn} 
+          onClose={() => setActiveTab('home')} 
+          onSignupClick={() => setActiveTab('signup')}
+        />;
+      case 'signup':
+        return <SignupPage onClose={() => setActiveTab('home')} onSuccess={() => { setIsLoggedIn(true); setActiveTab('account'); }} />;
+      case 'top-countries':
+      case 'international':
+      case 'other-countries':
+        return <CountriesSection selectedCategory={activeTab} onBetClick={handleBetClick} />;
       case 'tennis':
       case 'hockey':
       case 'volleyball':

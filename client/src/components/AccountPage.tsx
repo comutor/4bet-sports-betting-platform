@@ -3,9 +3,10 @@ import { Button } from "@/components/ui/button";
 interface AccountPageProps {
   isLoggedIn?: boolean;
   onClose?: () => void;
+  onSignupClick?: () => void;
 }
 
-export function AccountPage({ isLoggedIn = false, onClose }: AccountPageProps) {
+export function AccountPage({ isLoggedIn = false, onClose, onSignupClick }: AccountPageProps) {
   const menuItems = [
     { id: 'why-join', label: 'Why Join?', icon: 'fas fa-question-circle' },
     { id: 'deposit', label: 'Deposit', icon: 'fas fa-credit-card' },
@@ -37,7 +38,10 @@ export function AccountPage({ isLoggedIn = false, onClose }: AccountPageProps) {
         <div className="space-y-3">
           {!isLoggedIn ? (
             <div className="grid grid-cols-2 gap-3">
-              <Button className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 text-sm">
+              <Button 
+                className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 text-sm"
+                onClick={onSignupClick}
+              >
                 SIGN UP
               </Button>
               <Button variant="outline" className="border-2 border-gray-400 text-gray-300 hover:bg-slate-700 font-bold py-4 text-sm">
