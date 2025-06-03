@@ -38,7 +38,11 @@ export function SignupPage({ onClose, onSuccess }: SignupPageProps) {
     const newErrors: { [key: string]: string } = {};
 
     if (!formData.country) newErrors.country = 'Country is required';
-    if (!formData.phoneNumber) newErrors.phoneNumber = 'Phone number is required';
+    if (!formData.phoneNumber) {
+      newErrors.phoneNumber = 'Phone number is required';
+    } else if (formData.phoneNumber.length !== 9) {
+      newErrors.phoneNumber = 'Phone number must be exactly 9 digits';
+    }
     if (!formData.password) newErrors.password = 'Password is required';
     
     if (!isLogin) {
@@ -79,7 +83,13 @@ export function SignupPage({ onClose, onSuccess }: SignupPageProps) {
   };
 
   const handleInputChange = (field: string, value: string) => {
-    setFormData(prev => ({ ...prev, [field]: value }));
+    if (field === 'phoneNumber') {
+      // Only allow digits and limit to 9 characters
+      const numericValue = value.replace(/\D/g, '').slice(0, 9);
+      setFormData(prev => ({ ...prev, [field]: numericValue }));
+    } else {
+      setFormData(prev => ({ ...prev, [field]: value }));
+    }
     if (errors[field]) {
       setErrors(prev => ({ ...prev, [field]: '' }));
     }

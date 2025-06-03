@@ -28,7 +28,13 @@ export function LoginModal({ isOpen, onClose, onSuccess }: LoginModalProps) {
   };
 
   const handleInputChange = (field: string, value: string) => {
-    setFormData(prev => ({ ...prev, [field]: value }));
+    if (field === 'phoneNumber') {
+      // Only allow digits and limit to 9 characters
+      const numericValue = value.replace(/\D/g, '').slice(0, 9);
+      setFormData(prev => ({ ...prev, [field]: numericValue }));
+    } else {
+      setFormData(prev => ({ ...prev, [field]: value }));
+    }
     if (errors[field]) {
       setErrors(prev => ({ ...prev, [field]: '' }));
     }
@@ -39,6 +45,8 @@ export function LoginModal({ isOpen, onClose, onSuccess }: LoginModalProps) {
 
     if (!formData.phoneNumber.trim()) {
       newErrors.phoneNumber = 'Phone number is required';
+    } else if (formData.phoneNumber.length !== 9) {
+      newErrors.phoneNumber = 'Phone number must be exactly 9 digits';
     }
 
     if (!formData.password) {
