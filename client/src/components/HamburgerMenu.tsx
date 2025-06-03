@@ -81,7 +81,7 @@ export function HamburgerMenu({ isOpen, onClose, onTabChange, activeTab }: Hambu
                   <Button
                     key={section.id}
                     variant="ghost"
-                    className={`flex flex-col items-center justify-center p-2 md:p-3 h-12 md:h-14 rounded-lg transition-all duration-300 touch-manipulation ${
+                    className={`flex flex-col items-center justify-center p-2 md:p-3 aspect-square rounded-lg transition-all duration-300 touch-manipulation ${
                       activeTab === section.id
                         ? 'bg-primary text-white scale-95'
                         : 'text-gray-300 hover:bg-slate-700 bg-slate-900 active:scale-95'
@@ -105,7 +105,7 @@ export function HamburgerMenu({ isOpen, onClose, onTabChange, activeTab }: Hambu
                   <Button
                     key={sport.id}
                     variant="ghost"
-                    className={`flex flex-col items-center justify-center p-2 md:p-3 h-10 md:h-12 rounded-lg transition-all duration-300 touch-manipulation ${
+                    className={`flex flex-col items-center justify-center p-2 md:p-3 aspect-square rounded-lg transition-all duration-300 touch-manipulation ${
                       activeTab === sport.id
                         ? 'bg-primary text-white scale-95'
                         : 'text-gray-300 hover:bg-slate-700 bg-slate-900 active:scale-95'
