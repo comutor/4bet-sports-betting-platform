@@ -70,51 +70,51 @@ export function HamburgerMenu({ isOpen, onClose, onTabChange, activeTab }: Hambu
           </div>
           
           {/* Content */}
-          <div className="flex-1 overflow-y-auto overflow-x-hidden p-4 md:p-6 space-y-4 md:space-y-6 hamburger-scroll">
+          <div className="flex-1 overflow-y-auto overflow-x-hidden p-3 md:p-4 space-y-3 md:space-y-4 hamburger-scroll">
             {/* Main Sections */}
-            <div className="bg-slate-800 rounded-xl p-3 md:p-4 border border-gray-700">
-              <h3 className="text-lg font-bold text-gray-300 mb-3 md:mb-4">
+            <div>
+              <h3 className="text-base font-bold text-white mb-2 md:mb-3">
                 Main Menu
               </h3>
-              <div className="grid grid-cols-2 gap-2 md:gap-3">
+              <div className="grid grid-cols-2 gap-2">
                 {mainSections.map((section) => (
                   <Button
                     key={section.id}
                     variant={activeTab === section.id ? "default" : "secondary"}
-                    className={`p-4 min-h-20 flex flex-col items-center justify-center text-center transition-all duration-200 rounded-xl border shadow-sm ${
+                    className={`p-3 min-h-16 flex flex-col items-center justify-center text-center transition-all duration-200 rounded-xl border shadow-sm ${
                       activeTab === section.id 
                         ? 'bg-primary text-white border-primary/20' 
                         : 'bg-slate-custom hover:bg-slate-light-custom border-slate-600 hover:border-slate-500'
                     }`}
                     onClick={() => handleItemClick(section.id)}
                   >
-                    <i className={`${section.icon} text-lg mb-1`}></i>
-                    <div className="font-medium text-center leading-tight whitespace-normal text-sm">{section.label}</div>
+                    <i className={`${section.icon} text-base mb-1`}></i>
+                    <div className="font-medium text-center leading-tight whitespace-normal text-xs">{section.label}</div>
                   </Button>
                 ))}
               </div>
             </div>
             
             {/* Sports Categories */}
-            <div className="bg-slate-800 rounded-xl p-3 md:p-4 border border-gray-700">
-              <h3 className="text-lg font-bold text-gray-300 mb-3 md:mb-4">
+            <div>
+              <h3 className="text-base font-bold text-white mb-2 md:mb-3">
                 Popular Sports
               </h3>
-              <div className="grid grid-cols-2 md:grid-cols-3 gap-2 md:gap-3">
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
                 {sportsCategories.map((sport) => (
                   <Button
                     key={sport.id}
                     variant={activeTab === sport.id ? "default" : "secondary"}
-                    className={`p-4 min-h-20 flex flex-col items-center justify-center text-center transition-all duration-200 rounded-xl border shadow-sm ${
+                    className={`p-3 min-h-16 flex flex-col items-center justify-center text-center transition-all duration-200 rounded-xl border shadow-sm ${
                       activeTab === sport.id 
                         ? 'bg-primary text-white border-primary/20' 
                         : 'bg-slate-custom hover:bg-slate-light-custom border-slate-600 hover:border-slate-500'
                     }`}
                     onClick={() => handleItemClick(sport.id)}
                   >
-                    <i className={`${sport.icon} text-lg mb-1`}></i>
+                    <i className={`${sport.icon} text-base mb-1`}></i>
                     <div className={`font-medium text-center leading-tight whitespace-normal ${
-                      sport.label.length > 12 ? 'text-xs' : 'text-sm'
+                      sport.label.length > 12 ? 'text-xs' : 'text-xs'
                     }`}>{sport.label}</div>
                   </Button>
                 ))}
@@ -122,16 +122,16 @@ export function HamburgerMenu({ isOpen, onClose, onTabChange, activeTab }: Hambu
             </div>
 
             {/* Countries */}
-            <div className="bg-slate-800 rounded-xl p-3 md:p-4 border border-gray-700">
-              <h3 className="text-lg font-bold text-gray-300 mb-3 md:mb-4">
+            <div>
+              <h3 className="text-base font-bold text-white mb-2 md:mb-3">
                 Countries
               </h3>
-              <div className="space-y-1 md:space-y-2">
+              <div className="space-y-1">
                 {countryCategories.map((country) => (
                   <Button
                     key={country.id}
                     variant="ghost"
-                    className="w-full justify-between p-3 md:p-4 text-left text-gray-300 hover:bg-slate-light-custom active:bg-slate-600 transition-all duration-200 rounded-xl border border-slate-600 hover:border-slate-500 shadow-sm touch-manipulation"
+                    className="w-full justify-between p-2 text-left text-gray-300 hover:bg-slate-light-custom active:bg-slate-600 transition-all duration-200 rounded-xl border border-slate-600 hover:border-slate-500 shadow-sm touch-manipulation"
                     onClick={() => handleItemClick(country.id)}
                   >
                     <div className="flex items-center">
