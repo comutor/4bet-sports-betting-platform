@@ -50,7 +50,7 @@ export function TopNavigation({ activeTab, onTabChange, userBalance, isLoggedIn 
             <Button 
               variant="ghost" 
               className="p-1 md:p-2 text-gray-400 hover:text-white"
-              onClick={() => setIsMenuOpen(true)}
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
             >
               <i className="fas fa-bars text-lg md:text-xl"></i>
             </Button>
