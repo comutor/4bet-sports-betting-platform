@@ -27,7 +27,8 @@ export function BottomNavigation({
       id: isLoggedIn ? 'my-bets' : 'sign-up', 
       label: isLoggedIn ? 'My Bets' : 'Sign Up', 
       icon: isLoggedIn ? 'fas fa-history' : 'fas fa-user-plus' 
-    }
+    },
+    { id: 'account', label: 'Account', icon: 'fas fa-user' }
   ];
 
   const handleTabClick = (tabId: string) => {
@@ -54,7 +55,7 @@ export function BottomNavigation({
           </div>
         </div>
         
-        <div className="grid grid-cols-4 max-w-md mx-auto pt-2">
+        <div className="grid grid-cols-5 max-w-md mx-auto pt-2">
           {navItems.map((item, index) => (
             <Button
               key={item.id}

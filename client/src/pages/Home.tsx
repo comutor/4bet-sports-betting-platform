@@ -10,6 +10,7 @@ import { CasinoSection } from "@/components/CasinoSection";
 import { VirtualSection } from "@/components/VirtualSection";
 import { AviatorSection } from "@/components/AviatorSection";
 import { ScratchCardsSection } from "@/components/ScratchCardsSection";
+import { AccountPage } from "@/components/AccountPage";
 import { useBetslip } from "@/hooks/useBetslip";
 import { sampleFeaturedEvents } from "@/lib/betting-data";
 import { Button } from "@/components/ui/button";
@@ -72,6 +73,8 @@ export default function Home() {
         return <AviatorSection />;
       case 'scratch-cards':
         return <ScratchCardsSection />;
+      case 'account':
+        return <AccountPage isLoggedIn={isLoggedIn} />;
       case 'tennis':
       case 'hockey':
       case 'volleyball':
