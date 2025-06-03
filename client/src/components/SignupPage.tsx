@@ -39,11 +39,11 @@ export function SignupPage({ onClose, onSuccess }: SignupPageProps) {
 
     if (!formData.country) newErrors.country = 'Country is required';
     if (!formData.phoneNumber) newErrors.phoneNumber = 'Phone number is required';
-    if (!formData.firstName) newErrors.firstName = 'First name is required';
-    if (!formData.lastName) newErrors.lastName = 'Last name is required';
     if (!formData.password) newErrors.password = 'Password is required';
     
     if (!isLogin) {
+      if (!formData.firstName) newErrors.firstName = 'First name is required';
+      if (!formData.lastName) newErrors.lastName = 'Last name is required';
       if (formData.password !== formData.confirmPassword) {
         newErrors.confirmPassword = 'Passwords do not match';
       }
@@ -56,9 +56,23 @@ export function SignupPage({ onClose, onSuccess }: SignupPageProps) {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (validateForm()) {
-      // Create username from first and last name
-      const username = `${formData.firstName.toLowerCase()}_${formData.lastName.toLowerCase()}`;
-      console.log('Registration data:', { ...formData, username });
+      if (isLogin) {
+        // Login with phone number and password
+        const fullPhoneNumber = `${getPhonePrefix()}${formData.phoneNumber}`;
+        console.log('Login data:', { 
+          phoneNumber: fullPhoneNumber,
+          password: formData.password 
+        });
+      } else {
+        // Registration with full user data
+        const username = `${formData.firstName.toLowerCase()}_${formData.lastName.toLowerCase()}`;
+        const fullPhoneNumber = `${getPhonePrefix()}${formData.phoneNumber}`;
+        console.log('Registration data:', { 
+          ...formData, 
+          username,
+          phoneNumber: fullPhoneNumber
+        });
+      }
       // Simulate successful registration/login
       onSuccess?.();
     }
@@ -148,31 +162,35 @@ export function SignupPage({ onClose, onSuccess }: SignupPageProps) {
           {errors.phoneNumber && <p className="text-red-400 text-sm">{errors.phoneNumber}</p>}
         </div>
 
-        {/* First Name */}
-        <div className="space-y-2">
-          <Label htmlFor="firstName" className="text-white">First Name</Label>
-          <Input
-            id="firstName"
-            value={formData.firstName}
-            onChange={(e) => handleInputChange('firstName', e.target.value)}
-            className="bg-slate-700 border-gray-600 text-white"
-            placeholder="Enter your first name"
-          />
-          {errors.firstName && <p className="text-red-400 text-sm">{errors.firstName}</p>}
-        </div>
+        {/* First Name - Only show during signup */}
+        {!isLogin && (
+          <div className="space-y-2">
+            <Label htmlFor="firstName" className="text-white">First Name</Label>
+            <Input
+              id="firstName"
+              value={formData.firstName}
+              onChange={(e) => handleInputChange('firstName', e.target.value)}
+              className="bg-slate-700 border-gray-600 text-white"
+              placeholder="Enter your first name"
+            />
+            {errors.firstName && <p className="text-red-400 text-sm">{errors.firstName}</p>}
+          </div>
+        )}
 
-        {/* Last Name */}
-        <div className="space-y-2">
-          <Label htmlFor="lastName" className="text-white">Last Name</Label>
-          <Input
-            id="lastName"
-            value={formData.lastName}
-            onChange={(e) => handleInputChange('lastName', e.target.value)}
-            className="bg-slate-700 border-gray-600 text-white"
-            placeholder="Enter your last name"
-          />
-          {errors.lastName && <p className="text-red-400 text-sm">{errors.lastName}</p>}
-        </div>
+        {/* Last Name - Only show during signup */}
+        {!isLogin && (
+          <div className="space-y-2">
+            <Label htmlFor="lastName" className="text-white">Last Name</Label>
+            <Input
+              id="lastName"
+              value={formData.lastName}
+              onChange={(e) => handleInputChange('lastName', e.target.value)}
+              className="bg-slate-700 border-gray-600 text-white"
+              placeholder="Enter your last name"
+            />
+            {errors.lastName && <p className="text-red-400 text-sm">{errors.lastName}</p>}
+          </div>
+        )}
 
         {/* Password */}
         <div className="space-y-2">
