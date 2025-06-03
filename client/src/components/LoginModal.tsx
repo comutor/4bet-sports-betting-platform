@@ -1,0 +1,165 @@
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+
+interface LoginModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+  onSuccess: () => void;
+}
+
+export function LoginModal({ isOpen, onClose, onSuccess }: LoginModalProps) {
+  const [formData, setFormData] = useState({
+    country: 'South Sudan',
+    phoneNumber: '',
+    password: ''
+  });
+  const [errors, setErrors] = useState<{ [key: string]: string }>({});
+
+  const countries = [
+    { name: 'South Sudan', code: '+211', flag: '🇸🇸' },
+    { name: 'Uganda', code: '+256', flag: '🇺🇬' }
+  ];
+
+  const getPhonePrefix = () => {
+    const country = countries.find(c => c.name === formData.country);
+    return country?.code || '+211';
+  };
+
+  const handleInputChange = (field: string, value: string) => {
+    setFormData(prev => ({ ...prev, [field]: value }));
+    if (errors[field]) {
+      setErrors(prev => ({ ...prev, [field]: '' }));
+    }
+  };
+
+  const validateForm = () => {
+    const newErrors: { [key: string]: string } = {};
+
+    if (!formData.phoneNumber.trim()) {
+      newErrors.phoneNumber = 'Phone number is required';
+    }
+
+    if (!formData.password) {
+      newErrors.password = 'Password is required';
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (validateForm()) {
+      // Handle login logic here
+      console.log('Login data:', {
+        ...formData,
+        fullPhoneNumber: getPhonePrefix() + formData.phoneNumber
+      });
+      onSuccess();
+    }
+  };
+
+  if (!isOpen) return null;
+
+  return (
+    <div className="fixed inset-0 z-[9999] flex items-center justify-center">
+      {/* Background overlay */}
+      <div 
+        className="fixed inset-0 bg-black bg-opacity-50"
+        onClick={onClose}
+      ></div>
+      
+      {/* Login modal */}
+      <div className="bg-slate-custom text-white w-full max-w-sm mx-4 rounded-lg relative z-10 transform transition-all duration-300 ease-in-out scale-100">
+        {/* Header */}
+        <div className="bg-slate-800 px-6 py-4 rounded-t-lg border-b border-gray-700 flex items-center justify-between">
+          <h2 className="text-xl font-bold text-white">Login</h2>
+          <Button
+            variant="ghost"
+            size="sm"
+            className="text-gray-400 hover:text-white"
+            onClick={onClose}
+          >
+            <i className="fas fa-times text-lg"></i>
+          </Button>
+        </div>
+
+        <form onSubmit={handleSubmit} className="p-6 space-y-4">
+          {/* Country Selection */}
+          <div className="space-y-2">
+            <Label htmlFor="country" className="text-white">Phone</Label>
+            <select
+              id="country"
+              value={formData.country}
+              onChange={(e) => handleInputChange('country', e.target.value)}
+              className="w-full bg-slate-700 border border-gray-600 text-white rounded-md px-3 py-2"
+            >
+              {countries.map(country => (
+                <option key={country.name} value={country.name}>
+                  {country.flag} {country.name} ({country.code})
+                </option>
+              ))}
+            </select>
+          </div>
+
+          {/* Mobile Number */}
+          <div className="space-y-2">
+            <div className="flex">
+              <div className="bg-slate-700 border border-gray-600 border-r-0 px-3 py-2 rounded-l-md text-gray-300">
+                {getPhonePrefix()}
+              </div>
+              <Input
+                id="phoneNumber"
+                type="tel"
+                value={formData.phoneNumber}
+                onChange={(e) => handleInputChange('phoneNumber', e.target.value)}
+                className="bg-slate-700 border-gray-600 text-white rounded-l-none flex-1"
+                placeholder="Mobile number"
+              />
+            </div>
+            {errors.phoneNumber && <p className="text-red-400 text-sm">{errors.phoneNumber}</p>}
+          </div>
+
+          {/* Password */}
+          <div className="space-y-2">
+            <Label htmlFor="password" className="text-white">Password</Label>
+            <Input
+              id="password"
+              type="password"
+              value={formData.password}
+              onChange={(e) => handleInputChange('password', e.target.value)}
+              className="bg-slate-700 border-gray-600 text-white"
+              placeholder="Enter your password"
+            />
+            {errors.password && <p className="text-red-400 text-sm">{errors.password}</p>}
+          </div>
+
+          {/* Submit Button */}
+          <Button
+            type="submit"
+            className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 mt-6"
+          >
+            LOG IN
+          </Button>
+
+          {/* Sign up link */}
+          <p className="text-center text-sm text-gray-400 mt-4">
+            Don't have an account?{' '}
+            <button
+              type="button"
+              className="text-blue-400 hover:text-blue-300"
+              onClick={() => {
+                onClose();
+                // This could trigger opening the signup form
+              }}
+            >
+              Sign up here
+            </button>
+          </p>
+        </form>
+      </div>
+    </div>
+  );
+}

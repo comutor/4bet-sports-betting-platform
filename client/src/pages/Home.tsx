@@ -14,6 +14,7 @@ import { AccountPage } from "@/components/AccountPage";
 import { LoginPrompt } from "@/components/LoginPrompt";
 import { CountriesSection } from "@/components/CountriesSection";
 import { SignupPage } from "@/components/SignupPage";
+import { LoginModal } from "@/components/LoginModal";
 import { useBetslip } from "@/hooks/useBetslip";
 import { sampleFeaturedEvents } from "@/lib/betting-data";
 import { Button } from "@/components/ui/button";
@@ -24,6 +25,7 @@ export default function Home() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [showLoginPrompt, setShowLoginPrompt] = useState(false);
   const [showSignupPage, setShowSignupPage] = useState(false);
+  const [showLoginModal, setShowLoginModal] = useState(false);
   const {
     items: betslipItems,
     isOpen: betslipOpen,
@@ -62,6 +64,14 @@ export default function Home() {
   const handleOpenSignupPage = () => {
     setShowSignupPage(true);
     setShowLoginPrompt(false);
+    setShowLoginModal(false);
+    setIsMenuOpen(false);
+  };
+
+  const handleOpenLoginModal = () => {
+    setShowLoginModal(true);
+    setShowSignupPage(false);
+    setShowLoginPrompt(false);
     setIsMenuOpen(false);
   };
 
@@ -69,9 +79,19 @@ export default function Home() {
     setShowSignupPage(false);
   };
 
+  const handleCloseLoginModal = () => {
+    setShowLoginModal(false);
+  };
+
   const handleSignupSuccess = () => {
     setIsLoggedIn(true);
     setShowSignupPage(false);
+    setActiveTab('account');
+  };
+
+  const handleLoginSuccess = () => {
+    setIsLoggedIn(true);
+    setShowLoginModal(false);
     setActiveTab('account');
   };
 
@@ -156,7 +176,7 @@ export default function Home() {
         isMenuOpen={isMenuOpen}
         onMenuToggle={() => setIsMenuOpen(!isMenuOpen)}
         onSignupClick={handleOpenSignupPage}
-        onLoginClick={handleOpenSignupPage}
+        onLoginClick={handleOpenLoginModal}
       />
       
 
@@ -206,6 +226,12 @@ export default function Home() {
           onSuccess={handleSignupSuccess}
         />
       )}
+
+      <LoginModal
+        isOpen={showLoginModal}
+        onClose={handleCloseLoginModal}
+        onSuccess={handleLoginSuccess}
+      />
     </div>
   );
 }
