@@ -15,6 +15,8 @@ import {
   type CasinoGame,
   type InsertCasinoGame
 } from "@shared/schema";
+import { db } from "./db";
+import { eq } from "drizzle-orm";
 
 export interface IStorage {
   getUser(id: number): Promise<User | undefined>;
@@ -326,4 +328,91 @@ export class MemStorage implements IStorage {
   }
 }
 
-export const storage = new MemStorage();
+export class DatabaseStorage implements IStorage {
+  async getUser(id: number): Promise<User | undefined> {
+    const [user] = await db.select().from(users).where(eq(users.id, id));
+    return user || undefined;
+  }
+
+  async getUserByUsername(username: string): Promise<User | undefined> {
+    const [user] = await db.select().from(users).where(eq(users.username, username));
+    return user || undefined;
+  }
+
+  async getUserByPhoneNumber(phoneNumber: string): Promise<User | undefined> {
+    const [user] = await db.select().from(users).where(eq(users.phoneNumber, phoneNumber));
+    return user || undefined;
+  }
+
+  async createUser(insertUser: InsertUser): Promise<User> {
+    // Auto-generate username from first and last name
+    const username = `${insertUser.firstName.toLowerCase()}_${insertUser.lastName.toLowerCase()}`;
+    
+    const userToInsert = {
+      ...insertUser,
+      username,
+      balance: "1000.00" // Default starting balance
+    };
+
+    const [user] = await db
+      .insert(users)
+      .values(userToInsert)
+      .returning();
+    return user;
+  }
+
+  // Placeholder implementations for other methods (keeping interface compatibility)
+  async getSportsEvents(): Promise<SportsEvent[]> {
+    return [];
+  }
+
+  async getLiveEvents(): Promise<SportsEvent[]> {
+    return [];
+  }
+
+  async getEventsByCategory(sport: string): Promise<SportsEvent[]> {
+    return [];
+  }
+
+  async createSportsEvent(event: InsertSportsEvent): Promise<SportsEvent> {
+    const [created] = await db.insert(sportsEvents).values(event).returning();
+    return created;
+  }
+
+  async getBettingMarkets(eventId: number): Promise<BettingMarket[]> {
+    return [];
+  }
+
+  async createBettingMarket(market: InsertBettingMarket): Promise<BettingMarket> {
+    const [created] = await db.insert(bettingMarkets).values(market).returning();
+    return created;
+  }
+
+  async getBetslipItems(userId: number): Promise<BetslipItem[]> {
+    return [];
+  }
+
+  async addToBetslip(item: InsertBetslipItem): Promise<BetslipItem> {
+    const [created] = await db.insert(betslipItems).values(item).returning();
+    return created;
+  }
+
+  async removeFromBetslip(id: number): Promise<void> {
+    await db.delete(betslipItems).where(eq(betslipItems.id, id));
+  }
+
+  async getCasinoGames(): Promise<CasinoGame[]> {
+    return [];
+  }
+
+  async getCasinoGamesByCategory(category: string): Promise<CasinoGame[]> {
+    return [];
+  }
+
+  async createCasinoGame(game: InsertCasinoGame): Promise<CasinoGame> {
+    const [created] = await db.insert(casinoGames).values(game).returning();
+    return created;
+  }
+}
+
+export const storage = new DatabaseStorage();

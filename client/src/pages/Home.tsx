@@ -97,6 +97,25 @@ export default function Home() {
     setActiveTab('account');
   };
 
+  const handleLogout = async () => {
+    try {
+      const response = await fetch('/api/auth/logout', {
+        method: 'POST',
+        credentials: 'include'
+      });
+      
+      if (response.ok) {
+        setIsLoggedIn(false);
+        setActiveTab('home');
+      }
+    } catch (error) {
+      console.error('Logout failed:', error);
+      // Still log out locally even if server request fails
+      setIsLoggedIn(false);
+      setActiveTab('home');
+    }
+  };
+
   const renderMainContent = () => {
     switch (activeTab) {
       case 'home':

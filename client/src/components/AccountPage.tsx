@@ -4,9 +4,10 @@ interface AccountPageProps {
   isLoggedIn?: boolean;
   onClose?: () => void;
   onSignupClick?: () => void;
+  onLogout?: () => void;
 }
 
-export function AccountPage({ isLoggedIn = false, onClose, onSignupClick }: AccountPageProps) {
+export function AccountPage({ isLoggedIn = false, onClose, onSignupClick, onLogout }: AccountPageProps) {
   const menuItems = [
     { id: 'why-join', label: 'Why Join?', icon: 'fas fa-question-circle' },
     { id: 'deposit', label: 'Deposit', icon: 'fas fa-credit-card' },
@@ -75,6 +76,21 @@ export function AccountPage({ isLoggedIn = false, onClose, onSignupClick }: Acco
               <i className="fas fa-chevron-right text-gray-400 text-sm"></i>
             </Button>
           ))}
+          
+          {/* Logout Button for logged-in users */}
+          {isLoggedIn && onLogout && (
+            <Button
+              variant="ghost"
+              className="w-full justify-between p-4 text-left text-red-400 hover:bg-red-900/20 transition-all duration-200 rounded-xl border border-red-600/50 hover:border-red-500 mt-6"
+              onClick={onLogout}
+            >
+              <div className="flex items-center">
+                <i className="fas fa-sign-out-alt w-5 mr-3 text-red-400"></i>
+                <span className="text-base font-medium">Logout</span>
+              </div>
+              <i className="fas fa-chevron-right text-red-400 text-sm"></i>
+            </Button>
+          )}
         </div>
       </div>
     </div>
