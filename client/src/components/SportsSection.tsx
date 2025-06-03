@@ -6,6 +6,12 @@ import premierLeagueLogo from "@assets/Z.jpeg";
 import serieALogo from "@assets/9k=.jpeg";
 import bundesligaLogo from "@assets/IMG_4089.png";
 import laLigaLogo from "@assets/IMG_4090.png";
+import nbaLogo from "@assets/IMG_4098.png";
+import vtbLogo from "@assets/IMG_4097.png";
+import proALogo from "@assets/IMG_4096.jpeg";
+import ligaEndesa from "@assets/IMG_4095.png";
+import euroleagueLogo from "@assets/IMG_4094.png";
+import turkishBslLogo from "@assets/IMG_4092.png";
 
 interface SportsMatch {
   id: number;
@@ -37,12 +43,12 @@ export function SportsSection({ onBetClick, selectedSport = 'soccer' }: SportsSe
   ];
 
   const basketballCategories = [
-    { id: 'nba', name: 'NBA', icon: 'fas fa-basketball-ball', logo: null },
-    { id: 'euroleague', name: 'EuroLeague', icon: 'fas fa-basketball-ball', logo: null },
-    { id: 'liga-acb', name: 'Liga ACB', icon: 'fas fa-basketball-ball', logo: null },
-    { id: 'turkish-bsl', name: 'Turkish Basketball Super League', icon: 'fas fa-basketball-ball', logo: null },
-    { id: 'vtb-league', name: 'Russian VTB United League', icon: 'fas fa-basketball-ball', logo: null },
-    { id: 'pro-a', name: 'Pro A', icon: 'fas fa-basketball-ball', logo: null }
+    { id: 'nba', name: 'NBA', icon: null, logo: nbaLogo },
+    { id: 'euroleague', name: 'EuroLeague', icon: null, logo: euroleagueLogo },
+    { id: 'liga-acb', name: 'Liga ACB', icon: null, logo: ligaEndesa },
+    { id: 'turkish-bsl', name: 'Turkish Basketball Super League', icon: null, logo: turkishBslLogo },
+    { id: 'vtb-league', name: 'Russian VTB United League', icon: null, logo: vtbLogo },
+    { id: 'pro-a', name: 'Pro A', icon: null, logo: proALogo }
   ];
 
   const getSportsCategories = () => {
