@@ -11,12 +11,10 @@ interface SignupPageProps {
 export function SignupPage({ onClose, onSuccess }: SignupPageProps) {
   const [isLogin, setIsLogin] = useState(false);
   const [formData, setFormData] = useState({
-    email: '',
-    username: '',
-    password: '',
-    confirmPassword: '',
     firstName: '',
     lastName: '',
+    password: '',
+    confirmPassword: '',
     phoneNumber: '',
     dateOfBirth: '',
     country: '',
@@ -37,16 +35,14 @@ export function SignupPage({ onClose, onSuccess }: SignupPageProps) {
   const validateForm = () => {
     const newErrors: { [key: string]: string } = {};
 
-    if (!formData.email) newErrors.email = 'Email is required';
-    if (!formData.username) newErrors.username = 'Username is required';
+    if (!formData.firstName) newErrors.firstName = 'First name is required';
+    if (!formData.lastName) newErrors.lastName = 'Last name is required';
     if (!formData.password) newErrors.password = 'Password is required';
     
     if (!isLogin) {
       if (formData.password !== formData.confirmPassword) {
         newErrors.confirmPassword = 'Passwords do not match';
       }
-      if (!formData.firstName) newErrors.firstName = 'First name is required';
-      if (!formData.lastName) newErrors.lastName = 'Last name is required';
       if (!formData.dateOfBirth) newErrors.dateOfBirth = 'Date of birth is required';
       if (!formData.country) newErrors.country = 'Country is required';
     }
@@ -58,6 +54,9 @@ export function SignupPage({ onClose, onSuccess }: SignupPageProps) {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (validateForm()) {
+      // Create username from first and last name
+      const username = `${formData.firstName.toLowerCase()}_${formData.lastName.toLowerCase()}`;
+      console.log('Registration data:', { ...formData, username });
       // Simulate successful registration/login
       onSuccess?.();
     }
@@ -110,31 +109,30 @@ export function SignupPage({ onClose, onSuccess }: SignupPageProps) {
           </Button>
         </div>
 
-        {/* Email */}
+        {/* First Name */}
         <div className="space-y-2">
-          <Label htmlFor="email" className="text-white">Email</Label>
+          <Label htmlFor="firstName" className="text-white">First Name</Label>
           <Input
-            id="email"
-            type="email"
-            value={formData.email}
-            onChange={(e) => handleInputChange('email', e.target.value)}
+            id="firstName"
+            value={formData.firstName}
+            onChange={(e) => handleInputChange('firstName', e.target.value)}
             className="bg-slate-700 border-gray-600 text-white"
-            placeholder="Enter your email"
+            placeholder="Enter your first name"
           />
-          {errors.email && <p className="text-red-400 text-sm">{errors.email}</p>}
+          {errors.firstName && <p className="text-red-400 text-sm">{errors.firstName}</p>}
         </div>
 
-        {/* Username */}
+        {/* Last Name */}
         <div className="space-y-2">
-          <Label htmlFor="username" className="text-white">Username</Label>
+          <Label htmlFor="lastName" className="text-white">Last Name</Label>
           <Input
-            id="username"
-            value={formData.username}
-            onChange={(e) => handleInputChange('username', e.target.value)}
+            id="lastName"
+            value={formData.lastName}
+            onChange={(e) => handleInputChange('lastName', e.target.value)}
             className="bg-slate-700 border-gray-600 text-white"
-            placeholder="Choose a username"
+            placeholder="Enter your last name"
           />
-          {errors.username && <p className="text-red-400 text-sm">{errors.username}</p>}
+          {errors.lastName && <p className="text-red-400 text-sm">{errors.lastName}</p>}
         </div>
 
         {/* Password */}
@@ -168,31 +166,7 @@ export function SignupPage({ onClose, onSuccess }: SignupPageProps) {
               {errors.confirmPassword && <p className="text-red-400 text-sm">{errors.confirmPassword}</p>}
             </div>
 
-            {/* Name fields */}
-            <div className="grid grid-cols-2 gap-3">
-              <div className="space-y-2">
-                <Label htmlFor="firstName" className="text-white">First Name</Label>
-                <Input
-                  id="firstName"
-                  value={formData.firstName}
-                  onChange={(e) => handleInputChange('firstName', e.target.value)}
-                  className="bg-slate-700 border-gray-600 text-white"
-                  placeholder="First name"
-                />
-                {errors.firstName && <p className="text-red-400 text-sm">{errors.firstName}</p>}
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="lastName" className="text-white">Last Name</Label>
-                <Input
-                  id="lastName"
-                  value={formData.lastName}
-                  onChange={(e) => handleInputChange('lastName', e.target.value)}
-                  className="bg-slate-700 border-gray-600 text-white"
-                  placeholder="Last name"
-                />
-                {errors.lastName && <p className="text-red-400 text-sm">{errors.lastName}</p>}
-              </div>
-            </div>
+
 
             {/* Phone and Date of Birth */}
             <div className="space-y-2">

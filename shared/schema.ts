@@ -4,8 +4,15 @@ import { z } from "zod";
 
 export const users = pgTable("users", {
   id: serial("id").primaryKey(),
-  username: text("username").notNull().unique(),
+  firstName: text("first_name").notNull(),
+  lastName: text("last_name").notNull(),
+  username: text("username").notNull().unique(), // auto-generated from firstName_lastName
   password: text("password").notNull(),
+  phoneNumber: text("phone_number"),
+  dateOfBirth: text("date_of_birth"),
+  country: text("country"),
+  currency: text("currency").default("USD"),
+  promoCode: text("promo_code"),
   balance: decimal("balance", { precision: 10, scale: 2 }).default("0.00"),
 });
 
@@ -53,8 +60,14 @@ export const casinoGames = pgTable("casino_games", {
 });
 
 export const insertUserSchema = createInsertSchema(users).pick({
-  username: true,
+  firstName: true,
+  lastName: true,
   password: true,
+  phoneNumber: true,
+  dateOfBirth: true,
+  country: true,
+  currency: true,
+  promoCode: true,
 });
 
 export const insertSportsEventSchema = createInsertSchema(sportsEvents);
