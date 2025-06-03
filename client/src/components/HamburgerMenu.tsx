@@ -81,10 +81,10 @@ export function HamburgerMenu({ isOpen, onClose, onTabChange, activeTab }: Hambu
                   <Button
                     key={section.id}
                     variant={activeTab === section.id ? "default" : "secondary"}
-                    className={`p-3 min-h-20 flex flex-col items-center justify-center text-center transition-colors ${
+                    className={`p-4 min-h-20 flex flex-col items-center justify-center text-center transition-all duration-200 rounded-xl border shadow-sm ${
                       activeTab === section.id 
-                        ? 'bg-primary text-white' 
-                        : 'bg-slate-custom hover:bg-slate-light-custom'
+                        ? 'bg-primary text-white border-primary/20' 
+                        : 'bg-slate-custom hover:bg-slate-light-custom border-slate-600 hover:border-slate-500'
                     }`}
                     onClick={() => handleItemClick(section.id)}
                   >
@@ -105,10 +105,10 @@ export function HamburgerMenu({ isOpen, onClose, onTabChange, activeTab }: Hambu
                   <Button
                     key={sport.id}
                     variant={activeTab === sport.id ? "default" : "secondary"}
-                    className={`p-3 min-h-20 flex flex-col items-center justify-center text-center transition-colors ${
+                    className={`p-4 min-h-20 flex flex-col items-center justify-center text-center transition-all duration-200 rounded-xl border shadow-sm ${
                       activeTab === sport.id 
-                        ? 'bg-primary text-white' 
-                        : 'bg-slate-custom hover:bg-slate-light-custom'
+                        ? 'bg-primary text-white border-primary/20' 
+                        : 'bg-slate-custom hover:bg-slate-light-custom border-slate-600 hover:border-slate-500'
                     }`}
                     onClick={() => handleItemClick(sport.id)}
                   >
@@ -131,7 +131,7 @@ export function HamburgerMenu({ isOpen, onClose, onTabChange, activeTab }: Hambu
                   <Button
                     key={country.id}
                     variant="ghost"
-                    className="w-full justify-between p-2 md:p-3 text-left text-gray-300 hover:bg-slate-700 active:bg-slate-600 transition-all duration-300 rounded-lg touch-manipulation"
+                    className="w-full justify-between p-3 md:p-4 text-left text-gray-300 hover:bg-slate-light-custom active:bg-slate-600 transition-all duration-200 rounded-xl border border-slate-600 hover:border-slate-500 shadow-sm touch-manipulation"
                     onClick={() => handleItemClick(country.id)}
                   >
                     <div className="flex items-center">
