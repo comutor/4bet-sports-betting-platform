@@ -86,25 +86,33 @@ export function SignupPage({ onClose, onSuccess }: SignupPageProps) {
   };
 
   return (
-    <div className="min-h-screen bg-slate-custom text-white">
-      {/* Header */}
-      <div className="bg-slate-800 p-6 border-b border-gray-700 flex items-center justify-between">
-        <h1 className="text-2xl font-bold text-white">
-          {isLogin ? 'Log In' : 'Sign Up'}
-        </h1>
-        {onClose && (
-          <Button
-            variant="ghost"
-            size="sm"
-            className="text-gray-400 hover:text-white"
-            onClick={onClose}
-          >
-            <i className="fas fa-times text-2xl"></i>
-          </Button>
-        )}
-      </div>
+    <div className="fixed inset-0 z-50 flex">
+      {/* Background overlay */}
+      <div 
+        className="fixed inset-0 bg-black bg-opacity-50"
+        onClick={onClose}
+      ></div>
+      
+      {/* Sliding panel */}
+      <div className="ml-auto bg-slate-custom text-white w-full max-w-md h-full overflow-y-auto animate-in slide-in-from-right duration-300">
+        {/* Header */}
+        <div className="bg-slate-800 p-6 border-b border-gray-700 flex items-center justify-between">
+          <h1 className="text-2xl font-bold text-white">
+            {isLogin ? 'Log In' : 'Sign Up'}
+          </h1>
+          {onClose && (
+            <Button
+              variant="ghost"
+              size="sm"
+              className="text-gray-400 hover:text-white"
+              onClick={onClose}
+            >
+              <i className="fas fa-times text-2xl"></i>
+            </Button>
+          )}
+        </div>
 
-      <form onSubmit={handleSubmit} className="p-6 space-y-6 max-w-md mx-auto">
+        <form onSubmit={handleSubmit} className="p-6 space-y-6 max-w-md mx-auto">
         {/* Toggle Login/Signup */}
         <div className="flex rounded-lg bg-slate-800 p-1">
           <Button
@@ -259,6 +267,7 @@ export function SignupPage({ onClose, onSuccess }: SignupPageProps) {
           </p>
         )}
       </form>
+      </div>
     </div>
   );
 }
