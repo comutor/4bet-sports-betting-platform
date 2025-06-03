@@ -1,4 +1,6 @@
 import { Button } from "@/components/ui/button";
+import { AccountSidebar } from "./AccountSidebar";
+import { useState } from "react";
 
 interface BottomNavigationProps {
   activeTab: string;
@@ -19,6 +21,7 @@ export function BottomNavigation({
   isLoggedIn = false,
   isMenuOpen = false
 }: BottomNavigationProps) {
+  const [isAccountOpen, setIsAccountOpen] = useState(false);
   const navItems = [
     { id: 'menu', label: 'Menu', icon: 'fas fa-bars' },
     { id: 'home', label: 'Sports', icon: 'fas fa-futbol' },
@@ -36,6 +39,8 @@ export function BottomNavigation({
       onBetslipOpen();
     } else if (tabId === 'menu') {
       onMenuOpen();
+    } else if (tabId === 'account') {
+      setIsAccountOpen(true);
     } else {
       onTabChange(tabId);
     }
@@ -98,6 +103,12 @@ export function BottomNavigation({
         </div>
       </div>
 
+      {/* Account Sidebar */}
+      <AccountSidebar 
+        isOpen={isAccountOpen} 
+        onClose={() => setIsAccountOpen(false)}
+        isLoggedIn={isLoggedIn}
+      />
     </nav>
   );
 }

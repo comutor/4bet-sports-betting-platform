@@ -7,12 +7,12 @@ interface AccountSidebarProps {
 }
 
 export function AccountSidebar({ isOpen, onClose, isLoggedIn = false }: AccountSidebarProps) {
-  const accountMenuItems = [
-    { id: 'why-join', label: 'Why Join?', icon: 'fas fa-question-circle', hasArrow: true },
-    { id: 'deposit', label: 'Deposit', icon: 'fas fa-credit-card', hasArrow: true },
-    { id: 'help-center', label: 'Help Center', icon: 'fas fa-life-ring', hasDropdown: true },
-    { id: 'download-app', label: 'Download the App', icon: 'fas fa-mobile-alt', hasArrow: true },
-    { id: 'more-betpawa', label: 'More on betPawa', icon: 'fas fa-info-circle', hasDropdown: true }
+  const menuItems = [
+    { id: 'why-join', label: 'Why Join?', icon: 'fas fa-question-circle' },
+    { id: 'deposit', label: 'Deposit', icon: 'fas fa-credit-card' },
+    { id: 'help-center', label: 'Help Center', icon: 'fas fa-life-ring' },
+    { id: 'download-app', label: 'Download the App', icon: 'fas fa-mobile-alt' },
+    { id: 'more-nilebet', label: 'More on NileBet', icon: 'fas fa-info-circle' }
   ];
 
   return (
@@ -22,10 +22,7 @@ export function AccountSidebar({ isOpen, onClose, isLoggedIn = false }: AccountS
         className={`fixed inset-0 bg-black/50 z-[59] transition-opacity duration-300 ${
           isOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'
         }`}
-        onClick={(e) => {
-          e.stopPropagation();
-          onClose();
-        }}
+        onClick={onClose}
       />
       
       {/* Sidebar Panel */}
@@ -33,7 +30,6 @@ export function AccountSidebar({ isOpen, onClose, isLoggedIn = false }: AccountS
         className={`fixed top-0 right-0 h-full w-full bg-slate-custom transform transition-transform duration-300 ease-in-out z-[60] ${
           isOpen ? "translate-x-0" : "translate-x-full"
         }`}
-        onClick={(e) => e.stopPropagation()}
       >
         <div className="flex flex-col h-full">
           {/* Header */}
@@ -56,7 +52,7 @@ export function AccountSidebar({ isOpen, onClose, isLoggedIn = false }: AccountS
               {!isLoggedIn ? (
                 <div className="grid grid-cols-2 gap-3">
                   <Button className="bg-lime-500 hover:bg-lime-600 text-black font-bold py-4 text-sm">
-                    JOIN NOW
+                    SIGN UP
                   </Button>
                   <Button variant="outline" className="border-2 border-gray-400 text-gray-300 hover:bg-slate-700 font-bold py-4 text-sm">
                     LOG IN
@@ -76,22 +72,17 @@ export function AccountSidebar({ isOpen, onClose, isLoggedIn = false }: AccountS
 
             {/* Menu Items */}
             <div className="space-y-2">
-              {accountMenuItems.map((item) => (
+              {menuItems.map((item) => (
                 <Button
                   key={item.id}
                   variant="ghost"
-                  className="w-full justify-between p-4 text-left text-gray-300 hover:bg-slate-light-custom transition-all duration-200 rounded-lg"
+                  className="w-full justify-between p-4 text-left text-gray-300 hover:bg-slate-light-custom transition-all duration-200 rounded-xl border border-slate-600 hover:border-slate-500"
                 >
                   <div className="flex items-center">
                     <i className={`${item.icon} w-5 mr-3 text-gray-400`}></i>
                     <span className="text-base font-medium">{item.label}</span>
                   </div>
-                  {item.hasArrow && (
-                    <i className="fas fa-chevron-right text-gray-400 text-sm"></i>
-                  )}
-                  {item.hasDropdown && (
-                    <i className="fas fa-chevron-down text-gray-400 text-sm"></i>
-                  )}
+                  <i className="fas fa-chevron-right text-gray-400 text-sm"></i>
                 </Button>
               ))}
             </div>

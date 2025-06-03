@@ -27,7 +27,7 @@ export function AccountPage({ isLoggedIn = false }: AccountPageProps) {
           {!isLoggedIn ? (
             <div className="grid grid-cols-2 gap-3">
               <Button className="bg-lime-500 hover:bg-lime-600 text-black font-bold py-4 text-sm">
-                JOIN NOW
+                SIGN UP
               </Button>
               <Button variant="outline" className="border-2 border-gray-400 text-gray-300 hover:bg-slate-700 font-bold py-4 text-sm">
                 LOG IN
