@@ -1,6 +1,7 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
+import { oddsApiService } from "./services/oddsApi";
 import { insertBetslipItemSchema } from "@shared/schema";
 
 export async function registerRoutes(app: Express): Promise<Server> {
@@ -30,6 +31,53 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.json(events);
     } catch (error) {
       res.status(500).json({ message: "Failed to fetch events by category" });
+    }
+  });
+
+  // Real sports data from Odds API
+  app.get("/api/odds/sports", async (req, res) => {
+    try {
+      const sports = await oddsApiService.getSports();
+      res.json(sports);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to fetch sports from API" });
+    }
+  });
+
+  app.get("/api/odds/:sportKey", async (req, res) => {
+    try {
+      const { sportKey } = req.params;
+      const events = await oddsApiService.getOdds(sportKey);
+      res.json(events);
+    } catch (error) {
+      res.status(500).json({ message: `Failed to fetch odds for ${req.params.sportKey}` });
+    }
+  });
+
+  app.get("/api/odds/upcoming/popular", async (req, res) => {
+    try {
+      const games = await oddsApiService.getUpcomingGames();
+      res.json(games);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to fetch upcoming games" });
+    }
+  });
+
+  app.get("/api/odds/soccer/leagues", async (req, res) => {
+    try {
+      const leagues = await oddsApiService.getSoccerLeagues();
+      res.json(leagues);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to fetch soccer leagues" });
+    }
+  });
+
+  app.get("/api/odds/basketball/leagues", async (req, res) => {
+    try {
+      const leagues = await oddsApiService.getBasketballLeagues();
+      res.json(leagues);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to fetch basketball leagues" });
     }
   });
 
