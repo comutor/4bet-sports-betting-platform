@@ -34,13 +34,11 @@ export function BottomNavigation({
   ];
 
   const handleTabClick = (tabId: string) => {
-    console.log('Bottom nav tab clicked:', tabId, 'isLoggedIn:', isLoggedIn);
     if (tabId === 'betslip') {
       onBetslipOpen();
     } else if (tabId === 'menu') {
       onMenuOpen();
     } else if (tabId === 'sign-up' && !isLoggedIn && onSignupClick) {
-      console.log('Calling onSignupClick from bottom nav');
       onSignupClick();
     } else {
       onTabChange(tabId);

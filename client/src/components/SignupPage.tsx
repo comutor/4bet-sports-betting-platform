@@ -86,7 +86,7 @@ export function SignupPage({ onClose, onSuccess }: SignupPageProps) {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex">
+    <div className="fixed inset-0 z-[9999] flex">
       {/* Background overlay */}
       <div 
         className="fixed inset-0 bg-black bg-opacity-50"
@@ -94,7 +94,7 @@ export function SignupPage({ onClose, onSuccess }: SignupPageProps) {
       ></div>
       
       {/* Sliding panel */}
-      <div className="ml-auto bg-slate-custom text-white w-full max-w-md h-full overflow-y-auto animate-in slide-in-from-right duration-300">
+      <div className="ml-auto bg-slate-custom text-white w-full max-w-md h-full overflow-y-auto relative z-10 transform transition-transform duration-300 ease-in-out translate-x-0">
         {/* Header */}
         <div className="bg-slate-800 p-6 border-b border-gray-700 flex items-center justify-between">
           <h1 className="text-2xl font-bold text-white">
@@ -112,7 +112,7 @@ export function SignupPage({ onClose, onSuccess }: SignupPageProps) {
           )}
         </div>
 
-        <form onSubmit={handleSubmit} className="p-6 space-y-6 max-w-md mx-auto">
+        <form onSubmit={handleSubmit} className="p-6 space-y-6">
         {/* Toggle Login/Signup */}
         <div className="flex rounded-lg bg-slate-800 p-1">
           <Button

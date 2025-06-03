@@ -60,7 +60,6 @@ export default function Home() {
   };
 
   const handleOpenSignupPage = () => {
-    console.log('handleOpenSignupPage called');
     setShowSignupPage(true);
     setShowLoginPrompt(false);
     setIsMenuOpen(false);
