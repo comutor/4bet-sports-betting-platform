@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { AccountSidebar } from "./AccountSidebar";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 interface BottomNavigationProps {
   activeTab: string;
@@ -22,6 +22,10 @@ export function BottomNavigation({
   isMenuOpen = false
 }: BottomNavigationProps) {
   const [isAccountOpen, setIsAccountOpen] = useState(false);
+  
+  useEffect(() => {
+    console.log('BottomNavigation activeTab changed to:', activeTab, 'isAccountOpen:', isAccountOpen);
+  }, [activeTab, isAccountOpen]);
   const navItems = [
     { id: 'menu', label: 'Menu', icon: 'fas fa-bars' },
     { id: 'home', label: 'Sports', icon: 'fas fa-futbol' },
@@ -44,6 +48,8 @@ export function BottomNavigation({
       console.log('Setting account open to true');
       setIsAccountOpen(true);
     } else {
+      // Close account sidebar when switching to other tabs
+      setIsAccountOpen(false);
       onTabChange(tabId);
     }
   };
