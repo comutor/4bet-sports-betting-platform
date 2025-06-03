@@ -35,11 +35,13 @@ export function BottomNavigation({
   ];
 
   const handleTabClick = (tabId: string) => {
+    console.log('handleTabClick called with:', tabId);
     if (tabId === 'betslip') {
       onBetslipOpen();
     } else if (tabId === 'menu') {
       onMenuOpen();
     } else if (tabId === 'account') {
+      console.log('Setting account open to true');
       setIsAccountOpen(true);
     } else {
       onTabChange(tabId);
