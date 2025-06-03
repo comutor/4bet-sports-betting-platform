@@ -7,7 +7,6 @@ interface AccountSidebarProps {
 }
 
 export function AccountSidebar({ isOpen, onClose, isLoggedIn = false }: AccountSidebarProps) {
-  console.log('AccountSidebar rendering, isOpen:', isOpen);
   const accountMenuItems = [
     { id: 'why-join', label: 'Why Join?', icon: 'fas fa-question-circle', hasArrow: true },
     { id: 'deposit', label: 'Deposit', icon: 'fas fa-credit-card', hasArrow: true },

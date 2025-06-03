@@ -23,9 +23,12 @@ export function BottomNavigation({
 }: BottomNavigationProps) {
   const [isAccountOpen, setIsAccountOpen] = useState(false);
   
+  // Close account sidebar when menu opens
   useEffect(() => {
-    console.log('BottomNavigation activeTab changed to:', activeTab, 'isAccountOpen:', isAccountOpen);
-  }, [activeTab, isAccountOpen]);
+    if (isMenuOpen) {
+      setIsAccountOpen(false);
+    }
+  }, [isMenuOpen]);
   const navItems = [
     { id: 'menu', label: 'Menu', icon: 'fas fa-bars' },
     { id: 'home', label: 'Sports', icon: 'fas fa-futbol' },
@@ -39,16 +42,15 @@ export function BottomNavigation({
   ];
 
   const handleTabClick = (tabId: string) => {
-    console.log('handleTabClick called with:', tabId);
     if (tabId === 'betslip') {
+      setIsAccountOpen(false);
       onBetslipOpen();
     } else if (tabId === 'menu') {
+      setIsAccountOpen(false);
       onMenuOpen();
     } else if (tabId === 'account') {
-      console.log('Setting account open to true');
-      setIsAccountOpen(true);
+      setIsAccountOpen(!isAccountOpen);
     } else {
-      // Close account sidebar when switching to other tabs
       setIsAccountOpen(false);
       onTabChange(tabId);
     }
