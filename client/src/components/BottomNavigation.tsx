@@ -1,6 +1,4 @@
 import { Button } from "@/components/ui/button";
-import { AccountSidebar } from "./AccountSidebar";
-import { useState, useEffect } from "react";
 
 interface BottomNavigationProps {
   activeTab: string;
@@ -21,14 +19,6 @@ export function BottomNavigation({
   isLoggedIn = false,
   isMenuOpen = false
 }: BottomNavigationProps) {
-  const [isAccountOpen, setIsAccountOpen] = useState(false);
-  
-  // Close account sidebar when menu opens
-  useEffect(() => {
-    if (isMenuOpen) {
-      setIsAccountOpen(false);
-    }
-  }, [isMenuOpen]);
   const navItems = [
     { id: 'menu', label: 'Menu', icon: 'fas fa-bars' },
     { id: 'home', label: 'Sports', icon: 'fas fa-futbol' },
@@ -37,21 +27,15 @@ export function BottomNavigation({
       id: isLoggedIn ? 'my-bets' : 'sign-up', 
       label: isLoggedIn ? 'My Bets' : 'Sign Up', 
       icon: isLoggedIn ? 'fas fa-history' : 'fas fa-user-plus' 
-    },
-    { id: 'account', label: 'Account', icon: 'fas fa-user' }
+    }
   ];
 
   const handleTabClick = (tabId: string) => {
     if (tabId === 'betslip') {
-      setIsAccountOpen(false);
       onBetslipOpen();
     } else if (tabId === 'menu') {
-      setIsAccountOpen(false);
       onMenuOpen();
-    } else if (tabId === 'account') {
-      setIsAccountOpen(!isAccountOpen);
     } else {
-      setIsAccountOpen(false);
       onTabChange(tabId);
     }
   };
@@ -70,7 +54,7 @@ export function BottomNavigation({
           </div>
         </div>
         
-        <div className="grid grid-cols-5 max-w-md mx-auto pt-2">
+        <div className="grid grid-cols-4 max-w-md mx-auto pt-2">
           {navItems.map((item, index) => (
             <Button
               key={item.id}
@@ -112,13 +96,7 @@ export function BottomNavigation({
           ))}
         </div>
       </div>
-      
-      {/* Account Sidebar */}
-      <AccountSidebar 
-        isOpen={isAccountOpen} 
-        onClose={() => setIsAccountOpen(false)}
-        isLoggedIn={isLoggedIn}
-      />
+
     </nav>
   );
 }
