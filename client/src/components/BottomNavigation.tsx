@@ -18,7 +18,8 @@ export function BottomNavigation({
   onBetslipOpen, 
   onMenuOpen,
   betslipCount,
-  isLoggedIn = false
+  isLoggedIn = false,
+  isMenuOpen = false
 }: BottomNavigationProps) {
   const [isAccountOpen, setIsAccountOpen] = useState(false);
   const navItems = [
@@ -46,7 +47,9 @@ export function BottomNavigation({
   };
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 bg-slate-custom z-50">
+    <nav className={`fixed bottom-0 left-0 right-0 bg-slate-custom z-50 transition-transform duration-300 ${
+      isMenuOpen ? 'transform translate-y-full' : 'transform translate-y-0'
+    }`}>
       {/* Navigation bar with curved cutout */}
       <div className="relative">
         {/* Main border with curved cutout for betslip */}
