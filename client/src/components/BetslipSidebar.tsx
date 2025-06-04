@@ -91,7 +91,7 @@ export function BetslipSidebar({
                 </div>
                 <div className="text-sm text-gray-400 mb-2">{item.selection}</div>
                 <div className="flex items-center justify-between">
-                  <span className="font-bold">@{item.odds}</span>
+                  <span className="font-bold">{item.odds}</span>
                   <Input
                     type="number"
                     value={item.stake}
@@ -122,7 +122,7 @@ export function BetslipSidebar({
                     <div className="text-xs text-gray-400">{item.selection}</div>
                   </div>
                   <div className="flex items-center space-x-2">
-                    <span className="font-bold">@{item.odds}</span>
+                    <span className="font-bold">{item.odds}</span>
                     <Button 
                       variant="ghost" 
                       size="sm"
@@ -139,7 +139,7 @@ export function BetslipSidebar({
               <div className="mt-4 pt-4 border-t border-gray-600">
                 <div className="flex items-center justify-between mb-2">
                   <span className="text-sm">Combined Odds:</span>
-                  <span className="font-bold text-lg">@{accumulatorOdds.toFixed(2)}</span>
+                  <span className="font-bold text-lg">{accumulatorOdds.toFixed(2)}</span>
                 </div>
                 <div className="flex items-center justify-between">
                   <span className="text-sm">Stake:</span>
@@ -186,7 +186,7 @@ export function BetslipSidebar({
                 </div>
                 <div className="flex items-center justify-between mb-2">
                   <span>Combined Odds:</span>
-                  <span className="font-bold">@{accumulatorOdds.toFixed(2)}</span>
+                  <span className="font-bold">{accumulatorOdds.toFixed(2)}</span>
                 </div>
                 <div className="flex items-center justify-between mb-4">
                   <span>Potential Win:</span>
