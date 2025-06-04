@@ -19,6 +19,7 @@ import { FootballSection } from "@/components/FootballSection";
 import { SportSection } from "@/components/SportSection";
 import { SportsOverview } from "@/components/SportsOverview";
 import { QuickAccessBoxes } from "@/components/QuickAccessBoxes";
+import { WelcomeBanner } from "@/components/WelcomeBanner";
 import { useBetslip } from "@/hooks/useBetslip";
 import { sampleFeaturedEvents } from "@/lib/betting-data";
 import { Button } from "@/components/ui/button";
@@ -164,21 +165,8 @@ export default function Home() {
       case 'home':
         return (
           <>
-            {/* Hero Section */}
-            <div className="relative overflow-hidden">
-              <div className="h-64 md:h-80 bg-gradient-to-r from-blue-600/90 to-emerald-600/90 relative">
-                <div className="absolute inset-0 bg-black/50"></div>
-                <div className="relative z-10 h-full flex items-center justify-center text-center px-4">
-                  <div>
-                    <h1 className="text-4xl md:text-6xl font-bold mb-4">Welcome to NileBet</h1>
-                    <p className="text-xl md:text-2xl text-gray-200 mb-6">Your Premier Betting Destination</p>
-                    <Button className="bg-warning hover:bg-yellow-500 text-black px-8 py-3 text-lg font-bold">
-                      Start Betting Now
-                    </Button>
-                  </div>
-                </div>
-              </div>
-            </div>
+            {/* Auto-Rotating Welcome Banner */}
+            <WelcomeBanner />
 
             <QuickAccessBoxes 
               onUpcomingClick={() => {
