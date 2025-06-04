@@ -40,12 +40,10 @@ export function TopNavigation({ activeTab, onTabChange, userBalance, userCountry
   const allNavItems = [
     { id: 'home', label: 'Home', icon: 'fas fa-home' },
     { id: 'sports', label: 'Sports', icon: 'fas fa-futbol' },
-    { id: 'basketball', label: 'Basketball', icon: 'fas fa-basketball' },
     { id: 'aviator', label: 'Aviator', icon: 'fas fa-plane' },
-    { id: 'live', label: 'Live Now', icon: 'fas fa-broadcast-tower', hasIndicator: true },
-    { id: 'casino', label: 'Casino', icon: 'fas fa-dice' },
     { id: 'virtual', label: 'Virtual', icon: 'fas fa-robot' },
-    { id: 'tennis', label: 'Tennis', icon: 'fas fa-table-tennis' }
+    { id: 'tennis', label: 'Tennis', icon: 'fas fa-table-tennis' },
+    { id: 'casino', label: 'Casino', icon: 'fas fa-dice' }
   ];
 
   const allServices = [
