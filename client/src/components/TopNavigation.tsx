@@ -34,7 +34,7 @@ export function TopNavigation({ activeTab, onTabChange, userBalance, userCountry
     } else if (country === 'South Sudan') {
       return `SSP ${balance}`;
     }
-    return `$${balance}`; // Default fallback
+    return `SSP ${balance}`; // Default to South Sudanese Pounds
   };
 
   const allNavItems = [
