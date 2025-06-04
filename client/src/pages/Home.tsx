@@ -278,6 +278,10 @@ export default function Home() {
         onUpdateStake={updateStake}
         totalStake={totalStake}
         totalPotentialReturn={totalPotentialReturn}
+        isLoggedIn={isLoggedIn}
+        userBalance={parseFloat(userBalance)}
+        onLoginClick={handleOpenLoginModal}
+        onDepositClick={() => {}} // TODO: Implement deposit functionality
       />
 
       <HamburgerMenu 

@@ -11,6 +11,10 @@ interface BetslipSidebarProps {
   onUpdateStake: (id: string, stake: number) => void;
   totalStake: number;
   totalPotentialReturn: number;
+  isLoggedIn: boolean;
+  userBalance: number;
+  onLoginClick: () => void;
+  onDepositClick: () => void;
 }
 
 export function BetslipSidebar({
@@ -20,7 +24,11 @@ export function BetslipSidebar({
   onRemoveItem,
   onUpdateStake,
   totalStake,
-  totalPotentialReturn
+  totalPotentialReturn,
+  isLoggedIn,
+  userBalance,
+  onLoginClick,
+  onDepositClick
 }: BetslipSidebarProps) {
   const [betType, setBetType] = useState<'single' | 'accumulator'>('accumulator');
   const [accumulatorStake, setAccumulatorStake] = useState(100);
@@ -28,6 +36,34 @@ export function BetslipSidebar({
   // Calculate accumulator odds (multiply all odds together)
   const accumulatorOdds = items.reduce((total, item) => total * parseFloat(item.odds), 1);
   const accumulatorReturn = accumulatorStake * accumulatorOdds;
+
+  // Determine button state and text
+  const getButtonConfig = () => {
+    if (!isLoggedIn) {
+      return {
+        text: "LOGIN TO PLACE YOUR BET",
+        onClick: onLoginClick,
+        className: "w-full bg-primary hover:bg-primary-blue-dark font-bold"
+      };
+    }
+
+    const requiredBalance = betType === 'single' ? totalStake : accumulatorStake;
+    if (userBalance < requiredBalance) {
+      return {
+        text: "DEPOSIT TO PLACE YOUR BET",
+        onClick: onDepositClick,
+        className: "w-full bg-primary hover:bg-primary-blue-dark font-bold"
+      };
+    }
+
+    return {
+      text: betType === 'single' 
+        ? `Place ${items.length} Single Bet${items.length > 1 ? 's' : ''}`
+        : "Place Accumulator",
+      onClick: () => {}, // Actual bet placement logic
+      className: "w-full bg-primary hover:bg-primary-blue-dark font-bold"
+    };
+  };
 
   // Prevent background scroll when betslip is open
   useEffect(() => {
@@ -195,8 +231,11 @@ export function BetslipSidebar({
                   <span className="font-bold text-success">SSP {totalPotentialReturn.toFixed(2)}</span>
                 </div>
                 
-                <Button className="w-full bg-success hover:bg-green-600 font-bold">
-                  Place {items.length} Single Bet{items.length > 1 ? 's' : ''}
+                <Button 
+                  className={getButtonConfig().className}
+                  onClick={getButtonConfig().onClick}
+                >
+                  {getButtonConfig().text}
                 </Button>
               </>
             ) : (
@@ -214,8 +253,11 @@ export function BetslipSidebar({
                   <span className="font-bold text-success">SSP {accumulatorReturn.toFixed(2)}</span>
                 </div>
                 
-                <Button className="w-full bg-success hover:bg-green-600 font-bold">
-                  Place Accumulator
+                <Button 
+                  className={getButtonConfig().className}
+                  onClick={getButtonConfig().onClick}
+                >
+                  {getButtonConfig().text}
                 </Button>
               </>
             )}
