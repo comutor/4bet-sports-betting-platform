@@ -122,7 +122,7 @@ export function TopNavigation({ activeTab, onTabChange, userBalance, userCountry
         <div className="pb-3 relative">
           <div className="flex items-center">
             {/* Scrollable Navigation Pills */}
-            <div className={`flex items-center gap-1 overflow-x-auto scrollbar-hide flex-1 ${activeTab === 'sports' ? '' : 'pr-12'}`}>
+            <div className={`flex items-center ${activeTab === 'sports' ? 'gap-3 justify-center' : 'gap-1'} overflow-x-auto scrollbar-hide flex-1 ${activeTab === 'sports' ? '' : 'pr-12'}`}>
               {activeTab === 'sports' ? (
                 // Sports-specific navigation
                 <>
