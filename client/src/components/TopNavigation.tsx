@@ -120,19 +120,22 @@ export function TopNavigation({ activeTab, onTabChange, userBalance, userCountry
         
         {/* Bottom Row - Navigation Tabs */}
         <div className="pb-3 relative">
+          {activeTab === 'sports' && (
+            <div className="border-t border-gray-600 mb-3"></div>
+          )}
           <div className="flex items-center">
             {/* Scrollable Navigation Pills */}
-            <div className={`flex items-center ${activeTab === 'sports' ? 'gap-3 justify-center' : 'gap-1'} overflow-x-auto scrollbar-hide flex-1 ${activeTab === 'sports' ? '' : 'pr-12'}`}>
+            <div className={`flex items-center ${activeTab === 'sports' ? 'gap-4 justify-center py-2' : 'gap-1'} overflow-x-auto scrollbar-hide flex-1 ${activeTab === 'sports' ? '' : 'pr-12'}`}>
               {activeTab === 'sports' ? (
                 // Sports-specific navigation
                 <>
                   <Button
                     variant="ghost"
                     size="sm"
-                    className={`flex items-center gap-2 px-4 py-2.5 rounded-lg font-medium transition-all duration-200 whitespace-nowrap border ${
+                    className={`flex items-center gap-2 px-4 py-2 font-medium transition-all duration-200 whitespace-nowrap ${
                       sportsFilter === 'upcoming'
-                        ? 'bg-primary text-white shadow-lg border-primary'
-                        : 'text-gray-300 hover:bg-slate-700 hover:text-white border-gray-600 bg-slate-800'
+                        ? 'text-white'
+                        : 'text-gray-400 hover:text-white'
                     }`}
                     onClick={() => onSportsFilterChange?.('upcoming')}
                   >
@@ -142,10 +145,10 @@ export function TopNavigation({ activeTab, onTabChange, userBalance, userCountry
                   <Button
                     variant="ghost"
                     size="sm"
-                    className={`flex items-center gap-2 px-4 py-2.5 rounded-lg font-medium transition-all duration-200 whitespace-nowrap border ${
+                    className={`flex items-center gap-2 px-4 py-2 font-medium transition-all duration-200 whitespace-nowrap ${
                       sportsFilter === 'popular'
-                        ? 'bg-primary text-white shadow-lg border-primary'
-                        : 'text-gray-300 hover:bg-slate-700 hover:text-white border-gray-600 bg-slate-800'
+                        ? 'text-white'
+                        : 'text-gray-400 hover:text-white'
                     }`}
                     onClick={() => onSportsFilterChange?.('popular')}
                   >
@@ -155,10 +158,10 @@ export function TopNavigation({ activeTab, onTabChange, userBalance, userCountry
                   <Button
                     variant="ghost"
                     size="sm"
-                    className={`flex items-center gap-2 px-4 py-2.5 rounded-lg font-medium transition-all duration-200 whitespace-nowrap border ${
+                    className={`flex items-center gap-2 px-4 py-2 font-medium transition-all duration-200 whitespace-nowrap ${
                       sportsFilter === 'live'
-                        ? 'bg-primary text-white shadow-lg border-primary'
-                        : 'text-gray-300 hover:bg-slate-700 hover:text-white border-gray-600 bg-slate-800'
+                        ? 'text-white'
+                        : 'text-gray-400 hover:text-white'
                     }`}
                     onClick={() => onSportsFilterChange?.('live')}
                   >
@@ -209,6 +212,9 @@ export function TopNavigation({ activeTab, onTabChange, userBalance, userCountry
               </div>
             )}
           </div>
+          {activeTab === 'sports' && (
+            <div className="border-b border-gray-600 mt-3"></div>
+          )}
           
           {/* Services Dropdown */}
           {isServicesDropdownOpen && (
