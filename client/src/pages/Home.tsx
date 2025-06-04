@@ -182,7 +182,7 @@ export default function Home() {
           </>
         );
       case 'sports':
-        return <SportsSection onBetClick={handleBetClick} selectedSport="soccer" />;
+        return <SportsOverview onBetClick={handleBetClick} />;
       case 'football':
         return <FootballSection onBetClick={handleBetClick} />;
       case 'basketball':
@@ -205,8 +205,6 @@ export default function Home() {
         return <AviatorSection />;
       case 'scratch-cards':
         return <ScratchCardsSection />;
-      case 'sports':
-        return <SportsOverview onBetClick={handleBetClick} />;
       case 'account':
         return <AccountPage 
           isLoggedIn={isLoggedIn} 

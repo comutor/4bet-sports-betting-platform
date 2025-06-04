@@ -152,7 +152,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const upcomingGames = await oddsApiService.getUpcomingGames();
       
       // Transform to consistent format for sports overview
-      const transformedEvents = upcomingGames.slice(0, 10).map((game: any) => ({
+      const transformedEvents = (upcomingGames || []).slice(0, 10).map((game: any) => ({
         id: game.id,
         sport: game.sport_key?.includes('soccer') ? 'football' : 
                game.sport_key?.includes('basketball') ? 'basketball' :
@@ -182,7 +182,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const upcomingGames = await oddsApiService.getUpcomingGames();
       
       // Transform to consistent format for sports overview (simulating live events)
-      const liveEvents = upcomingGames.slice(0, 5).map((game: any) => ({
+      const liveEvents = (upcomingGames || []).slice(0, 5).map((game: any) => ({
         id: game.id,
         sport: game.sport_key?.includes('soccer') ? 'football' : 
                game.sport_key?.includes('basketball') ? 'basketball' :
