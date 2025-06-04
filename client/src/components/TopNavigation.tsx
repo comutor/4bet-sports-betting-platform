@@ -19,6 +19,7 @@ export function TopNavigation({ activeTab, onTabChange, userBalance, userCountry
   const [isServicesDropdownOpen, setIsServicesDropdownOpen] = useState(false);
 
   const getCurrencyDisplay = (balance: string, country?: string) => {
+    console.log('Currency display - Balance:', balance, 'Country:', country);
     if (country === 'Uganda') {
       return `UGX ${balance}`;
     } else if (country === 'South Sudan') {
