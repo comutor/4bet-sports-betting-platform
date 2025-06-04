@@ -88,6 +88,7 @@ export default function Home() {
   };
 
   const handleSignupSuccess = (userData?: any) => {
+    console.log('Signup success - received userData:', userData);
     setIsLoggedIn(true);
     setShowSignupPage(false);
     setActiveTab('account');
@@ -95,6 +96,7 @@ export default function Home() {
       setUserBalance(userData.balance);
     }
     if (userData?.country) {
+      console.log('Setting user country to:', userData.country);
       setUserCountry(userData.country);
     }
   };
