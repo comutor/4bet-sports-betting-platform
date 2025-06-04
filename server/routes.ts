@@ -124,15 +124,22 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Pure football (soccer) matches only
+  // Pure football (soccer) matches only - Nations League and FIFA competitions
   app.get("/api/football/matches", async (req, res) => {
     try {
-      const footballLeagues = ['soccer_epl', 'soccer_spain_la_liga', 'soccer_germany_bundesliga', 'soccer_italy_serie_a'];
+      const footballCompetitions = [
+        'soccer_uefa_nations_league', 
+        'soccer_fifa_world_cup', 
+        'soccer_conmebol_copa_america',
+        'soccer_uefa_european_championship',
+        'soccer_africa_cup_of_nations',
+        'soccer_fifa_club_world_cup'
+      ];
       const footballMatches: any[] = [];
 
-      for (const league of footballLeagues) {
+      for (const competition of footballCompetitions) {
         try {
-          const matches = await oddsApiService.getOdds(league);
+          const matches = await oddsApiService.getOdds(competition);
           const transformedMatches = matches.slice(0, 5).map((match: any) => ({
             id: match.id,
             homeTeam: match.home_team,
@@ -143,7 +150,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
           }));
           footballMatches.push(...transformedMatches);
         } catch (error) {
-          console.log(`Error fetching ${league}:`, error);
+          console.log(`Error fetching ${competition}:`, error);
         }
       }
 
