@@ -493,6 +493,109 @@ export class OddsApiService {
     return availableLeagues.sort((a, b) => a.priority - b.priority);
   }
 
+  // Get dynamic top countries with real data
+  async getTopCountriesWithData() {
+    const topCountries = [
+      { name: 'England', leagues: ['soccer_epl', 'soccer_england_league_one', 'soccer_england_league_two'], flag: '🏴󠁧󠁢󠁥󠁮󠁧󠁿', priority: 1 },
+      { name: 'Spain', leagues: ['soccer_spain_la_liga', 'soccer_spain_segunda_division'], flag: '🇪🇸', priority: 2 },
+      { name: 'Germany', leagues: ['soccer_germany_bundesliga', 'soccer_germany_bundesliga2'], flag: '🇩🇪', priority: 3 },
+      { name: 'Italy', leagues: ['soccer_italy_serie_a', 'soccer_italy_serie_b'], flag: '🇮🇹', priority: 4 },
+      { name: 'France', leagues: ['soccer_france_ligue_one', 'soccer_france_ligue_two'], flag: '🇫🇷', priority: 5 },
+      { name: 'Brazil', leagues: ['soccer_brazil_campeonato', 'soccer_brazil_serie_b'], flag: '🇧🇷', priority: 6 },
+      { name: 'USA', leagues: ['soccer_usa_mls'], flag: '🇺🇸', priority: 7 },
+      { name: 'Argentina', leagues: ['soccer_argentina_primera_division'], flag: '🇦🇷', priority: 8 },
+      { name: 'Netherlands', leagues: ['soccer_netherlands_eredivisie'], flag: '🇳🇱', priority: 9 },
+      { name: 'Portugal', leagues: ['soccer_portugal_primeira_liga'], flag: '🇵🇹', priority: 10 },
+      { name: 'Belgium', leagues: ['soccer_belgium_first_div'], flag: '🇧🇪', priority: 11 },
+      { name: 'Turkey', leagues: ['soccer_turkey_super_league'], flag: '🇹🇷', priority: 12 }
+    ];
+
+    const availableCountries = [];
+
+    for (const country of topCountries) {
+      const availableLeagues = [];
+      let totalGames = 0;
+
+      for (const leagueKey of country.leagues) {
+        try {
+          const games = await this.getOdds(leagueKey);
+          if (games.length > 0) {
+            availableLeagues.push(this.getLeagueName(leagueKey));
+            totalGames += games.length;
+          }
+        } catch (error) {
+          console.log(`League ${leagueKey} not available for ${country.name}`);
+        }
+      }
+
+      if (availableLeagues.length > 0) {
+        availableCountries.push({
+          id: country.name.toLowerCase(),
+          name: country.name,
+          flag: country.flag,
+          leagues: availableLeagues,
+          gameCount: totalGames,
+          priority: country.priority
+        });
+      }
+    }
+
+    return availableCountries.sort((a, b) => a.priority - b.priority);
+  }
+
+  // Get dynamic other countries with real data
+  async getOtherCountriesWithData() {
+    const otherCountries = [
+      { name: 'Russia', leagues: ['soccer_russia_premier_league'], flag: '🇷🇺', priority: 1 },
+      { name: 'Mexico', leagues: ['soccer_mexico_ligamx'], flag: '🇲🇽', priority: 2 },
+      { name: 'Japan', leagues: ['soccer_japan_j_league'], flag: '🇯🇵', priority: 3 },
+      { name: 'Australia', leagues: ['soccer_australia_aleague'], flag: '🇦🇺', priority: 4 },
+      { name: 'China', leagues: ['soccer_china_superleague'], flag: '🇨🇳', priority: 5 },
+      { name: 'South Korea', leagues: ['soccer_south_korea_kleague1'], flag: '🇰🇷', priority: 6 },
+      { name: 'Greece', leagues: ['soccer_greece_super_league'], flag: '🇬🇷', priority: 7 },
+      { name: 'Scotland', leagues: ['soccer_scotland_premiership'], flag: '🏴󠁧󠁢󠁳󠁣󠁴󠁿', priority: 8 },
+      { name: 'Norway', leagues: ['soccer_norway_eliteserien'], flag: '🇳🇴', priority: 9 },
+      { name: 'Sweden', leagues: ['soccer_sweden_allsvenskan'], flag: '🇸🇪', priority: 10 },
+      { name: 'Denmark', leagues: ['soccer_denmark_superliga'], flag: '🇩🇰', priority: 11 },
+      { name: 'Switzerland', leagues: ['soccer_switzerland_superleague'], flag: '🇨🇭', priority: 12 },
+      { name: 'Austria', leagues: ['soccer_austria_bundesliga'], flag: '🇦🇹', priority: 13 },
+      { name: 'Poland', leagues: ['soccer_poland_ekstraklasa'], flag: '🇵🇱', priority: 14 },
+      { name: 'Chile', leagues: ['soccer_chile_campeonato'], flag: '🇨🇱', priority: 15 }
+    ];
+
+    const availableCountries = [];
+
+    for (const country of otherCountries) {
+      const availableLeagues = [];
+      let totalGames = 0;
+
+      for (const leagueKey of country.leagues) {
+        try {
+          const games = await this.getOdds(leagueKey);
+          if (games.length > 0) {
+            availableLeagues.push(this.getLeagueName(leagueKey));
+            totalGames += games.length;
+          }
+        } catch (error) {
+          console.log(`League ${leagueKey} not available for ${country.name}`);
+        }
+      }
+
+      if (availableLeagues.length > 0) {
+        availableCountries.push({
+          id: country.name.toLowerCase().replace(' ', '_'),
+          name: country.name,
+          flag: country.flag,
+          leagues: availableLeagues,
+          gameCount: totalGames,
+          priority: country.priority
+        });
+      }
+    }
+
+    return availableCountries.sort((a, b) => a.priority - b.priority);
+  }
+
   private getCountryFlag(countryName: string): string {
     const flags: { [key: string]: string } = {
       'England': '🏴󠁧󠁢󠁥󠁮󠁧󠁿',

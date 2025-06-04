@@ -190,6 +190,28 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Top countries with real data
+  app.get("/api/countries/top", async (req, res) => {
+    try {
+      const topCountriesData = await oddsApiService.getTopCountriesWithData();
+      res.json(topCountriesData);
+    } catch (error) {
+      console.error("Error fetching top countries:", error);
+      res.status(500).json({ error: "Failed to fetch top countries" });
+    }
+  });
+
+  // Other countries with real data
+  app.get("/api/countries/other", async (req, res) => {
+    try {
+      const otherCountriesData = await oddsApiService.getOtherCountriesWithData();
+      res.json(otherCountriesData);
+    } catch (error) {
+      console.error("Error fetching other countries:", error);
+      res.status(500).json({ error: "Failed to fetch other countries" });
+    }
+  });
+
   // Authentication endpoints
   app.post("/api/auth/signup", async (req, res) => {
     try {

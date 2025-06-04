@@ -17,20 +17,13 @@ interface CountriesSectionProps {
 export function CountriesSection({ selectedCategory = 'top-countries', onBetClick }: CountriesSectionProps) {
   const [selectedCountry, setSelectedCountry] = useState<string | null>(null);
 
-  const topCountries: Country[] = [
-    { id: 'england', name: 'England', flag: '🏴󠁧󠁢󠁥󠁮󠁧󠁿', leagues: ['Premier League', 'Championship', 'League One', 'League Two', 'FA Cup'] },
-    { id: 'spain', name: 'Spain', flag: '🇪🇸', leagues: ['La Liga', 'Segunda División', 'Copa del Rey', 'Segunda División B'] },
-    { id: 'germany', name: 'Germany', flag: '🇩🇪', leagues: ['Bundesliga', '2. Bundesliga', 'DFB-Pokal', '3. Liga'] },
-    { id: 'italy', name: 'Italy', flag: '🇮🇹', leagues: ['Serie A', 'Serie B', 'Coppa Italia', 'Serie C'] },
-    { id: 'france', name: 'France', flag: '🇫🇷', leagues: ['Ligue 1', 'Ligue 2', 'Coupe de France', 'Coupe de la Ligue'] },
-    { id: 'usa', name: 'United States', flag: '🇺🇸', leagues: ['MLS', 'NBA', 'NFL', 'MLB', 'NHL', 'WNBA'] },
-    { id: 'brazil', name: 'Brazil', flag: '🇧🇷', leagues: ['Série A', 'Série B', 'Copa do Brasil', 'State Championships'] },
-    { id: 'argentina', name: 'Argentina', flag: '🇦🇷', leagues: ['Primera División', 'Primera Nacional', 'Copa Argentina'] },
-    { id: 'netherlands', name: 'Netherlands', flag: '🇳🇱', leagues: ['Eredivisie', 'Eerste Divisie', 'KNVB Cup'] },
-    { id: 'portugal', name: 'Portugal', flag: '🇵🇹', leagues: ['Primeira Liga', 'Segunda Liga', 'Taça de Portugal'] },
-    { id: 'belgium', name: 'Belgium', flag: '🇧🇪', leagues: ['Pro League', 'Challenger Pro League', 'Belgian Cup'] },
-    { id: 'turkey', name: 'Turkey', flag: '🇹🇷', leagues: ['Süper Lig', '1. Lig', 'Turkish Cup', 'Basketball Super League'] }
-  ];
+  // Fetch top countries from API
+  const { data: topCountriesData } = useQuery({
+    queryKey: ['/api/countries/top'],
+    enabled: selectedCategory === 'top-countries'
+  });
+
+  const topCountries: Country[] = Array.isArray(topCountriesData) ? topCountriesData : [];
 
   // Fetch international competitions from API
   const { data: internationalData } = useQuery({
@@ -38,7 +31,7 @@ export function CountriesSection({ selectedCategory = 'top-countries', onBetClic
     enabled: selectedCategory === 'international'
   });
 
-  const internationalCompetitions: Country[] = internationalData ? [
+  const internationalCompetitions: Country[] = internationalData && Array.isArray(internationalData) ? [
     { 
       id: 'international', 
       name: 'All International Leagues', 
