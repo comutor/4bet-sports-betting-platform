@@ -51,8 +51,6 @@ export function SportsOverview({ onBetClick }: SportsOverviewProps) {
     <div className="space-y-6 pb-20">
       {/* Header */}
       <div className="mb-6">
-        <h2 className="text-2xl font-bold text-white mb-4">Sports</h2>
-        
         {/* Navigation Tabs */}
         <div className="flex border-b border-gray-600">
           <button
