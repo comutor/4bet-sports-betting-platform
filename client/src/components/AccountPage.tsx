@@ -55,7 +55,7 @@ export function AccountPage({ isLoggedIn = false, onClose, onSignupClick, onLogo
                 DEPOSIT
               </Button>
               <Button variant="outline" className="border-gray-400 text-gray-300 hover:bg-slate-700 font-bold py-4">
-                MY BETS
+                WITHDRAW
               </Button>
             </div>
           )}
