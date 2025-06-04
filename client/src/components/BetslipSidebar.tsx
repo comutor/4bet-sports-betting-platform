@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { BetslipItem } from "@/hooks/useBetslip";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 interface BetslipSidebarProps {
   isOpen: boolean;
@@ -29,10 +29,31 @@ export function BetslipSidebar({
   const accumulatorOdds = items.reduce((total, item) => total * parseFloat(item.odds), 1);
   const accumulatorReturn = accumulatorStake * accumulatorOdds;
 
+  // Prevent background scroll when betslip is open
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+
+    // Cleanup on unmount
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [isOpen]);
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    e.stopPropagation();
+  };
+
   return (
-    <div className={`fixed inset-0 bg-slate-custom transform transition-transform duration-300 z-50 ${
-      isOpen ? 'translate-y-0' : 'translate-y-full'
-    }`}>
+    <div 
+      className={`fixed inset-0 bg-slate-custom transform transition-transform duration-300 z-50 ${
+        isOpen ? 'translate-y-0' : 'translate-y-full'
+      }`}
+      onTouchMove={handleTouchMove}
+    >
       <div className="p-6 h-full flex flex-col">
         <div className="flex items-center justify-between mb-6">
           <h3 className="text-xl font-bold">Betslip</h3>
@@ -68,7 +89,7 @@ export function BetslipSidebar({
         )}
         
         {/* Betslip Items */}
-        <div className="flex-1 overflow-y-auto space-y-4 mb-6">
+        <div className="flex-1 overflow-y-auto space-y-4 mb-6 overscroll-contain" style={{ WebkitOverflowScrolling: 'touch' }}>
           {items.length === 0 ? (
             <div className="text-center text-gray-400 py-8">
               <i className="fas fa-receipt text-4xl mb-4"></i>
