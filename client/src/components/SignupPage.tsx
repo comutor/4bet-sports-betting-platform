@@ -302,6 +302,13 @@ export function SignupPage({ onClose, onSuccess }: SignupPageProps) {
           </>
         )}
 
+        {/* Error Display */}
+        {errors.general && (
+          <div className="bg-red-900/20 border border-red-600/50 rounded-lg p-3">
+            <p className="text-red-400 text-sm">{errors.general}</p>
+          </div>
+        )}
+
         {/* Submit Button */}
         <Button
           type="submit"
