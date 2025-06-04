@@ -134,7 +134,7 @@ export function SportsSection({ onBetClick, selectedSport = 'soccer' }: SportsSe
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-8">
-      <h2 className="text-2xl font-bold mb-6">Leagues</h2>
+      <h2 className="text-2xl font-bold mb-6">Top Leagues</h2>
       
       {/* Sports Categories */}
       <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3 mb-8">
