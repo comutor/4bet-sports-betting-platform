@@ -210,6 +210,32 @@ export function TopNavigation({ activeTab, onTabChange, userBalance, userCountry
             )}
           </div>
           
+          {/* Sports Filter Dropdowns */}
+          {activeTab === 'sports' && (
+            <div className="flex items-center gap-2 mt-3 px-4">
+              <div className="bg-slate-800 border border-gray-600 rounded-lg px-3 py-2 flex items-center gap-2 cursor-pointer hover:bg-slate-700 transition-colors">
+                <i className="fas fa-futbol text-sm text-gray-300"></i>
+                <span className="text-sm text-gray-300">Football</span>
+                <i className="fas fa-chevron-down text-xs text-gray-400"></i>
+              </div>
+              <div className="bg-slate-800 border border-gray-600 rounded-lg px-3 py-2 flex items-center gap-2 cursor-pointer hover:bg-slate-700 transition-colors">
+                <i className="fas fa-trophy text-sm text-gray-300"></i>
+                <span className="text-sm text-gray-300">Leagues</span>
+                <i className="fas fa-chevron-down text-xs text-gray-400"></i>
+              </div>
+              <div className="bg-slate-800 border border-gray-600 rounded-lg px-3 py-2 flex items-center gap-2 cursor-pointer hover:bg-slate-700 transition-colors">
+                <i className="fas fa-chart-line text-sm text-gray-300"></i>
+                <span className="text-sm text-gray-300">Markets</span>
+                <i className="fas fa-chevron-down text-xs text-gray-400"></i>
+              </div>
+              <div className="bg-slate-800 border border-gray-600 rounded-lg px-3 py-2 flex items-center gap-2 cursor-pointer hover:bg-slate-700 transition-colors">
+                <i className="fas fa-calendar text-sm text-gray-300"></i>
+                <span className="text-sm text-gray-300">Date</span>
+                <i className="fas fa-chevron-down text-xs text-gray-400"></i>
+              </div>
+            </div>
+          )}
+          
           {/* Services Dropdown */}
           {isServicesDropdownOpen && (
             <div className="absolute top-full left-0 right-0 mt-2 mx-4 bg-slate-800 border border-gray-700 rounded-xl p-4 z-50 shadow-lg animate-slide-down">
