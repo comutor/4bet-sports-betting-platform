@@ -52,14 +52,12 @@ export default function Home() {
         
         if (response.ok) {
           const result = await response.json();
-          console.log('Existing session found - user data:', result.user);
           setIsLoggedIn(true);
           setUserBalance(result.user.balance);
           setUserCountry(result.user.country);
-          console.log('Setting country from session:', result.user.country);
         }
       } catch (error) {
-        console.log('No existing session found');
+        // No existing session
       }
     };
     
@@ -112,22 +110,15 @@ export default function Home() {
   };
 
   const handleSignupSuccess = (userData?: any) => {
-    console.log('Signup success - received userData:', userData);
-    console.log('userData?.country:', userData?.country);
     setIsLoggedIn(true);
     setShowSignupPage(false);
     setActiveTab('account');
     if (userData?.balance) {
-      console.log('Setting balance to:', userData.balance);
       setUserBalance(userData.balance);
     }
     if (userData?.country) {
-      console.log('Setting user country to:', userData.country);
       setUserCountry(userData.country);
-    } else {
-      console.log('No country data found in userData');
     }
-    console.log('Current userCountry state after update:', userCountry);
   };
 
   const handleLoginSuccess = (userData?: any) => {
