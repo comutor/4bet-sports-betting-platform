@@ -110,6 +110,8 @@ export function SignupPage({ onClose, onSuccess }: SignupPageProps) {
         });
 
         const result = await response.json();
+        console.log('Signup response result:', result);
+        console.log('User data in result:', result.user);
         
         if (response.ok) {
           onSuccess?.(result.user);
