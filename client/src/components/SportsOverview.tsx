@@ -59,11 +59,6 @@ export function SportsOverview({ onBetClick, activeFilter }: SportsOverviewProps
     <div className="space-y-6 pb-20">
       {/* Events List */}
       <div className="bg-slate-800 rounded-lg border border-gray-700 p-4">
-        <h3 className="text-lg font-semibold text-white mb-3">
-          {activeFilter === 'upcoming' ? 'Upcoming Matches' : 
-           activeFilter === 'popular' ? 'Popular Matches' : 'Live Matches'}
-        </h3>
-        
         {isLoading ? (
           <div className="flex items-center justify-center py-8">
             <Loader2 className="h-6 w-6 animate-spin text-primary" />
