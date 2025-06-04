@@ -29,7 +29,7 @@ export function TopNavigation({ activeTab, onTabChange, userBalance, userCountry
 
   const allNavItems = [
     { id: 'home', label: 'Home', icon: 'fas fa-home' },
-    { id: 'sports', label: 'Soccer', icon: 'fas fa-futbol' },
+    { id: 'sports', label: 'Football', icon: 'fas fa-futbol' },
     { id: 'basketball', label: 'Basketball', icon: 'fas fa-basketball' },
     { id: 'aviator', label: 'Aviator', icon: 'fas fa-plane' },
     { id: 'live', label: 'Live Now', icon: 'fas fa-broadcast-tower', hasIndicator: true },
@@ -67,12 +67,17 @@ export function TopNavigation({ activeTab, onTabChange, userBalance, userCountry
             >
               <i className="fas fa-bars text-lg md:text-xl"></i>
             </Button>
-            <div className="bg-gradient-to-r from-blue-600 to-emerald-600 w-8 h-8 md:w-10 md:h-10 rounded-lg flex items-center justify-center">
-              <i className="fas fa-dice text-white text-lg md:text-xl"></i>
-            </div>
-            <span className="text-xl md:text-3xl tracking-tight bg-gradient-to-r from-blue-400 to-emerald-400 bg-clip-text text-transparent italic" style={{ fontFamily: 'Nunito', fontWeight: '800', fontStyle: 'italic' }}>
-              NileBet
-            </span>
+            <button 
+              className="flex items-center space-x-2 hover:opacity-80 transition-opacity cursor-pointer"
+              onClick={() => onTabChange('home')}
+            >
+              <div className="bg-gradient-to-r from-blue-600 to-emerald-600 w-8 h-8 md:w-10 md:h-10 rounded-lg flex items-center justify-center">
+                <i className="fas fa-dice text-white text-lg md:text-xl"></i>
+              </div>
+              <span className="text-xl md:text-3xl tracking-tight bg-gradient-to-r from-blue-400 to-emerald-400 bg-clip-text text-transparent italic" style={{ fontFamily: 'Nunito', fontWeight: '800', fontStyle: 'italic' }}>
+                NileBet
+              </span>
+            </button>
           </div>
           
           {/* Right side - Search and User Actions */}
