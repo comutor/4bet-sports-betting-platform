@@ -122,17 +122,17 @@ export function TopNavigation({ activeTab, onTabChange, userBalance, userCountry
         <div className="pb-3 relative">
           <div className="flex items-center">
             {/* Scrollable Navigation Pills */}
-            <div className={`flex items-center gap-1 overflow-x-auto scrollbar-hide flex-1 ${activeTab === 'sports' ? '' : 'pr-12'}`}>
+            <div className={`flex items-center ${activeTab === 'sports' ? 'gap-3 justify-center' : 'gap-1'} overflow-x-auto scrollbar-hide flex-1 ${activeTab === 'sports' ? '' : 'pr-12'}`}>
               {activeTab === 'sports' ? (
                 // Sports-specific navigation
                 <>
                   <Button
                     variant="ghost"
                     size="sm"
-                    className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full font-medium transition-all duration-200 whitespace-nowrap shrink-0 ${
+                    className={`flex items-center gap-2 px-4 py-2.5 rounded-lg font-medium transition-all duration-200 whitespace-nowrap border ${
                       sportsFilter === 'upcoming'
-                        ? 'bg-primary text-white shadow-sm'
-                        : 'text-gray-300 hover:bg-slate-light-custom hover:text-white'
+                        ? 'bg-primary text-white shadow-lg border-primary'
+                        : 'text-gray-300 hover:bg-slate-700 hover:text-white border-gray-600 bg-slate-800'
                     }`}
                     onClick={() => onSportsFilterChange?.('upcoming')}
                   >
@@ -142,10 +142,10 @@ export function TopNavigation({ activeTab, onTabChange, userBalance, userCountry
                   <Button
                     variant="ghost"
                     size="sm"
-                    className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full font-medium transition-all duration-200 whitespace-nowrap shrink-0 ${
+                    className={`flex items-center gap-2 px-4 py-2.5 rounded-lg font-medium transition-all duration-200 whitespace-nowrap border ${
                       sportsFilter === 'popular'
-                        ? 'bg-primary text-white shadow-sm'
-                        : 'text-gray-300 hover:bg-slate-light-custom hover:text-white'
+                        ? 'bg-primary text-white shadow-lg border-primary'
+                        : 'text-gray-300 hover:bg-slate-700 hover:text-white border-gray-600 bg-slate-800'
                     }`}
                     onClick={() => onSportsFilterChange?.('popular')}
                   >
@@ -155,10 +155,10 @@ export function TopNavigation({ activeTab, onTabChange, userBalance, userCountry
                   <Button
                     variant="ghost"
                     size="sm"
-                    className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full font-medium transition-all duration-200 whitespace-nowrap shrink-0 ${
+                    className={`flex items-center gap-2 px-4 py-2.5 rounded-lg font-medium transition-all duration-200 whitespace-nowrap border ${
                       sportsFilter === 'live'
-                        ? 'bg-primary text-white shadow-sm'
-                        : 'text-gray-300 hover:bg-slate-light-custom hover:text-white'
+                        ? 'bg-primary text-white shadow-lg border-primary'
+                        : 'text-gray-300 hover:bg-slate-700 hover:text-white border-gray-600 bg-slate-800'
                     }`}
                     onClick={() => onSportsFilterChange?.('live')}
                   >
