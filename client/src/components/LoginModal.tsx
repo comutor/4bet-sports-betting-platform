@@ -6,7 +6,7 @@ import { Label } from "@/components/ui/label";
 interface LoginModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onSuccess: () => void;
+  onSuccess: (userData?: any) => void;
 }
 
 export function LoginModal({ isOpen, onClose, onSuccess }: LoginModalProps) {
@@ -57,15 +57,36 @@ export function LoginModal({ isOpen, onClose, onSuccess }: LoginModalProps) {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (validateForm()) {
-      // Handle login logic here
-      console.log('Login data:', {
-        ...formData,
-        fullPhoneNumber: getPhonePrefix() + formData.phoneNumber
-      });
-      onSuccess();
+      try {
+        const fullPhoneNumber = getPhonePrefix() + formData.phoneNumber;
+        const loginData = {
+          phoneNumber: fullPhoneNumber,
+          password: formData.password
+        };
+
+        const response = await fetch('/api/auth/login', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          credentials: 'include',
+          body: JSON.stringify(loginData),
+        });
+
+        const result = await response.json();
+        
+        if (response.ok) {
+          onSuccess(result.user);
+        } else {
+          setErrors({ general: result.message || 'Login failed' });
+        }
+      } catch (error) {
+        console.error('Login error:', error);
+        setErrors({ general: 'Network error. Please try again.' });
+      }
     }
   };
 
@@ -143,6 +164,13 @@ export function LoginModal({ isOpen, onClose, onSuccess }: LoginModalProps) {
             />
             {errors.password && <p className="text-red-400 text-sm">{errors.password}</p>}
           </div>
+
+          {/* General Error Message */}
+          {errors.general && (
+            <div className="bg-red-500/10 border border-red-500/20 rounded-lg p-3">
+              <p className="text-red-400 text-sm">{errors.general}</p>
+            </div>
+          )}
 
           {/* Submit Button */}
           <Button
