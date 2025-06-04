@@ -32,10 +32,23 @@ export function CountriesSection({ selectedCategory = 'top-countries', onBetClic
   ];
 
   const internationalCompetitions: Country[] = [
-    { id: 'uefa', name: 'UEFA', flag: '🏆', leagues: ['Champions League', 'Europa League', 'Conference League'] },
-    { id: 'fifa', name: 'FIFA', flag: '⚽', leagues: ['World Cup', 'Nations League', 'Club World Cup'] },
-    { id: 'conmebol', name: 'CONMEBOL', flag: '🌎', leagues: ['Copa Libertadores', 'Copa Sudamericana'] },
-    { id: 'concacaf', name: 'CONCACAF', flag: '🌍', leagues: ['Champions Cup', 'Nations League'] }
+    { id: 'international', name: 'All International Leagues', flag: '🌍', leagues: [
+      'UEFA Nations League',
+      'World Cup Qualification UEFA', 
+      'WC Qual. CONMEBOL',
+      'WC Qualification, AFC',
+      'Copa Sudamericana',
+      'Toulon Tournament',
+      'COSAFA Cup',
+      'Int. Friendly Games W',
+      'U21 European Championship',
+      'UEFA Super Cup',
+      'FIFA Club World Cup',
+      'Int. Friendly Games',
+      'World Cup Qualification CONCACAF',
+      'U20 CONCACAF Championship, Women',
+      'UEFA Nations League, Women'
+    ]}
   ];
 
   const otherCountries: Country[] = [
