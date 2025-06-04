@@ -212,25 +212,25 @@ export function TopNavigation({ activeTab, onTabChange, userBalance, userCountry
           
           {/* Sports Filter Dropdowns */}
           {activeTab === 'sports' && (
-            <div className="flex items-center gap-2 mt-3 px-4">
-              <div className="bg-slate-800 border border-gray-600 rounded-lg px-3 py-2 flex items-center gap-2 cursor-pointer hover:bg-slate-700 transition-colors">
-                <i className="fas fa-futbol text-sm text-gray-300"></i>
-                <span className="text-sm text-gray-300">Football</span>
+            <div className="flex items-center gap-1.5 mt-3 px-2 overflow-x-auto scrollbar-hide">
+              <div className="bg-slate-800 border border-gray-600 rounded-md px-2.5 py-1.5 flex items-center gap-1.5 cursor-pointer hover:bg-slate-700 transition-colors whitespace-nowrap shrink-0">
+                <i className="fas fa-futbol text-xs text-gray-300"></i>
+                <span className="text-xs text-gray-300">Football</span>
                 <i className="fas fa-chevron-down text-xs text-gray-400"></i>
               </div>
-              <div className="bg-slate-800 border border-gray-600 rounded-lg px-3 py-2 flex items-center gap-2 cursor-pointer hover:bg-slate-700 transition-colors">
-                <i className="fas fa-trophy text-sm text-gray-300"></i>
-                <span className="text-sm text-gray-300">Leagues</span>
+              <div className="bg-slate-800 border border-gray-600 rounded-md px-2.5 py-1.5 flex items-center gap-1.5 cursor-pointer hover:bg-slate-700 transition-colors whitespace-nowrap shrink-0">
+                <i className="fas fa-trophy text-xs text-gray-300"></i>
+                <span className="text-xs text-gray-300">Leagues</span>
                 <i className="fas fa-chevron-down text-xs text-gray-400"></i>
               </div>
-              <div className="bg-slate-800 border border-gray-600 rounded-lg px-3 py-2 flex items-center gap-2 cursor-pointer hover:bg-slate-700 transition-colors">
-                <i className="fas fa-chart-line text-sm text-gray-300"></i>
-                <span className="text-sm text-gray-300">Markets</span>
+              <div className="bg-slate-800 border border-gray-600 rounded-md px-2.5 py-1.5 flex items-center gap-1.5 cursor-pointer hover:bg-slate-700 transition-colors whitespace-nowrap shrink-0">
+                <i className="fas fa-chart-line text-xs text-gray-300"></i>
+                <span className="text-xs text-gray-300">Markets</span>
                 <i className="fas fa-chevron-down text-xs text-gray-400"></i>
               </div>
-              <div className="bg-slate-800 border border-gray-600 rounded-lg px-3 py-2 flex items-center gap-2 cursor-pointer hover:bg-slate-700 transition-colors">
-                <i className="fas fa-calendar text-sm text-gray-300"></i>
-                <span className="text-sm text-gray-300">Date</span>
+              <div className="bg-slate-800 border border-gray-600 rounded-md px-2.5 py-1.5 flex items-center gap-1.5 cursor-pointer hover:bg-slate-700 transition-colors whitespace-nowrap shrink-0">
+                <i className="fas fa-calendar text-xs text-gray-300"></i>
+                <span className="text-xs text-gray-300">Date</span>
                 <i className="fas fa-chevron-down text-xs text-gray-400"></i>
               </div>
             </div>
