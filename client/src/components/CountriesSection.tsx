@@ -40,50 +40,13 @@ export function CountriesSection({ selectedCategory = 'top-countries', onBetClic
     }
   ] : [];
 
-  const otherCountries: Country[] = [
-    { id: 'russia', name: 'Russia', flag: '🇷🇺', leagues: ['Premier League', 'FNL', 'VTB United League'] },
-    { id: 'mexico', name: 'Mexico', flag: '🇲🇽', leagues: ['Liga MX', 'Liga de Expansión', 'Copa MX'] },
-    { id: 'japan', name: 'Japan', flag: '🇯🇵', leagues: ['J1 League', 'J2 League', 'Emperor Cup'] },
-    { id: 'australia', name: 'Australia', flag: '🇦🇺', leagues: ['A-League', 'NPL', 'FFA Cup'] },
-    { id: 'china', name: 'China', flag: '🇨🇳', leagues: ['Super League', 'League One', 'FA Cup'] },
-    { id: 'south_korea', name: 'South Korea', flag: '🇰🇷', leagues: ['K League 1', 'K League 2', 'KBL'] },
-    { id: 'greece', name: 'Greece', flag: '🇬🇷', leagues: ['Super League', 'Greek Cup', 'Basketball League'] },
-    { id: 'scotland', name: 'Scotland', flag: '🏴󠁧󠁢󠁳󠁣󠁴󠁿', leagues: ['Premiership', 'Championship', 'Scottish Cup'] },
-    { id: 'norway', name: 'Norway', flag: '🇳🇴', leagues: ['Eliteserien', 'OBOS-ligaen', 'Norwegian Cup'] },
-    { id: 'sweden', name: 'Sweden', flag: '🇸🇪', leagues: ['Allsvenskan', 'Superettan', 'Svenska Cupen'] },
-    { id: 'denmark', name: 'Denmark', flag: '🇩🇰', leagues: ['Superliga', '1st Division', 'Danish Cup'] },
-    { id: 'switzerland', name: 'Switzerland', flag: '🇨🇭', leagues: ['Super League', 'Challenge League', 'Swiss Cup'] },
-    { id: 'austria', name: 'Austria', flag: '🇦🇹', leagues: ['Bundesliga', '2. Liga', 'ÖFB Cup'] },
-    { id: 'czech_republic', name: 'Czech Republic', flag: '🇨🇿', leagues: ['First League', 'Second League', 'Czech Cup'] },
-    { id: 'poland', name: 'Poland', flag: '🇵🇱', leagues: ['Ekstraklasa', 'I Liga', 'Polish Cup'] },
-    { id: 'ukraine', name: 'Ukraine', flag: '🇺🇦', leagues: ['Premier League', 'First League', 'Ukrainian Cup'] },
-    { id: 'croatia', name: 'Croatia', flag: '🇭🇷', leagues: ['1. HNL', '2. HNL', 'Croatian Cup'] },
-    { id: 'serbia', name: 'Serbia', flag: '🇷🇸', leagues: ['SuperLiga', 'Prva Liga', 'Serbian Cup'] },
-    { id: 'romania', name: 'Romania', flag: '🇷🇴', leagues: ['Liga I', 'Liga II', 'Romanian Cup'] },
-    { id: 'bulgaria', name: 'Bulgaria', flag: '🇧🇬', leagues: ['First League', 'Second League', 'Bulgarian Cup'] },
-    { id: 'israel', name: 'Israel', flag: '🇮🇱', leagues: ['Premier League', 'Liga Leumit', 'State Cup'] },
-    { id: 'saudi_arabia', name: 'Saudi Arabia', flag: '🇸🇦', leagues: ['Pro League', 'First Division', 'Kings Cup'] },
-    { id: 'uae', name: 'UAE', flag: '🇦🇪', leagues: ['Pro League', 'First Division', 'UAE Cup'] },
-    { id: 'qatar', name: 'Qatar', flag: '🇶🇦', leagues: ['Stars League', 'Second Division', 'Emir Cup'] },
-    { id: 'egypt', name: 'Egypt', flag: '🇪🇬', leagues: ['Premier League', 'Second Division', 'Egypt Cup'] },
-    { id: 'morocco', name: 'Morocco', flag: '🇲🇦', leagues: ['Botola Pro', 'Botola 2', 'Throne Cup'] },
-    { id: 'south_africa', name: 'South Africa', flag: '🇿🇦', leagues: ['PSL', 'GladAfrica Championship', 'Nedbank Cup'] },
-    { id: 'ghana', name: 'Ghana', flag: '🇬🇭', leagues: ['Premier League', 'Division One', 'FA Cup'] },
-    { id: 'nigeria', name: 'Nigeria', flag: '🇳🇬', leagues: ['NPFL', 'NNL', 'Federation Cup'] },
-    { id: 'colombia', name: 'Colombia', flag: '🇨🇴', leagues: ['Categoría Primera A', 'Categoría Primera B', 'Copa Colombia'] },
-    { id: 'chile', name: 'Chile', flag: '🇨🇱', leagues: ['Primera División', 'Primera B', 'Copa Chile'] },
-    { id: 'uruguay', name: 'Uruguay', flag: '🇺🇾', leagues: ['Primera División', 'Segunda División', 'Copa Uruguay'] },
-    { id: 'peru', name: 'Peru', flag: '🇵🇪', leagues: ['Liga 1', 'Liga 2', 'Copa Perú'] },
-    { id: 'ecuador', name: 'Ecuador', flag: '🇪🇨', leagues: ['Serie A', 'Serie B', 'Copa Ecuador'] },
-    { id: 'venezuela', name: 'Venezuela', flag: '🇻🇪', leagues: ['Primera División', 'Segunda División', 'Copa Venezuela'] },
-    { id: 'canada', name: 'Canada', flag: '🇨🇦', leagues: ['CPL', 'NHL', 'CFL'] },
-    { id: 'india', name: 'India', flag: '🇮🇳', leagues: ['ISL', 'I-League', 'Durand Cup'] },
-    { id: 'thailand', name: 'Thailand', flag: '🇹🇭', leagues: ['Thai League 1', 'Thai League 2', 'FA Cup'] },
-    { id: 'malaysia', name: 'Malaysia', flag: '🇲🇾', leagues: ['Super League', 'Premier League', 'FA Cup'] },
-    { id: 'singapore', name: 'Singapore', flag: '🇸🇬', leagues: ['Premier League', 'League Cup', 'FA Cup'] },
-    { id: 'indonesia', name: 'Indonesia', flag: '🇮🇩', leagues: ['Liga 1', 'Liga 2', 'Piala Indonesia'] },
-    { id: 'vietnam', name: 'Vietnam', flag: '🇻🇳', leagues: ['V.League 1', 'V.League 2', 'National Cup'] }
-  ];
+  // Fetch other countries from API
+  const { data: otherCountriesData } = useQuery({
+    queryKey: ['/api/countries/other'],
+    enabled: selectedCategory === 'other-countries'
+  });
+
+  const otherCountries: Country[] = Array.isArray(otherCountriesData) ? otherCountriesData : [];
 
   const getCountriesByCategory = () => {
     switch (selectedCategory) {
