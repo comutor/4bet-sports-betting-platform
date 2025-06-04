@@ -23,7 +23,7 @@ export function BottomNavigation({
 }: BottomNavigationProps) {
   const navItems = [
     { id: 'menu', label: 'Menu', icon: 'fas fa-bars' },
-    { id: 'home', label: 'Sports', icon: 'fas fa-futbol' },
+    { id: 'sports', label: 'Sports', icon: 'fas fa-futbol' },
     { id: 'betslip', label: 'Betslip', icon: 'fas fa-receipt', count: betslipCount },
     { 
       id: isLoggedIn ? 'my-bets' : 'sign-up', 

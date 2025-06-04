@@ -146,6 +146,65 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Sports overview - upcoming events
+  app.get("/api/sports-events", async (req, res) => {
+    try {
+      const upcomingGames = await oddsApiService.getUpcomingGames();
+      
+      // Transform to consistent format for sports overview
+      const transformedEvents = upcomingGames.slice(0, 10).map((game: any) => ({
+        id: game.id,
+        sport: game.sport_key?.includes('soccer') ? 'football' : 
+               game.sport_key?.includes('basketball') ? 'basketball' :
+               game.sport_key?.includes('tennis') ? 'tennis' :
+               game.sport_key?.includes('hockey') ? 'hockey' : 'other',
+        league: game.sport_title || 'Unknown League',
+        homeTeam: game.home_team,
+        awayTeam: game.away_team,
+        eventName: `${game.home_team} vs ${game.away_team}`,
+        time: new Date(game.commence_time).toLocaleString(),
+        homeOdds: game.bookmakers?.[0]?.markets?.[0]?.outcomes?.find((o: any) => o.name === game.home_team)?.price?.toString() || 'N/A',
+        awayOdds: game.bookmakers?.[0]?.markets?.[0]?.outcomes?.find((o: any) => o.name === game.away_team)?.price?.toString() || 'N/A',
+        drawOdds: game.bookmakers?.[0]?.markets?.[0]?.outcomes?.find((o: any) => o.name === 'Draw')?.price?.toString()
+      }));
+      
+      res.json(transformedEvents);
+    } catch (error) {
+      console.error("Error fetching sports events:", error);
+      res.status(500).json({ error: "Failed to fetch sports events" });
+    }
+  });
+
+  // Sports overview - live events
+  app.get("/api/live-events", async (req, res) => {
+    try {
+      // For now, return a subset of upcoming games as "live" since we don't have separate live API
+      const upcomingGames = await oddsApiService.getUpcomingGames();
+      
+      // Transform to consistent format for sports overview (simulating live events)
+      const liveEvents = upcomingGames.slice(0, 5).map((game: any) => ({
+        id: game.id,
+        sport: game.sport_key?.includes('soccer') ? 'football' : 
+               game.sport_key?.includes('basketball') ? 'basketball' :
+               game.sport_key?.includes('tennis') ? 'tennis' :
+               game.sport_key?.includes('hockey') ? 'hockey' : 'other',
+        league: game.sport_title || 'Unknown League',
+        homeTeam: game.home_team,
+        awayTeam: game.away_team,
+        eventName: `${game.home_team} vs ${game.away_team}`,
+        time: 'LIVE',
+        homeOdds: game.bookmakers?.[0]?.markets?.[0]?.outcomes?.find((o: any) => o.name === game.home_team)?.price?.toString() || 'N/A',
+        awayOdds: game.bookmakers?.[0]?.markets?.[0]?.outcomes?.find((o: any) => o.name === game.away_team)?.price?.toString() || 'N/A',
+        drawOdds: game.bookmakers?.[0]?.markets?.[0]?.outcomes?.find((o: any) => o.name === 'Draw')?.price?.toString()
+      }));
+      
+      res.json(liveEvents);
+    } catch (error) {
+      console.error("Error fetching live events:", error);
+      res.status(500).json({ error: "Failed to fetch live events" });
+    }
+  });
+
   // Tennis games by tournament priority
   app.get("/api/tennis/tournaments", async (req, res) => {
     try {

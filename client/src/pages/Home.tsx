@@ -17,6 +17,7 @@ import { SignupPage } from "@/components/SignupPage";
 import { LoginModal } from "@/components/LoginModal";
 import { FootballSection } from "@/components/FootballSection";
 import { SportSection } from "@/components/SportSection";
+import { SportsOverview } from "@/components/SportsOverview";
 import { useBetslip } from "@/hooks/useBetslip";
 import { sampleFeaturedEvents } from "@/lib/betting-data";
 import { Button } from "@/components/ui/button";
@@ -204,6 +205,8 @@ export default function Home() {
         return <AviatorSection />;
       case 'scratch-cards':
         return <ScratchCardsSection />;
+      case 'sports':
+        return <SportsOverview onBetClick={handleBetClick} />;
       case 'account':
         return <AccountPage 
           isLoggedIn={isLoggedIn} 
