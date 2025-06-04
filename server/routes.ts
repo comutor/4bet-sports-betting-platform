@@ -181,7 +181,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const upcomingGames = await oddsApiService.getUpcomingGames();
       
       // Transform to consistent format for sports overview (popular events with better odds)
-      const popularEvents = (upcomingGames || []).slice(5, 15).map((game: any) => ({
+      const popularEvents = Array.isArray(upcomingGames) ? upcomingGames.slice(5, 15).map((game: any) => ({
         id: game.id,
         sport: game.sport_key?.includes('soccer') ? 'football' : 
                game.sport_key?.includes('basketball') ? 'basketball' :
@@ -195,7 +195,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         homeOdds: game.bookmakers?.[0]?.markets?.[0]?.outcomes?.find((o: any) => o.name === game.home_team)?.price?.toString() || 'N/A',
         awayOdds: game.bookmakers?.[0]?.markets?.[0]?.outcomes?.find((o: any) => o.name === game.away_team)?.price?.toString() || 'N/A',
         drawOdds: game.bookmakers?.[0]?.markets?.[0]?.outcomes?.find((o: any) => o.name === 'Draw')?.price?.toString()
-      }));
+      })) : [];
       
       res.json(popularEvents);
     } catch (error) {
