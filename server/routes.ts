@@ -285,7 +285,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
           firstName: user.firstName,
           lastName: user.lastName,
           username: user.username,
-          balance: user.balance
+          balance: user.balance,
+          country: user.country,
+          phoneNumber: user.phoneNumber
         } 
       });
     } catch (error) {

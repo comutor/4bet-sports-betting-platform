@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { TopNavigation } from "@/components/TopNavigation";
 import { BottomNavigation } from "@/components/BottomNavigation";
 import { BetslipSidebar } from "@/components/BetslipSidebar";
@@ -41,6 +41,30 @@ export default function Home() {
     totalPotentialReturn,
     count: betslipCount
   } = useBetslip();
+
+  // Check for existing authentication on app load
+  useEffect(() => {
+    const checkAuth = async () => {
+      try {
+        const response = await fetch('/api/auth/me', {
+          credentials: 'include'
+        });
+        
+        if (response.ok) {
+          const result = await response.json();
+          console.log('Existing session found - user data:', result.user);
+          setIsLoggedIn(true);
+          setUserBalance(result.user.balance);
+          setUserCountry(result.user.country);
+          console.log('Setting country from session:', result.user.country);
+        }
+      } catch (error) {
+        console.log('No existing session found');
+      }
+    };
+    
+    checkAuth();
+  }, []);
 
   const handleBetClick = (eventName: string, selection: string, odds: string) => {
     // Temporarily disabled for betslip development
@@ -89,16 +113,21 @@ export default function Home() {
 
   const handleSignupSuccess = (userData?: any) => {
     console.log('Signup success - received userData:', userData);
+    console.log('userData?.country:', userData?.country);
     setIsLoggedIn(true);
     setShowSignupPage(false);
     setActiveTab('account');
     if (userData?.balance) {
+      console.log('Setting balance to:', userData.balance);
       setUserBalance(userData.balance);
     }
     if (userData?.country) {
       console.log('Setting user country to:', userData.country);
       setUserCountry(userData.country);
+    } else {
+      console.log('No country data found in userData');
     }
+    console.log('Current userCountry state after update:', userCountry);
   };
 
   const handleLoginSuccess = (userData?: any) => {
