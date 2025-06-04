@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useQuery } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
 
 interface Country {
@@ -31,25 +32,20 @@ export function CountriesSection({ selectedCategory = 'top-countries', onBetClic
     { id: 'turkey', name: 'Turkey', flag: '🇹🇷', leagues: ['Süper Lig', '1. Lig', 'Turkish Cup', 'Basketball Super League'] }
   ];
 
-  const internationalCompetitions: Country[] = [
-    { id: 'international', name: 'All International Leagues', flag: '🌍', leagues: [
-      'UEFA Nations League',
-      'World Cup Qualification UEFA', 
-      'WC Qual. CONMEBOL',
-      'WC Qualification, AFC',
-      'Copa Sudamericana',
-      'Toulon Tournament',
-      'COSAFA Cup',
-      'Int. Friendly Games W',
-      'U21 European Championship',
-      'UEFA Super Cup',
-      'FIFA Club World Cup',
-      'Int. Friendly Games',
-      'World Cup Qualification CONCACAF',
-      'U20 CONCACAF Championship, Women',
-      'UEFA Nations League, Women'
-    ]}
-  ];
+  // Fetch international competitions from API
+  const { data: internationalData } = useQuery({
+    queryKey: ['/api/international/competitions'],
+    enabled: selectedCategory === 'international'
+  });
+
+  const internationalCompetitions: Country[] = internationalData ? [
+    { 
+      id: 'international', 
+      name: 'All International Leagues', 
+      flag: '🌍', 
+      leagues: internationalData.map((comp: any) => comp.name)
+    }
+  ] : [];
 
   const otherCountries: Country[] = [
     { id: 'russia', name: 'Russia', flag: '🇷🇺', leagues: ['Premier League', 'FNL', 'VTB United League'] },

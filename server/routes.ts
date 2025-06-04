@@ -179,6 +179,17 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // International competitions with real data
+  app.get("/api/international/competitions", async (req, res) => {
+    try {
+      const internationalData = await oddsApiService.getInternationalCompetitions();
+      res.json(internationalData);
+    } catch (error) {
+      console.error("Error fetching international competitions:", error);
+      res.status(500).json({ error: "Failed to fetch international competitions" });
+    }
+  });
+
   // Authentication endpoints
   app.post("/api/auth/signup", async (req, res) => {
     try {

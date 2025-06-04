@@ -457,6 +457,42 @@ export class OddsApiService {
     return leagueNames[sportKey] || sportKey.replace('soccer_', '').replace(/_/g, ' ');
   }
 
+  // Get international competitions with real data
+  async getInternationalCompetitions() {
+    const internationalLeagues = [
+      { name: 'UEFA Nations League', key: 'soccer_uefa_nations_league', priority: 1 },
+      { name: 'World Cup Qualification UEFA', key: 'soccer_uefa_euro_qualification', priority: 2 },
+      { name: 'WC Qual. CONMEBOL', key: 'soccer_conmebol_copa_america', priority: 3 },
+      { name: 'WC Qualification, AFC', key: 'soccer_afc_asian_cup', priority: 4 },
+      { name: 'Copa Sudamericana', key: 'soccer_conmebol_copa_sudamericana', priority: 5 },
+      { name: 'UEFA Super Cup', key: 'soccer_uefa_super_cup', priority: 6 },
+      { name: 'FIFA Club World Cup', key: 'soccer_fifa_world_cup', priority: 7 },
+      { name: 'Int. Friendly Games', key: 'soccer_international_friendlies', priority: 8 },
+      { name: 'World Cup Qualification CONCACAF', key: 'soccer_concacaf_gold_cup', priority: 9 },
+      { name: 'UEFA Nations League, Women', key: 'soccer_uefa_womens_euro', priority: 10 }
+    ];
+
+    const availableLeagues = [];
+
+    for (const league of internationalLeagues) {
+      try {
+        const games = await this.getOdds(league.key);
+        if (games.length > 0) {
+          availableLeagues.push({
+            name: league.name,
+            key: league.key,
+            gameCount: games.length,
+            priority: league.priority
+          });
+        }
+      } catch (error) {
+        console.log(`League ${league.name} not available`);
+      }
+    }
+
+    return availableLeagues.sort((a, b) => a.priority - b.priority);
+  }
+
   private getCountryFlag(countryName: string): string {
     const flags: { [key: string]: string } = {
       'England': '🏴󠁧󠁢󠁥󠁮󠁧󠁿',
