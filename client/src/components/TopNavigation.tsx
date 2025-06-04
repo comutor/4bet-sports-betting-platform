@@ -129,41 +129,41 @@ export function TopNavigation({ activeTab, onTabChange, userBalance, userCountry
                   <Button
                     variant="ghost"
                     size="sm"
-                    className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full font-medium transition-all duration-200 whitespace-nowrap shrink-0 ${
+                    className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full font-bold transition-all duration-200 whitespace-nowrap shrink-0 border-2 ${
                       sportsFilter === 'upcoming'
-                        ? 'bg-primary text-white shadow-sm'
-                        : 'text-gray-300 hover:bg-slate-light-custom hover:text-white'
+                        ? 'bg-primary text-white shadow-sm border-primary'
+                        : 'text-gray-300 hover:bg-slate-light-custom hover:text-white border-gray-600 hover:border-gray-500'
                     }`}
                     onClick={() => onSportsFilterChange?.('upcoming')}
                   >
                     <i className="fas fa-calendar text-sm"></i>
-                    <span className="text-sm font-medium">Upcoming</span>
+                    <span className="text-sm font-bold">Upcoming</span>
                   </Button>
                   <Button
                     variant="ghost"
                     size="sm"
-                    className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full font-medium transition-all duration-200 whitespace-nowrap shrink-0 ${
+                    className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full font-bold transition-all duration-200 whitespace-nowrap shrink-0 border-2 ${
                       sportsFilter === 'popular'
-                        ? 'bg-primary text-white shadow-sm'
-                        : 'text-gray-300 hover:bg-slate-light-custom hover:text-white'
+                        ? 'bg-primary text-white shadow-sm border-primary'
+                        : 'text-gray-300 hover:bg-slate-light-custom hover:text-white border-gray-600 hover:border-gray-500'
                     }`}
                     onClick={() => onSportsFilterChange?.('popular')}
                   >
                     <i className="fas fa-fire text-sm"></i>
-                    <span className="text-sm font-medium">Popular</span>
+                    <span className="text-sm font-bold">Popular</span>
                   </Button>
                   <Button
                     variant="ghost"
                     size="sm"
-                    className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full font-medium transition-all duration-200 whitespace-nowrap shrink-0 ${
+                    className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full font-bold transition-all duration-200 whitespace-nowrap shrink-0 border-2 ${
                       sportsFilter === 'live'
-                        ? 'bg-primary text-white shadow-sm'
-                        : 'text-gray-300 hover:bg-slate-light-custom hover:text-white'
+                        ? 'bg-primary text-white shadow-sm border-primary'
+                        : 'text-gray-300 hover:bg-slate-light-custom hover:text-white border-gray-600 hover:border-gray-500'
                     }`}
                     onClick={() => onSportsFilterChange?.('live')}
                   >
                     <i className="fas fa-broadcast-tower text-sm"></i>
-                    <span className="text-sm font-medium">Live Now</span>
+                    <span className="text-sm font-bold">Live Now</span>
                     {sportsFilter === 'live' && (
                       <span className="w-1.5 h-1.5 bg-live rounded-full animate-pulse"></span>
                     )}
