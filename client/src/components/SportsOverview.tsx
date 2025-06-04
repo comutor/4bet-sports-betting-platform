@@ -72,24 +72,7 @@ export function SportsOverview({ onBetClick }: SportsOverviewProps) {
         </div>
       </div>
 
-      {/* Quick Access Sports */}
-      <div className="bg-slate-800 rounded-lg border border-gray-700 p-4">
-        <h3 className="text-lg font-semibold text-white mb-3">Quick Access</h3>
-        <div className="grid grid-cols-3 gap-3">
-          {quickAccessItems.map((item) => (
-            <Button
-              key={item.id}
-              variant="outline"
-              className="h-16 border-gray-600 hover:border-blue-500 hover:bg-slate-700 flex flex-col gap-1"
-            >
-              <div className={`w-8 h-8 rounded-full ${item.color} flex items-center justify-center text-white text-lg`}>
-                {item.icon}
-              </div>
-              <span className="text-xs text-white">{item.name}</span>
-            </Button>
-          ))}
-        </div>
-      </div>
+
 
       {/* Events List */}
       <div className="bg-slate-800 rounded-lg border border-gray-700 p-4">
