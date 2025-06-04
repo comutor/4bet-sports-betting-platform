@@ -306,53 +306,55 @@ export function TopNavigation({ activeTab, onTabChange, userBalance, userCountry
           
           {/* Leagues Dropdown */}
           {isLeaguesDropdownOpen && (
-            <div className="absolute top-full left-0 right-0 mt-2 mx-4 bg-slate-800 border border-gray-700 rounded-xl p-4 z-50 shadow-lg animate-slide-down">
-              <div className="flex items-center justify-between mb-4">
-                <h3 className="text-lg font-bold text-gray-300">Select League</h3>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  className="text-gray-400 hover:text-white"
-                  onClick={() => setIsLeaguesDropdownOpen(false)}
-                >
-                  <i className="fas fa-times"></i>
-                </Button>
-              </div>
-              <div className="grid grid-cols-1 gap-2">
-                {[
-                  { name: 'All Leagues', icon: 'fas fa-globe', country: 'Global' },
-                  { name: 'Premier League', icon: 'fas fa-flag', country: 'England' },
-                  { name: 'La Liga', icon: 'fas fa-flag', country: 'Spain' },
-                  { name: 'Serie A', icon: 'fas fa-flag', country: 'Italy' },
-                  { name: 'Bundesliga', icon: 'fas fa-flag', country: 'Germany' },
-                  { name: 'Ligue 1', icon: 'fas fa-flag', country: 'France' },
-                  { name: 'Champions League', icon: 'fas fa-trophy', country: 'UEFA' },
-                  { name: 'Europa League', icon: 'fas fa-medal', country: 'UEFA' },
-                  { name: 'Premier League', icon: 'fas fa-flag', country: 'Uganda' },
-                  { name: 'South Sudan League', icon: 'fas fa-flag', country: 'South Sudan' }
-                ].map((league) => (
+            <div className="fixed inset-0 z-50 bg-black bg-opacity-50 flex items-start justify-center pt-20">
+              <div className="bg-slate-800 border border-gray-700 rounded-xl p-4 shadow-lg max-w-md w-full mx-4 max-h-96 overflow-y-auto">
+                <div className="flex items-center justify-between mb-4">
+                  <h3 className="text-lg font-bold text-gray-300">Select League</h3>
                   <Button
-                    key={league.name + league.country}
                     variant="ghost"
-                    className={`flex items-center justify-between p-3 h-12 rounded-lg transition-all duration-200 ${
-                      selectedLeague === league.name 
-                        ? 'bg-primary text-white' 
-                        : 'hover:bg-slate-700 text-gray-300'
-                    }`}
-                    onClick={() => {
-                      setSelectedLeague(league.name);
-                      setIsLeaguesDropdownOpen(false);
-                    }}
+                    size="sm"
+                    className="text-gray-400 hover:text-white"
+                    onClick={() => setIsLeaguesDropdownOpen(false)}
                   >
-                    <div className="flex items-center">
-                      <i className={`${league.icon} text-sm mr-3`}></i>
-                      <div className="text-left">
-                        <span className="text-sm font-medium block">{league.name}</span>
-                        <span className="text-xs text-gray-400">{league.country}</span>
-                      </div>
-                    </div>
+                    <i className="fas fa-times"></i>
                   </Button>
-                ))}
+                </div>
+                <div className="grid grid-cols-1 gap-2">
+                  {[
+                    { name: 'All Leagues', icon: 'fas fa-globe', country: 'Global' },
+                    { name: 'Premier League', icon: 'fas fa-flag', country: 'England' },
+                    { name: 'La Liga', icon: 'fas fa-flag', country: 'Spain' },
+                    { name: 'Serie A', icon: 'fas fa-flag', country: 'Italy' },
+                    { name: 'Bundesliga', icon: 'fas fa-flag', country: 'Germany' },
+                    { name: 'Ligue 1', icon: 'fas fa-flag', country: 'France' },
+                    { name: 'Champions League', icon: 'fas fa-trophy', country: 'UEFA' },
+                    { name: 'Europa League', icon: 'fas fa-medal', country: 'UEFA' },
+                    { name: 'Premier League', icon: 'fas fa-flag', country: 'Uganda' },
+                    { name: 'South Sudan League', icon: 'fas fa-flag', country: 'South Sudan' }
+                  ].map((league) => (
+                    <Button
+                      key={league.name + league.country}
+                      variant="ghost"
+                      className={`flex items-center justify-between p-3 h-12 rounded-lg transition-all duration-200 ${
+                        selectedLeague === league.name 
+                          ? 'bg-primary text-white' 
+                          : 'hover:bg-slate-700 text-gray-300'
+                      }`}
+                      onClick={() => {
+                        setSelectedLeague(league.name);
+                        setIsLeaguesDropdownOpen(false);
+                      }}
+                    >
+                      <div className="flex items-center">
+                        <i className={`${league.icon} text-sm mr-3`}></i>
+                        <div className="text-left">
+                          <span className="text-sm font-medium block">{league.name}</span>
+                          <span className="text-xs text-gray-400">{league.country}</span>
+                        </div>
+                      </div>
+                    </Button>
+                  ))}
+                </div>
               </div>
             </div>
           )}
