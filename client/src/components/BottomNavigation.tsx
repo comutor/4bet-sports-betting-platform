@@ -55,7 +55,7 @@ export function BottomNavigation({
         <div className="border-t border-gray-700 relative">
           {/* Curved cutout in the center */}
           <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-px">
-            <div className="w-20 h-8 bg-background rounded-b-full border-l border-r border-gray-700"></div>
+            <div className="w-20 h-8 bg-slate-custom rounded-b-full border-l border-r border-gray-700"></div>
           </div>
         </div>
         
