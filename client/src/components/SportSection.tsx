@@ -183,35 +183,68 @@ export function SportSection({ sport, onBetClick }: SportSectionProps) {
         </div>
       </div>
 
-      {/* Leagues Overview Box */}
-      <div className="bg-slate-800 rounded-lg border border-gray-700 p-4">
-        <h3 className="text-lg font-semibold text-white mb-3 flex items-center gap-2">
-          <i className="fas fa-trophy text-yellow-500"></i>
-          Available Leagues
-        </h3>
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
-          {sportData.map((leagueData, index) => (
-            <div key={leagueData.league} className="bg-slate-700 rounded-lg p-3 border border-gray-600">
-              <div className="flex items-center gap-2 mb-2">
-                <span className="text-lg">{leagueData.flag}</span>
-                <div>
-                  <div className="font-medium text-white text-sm truncate">{leagueData.league}</div>
-                  <div className="text-xs text-gray-400">{leagueData.country}</div>
-                </div>
+      {/* Basketball Leagues Selection Box */}
+      {sport === 'basketball' && (
+        <div className="bg-slate-800 rounded-lg border border-gray-700 p-4">
+          <h3 className="text-lg font-semibold text-white mb-3">Select League</h3>
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+            <Button
+              variant="outline"
+              className="h-16 border-gray-600 hover:border-blue-500 hover:bg-slate-700"
+            >
+              <div className="flex flex-col items-center gap-1">
+                <img src="/attached_assets/IMG_4098.png" alt="NBA" className="w-8 h-8 object-contain" />
+                <span className="text-xs text-white">NBA</span>
               </div>
-              <div className="flex justify-between items-center text-xs">
-                <span className="text-blue-400">{leagueData.games.length} matches</span>
-                <span className={`px-2 py-1 rounded-full ${index < displayedLeagues ? 'bg-green-900 text-green-300' : 'bg-gray-600 text-gray-400'}`}>
-                  {index < displayedLeagues ? 'Shown' : 'Hidden'}
-                </span>
+            </Button>
+            <Button
+              variant="outline"
+              className="h-16 border-gray-600 hover:border-blue-500 hover:bg-slate-700"
+            >
+              <div className="flex flex-col items-center gap-1">
+                <img src="/attached_assets/IMG_4094.png" alt="EuroLeague" className="w-8 h-8 object-contain" />
+                <span className="text-xs text-white">EuroLeague</span>
               </div>
-            </div>
-          ))}
+            </Button>
+            <Button
+              variant="outline"
+              className="h-16 border-gray-600 hover:border-blue-500 hover:bg-slate-700"
+            >
+              <div className="flex flex-col items-center gap-1">
+                <img src="/attached_assets/IMG_4096.jpeg" alt="Pro A" className="w-8 h-8 object-contain" />
+                <span className="text-xs text-white">Pro A</span>
+              </div>
+            </Button>
+            <Button
+              variant="outline"
+              className="h-16 border-gray-600 hover:border-blue-500 hover:bg-slate-700"
+            >
+              <div className="flex flex-col items-center gap-1">
+                <img src="/attached_assets/IMG_4095.png" alt="Liga Endesa" className="w-8 h-8 object-contain" />
+                <span className="text-xs text-white">Liga Endesa</span>
+              </div>
+            </Button>
+            <Button
+              variant="outline"
+              className="h-16 border-gray-600 hover:border-blue-500 hover:bg-slate-700"
+            >
+              <div className="flex flex-col items-center gap-1">
+                <img src="/attached_assets/IMG_4092.png" alt="Turkish BSL" className="w-8 h-8 object-contain" />
+                <span className="text-xs text-white">Turkish BSL</span>
+              </div>
+            </Button>
+            <Button
+              variant="outline"
+              className="h-16 border-gray-600 hover:border-blue-500 hover:bg-slate-700"
+            >
+              <div className="flex flex-col items-center gap-1">
+                <img src="/attached_assets/IMG_4097.png" alt="VTB League" className="w-8 h-8 object-contain" />
+                <span className="text-xs text-white">VTB League</span>
+              </div>
+            </Button>
+          </div>
         </div>
-        <div className="mt-3 text-center text-sm text-gray-400">
-          {sportData.reduce((total, league) => total + league.games.length, 0)} total matches across {sportData.length} leagues
-        </div>
-      </div>
+      )}
 
       {/* Leagues */}
       <div className="space-y-4">
