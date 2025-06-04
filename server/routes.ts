@@ -1,11 +1,24 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
+import session from "express-session";
 import { storage } from "./storage";
 import { oddsApiService } from "./services/oddsApi";
 import { DataTransformer } from "./services/dataTransformer";
-import { insertBetslipItemSchema } from "@shared/schema";
+import { insertBetslipItemSchema, insertUserSchema } from "@shared/schema";
 
 export async function registerRoutes(app: Express): Promise<Server> {
+  // Configure session middleware
+  app.use(session({
+    secret: 'nilebet-secret-key-2024',
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+      secure: false, // Set to true in production with HTTPS
+      httpOnly: true,
+      maxAge: 24 * 60 * 60 * 1000 // 24 hours
+    }
+  }));
+
   // Sports events endpoints - now serving real data
   app.get("/api/sports-events", async (req, res) => {
     try {
