@@ -122,7 +122,7 @@ export function TopNavigation({ activeTab, onTabChange, userBalance, userCountry
         <div className="pb-3 relative">
           <div className="flex items-center">
             {/* Scrollable Navigation Pills */}
-            <div className="flex items-center gap-1 overflow-x-auto scrollbar-hide flex-1 pr-12">
+            <div className={`flex items-center gap-1 overflow-x-auto scrollbar-hide flex-1 ${activeTab === 'sports' ? '' : 'pr-12'}`}>
               {activeTab === 'sports' ? (
                 // Sports-specific navigation
                 <>
@@ -180,19 +180,21 @@ export function TopNavigation({ activeTab, onTabChange, userBalance, userCountry
               )}
             </div>
             
-            {/* Fixed Dropdown Button */}
-            <div className="absolute right-0 top-0 bottom-0 flex items-center bg-gradient-to-l from-slate-custom via-slate-custom to-transparent pl-8">
-              <div className="bg-slate-800 border border-gray-700 rounded-lg p-1">
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  className="flex items-center justify-center w-8 h-8 rounded-md font-medium transition-all duration-200 shrink-0 text-gray-300 hover:bg-slate-700 hover:text-white"
-                  onClick={() => setIsServicesDropdownOpen(!isServicesDropdownOpen)}
-                >
-                  <i className={`fas fa-chevron-down text-xs transition-transform duration-200 ${isServicesDropdownOpen ? 'rotate-180' : ''}`}></i>
-                </Button>
+            {/* Fixed Dropdown Button - Only show when not in sports mode */}
+            {activeTab !== 'sports' && (
+              <div className="absolute right-0 top-0 bottom-0 flex items-center bg-gradient-to-l from-slate-custom via-slate-custom to-transparent pl-8">
+                <div className="bg-slate-800 border border-gray-700 rounded-lg p-1">
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className="flex items-center justify-center w-8 h-8 rounded-md font-medium transition-all duration-200 shrink-0 text-gray-300 hover:bg-slate-700 hover:text-white"
+                    onClick={() => setIsServicesDropdownOpen(!isServicesDropdownOpen)}
+                  >
+                    <i className={`fas fa-chevron-down text-xs transition-transform duration-200 ${isServicesDropdownOpen ? 'rotate-180' : ''}`}></i>
+                  </Button>
+                </div>
               </div>
-            </div>
+            )}
           </div>
           
           {/* Services Dropdown */}
