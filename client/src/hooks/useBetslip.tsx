@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 
 export interface BetslipItem {
   id: string;
@@ -12,6 +12,24 @@ export interface BetslipItem {
 export function useBetslip() {
   const [items, setItems] = useState<BetslipItem[]>([]);
   const [isOpen, setIsOpen] = useState(false);
+
+  // Load betslip from localStorage on mount
+  useEffect(() => {
+    const savedBetslip = localStorage.getItem('betslip');
+    if (savedBetslip) {
+      try {
+        const parsedItems = JSON.parse(savedBetslip);
+        setItems(parsedItems);
+      } catch (error) {
+        console.error('Error loading betslip from localStorage:', error);
+      }
+    }
+  }, []);
+
+  // Save betslip to localStorage whenever items change
+  useEffect(() => {
+    localStorage.setItem('betslip', JSON.stringify(items));
+  }, [items]);
 
   const addToBetslip = useCallback((item: Omit<BetslipItem, 'id' | 'stake' | 'potentialReturn'>) => {
     const newItem: BetslipItem = {
