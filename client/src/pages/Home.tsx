@@ -18,6 +18,7 @@ import { LoginModal } from "@/components/LoginModal";
 import { FootballSection } from "@/components/FootballSection";
 import { SportSection } from "@/components/SportSection";
 import { SportsOverview } from "@/components/SportsOverview";
+import { QuickAccessBoxes } from "@/components/QuickAccessBoxes";
 import { useBetslip } from "@/hooks/useBetslip";
 import { sampleFeaturedEvents } from "@/lib/betting-data";
 import { Button } from "@/components/ui/button";
@@ -178,6 +179,17 @@ export default function Home() {
                 </div>
               </div>
             </div>
+
+            <QuickAccessBoxes 
+              onUpcomingClick={() => {
+                setActiveTab('sports');
+                setSportsFilter('upcoming');
+              }}
+              onLiveClick={() => {
+                setActiveTab('sports');
+                setSportsFilter('live');
+              }}
+            />
 
             <FeaturedEvents events={sampleFeaturedEvents} onBetClick={handleBetClick} />
           </>
