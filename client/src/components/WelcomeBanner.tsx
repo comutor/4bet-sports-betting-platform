@@ -55,7 +55,7 @@ export function WelcomeBanner() {
 
   return (
     <div className="relative overflow-hidden">
-      <div className={`h-52 md:h-64 bg-gradient-to-r ${currentBanner.gradient} relative transition-all duration-500`}>
+      <div className={`h-52 md:h-64 bg-gradient-to-r ${currentBanner.gradient} relative`}>
         <div className="absolute inset-0 bg-black/50"></div>
         <div className="relative z-10 h-full flex items-center justify-center text-center px-4">
           <div>
@@ -69,31 +69,6 @@ export function WelcomeBanner() {
             </Button>
           </div>
         </div>
-      </div>
-
-      {/* Pagination Dots */}
-      <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2 z-20">
-        {bannerSlides.map((_, index) => (
-          <button
-            key={index}
-            onClick={() => goToSlide(index)}
-            className={`w-3 h-3 rounded-full transition-all duration-300 ${
-              index === currentSlide 
-                ? 'bg-white' 
-                : 'bg-white/50 hover:bg-white/75'
-            }`}
-          />
-        ))}
-      </div>
-
-      {/* Slide Progress Indicator */}
-      <div className="absolute bottom-0 left-0 w-full h-1 bg-black/20">
-        <div 
-          className="h-full bg-warning transition-all duration-75 ease-linear"
-          style={{ 
-            width: `${((currentSlide + 1) / bannerSlides.length) * 100}%` 
-          }}
-        />
       </div>
     </div>
   );
