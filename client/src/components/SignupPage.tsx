@@ -5,7 +5,7 @@ import { Label } from "@/components/ui/label";
 
 interface SignupPageProps {
   onClose?: () => void;
-  onSuccess?: () => void;
+  onSuccess?: (userData?: any) => void;
 }
 
 export function SignupPage({ onClose, onSuccess }: SignupPageProps) {
@@ -57,28 +57,69 @@ export function SignupPage({ onClose, onSuccess }: SignupPageProps) {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (validateForm()) {
+    if (!validateForm()) return;
+
+    try {
       if (isLogin) {
         // Login with phone number and password
         const fullPhoneNumber = `${getPhonePrefix()}${formData.phoneNumber}`;
-        console.log('Login data:', { 
+        const loginData = { 
           phoneNumber: fullPhoneNumber,
           password: formData.password 
+        };
+        console.log('Login data:', loginData);
+
+        const response = await fetch('/api/auth/login', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          credentials: 'include',
+          body: JSON.stringify(loginData),
         });
+
+        const result = await response.json();
+        
+        if (response.ok) {
+          onSuccess?.(result.user);
+        } else {
+          setErrors({ general: result.message || 'Login failed' });
+        }
       } else {
         // Registration with full user data
-        const username = `${formData.firstName.toLowerCase()}_${formData.lastName.toLowerCase()}`;
         const fullPhoneNumber = `${getPhonePrefix()}${formData.phoneNumber}`;
-        console.log('Registration data:', { 
-          ...formData, 
-          username,
-          phoneNumber: fullPhoneNumber
+        const registrationData = { 
+          firstName: formData.firstName,
+          lastName: formData.lastName,
+          country: formData.country,
+          phoneNumber: fullPhoneNumber,
+          password: formData.password,
+          promoCode: formData.promoCode || null
+        };
+        console.log('Registration data:', registrationData);
+
+        const response = await fetch('/api/auth/signup', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          credentials: 'include',
+          body: JSON.stringify(registrationData),
         });
+
+        const result = await response.json();
+        
+        if (response.ok) {
+          onSuccess?.(result.user);
+        } else {
+          setErrors({ general: result.message || 'Registration failed' });
+        }
       }
-      // Simulate successful registration/login
-      onSuccess?.();
+    } catch (error) {
+      console.error('Auth error:', error);
+      setErrors({ general: 'Network error. Please try again.' });
     }
   };
 
