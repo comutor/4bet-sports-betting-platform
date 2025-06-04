@@ -50,25 +50,31 @@ export function SportsOverview({ onBetClick }: SportsOverviewProps) {
   return (
     <div className="space-y-6 pb-20">
       {/* Header */}
-      <div className="flex items-center justify-between">
-        <h2 className="text-2xl font-bold text-white">Sports</h2>
-        <div className="flex gap-2">
-          <Button
-            variant={activeFilter === 'upcoming' ? 'default' : 'outline'}
-            size="sm"
+      <div className="mb-6">
+        <h2 className="text-2xl font-bold text-white mb-4">Sports</h2>
+        
+        {/* Navigation Tabs */}
+        <div className="flex border-b border-gray-600">
+          <button
             onClick={() => setActiveFilter('upcoming')}
-            className="text-xs"
+            className={`flex-1 py-3 px-4 text-sm font-medium border-b-2 transition-colors ${
+              activeFilter === 'upcoming'
+                ? 'border-blue-500 text-blue-400 bg-slate-700/50'
+                : 'border-transparent text-gray-400 hover:text-white hover:bg-slate-700/30'
+            }`}
           >
             Upcoming
-          </Button>
-          <Button
-            variant={activeFilter === 'live' ? 'default' : 'outline'}
-            size="sm"
+          </button>
+          <button
             onClick={() => setActiveFilter('live')}
-            className="text-xs"
+            className={`flex-1 py-3 px-4 text-sm font-medium border-b-2 transition-colors ${
+              activeFilter === 'live'
+                ? 'border-red-500 text-red-400 bg-slate-700/50'
+                : 'border-transparent text-gray-400 hover:text-white hover:bg-slate-700/30'
+            }`}
           >
             Live Now
-          </Button>
+          </button>
         </div>
       </div>
 
