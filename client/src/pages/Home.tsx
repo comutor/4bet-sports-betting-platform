@@ -26,6 +26,7 @@ export default function Home() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userBalance, setUserBalance] = useState('0.00');
+  const [userCountry, setUserCountry] = useState<string>('');
   const [showLoginPrompt, setShowLoginPrompt] = useState(false);
   const [showSignupPage, setShowSignupPage] = useState(false);
   const [showLoginModal, setShowLoginModal] = useState(false);
@@ -93,6 +94,9 @@ export default function Home() {
     if (userData?.balance) {
       setUserBalance(userData.balance);
     }
+    if (userData?.country) {
+      setUserCountry(userData.country);
+    }
   };
 
   const handleLoginSuccess = (userData?: any) => {
@@ -101,6 +105,9 @@ export default function Home() {
     setActiveTab('account');
     if (userData?.balance) {
       setUserBalance(userData.balance);
+    }
+    if (userData?.country) {
+      setUserCountry(userData.country);
     }
   };
 
@@ -114,6 +121,7 @@ export default function Home() {
       if (response.ok) {
         setIsLoggedIn(false);
         setUserBalance('0.00');
+        setUserCountry('');
         setActiveTab('home');
       }
     } catch (error) {
@@ -121,6 +129,7 @@ export default function Home() {
       // Still log out locally even if server request fails
       setIsLoggedIn(false);
       setUserBalance('0.00');
+      setUserCountry('');
       setActiveTab('home');
     }
   };
@@ -208,7 +217,8 @@ export default function Home() {
       <TopNavigation 
         activeTab={activeTab} 
         onTabChange={setActiveTab} 
-        userBalance={`$${userBalance}`}
+        userBalance={userBalance}
+        userCountry={userCountry}
         isLoggedIn={isLoggedIn}
         isMenuOpen={isMenuOpen}
         onMenuToggle={() => setIsMenuOpen(!isMenuOpen)}

@@ -7,6 +7,7 @@ interface TopNavigationProps {
   activeTab: string;
   onTabChange: (tab: string) => void;
   userBalance: string;
+  userCountry?: string;
   isLoggedIn?: boolean;
   isMenuOpen?: boolean;
   onMenuToggle?: () => void;
@@ -14,8 +15,17 @@ interface TopNavigationProps {
   onLoginClick?: () => void;
 }
 
-export function TopNavigation({ activeTab, onTabChange, userBalance, isLoggedIn = false, isMenuOpen = false, onMenuToggle, onSignupClick, onLoginClick }: TopNavigationProps) {
+export function TopNavigation({ activeTab, onTabChange, userBalance, userCountry, isLoggedIn = false, isMenuOpen = false, onMenuToggle, onSignupClick, onLoginClick }: TopNavigationProps) {
   const [isServicesDropdownOpen, setIsServicesDropdownOpen] = useState(false);
+
+  const getCurrencyDisplay = (balance: string, country?: string) => {
+    if (country === 'Uganda') {
+      return `UGX ${balance}`;
+    } else if (country === 'South Sudan') {
+      return `SSP ${balance}`;
+    }
+    return `$${balance}`; // Default fallback
+  };
 
   const allNavItems = [
     { id: 'home', label: 'Home', icon: 'fas fa-home' },
@@ -75,7 +85,7 @@ export function TopNavigation({ activeTab, onTabChange, userBalance, isLoggedIn 
               <>
                 <div className="flex items-center bg-gradient-to-r from-blue-600/20 to-emerald-600/20 border border-blue-500/30 rounded-lg px-2 md:px-3 py-1 md:py-2">
                   <i className="fas fa-wallet bg-gradient-to-r from-blue-400 to-emerald-400 bg-clip-text text-transparent mr-1 md:mr-2 text-sm md:text-base"></i>
-                  <span className="font-bold text-sm md:text-base bg-gradient-to-r from-blue-400 to-emerald-400 bg-clip-text text-transparent">{userBalance}</span>
+                  <span className="font-bold text-sm md:text-base bg-gradient-to-r from-blue-400 to-emerald-400 bg-clip-text text-transparent">{getCurrencyDisplay(userBalance, userCountry)}</span>
                 </div>
                 <Button className="bg-primary hover:bg-primary-blue-dark font-bold text-sm md:text-base px-2 md:px-4 py-1 md:py-2">
                   Deposit

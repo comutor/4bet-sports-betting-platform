@@ -345,13 +345,14 @@ export class DatabaseStorage implements IStorage {
   }
 
   async createUser(insertUser: InsertUser): Promise<User> {
-    // Auto-generate username from first and last name
-    const username = `${insertUser.firstName.toLowerCase()}_${insertUser.lastName.toLowerCase()}`;
+    // Auto-generate username from first and last name with timestamp to avoid duplicates
+    const timestamp = Date.now();
+    const username = `${insertUser.firstName.toLowerCase()}_${insertUser.lastName.toLowerCase()}_${timestamp}`;
     
     const userToInsert = {
       ...insertUser,
       username,
-      balance: "1000.00" // Default starting balance
+      balance: "0.00" // Starting balance is 0.00
     };
 
     const [user] = await db
