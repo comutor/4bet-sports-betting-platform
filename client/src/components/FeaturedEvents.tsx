@@ -58,44 +58,44 @@ export function FeaturedEvents({ onBetClick }: FeaturedEventsProps) {
           </div>
         </div>
         
-        <div className={`grid gap-2 ${match.drawOdds || match.odds?.draw ? 'grid-cols-3' : 'grid-cols-2'}`}>
+        <div className="flex gap-1 justify-between">
           <Button
             variant="secondary"
-            className="bg-slate-700 hover:bg-primary text-center py-2 transition-colors"
+            className="bg-slate-700 hover:bg-primary text-center py-1.5 px-2 transition-colors flex-1 min-w-0"
             onClick={() => onBetClick(
               `${match.homeTeam || match.home_team} vs ${match.awayTeam || match.away_team}`, 
               match.homeTeam || match.home_team, 
               match.homeOdds || match.odds?.home || match.bookmakers?.[0]?.markets?.[0]?.outcomes?.find((o: any) => o.name === (match.homeTeam || match.home_team))?.price?.toFixed(2) || 'N/A'
             )}
           >
-            <div className="text-xs text-gray-400">1</div>
-            <div className="font-bold">{match.homeOdds || match.odds?.home || match.bookmakers?.[0]?.markets?.[0]?.outcomes?.find((o: any) => o.name === (match.homeTeam || match.home_team))?.price?.toFixed(2) || 'N/A'}</div>
+            <div className="text-xs text-gray-400 leading-none">1</div>
+            <div className="text-sm font-bold leading-none">{match.homeOdds || match.odds?.home || match.bookmakers?.[0]?.markets?.[0]?.outcomes?.find((o: any) => o.name === (match.homeTeam || match.home_team))?.price?.toFixed(2) || 'N/A'}</div>
           </Button>
           {(match.drawOdds || match.odds?.draw || match.bookmakers?.[0]?.markets?.[0]?.outcomes?.find((o: any) => o.name === 'Draw')) && (
             <Button
               variant="secondary"
-              className="bg-slate-700 hover:bg-primary text-center py-2 transition-colors"
+              className="bg-slate-700 hover:bg-primary text-center py-1.5 px-2 transition-colors flex-1 min-w-0"
               onClick={() => onBetClick(
                 `${match.homeTeam || match.home_team} vs ${match.awayTeam || match.away_team}`, 
                 'Draw', 
                 match.drawOdds || match.odds?.draw || match.bookmakers?.[0]?.markets?.[0]?.outcomes?.find((o: any) => o.name === 'Draw')?.price?.toFixed(2) || 'N/A'
               )}
             >
-              <div className="text-xs text-gray-400">X</div>
-              <div className="font-bold">{match.drawOdds || match.odds?.draw || match.bookmakers?.[0]?.markets?.[0]?.outcomes?.find((o: any) => o.name === 'Draw')?.price?.toFixed(2) || 'N/A'}</div>
+              <div className="text-xs text-gray-400 leading-none">X</div>
+              <div className="text-sm font-bold leading-none">{match.drawOdds || match.odds?.draw || match.bookmakers?.[0]?.markets?.[0]?.outcomes?.find((o: any) => o.name === 'Draw')?.price?.toFixed(2) || 'N/A'}</div>
             </Button>
           )}
           <Button
             variant="secondary"
-            className="bg-slate-700 hover:bg-primary text-center py-2 transition-colors"
+            className="bg-slate-700 hover:bg-primary text-center py-1.5 px-2 transition-colors flex-1 min-w-0"
             onClick={() => onBetClick(
               `${match.homeTeam || match.home_team} vs ${match.awayTeam || match.away_team}`, 
               match.awayTeam || match.away_team, 
               match.awayOdds || match.odds?.away || match.bookmakers?.[0]?.markets?.[0]?.outcomes?.find((o: any) => o.name === (match.awayTeam || match.away_team))?.price?.toFixed(2) || 'N/A'
             )}
           >
-            <div className="text-xs text-gray-400">2</div>
-            <div className="font-bold">{match.awayOdds || match.odds?.away || match.bookmakers?.[0]?.markets?.[0]?.outcomes?.find((o: any) => o.name === (match.awayTeam || match.away_team))?.price?.toFixed(2) || 'N/A'}</div>
+            <div className="text-xs text-gray-400 leading-none">2</div>
+            <div className="text-sm font-bold leading-none">{match.awayOdds || match.odds?.away || match.bookmakers?.[0]?.markets?.[0]?.outcomes?.find((o: any) => o.name === (match.awayTeam || match.away_team))?.price?.toFixed(2) || 'N/A'}</div>
           </Button>
         </div>
       </div>
