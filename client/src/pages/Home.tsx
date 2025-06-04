@@ -31,6 +31,7 @@ export default function Home() {
   const [showLoginPrompt, setShowLoginPrompt] = useState(false);
   const [showSignupPage, setShowSignupPage] = useState(false);
   const [showLoginModal, setShowLoginModal] = useState(false);
+  const [sportsFilter, setSportsFilter] = useState<'upcoming' | 'live'>('upcoming');
   const {
     items: betslipItems,
     isOpen: betslipOpen,
@@ -182,7 +183,7 @@ export default function Home() {
           </>
         );
       case 'sports':
-        return <SportsOverview onBetClick={handleBetClick} />;
+        return <SportsOverview onBetClick={handleBetClick} activeFilter={sportsFilter} />;
       case 'football':
         return <FootballSection onBetClick={handleBetClick} />;
       case 'basketball':
@@ -248,6 +249,8 @@ export default function Home() {
         onMenuToggle={() => setIsMenuOpen(!isMenuOpen)}
         onSignupClick={handleOpenSignupPage}
         onLoginClick={handleOpenLoginModal}
+        sportsFilter={sportsFilter}
+        onSportsFilterChange={setSportsFilter}
       />
       
 

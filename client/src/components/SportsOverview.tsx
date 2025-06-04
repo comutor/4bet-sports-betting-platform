@@ -18,10 +18,10 @@ interface SportEvent {
 
 interface SportsOverviewProps {
   onBetClick: (eventName: string, selection: string, odds: string) => void;
+  activeFilter: 'upcoming' | 'live';
 }
 
-export function SportsOverview({ onBetClick }: SportsOverviewProps) {
-  const [activeFilter, setActiveFilter] = useState<'upcoming' | 'live'>('upcoming');
+export function SportsOverview({ onBetClick, activeFilter }: SportsOverviewProps) {
 
   // Fetch upcoming events
   const { data: upcomingEvents = [], isLoading: loadingUpcoming } = useQuery<SportEvent[]>({
@@ -49,44 +49,6 @@ export function SportsOverview({ onBetClick }: SportsOverviewProps) {
 
   return (
     <div className="space-y-6 pb-20">
-      {/* Header */}
-      <div className="mb-6">
-        {/* Navigation Pills */}
-        <div className="flex items-center gap-2">
-          <Button
-            variant="ghost"
-            size="sm"
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full font-medium transition-all duration-200 whitespace-nowrap ${
-              activeFilter === 'upcoming'
-                ? 'bg-primary text-white shadow-sm'
-                : 'text-gray-300 hover:bg-slate-light-custom hover:text-white'
-            }`}
-            onClick={() => setActiveFilter('upcoming')}
-          >
-            <i className="fas fa-calendar text-sm"></i>
-            <span className="text-sm font-medium">Upcoming</span>
-          </Button>
-          <Button
-            variant="ghost"
-            size="sm"
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full font-medium transition-all duration-200 whitespace-nowrap ${
-              activeFilter === 'live'
-                ? 'bg-primary text-white shadow-sm'
-                : 'text-gray-300 hover:bg-slate-light-custom hover:text-white'
-            }`}
-            onClick={() => setActiveFilter('live')}
-          >
-            <i className="fas fa-broadcast-tower text-sm"></i>
-            <span className="text-sm font-medium">Live Now</span>
-            {activeFilter === 'live' && (
-              <span className="w-1.5 h-1.5 bg-live rounded-full animate-pulse"></span>
-            )}
-          </Button>
-        </div>
-      </div>
-
-
-
       {/* Events List */}
       <div className="bg-slate-800 rounded-lg border border-gray-700 p-4">
         <h3 className="text-lg font-semibold text-white mb-3">

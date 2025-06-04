@@ -13,9 +13,11 @@ interface TopNavigationProps {
   onMenuToggle?: () => void;
   onSignupClick?: () => void;
   onLoginClick?: () => void;
+  sportsFilter?: 'upcoming' | 'live';
+  onSportsFilterChange?: (filter: 'upcoming' | 'live') => void;
 }
 
-export function TopNavigation({ activeTab, onTabChange, userBalance, userCountry, isLoggedIn = false, isMenuOpen = false, onMenuToggle, onSignupClick, onLoginClick }: TopNavigationProps) {
+export function TopNavigation({ activeTab, onTabChange, userBalance, userCountry, isLoggedIn = false, isMenuOpen = false, onMenuToggle, onSignupClick, onLoginClick, sportsFilter = 'upcoming', onSportsFilterChange }: TopNavigationProps) {
   const [isServicesDropdownOpen, setIsServicesDropdownOpen] = useState(false);
 
   const getCurrencyDisplay = (balance: string, country?: string) => {
@@ -121,25 +123,61 @@ export function TopNavigation({ activeTab, onTabChange, userBalance, userCountry
           <div className="flex items-center">
             {/* Scrollable Navigation Pills */}
             <div className="flex items-center gap-1 overflow-x-auto scrollbar-hide flex-1 pr-12">
-              {allNavItems.map((item) => (
-                <Button
-                  key={item.id}
-                  variant="ghost"
-                  size="sm"
-                  className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full font-medium transition-all duration-200 whitespace-nowrap shrink-0 ${
-                    activeTab === item.id 
-                      ? 'bg-primary text-white shadow-sm' 
-                      : 'text-gray-300 hover:bg-slate-light-custom hover:text-white'
-                  }`}
-                  onClick={() => onTabChange(item.id)}
-                >
-                  <i className={`${item.icon} text-sm`}></i>
-                  <span className="text-sm font-medium">{item.label}</span>
-                  {item.hasIndicator && (
-                    <span className="w-1.5 h-1.5 bg-live rounded-full animate-pulse"></span>
-                  )}
-                </Button>
-              ))}
+              {activeTab === 'sports' ? (
+                // Sports-specific navigation
+                <>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full font-medium transition-all duration-200 whitespace-nowrap shrink-0 ${
+                      sportsFilter === 'upcoming'
+                        ? 'bg-primary text-white shadow-sm'
+                        : 'text-gray-300 hover:bg-slate-light-custom hover:text-white'
+                    }`}
+                    onClick={() => onSportsFilterChange?.('upcoming')}
+                  >
+                    <i className="fas fa-calendar text-sm"></i>
+                    <span className="text-sm font-medium">Upcoming</span>
+                  </Button>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full font-medium transition-all duration-200 whitespace-nowrap shrink-0 ${
+                      sportsFilter === 'live'
+                        ? 'bg-primary text-white shadow-sm'
+                        : 'text-gray-300 hover:bg-slate-light-custom hover:text-white'
+                    }`}
+                    onClick={() => onSportsFilterChange?.('live')}
+                  >
+                    <i className="fas fa-broadcast-tower text-sm"></i>
+                    <span className="text-sm font-medium">Live Now</span>
+                    {sportsFilter === 'live' && (
+                      <span className="w-1.5 h-1.5 bg-live rounded-full animate-pulse"></span>
+                    )}
+                  </Button>
+                </>
+              ) : (
+                // Regular navigation
+                allNavItems.map((item) => (
+                  <Button
+                    key={item.id}
+                    variant="ghost"
+                    size="sm"
+                    className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full font-medium transition-all duration-200 whitespace-nowrap shrink-0 ${
+                      activeTab === item.id 
+                        ? 'bg-primary text-white shadow-sm' 
+                        : 'text-gray-300 hover:bg-slate-light-custom hover:text-white'
+                    }`}
+                    onClick={() => onTabChange(item.id)}
+                  >
+                    <i className={`${item.icon} text-sm`}></i>
+                    <span className="text-sm font-medium">{item.label}</span>
+                    {item.hasIndicator && (
+                      <span className="w-1.5 h-1.5 bg-live rounded-full animate-pulse"></span>
+                    )}
+                  </Button>
+                ))
+              )}
             </div>
             
             {/* Fixed Dropdown Button */}
