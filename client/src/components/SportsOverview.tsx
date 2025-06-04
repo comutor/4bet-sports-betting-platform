@@ -51,28 +51,37 @@ export function SportsOverview({ onBetClick }: SportsOverviewProps) {
     <div className="space-y-6 pb-20">
       {/* Header */}
       <div className="mb-6">
-        {/* Navigation Tabs */}
-        <div className="flex border-b border-gray-600">
-          <button
-            onClick={() => setActiveFilter('upcoming')}
-            className={`flex-1 py-3 px-4 text-sm font-medium border-b-2 transition-colors ${
+        {/* Navigation Pills */}
+        <div className="flex items-center gap-2">
+          <Button
+            variant="ghost"
+            size="sm"
+            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full font-medium transition-all duration-200 whitespace-nowrap ${
               activeFilter === 'upcoming'
-                ? 'border-blue-500 text-blue-400 bg-slate-700/50'
-                : 'border-transparent text-gray-400 hover:text-white hover:bg-slate-700/30'
+                ? 'bg-primary text-white shadow-sm'
+                : 'text-gray-300 hover:bg-slate-light-custom hover:text-white'
             }`}
+            onClick={() => setActiveFilter('upcoming')}
           >
-            Upcoming
-          </button>
-          <button
-            onClick={() => setActiveFilter('live')}
-            className={`flex-1 py-3 px-4 text-sm font-medium border-b-2 transition-colors ${
+            <i className="fas fa-calendar text-sm"></i>
+            <span className="text-sm font-medium">Upcoming</span>
+          </Button>
+          <Button
+            variant="ghost"
+            size="sm"
+            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full font-medium transition-all duration-200 whitespace-nowrap ${
               activeFilter === 'live'
-                ? 'border-red-500 text-red-400 bg-slate-700/50'
-                : 'border-transparent text-gray-400 hover:text-white hover:bg-slate-700/30'
+                ? 'bg-primary text-white shadow-sm'
+                : 'text-gray-300 hover:bg-slate-light-custom hover:text-white'
             }`}
+            onClick={() => setActiveFilter('live')}
           >
-            Live Now
-          </button>
+            <i className="fas fa-broadcast-tower text-sm"></i>
+            <span className="text-sm font-medium">Live Now</span>
+            {activeFilter === 'live' && (
+              <span className="w-1.5 h-1.5 bg-live rounded-full animate-pulse"></span>
+            )}
+          </Button>
         </div>
       </div>
 
