@@ -73,9 +73,9 @@ export function TopNavigation({ activeTab, onTabChange, userBalance, isLoggedIn 
             
             {isLoggedIn ? (
               <>
-                <div className="hidden sm:flex items-center bg-slate-light-custom rounded-lg px-2 md:px-3 py-1 md:py-2">
-                  <i className="fas fa-wallet text-success mr-1 md:mr-2 text-sm md:text-base"></i>
-                  <span className="font-semibold text-sm md:text-base">{userBalance}</span>
+                <div className="flex items-center bg-gradient-to-r from-blue-600/20 to-emerald-600/20 border border-blue-500/30 rounded-lg px-2 md:px-3 py-1 md:py-2">
+                  <i className="fas fa-wallet bg-gradient-to-r from-blue-400 to-emerald-400 bg-clip-text text-transparent mr-1 md:mr-2 text-sm md:text-base"></i>
+                  <span className="font-bold text-sm md:text-base bg-gradient-to-r from-blue-400 to-emerald-400 bg-clip-text text-transparent">{userBalance}</span>
                 </div>
                 <Button className="bg-primary hover:bg-primary-blue-dark font-bold text-sm md:text-base px-2 md:px-4 py-1 md:py-2">
                   Deposit
