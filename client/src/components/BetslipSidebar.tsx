@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { BetslipItem } from "@/hooks/useBetslip";
+import { useState } from "react";
 
 interface BetslipSidebarProps {
   isOpen: boolean;
@@ -21,6 +22,13 @@ export function BetslipSidebar({
   totalStake,
   totalPotentialReturn
 }: BetslipSidebarProps) {
+  const [betType, setBetType] = useState<'single' | 'accumulator'>('accumulator');
+  const [accumulatorStake, setAccumulatorStake] = useState(100);
+
+  // Calculate accumulator odds (multiply all odds together)
+  const accumulatorOdds = items.reduce((total, item) => total * parseFloat(item.odds), 1);
+  const accumulatorReturn = accumulatorStake * accumulatorOdds;
+
   return (
     <div className={`fixed inset-0 bg-slate-custom transform transition-transform duration-300 z-50 ${
       isOpen ? 'translate-y-0' : 'translate-y-full'
@@ -32,6 +40,32 @@ export function BetslipSidebar({
             <i className="fas fa-times"></i>
           </Button>
         </div>
+
+        {/* Bet Type Selection */}
+        {items.length > 1 && (
+          <div className="flex mb-4 bg-slate-light-custom rounded-lg p-1">
+            <button
+              onClick={() => setBetType('single')}
+              className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-colors ${
+                betType === 'single'
+                  ? 'bg-primary text-white'
+                  : 'text-gray-400 hover:text-white'
+              }`}
+            >
+              Single Bets
+            </button>
+            <button
+              onClick={() => setBetType('accumulator')}
+              className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-colors ${
+                betType === 'accumulator'
+                  ? 'bg-primary text-white'
+                  : 'text-gray-400 hover:text-white'
+              }`}
+            >
+              Accumulator
+            </button>
+          </div>
+        )}
         
         {/* Betslip Items */}
         <div className="flex-1 overflow-y-auto space-y-4 mb-6">
@@ -41,7 +75,7 @@ export function BetslipSidebar({
               <p>Your betslip is empty</p>
               <p className="text-sm">Add some bets to get started!</p>
             </div>
-          ) : (
+          ) : betType === 'single' ? (
             items.map((item) => (
               <div key={item.id} className="bg-slate-light-custom rounded-lg p-4">
                 <div className="flex items-center justify-between mb-2">
@@ -72,24 +106,98 @@ export function BetslipSidebar({
                 </div>
               </div>
             ))
+          ) : (
+            // Accumulator view
+            <div className="bg-slate-light-custom rounded-lg p-4">
+              <div className="flex items-center justify-between mb-4">
+                <span className="font-bold text-lg">Accumulator</span>
+                <span className="text-sm text-gray-400">{items.length} selections</span>
+              </div>
+              
+              {/* List of selections */}
+              {items.map((item) => (
+                <div key={item.id} className="flex items-center justify-between py-2 border-b border-gray-600 last:border-b-0">
+                  <div className="flex-1">
+                    <div className="text-sm font-medium">{item.eventName}</div>
+                    <div className="text-xs text-gray-400">{item.selection}</div>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <span className="font-bold">@{item.odds}</span>
+                    <Button 
+                      variant="ghost" 
+                      size="sm"
+                      onClick={() => onRemoveItem(item.id)}
+                      className="text-gray-400 hover:text-white p-1"
+                    >
+                      <i className="fas fa-times text-xs"></i>
+                    </Button>
+                  </div>
+                </div>
+              ))}
+              
+              {/* Accumulator stake and odds */}
+              <div className="mt-4 pt-4 border-t border-gray-600">
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-sm">Combined Odds:</span>
+                  <span className="font-bold text-lg">@{accumulatorOdds.toFixed(2)}</span>
+                </div>
+                <div className="flex items-center justify-between">
+                  <span className="text-sm">Stake:</span>
+                  <Input
+                    type="number"
+                    value={accumulatorStake}
+                    onChange={(e) => setAccumulatorStake(parseFloat(e.target.value) || 0)}
+                    className="bg-slate-custom w-24 text-center py-1 px-2"
+                    min="0"
+                    step="1"
+                  />
+                </div>
+                <div className="text-right text-lg text-success mt-2">
+                  Potential Win: SSP {accumulatorReturn.toFixed(2)}
+                </div>
+              </div>
+            </div>
           )}
         </div>
         
         {/* Betslip Summary */}
         {items.length > 0 && (
           <div className="border-t border-gray-600 pt-4">
-            <div className="flex items-center justify-between mb-2">
-              <span>Total Stake:</span>
-              <span className="font-bold">SSP {totalStake.toFixed(2)}</span>
-            </div>
-            <div className="flex items-center justify-between mb-4">
-              <span>Potential Returns:</span>
-              <span className="font-bold text-success">SSP {totalPotentialReturn.toFixed(2)}</span>
-            </div>
-            
-            <Button className="w-full bg-success hover:bg-green-600 font-bold">
-              Place Bets
-            </Button>
+            {betType === 'single' ? (
+              <>
+                <div className="flex items-center justify-between mb-2">
+                  <span>Total Stake:</span>
+                  <span className="font-bold">SSP {totalStake.toFixed(2)}</span>
+                </div>
+                <div className="flex items-center justify-between mb-4">
+                  <span>Potential Returns:</span>
+                  <span className="font-bold text-success">SSP {totalPotentialReturn.toFixed(2)}</span>
+                </div>
+                
+                <Button className="w-full bg-success hover:bg-green-600 font-bold">
+                  Place {items.length} Single Bet{items.length > 1 ? 's' : ''}
+                </Button>
+              </>
+            ) : (
+              <>
+                <div className="flex items-center justify-between mb-2">
+                  <span>Accumulator Stake:</span>
+                  <span className="font-bold">SSP {accumulatorStake.toFixed(2)}</span>
+                </div>
+                <div className="flex items-center justify-between mb-2">
+                  <span>Combined Odds:</span>
+                  <span className="font-bold">@{accumulatorOdds.toFixed(2)}</span>
+                </div>
+                <div className="flex items-center justify-between mb-4">
+                  <span>Potential Win:</span>
+                  <span className="font-bold text-success">SSP {accumulatorReturn.toFixed(2)}</span>
+                </div>
+                
+                <Button className="w-full bg-success hover:bg-green-600 font-bold">
+                  Place Accumulator
+                </Button>
+              </>
+            )}
           </div>
         )}
       </div>
