@@ -191,7 +191,7 @@ export default function Home() {
               }}
             />
 
-            <FeaturedEvents events={sampleFeaturedEvents} onBetClick={handleBetClick} />
+            <FeaturedEvents onBetClick={handleBetClick} />
           </>
         );
       case 'sports':
