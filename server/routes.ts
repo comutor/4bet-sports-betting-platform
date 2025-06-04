@@ -124,6 +124,36 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Pure football (soccer) matches only
+  app.get("/api/football/matches", async (req, res) => {
+    try {
+      const footballLeagues = ['soccer_epl', 'soccer_spain_la_liga', 'soccer_germany_bundesliga', 'soccer_italy_serie_a'];
+      const footballMatches: any[] = [];
+
+      for (const league of footballLeagues) {
+        try {
+          const matches = await oddsApiService.getOdds(league);
+          const transformedMatches = matches.slice(0, 5).map((match: any) => ({
+            id: match.id,
+            homeTeam: match.home_team,
+            awayTeam: match.away_team,
+            league: match.sport_title,
+            commence_time: match.commence_time,
+            bookmakers: match.bookmakers
+          }));
+          footballMatches.push(...transformedMatches);
+        } catch (error) {
+          console.log(`Error fetching ${league}:`, error);
+        }
+      }
+
+      res.json(footballMatches.slice(0, 10));
+    } catch (error) {
+      console.error("Error fetching football matches:", error);
+      res.status(500).json({ error: "Failed to fetch football matches" });
+    }
+  });
+
   // Basketball games by league priority
   app.get("/api/basketball/leagues", async (req, res) => {
     try {

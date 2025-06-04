@@ -8,7 +8,7 @@ interface FeaturedEventsProps {
 
 export function FeaturedEvents({ onBetClick }: FeaturedEventsProps) {
   const { data: footballData, isLoading: footballLoading } = useQuery({
-    queryKey: ['/api/sports-events'],
+    queryKey: ['/api/football/matches'],
   });
 
   const { data: basketballData, isLoading: basketballLoading } = useQuery({
@@ -22,6 +22,9 @@ export function FeaturedEvents({ onBetClick }: FeaturedEventsProps) {
   const { data: tennisData, isLoading: tennisLoading } = useQuery({
     queryKey: ['/api/tennis/tournaments'],
   });
+
+  // Extract basketball games from league data
+  const basketballGames = Array.isArray(basketballData) ? basketballData.flatMap((league: any) => league.games || []) : [];
 
   const renderMatchCard = (match: any, sport: string, index: number) => {
     const getSportIcon = (sportType: string) => {
@@ -166,7 +169,7 @@ export function FeaturedEvents({ onBetClick }: FeaturedEventsProps) {
       </h2>
       
       {renderSportSection('Football', 'fas fa-futbol', footballData || [], footballLoading, 'football')}
-      {renderSportSection('Basketball', 'fas fa-basketball-ball', basketballData || [], basketballLoading, 'basketball')}
+      {renderSportSection('Basketball', 'fas fa-basketball-ball', basketballGames, basketballLoading, 'basketball')}
       {renderSportSection('Live Now', 'fas fa-broadcast-tower', liveData || [], liveLoading, 'live')}
       {renderSportSection('Tennis', 'fas fa-table-tennis', tennisData || [], tennisLoading, 'tennis')}
     </div>
