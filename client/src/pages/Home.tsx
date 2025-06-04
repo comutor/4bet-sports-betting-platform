@@ -208,7 +208,8 @@ export default function Home() {
         return <AccountPage 
           isLoggedIn={isLoggedIn} 
           onClose={() => setActiveTab('home')} 
-          onSignupClick={() => setActiveTab('signup')}
+          onSignupClick={handleOpenSignupPage}
+          onLoginClick={handleOpenLoginModal}
           onLogout={handleLogout}
         />;
       case 'signup':

@@ -4,10 +4,11 @@ interface AccountPageProps {
   isLoggedIn?: boolean;
   onClose?: () => void;
   onSignupClick?: () => void;
+  onLoginClick?: () => void;
   onLogout?: () => void;
 }
 
-export function AccountPage({ isLoggedIn = false, onClose, onSignupClick, onLogout }: AccountPageProps) {
+export function AccountPage({ isLoggedIn = false, onClose, onSignupClick, onLoginClick, onLogout }: AccountPageProps) {
   const menuItems = [
     { id: 'why-join', label: 'Why Join?', icon: 'fas fa-question-circle' },
     { id: 'deposit', label: 'Deposit', icon: 'fas fa-credit-card' },
@@ -45,7 +46,11 @@ export function AccountPage({ isLoggedIn = false, onClose, onSignupClick, onLogo
               >
                 SIGN UP
               </Button>
-              <Button variant="outline" className="border-2 border-gray-400 text-gray-300 hover:bg-slate-700 font-bold py-4 text-sm">
+              <Button 
+                variant="outline" 
+                className="border-2 border-gray-400 text-gray-300 hover:bg-slate-700 font-bold py-4 text-sm"
+                onClick={onLoginClick}
+              >
                 LOG IN
               </Button>
             </div>
