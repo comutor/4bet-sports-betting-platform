@@ -62,24 +62,24 @@ export function FeaturedEvents({ onBetClick }: FeaturedEventsProps) {
             onClick={() => onBetClick(
               `${match.homeTeam || match.home_team} vs ${match.awayTeam || match.away_team}`, 
               match.homeTeam || match.home_team, 
-              match.homeOdds || match.odds?.home || 'N/A'
+              match.homeOdds || match.odds?.home || match.bookmakers?.[0]?.markets?.[0]?.outcomes?.find((o: any) => o.name === (match.homeTeam || match.home_team))?.price?.toFixed(2) || 'N/A'
             )}
           >
             <div className="text-xs text-gray-400">1</div>
-            <div className="font-bold">{match.homeOdds || match.odds?.home || 'N/A'}</div>
+            <div className="font-bold">{match.homeOdds || match.odds?.home || match.bookmakers?.[0]?.markets?.[0]?.outcomes?.find((o: any) => o.name === (match.homeTeam || match.home_team))?.price?.toFixed(2) || 'N/A'}</div>
           </Button>
-          {(match.drawOdds || match.odds?.draw) && (
+          {(match.drawOdds || match.odds?.draw || match.bookmakers?.[0]?.markets?.[0]?.outcomes?.find((o: any) => o.name === 'Draw')) && (
             <Button
               variant="secondary"
               className="bg-slate-700 hover:bg-primary text-center py-2 transition-colors"
               onClick={() => onBetClick(
                 `${match.homeTeam || match.home_team} vs ${match.awayTeam || match.away_team}`, 
                 'Draw', 
-                match.drawOdds || match.odds?.draw
+                match.drawOdds || match.odds?.draw || match.bookmakers?.[0]?.markets?.[0]?.outcomes?.find((o: any) => o.name === 'Draw')?.price?.toFixed(2) || 'N/A'
               )}
             >
               <div className="text-xs text-gray-400">X</div>
-              <div className="font-bold">{match.drawOdds || match.odds?.draw}</div>
+              <div className="font-bold">{match.drawOdds || match.odds?.draw || match.bookmakers?.[0]?.markets?.[0]?.outcomes?.find((o: any) => o.name === 'Draw')?.price?.toFixed(2) || 'N/A'}</div>
             </Button>
           )}
           <Button
@@ -88,11 +88,11 @@ export function FeaturedEvents({ onBetClick }: FeaturedEventsProps) {
             onClick={() => onBetClick(
               `${match.homeTeam || match.home_team} vs ${match.awayTeam || match.away_team}`, 
               match.awayTeam || match.away_team, 
-              match.awayOdds || match.odds?.away || 'N/A'
+              match.awayOdds || match.odds?.away || match.bookmakers?.[0]?.markets?.[0]?.outcomes?.find((o: any) => o.name === (match.awayTeam || match.away_team))?.price?.toFixed(2) || 'N/A'
             )}
           >
             <div className="text-xs text-gray-400">2</div>
-            <div className="font-bold">{match.awayOdds || match.odds?.away || 'N/A'}</div>
+            <div className="font-bold">{match.awayOdds || match.odds?.away || match.bookmakers?.[0]?.markets?.[0]?.outcomes?.find((o: any) => o.name === (match.awayTeam || match.away_team))?.price?.toFixed(2) || 'N/A'}</div>
           </Button>
         </div>
       </div>
