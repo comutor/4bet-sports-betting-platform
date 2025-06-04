@@ -19,6 +19,8 @@ interface TopNavigationProps {
 
 export function TopNavigation({ activeTab, onTabChange, userBalance, userCountry, isLoggedIn = false, isMenuOpen = false, onMenuToggle, onSignupClick, onLoginClick, sportsFilter = 'upcoming', onSportsFilterChange }: TopNavigationProps) {
   const [isServicesDropdownOpen, setIsServicesDropdownOpen] = useState(false);
+  const [isDateDropdownOpen, setIsDateDropdownOpen] = useState(false);
+  const [selectedDateFilter, setSelectedDateFilter] = useState('Today');
 
   const getCurrencyDisplay = (balance: string, country?: string) => {
     if (country === 'Uganda') {
@@ -228,10 +230,32 @@ export function TopNavigation({ activeTab, onTabChange, userBalance, userCountry
                 <span className="text-xs text-gray-300">Markets</span>
                 <i className="fas fa-chevron-down text-xs text-gray-400"></i>
               </div>
-              <div className="bg-slate-800 border border-gray-600 rounded-md px-2.5 py-1.5 flex items-center gap-1.5 cursor-pointer hover:bg-slate-700 transition-colors whitespace-nowrap shrink-0">
+              <div 
+                className="bg-slate-800 border border-gray-600 rounded-md px-2.5 py-1.5 flex items-center gap-1.5 cursor-pointer hover:bg-slate-700 transition-colors whitespace-nowrap shrink-0 relative"
+                onClick={() => setIsDateDropdownOpen(!isDateDropdownOpen)}
+              >
                 <i className="fas fa-calendar text-xs text-gray-300"></i>
-                <span className="text-xs text-gray-300">Date</span>
-                <i className="fas fa-chevron-down text-xs text-gray-400"></i>
+                <span className="text-xs text-gray-300">{selectedDateFilter}</span>
+                <i className={`fas fa-chevron-down text-xs text-gray-400 transition-transform ${isDateDropdownOpen ? 'rotate-180' : ''}`}></i>
+                
+                {/* Date Dropdown */}
+                {isDateDropdownOpen && (
+                  <div className="absolute top-full left-0 mt-1 bg-slate-800 border border-gray-600 rounded-lg shadow-lg z-50 min-w-[120px]">
+                    {['Today', 'Tomorrow', 'This Week', 'This Month', 'Next Month'].map((option) => (
+                      <div
+                        key={option}
+                        className="px-3 py-2 text-xs text-gray-300 hover:bg-slate-700 cursor-pointer first:rounded-t-lg last:rounded-b-lg"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setSelectedDateFilter(option);
+                          setIsDateDropdownOpen(false);
+                        }}
+                      >
+                        {option}
+                      </div>
+                    ))}
+                  </div>
+                )}
               </div>
             </div>
           )}
