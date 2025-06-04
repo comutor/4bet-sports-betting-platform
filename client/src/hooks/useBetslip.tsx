@@ -17,8 +17,8 @@ export function useBetslip() {
     const newItem: BetslipItem = {
       ...item,
       id: Date.now().toString(),
-      stake: 10,
-      potentialReturn: 10 * parseFloat(item.odds)
+      stake: 100, // Default stake in SSP
+      potentialReturn: 100 * parseFloat(item.odds)
     };
     
     setItems(prev => {

@@ -68,7 +68,7 @@ export function BetslipSidebar({
                   />
                 </div>
                 <div className="text-right text-sm text-success mt-1">
-                  Returns: ${item.potentialReturn.toFixed(2)}
+                  Returns: SSP {item.potentialReturn.toFixed(2)}
                 </div>
               </div>
             ))
@@ -80,11 +80,11 @@ export function BetslipSidebar({
           <div className="border-t border-gray-600 pt-4">
             <div className="flex items-center justify-between mb-2">
               <span>Total Stake:</span>
-              <span className="font-bold">${totalStake.toFixed(2)}</span>
+              <span className="font-bold">SSP {totalStake.toFixed(2)}</span>
             </div>
             <div className="flex items-center justify-between mb-4">
               <span>Potential Returns:</span>
-              <span className="font-bold text-success">${totalPotentialReturn.toFixed(2)}</span>
+              <span className="font-bold text-success">SSP {totalPotentialReturn.toFixed(2)}</span>
             </div>
             
             <Button className="w-full bg-success hover:bg-green-600 font-bold">
