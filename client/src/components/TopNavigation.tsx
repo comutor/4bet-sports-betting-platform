@@ -29,7 +29,7 @@ export function TopNavigation({ activeTab, onTabChange, userBalance, userCountry
 
   const allNavItems = [
     { id: 'home', label: 'Home', icon: 'fas fa-home' },
-    { id: 'sports', label: 'Football', icon: 'fas fa-futbol' },
+    { id: 'sports', label: 'Sports', icon: 'fas fa-futbol' },
     { id: 'basketball', label: 'Basketball', icon: 'fas fa-basketball' },
     { id: 'aviator', label: 'Aviator', icon: 'fas fa-plane' },
     { id: 'live', label: 'Live Now', icon: 'fas fa-broadcast-tower', hasIndicator: true },
