@@ -31,7 +31,7 @@ export default function Home() {
   const [showLoginPrompt, setShowLoginPrompt] = useState(false);
   const [showSignupPage, setShowSignupPage] = useState(false);
   const [showLoginModal, setShowLoginModal] = useState(false);
-  const [sportsFilter, setSportsFilter] = useState<'upcoming' | 'live'>('upcoming');
+  const [sportsFilter, setSportsFilter] = useState<'upcoming' | 'popular' | 'live'>('upcoming');
   const {
     items: betslipItems,
     isOpen: betslipOpen,

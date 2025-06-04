@@ -13,8 +13,8 @@ interface TopNavigationProps {
   onMenuToggle?: () => void;
   onSignupClick?: () => void;
   onLoginClick?: () => void;
-  sportsFilter?: 'upcoming' | 'live';
-  onSportsFilterChange?: (filter: 'upcoming' | 'live') => void;
+  sportsFilter?: 'upcoming' | 'popular' | 'live';
+  onSportsFilterChange?: (filter: 'upcoming' | 'popular' | 'live') => void;
 }
 
 export function TopNavigation({ activeTab, onTabChange, userBalance, userCountry, isLoggedIn = false, isMenuOpen = false, onMenuToggle, onSignupClick, onLoginClick, sportsFilter = 'upcoming', onSportsFilterChange }: TopNavigationProps) {
@@ -138,6 +138,19 @@ export function TopNavigation({ activeTab, onTabChange, userBalance, userCountry
                   >
                     <i className="fas fa-calendar text-sm"></i>
                     <span className="text-sm font-medium">Upcoming</span>
+                  </Button>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full font-medium transition-all duration-200 whitespace-nowrap shrink-0 ${
+                      sportsFilter === 'popular'
+                        ? 'bg-primary text-white shadow-sm'
+                        : 'text-gray-300 hover:bg-slate-light-custom hover:text-white'
+                    }`}
+                    onClick={() => onSportsFilterChange?.('popular')}
+                  >
+                    <i className="fas fa-fire text-sm"></i>
+                    <span className="text-sm font-medium">Popular</span>
                   </Button>
                   <Button
                     variant="ghost"

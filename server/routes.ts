@@ -175,6 +175,35 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Sports overview - popular events
+  app.get("/api/popular-events", async (req, res) => {
+    try {
+      const upcomingGames = await oddsApiService.getUpcomingGames();
+      
+      // Transform to consistent format for sports overview (popular events with better odds)
+      const popularEvents = (upcomingGames || []).slice(5, 15).map((game: any) => ({
+        id: game.id,
+        sport: game.sport_key?.includes('soccer') ? 'football' : 
+               game.sport_key?.includes('basketball') ? 'basketball' :
+               game.sport_key?.includes('tennis') ? 'tennis' :
+               game.sport_key?.includes('hockey') ? 'hockey' : 'other',
+        league: game.sport_title || 'Unknown League',
+        homeTeam: game.home_team,
+        awayTeam: game.away_team,
+        eventName: `${game.home_team} vs ${game.away_team}`,
+        time: new Date(game.commence_time).toLocaleString(),
+        homeOdds: game.bookmakers?.[0]?.markets?.[0]?.outcomes?.find((o: any) => o.name === game.home_team)?.price?.toString() || 'N/A',
+        awayOdds: game.bookmakers?.[0]?.markets?.[0]?.outcomes?.find((o: any) => o.name === game.away_team)?.price?.toString() || 'N/A',
+        drawOdds: game.bookmakers?.[0]?.markets?.[0]?.outcomes?.find((o: any) => o.name === 'Draw')?.price?.toString()
+      }));
+      
+      res.json(popularEvents);
+    } catch (error) {
+      console.error("Error fetching popular events:", error);
+      res.status(500).json({ error: "Failed to fetch popular events" });
+    }
+  });
+
   // Sports overview - live events
   app.get("/api/live-events", async (req, res) => {
     try {

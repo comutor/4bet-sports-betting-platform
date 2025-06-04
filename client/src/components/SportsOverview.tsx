@@ -18,7 +18,7 @@ interface SportEvent {
 
 interface SportsOverviewProps {
   onBetClick: (eventName: string, selection: string, odds: string) => void;
-  activeFilter: 'upcoming' | 'live';
+  activeFilter: 'upcoming' | 'popular' | 'live';
 }
 
 export function SportsOverview({ onBetClick, activeFilter }: SportsOverviewProps) {
@@ -29,14 +29,22 @@ export function SportsOverview({ onBetClick, activeFilter }: SportsOverviewProps
     enabled: activeFilter === 'upcoming'
   });
 
+  // Fetch popular events
+  const { data: popularEvents = [], isLoading: loadingPopular } = useQuery<SportEvent[]>({
+    queryKey: ['/api/popular-events'],
+    enabled: activeFilter === 'popular'
+  });
+
   // Fetch live events
   const { data: liveEvents = [], isLoading: loadingLive } = useQuery<SportEvent[]>({
     queryKey: ['/api/live-events'],
     enabled: activeFilter === 'live'
   });
 
-  const currentEvents = activeFilter === 'upcoming' ? upcomingEvents : liveEvents;
-  const isLoading = activeFilter === 'upcoming' ? loadingUpcoming : loadingLive;
+  const currentEvents = activeFilter === 'upcoming' ? upcomingEvents : 
+                       activeFilter === 'popular' ? popularEvents : liveEvents;
+  const isLoading = activeFilter === 'upcoming' ? loadingUpcoming : 
+                   activeFilter === 'popular' ? loadingPopular : loadingLive;
 
   const quickAccessItems = [
     { id: 'football', name: 'Football', icon: '⚽', color: 'bg-green-600' },
@@ -52,7 +60,8 @@ export function SportsOverview({ onBetClick, activeFilter }: SportsOverviewProps
       {/* Events List */}
       <div className="bg-slate-800 rounded-lg border border-gray-700 p-4">
         <h3 className="text-lg font-semibold text-white mb-3">
-          {activeFilter === 'upcoming' ? 'Upcoming Matches' : 'Live Matches'}
+          {activeFilter === 'upcoming' ? 'Upcoming Matches' : 
+           activeFilter === 'popular' ? 'Popular Matches' : 'Live Matches'}
         </h3>
         
         {isLoading ? (
