@@ -172,21 +172,10 @@ export function SportSection({ sport, onBetClick }: SportSectionProps) {
 
   return (
     <div className="space-y-6">
-      {/* Header */}
-      <div className="flex items-center justify-between">
-        <h2 className="text-2xl font-bold text-white flex items-center gap-2">
-          <span className="text-3xl">{config.icon}</span>
-          {config.title} Matches
-        </h2>
-        <div className="text-sm text-gray-400">
-          Showing {displayedData.length} of {sportData.length} leagues
-        </div>
-      </div>
-
       {/* Basketball Leagues Selection Box */}
       {sport === 'basketball' && (
         <div className="bg-slate-800 rounded-lg border border-gray-700 p-4">
-          <h3 className="text-lg font-semibold text-white mb-3">Select League</h3>
+          <h3 className="text-lg font-semibold text-white mb-3">Top Leagues</h3>
           <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
             <Button
               variant="outline"
@@ -245,6 +234,17 @@ export function SportSection({ sport, onBetClick }: SportSectionProps) {
           </div>
         </div>
       )}
+
+      {/* Header */}
+      <div className="flex items-center justify-between">
+        <h2 className="text-2xl font-bold text-white flex items-center gap-2">
+          <span className="text-3xl">{config.icon}</span>
+          {config.title} Matches
+        </h2>
+        <div className="text-sm text-gray-400">
+          Showing {displayedData.length} of {sportData.length} leagues
+        </div>
+      </div>
 
       {/* Leagues */}
       <div className="space-y-4">
