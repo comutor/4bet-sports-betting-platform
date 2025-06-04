@@ -238,24 +238,44 @@ export function TopNavigation({ activeTab, onTabChange, userBalance, userCountry
                 <span className="text-xs text-gray-300">{selectedDateFilter}</span>
                 <i className={`fas fa-chevron-down text-xs text-gray-400 transition-transform ${isDateDropdownOpen ? 'rotate-180' : ''}`}></i>
                 
-                {/* Date Dropdown */}
-                {isDateDropdownOpen && (
-                  <div className="absolute top-full left-0 mt-1 bg-slate-800 border border-gray-600 rounded-lg shadow-lg z-50 min-w-[120px]">
-                    {['Today', 'Tomorrow', 'This Week', 'This Month', 'Next Month'].map((option) => (
-                      <div
-                        key={option}
-                        className="px-3 py-2 text-xs text-gray-300 hover:bg-slate-700 cursor-pointer first:rounded-t-lg last:rounded-b-lg"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          setSelectedDateFilter(option);
-                          setIsDateDropdownOpen(false);
-                        }}
-                      >
-                        {option}
-                      </div>
-                    ))}
-                  </div>
-                )}
+
+              </div>
+            </div>
+          )}
+          
+          {/* Date Dropdown */}
+          {isDateDropdownOpen && (
+            <div className="absolute top-full left-0 right-0 mt-2 mx-4 bg-slate-800 border border-gray-700 rounded-xl p-4 z-50 shadow-lg animate-slide-down">
+              <div className="flex items-center justify-between mb-4">
+                <h3 className="text-lg font-bold text-gray-300">Select Date Range</h3>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="text-gray-400 hover:text-white"
+                  onClick={() => setIsDateDropdownOpen(false)}
+                >
+                  <i className="fas fa-times"></i>
+                </Button>
+              </div>
+              <div className="grid grid-cols-1 gap-2">
+                {['Today', 'Tomorrow', 'This Week', 'This Month', 'Next Month'].map((option) => (
+                  <Button
+                    key={option}
+                    variant="ghost"
+                    className={`flex items-center justify-start p-3 h-12 rounded-lg transition-all duration-200 ${
+                      selectedDateFilter === option 
+                        ? 'bg-primary text-white' 
+                        : 'hover:bg-slate-700 text-gray-300'
+                    }`}
+                    onClick={() => {
+                      setSelectedDateFilter(option);
+                      setIsDateDropdownOpen(false);
+                    }}
+                  >
+                    <i className="fas fa-calendar text-sm mr-3"></i>
+                    <span className="text-sm font-medium">{option}</span>
+                  </Button>
+                ))}
               </div>
             </div>
           )}
