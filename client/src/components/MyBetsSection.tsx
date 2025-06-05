@@ -190,6 +190,20 @@ export function MyBetsSection({ userId, userCountry }: MyBetsSectionProps) {
     }
   };
 
+  const calculateTotalOdds = (selections: BetSelection[]) => {
+    return selections.reduce((total, selection) => total * parseFloat(selection.odds), 1).toFixed(2);
+  };
+
+  const getPayoutDisplay = (bet: UserBet) => {
+    if (bet.status === 'lost') {
+      return <span className="font-medium text-red-600">Lost</span>;
+    } else if (bet.status === 'won') {
+      return <span className="font-medium text-green-600 font-bold">{bet.potentialReturn} {bet.currency}</span>;
+    } else {
+      return <span className="font-medium text-gray-900">{bet.potentialReturn} {bet.currency}</span>;
+    }
+  };
+
   const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleDateString('en-US', {
       month: 'short',
@@ -332,14 +346,12 @@ export function MyBetsSection({ userId, userCountry }: MyBetsSectionProps) {
                   <div className="font-medium text-gray-900">{bet.totalStake} {bet.currency}</div>
                 </div>
                 <div>
-                  <div className="text-sm text-gray-500">Potential Return</div>
-                  <div className="font-medium text-gray-900">{bet.potentialReturn} {bet.currency}</div>
+                  <div className="text-sm text-gray-500">Total Odds</div>
+                  <div className="font-medium text-gray-900">{calculateTotalOdds(bet.selections)}</div>
                 </div>
                 <div>
-                  <div className="text-sm text-gray-500">Potential Profit</div>
-                  <div className="font-medium text-green-600">
-                    {(parseFloat(bet.potentialReturn) - parseFloat(bet.totalStake)).toFixed(2)} {bet.currency}
-                  </div>
+                  <div className="text-sm text-gray-500">Payout</div>
+                  <div>{getPayoutDisplay(bet)}</div>
                 </div>
               </div>
 
