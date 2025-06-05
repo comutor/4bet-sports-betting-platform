@@ -536,6 +536,38 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // User bets endpoints
+  app.get("/api/user-bets/:userId", async (req, res) => {
+    const { userId } = req.params;
+    try {
+      const bets = await storage.getUserBets(parseInt(userId));
+      res.json(bets);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to fetch user bets" });
+    }
+  });
+
+  app.post("/api/user-bets", async (req, res) => {
+    try {
+      const validatedBet = insertUserBetSchema.parse(req.body);
+      const bet = await storage.createUserBet(validatedBet);
+      res.status(201).json(bet);
+    } catch (error) {
+      res.status(400).json({ message: "Invalid bet data" });
+    }
+  });
+
+  app.put("/api/user-bets/:betId/status", async (req, res) => {
+    const { betId } = req.params;
+    const { status } = req.body;
+    try {
+      await storage.updateBetStatus(parseInt(betId), status);
+      res.json({ message: "Bet status updated" });
+    } catch (error) {
+      res.status(500).json({ message: "Failed to update bet status" });
+    }
+  });
+
   const httpServer = createServer(app);
   return httpServer;
 }
