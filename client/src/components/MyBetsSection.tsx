@@ -117,28 +117,40 @@ export function MyBetsSection({ userId }: MyBetsSectionProps) {
       </div>
 
       {/* Bets Summary */}
-      <div className="grid grid-cols-4 gap-4 mb-6">
-        <div className="bg-blue-50 p-4 rounded-lg text-center">
-          <div className="text-2xl font-bold text-blue-600">{bets.length}</div>
-          <div className="text-sm text-blue-600">Total Bets</div>
-        </div>
-        <div className="bg-yellow-50 p-4 rounded-lg text-center">
-          <div className="text-2xl font-bold text-yellow-600">
-            {bets.filter(b => b.status === 'pending').length}
+      <div className="grid grid-cols-2 gap-4 mb-6">
+        <div className="bg-blue-50 px-6 py-4 rounded-xl flex items-center justify-between">
+          <div>
+            <div className="text-sm text-blue-600 font-medium">Total Bets</div>
+            <div className="text-2xl font-bold text-blue-600">{bets.length}</div>
           </div>
-          <div className="text-sm text-yellow-600">Pending</div>
+          <Trophy className="w-8 h-8 text-blue-600 opacity-60" />
         </div>
-        <div className="bg-green-50 p-4 rounded-lg text-center">
-          <div className="text-2xl font-bold text-green-600">
-            {bets.filter(b => b.status === 'won').length}
+        <div className="bg-yellow-50 px-6 py-4 rounded-xl flex items-center justify-between">
+          <div>
+            <div className="text-sm text-yellow-600 font-medium">Pending</div>
+            <div className="text-2xl font-bold text-yellow-600">
+              {bets.filter(b => b.status === 'pending').length}
+            </div>
           </div>
-          <div className="text-sm text-green-600">Won</div>
+          <Clock className="w-8 h-8 text-yellow-600 opacity-60" />
         </div>
-        <div className="bg-red-50 p-4 rounded-lg text-center">
-          <div className="text-2xl font-bold text-red-600">
-            {bets.filter(b => b.status === 'lost').length}
+        <div className="bg-green-50 px-6 py-4 rounded-xl flex items-center justify-between">
+          <div>
+            <div className="text-sm text-green-600 font-medium">Won</div>
+            <div className="text-2xl font-bold text-green-600">
+              {bets.filter(b => b.status === 'won').length}
+            </div>
           </div>
-          <div className="text-sm text-red-600">Lost</div>
+          <Trophy className="w-8 h-8 text-green-600 opacity-60" />
+        </div>
+        <div className="bg-red-50 px-6 py-4 rounded-xl flex items-center justify-between">
+          <div>
+            <div className="text-sm text-red-600 font-medium">Lost</div>
+            <div className="text-2xl font-bold text-red-600">
+              {bets.filter(b => b.status === 'lost').length}
+            </div>
+          </div>
+          <XCircle className="w-8 h-8 text-red-600 opacity-60" />
         </div>
       </div>
 
