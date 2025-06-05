@@ -152,7 +152,16 @@ export function MyBetsSection({ userId, userCountry }: MyBetsSectionProps) {
       case 'won': return 'text-green-600 bg-green-50';
       case 'lost': return 'text-red-600 bg-red-50';
       case 'void': return 'text-gray-600 bg-gray-50';
-      default: return 'text-yellow-600 bg-yellow-50';
+      default: return 'text-amber-600 bg-amber-50';
+    }
+  };
+
+  const getCardColor = (status: string) => {
+    switch (status) {
+      case 'won': return 'border-green-200 bg-green-50/30';
+      case 'lost': return 'border-red-200 bg-red-50/30';
+      case 'void': return 'border-gray-200 bg-gray-50/30';
+      default: return 'border-amber-200 bg-amber-50/30';
     }
   };
 
@@ -249,7 +258,7 @@ export function MyBetsSection({ userId, userCountry }: MyBetsSectionProps) {
       ) : (
         <div className="space-y-4">
           {filteredBets.map((bet) => (
-            <div key={bet.id} className="bg-white border border-gray-200 rounded-lg p-4 shadow-sm">
+            <div key={bet.id} className={`bg-white border-2 rounded-lg p-4 shadow-sm ${getCardColor(bet.status)}`}>
               {/* Bet Header */}
               <div className="flex items-center justify-between mb-3">
                 <div className="flex items-center space-x-3">
