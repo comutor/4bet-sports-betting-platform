@@ -3,7 +3,7 @@ import { createServer, type Server } from "http";
 import session from "express-session";
 import { storage } from "./storage";
 import { oddsApiService } from "./services/oddsApi";
-import { insertBetslipItemSchema, insertUserSchema } from "@shared/schema";
+import { insertBetslipItemSchema, insertUserSchema, insertUserBetSchema } from "@shared/schema";
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // Configure session middleware

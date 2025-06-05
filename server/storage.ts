@@ -42,6 +42,10 @@ export interface IStorage {
   getCasinoGames(): Promise<CasinoGame[]>;
   getCasinoGamesByCategory(category: string): Promise<CasinoGame[]>;
   createCasinoGame(game: InsertCasinoGame): Promise<CasinoGame>;
+  
+  getUserBets(userId: number): Promise<UserBet[]>;
+  createUserBet(bet: InsertUserBet): Promise<UserBet>;
+  updateBetStatus(betId: number, status: string): Promise<void>;
 }
 
 export class MemStorage implements IStorage {
@@ -416,6 +420,21 @@ export class DatabaseStorage implements IStorage {
   async createCasinoGame(game: InsertCasinoGame): Promise<CasinoGame> {
     const [created] = await db.insert(casinoGames).values(game).returning();
     return created;
+  }
+
+  async getUserBets(userId: number): Promise<UserBet[]> {
+    return await db.select().from(userBets).where(eq(userBets.userId, userId)).orderBy(userBets.placedAt);
+  }
+
+  async createUserBet(bet: InsertUserBet): Promise<UserBet> {
+    const [created] = await db.insert(userBets).values(bet).returning();
+    return created;
+  }
+
+  async updateBetStatus(betId: number, status: string): Promise<void> {
+    await db.update(userBets)
+      .set({ status, settledAt: new Date() })
+      .where(eq(userBets.id, betId));
   }
 }
 
