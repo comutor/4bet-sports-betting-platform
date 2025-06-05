@@ -64,8 +64,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         }
       }
 
-      const transformedEvents = DataTransformer.transformToFeaturedEvents(allEvents);
-      res.json(transformedEvents);
+      res.json(allEvents);
     } catch (error) {
       res.status(500).json({ message: "Failed to fetch events by category" });
     }

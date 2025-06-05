@@ -38,12 +38,29 @@ export interface Event {
 export class OddsApiService {
   private apiKey: string;
   private baseUrl = 'https://api.the-odds-api.com/v4';
+  private cache = new Map<string, { data: any; timestamp: number }>();
+  private cacheTimeout = 5 * 60 * 1000; // 5 minutes
 
   constructor() {
     this.apiKey = process.env.ODDS_API_KEY || '';
     if (!this.apiKey) {
       throw new Error('ODDS_API_KEY environment variable is required');
     }
+  }
+
+  private isCacheValid(key: string): boolean {
+    const cached = this.cache.get(key);
+    if (!cached) return false;
+    return Date.now() - cached.timestamp < this.cacheTimeout;
+  }
+
+  private getCached(key: string): any {
+    const cached = this.cache.get(key);
+    return cached ? cached.data : null;
+  }
+
+  private setCache(key: string, data: any): void {
+    this.cache.set(key, { data, timestamp: Date.now() });
   }
 
   async getSports(): Promise<Sport[]> {
@@ -62,6 +79,13 @@ export class OddsApiService {
   }
 
   async getOdds(sportKey: string, regions = 'us', markets = 'h2h', oddsFormat = 'decimal'): Promise<Event[]> {
+    const cacheKey = `odds_${sportKey}_${regions}_${markets}`;
+    
+    if (this.isCacheValid(cacheKey)) {
+      log(`Using cached data for ${sportKey}`);
+      return this.getCached(cacheKey);
+    }
+
     try {
       const url = `${this.baseUrl}/sports/${sportKey}/odds/?apiKey=${this.apiKey}&regions=${regions}&markets=${markets}&oddsFormat=${oddsFormat}`;
       const response = await fetch(url);
@@ -71,6 +95,7 @@ export class OddsApiService {
       }
       
       const events = await response.json();
+      this.setCache(cacheKey, events);
       log(`Fetched ${events.length} events for ${sportKey}`);
       return events;
     } catch (error) {
