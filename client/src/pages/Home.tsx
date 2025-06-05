@@ -31,6 +31,7 @@ export default function Home() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userBalance, setUserBalance] = useState('0.00');
   const [userCountry, setUserCountry] = useState<string>('');
+  const [userData, setUserData] = useState<any>(null);
   const [showLoginPrompt, setShowLoginPrompt] = useState(false);
   const [showSignupPage, setShowSignupPage] = useState(false);
   const [showLoginModal, setShowLoginModal] = useState(false);
@@ -61,6 +62,7 @@ export default function Home() {
           setIsLoggedIn(true);
           setUserBalance(result.user.balance);
           setUserCountry(result.user.country);
+          setUserData(result.user);
         }
       } catch (error) {
         // No existing session
@@ -119,11 +121,14 @@ export default function Home() {
     setIsLoggedIn(true);
     setShowSignupPage(false);
     setActiveTab('account');
-    if (userData?.balance) {
-      setUserBalance(userData.balance);
-    }
-    if (userData?.country) {
-      setUserCountry(userData.country);
+    if (userData) {
+      setUserData(userData);
+      if (userData.balance) {
+        setUserBalance(userData.balance);
+      }
+      if (userData.country) {
+        setUserCountry(userData.country);
+      }
     }
   };
 
@@ -131,11 +136,14 @@ export default function Home() {
     setIsLoggedIn(true);
     setShowLoginModal(false);
     setActiveTab('account');
-    if (userData?.balance) {
-      setUserBalance(userData.balance);
-    }
-    if (userData?.country) {
-      setUserCountry(userData.country);
+    if (userData) {
+      setUserData(userData);
+      if (userData.balance) {
+        setUserBalance(userData.balance);
+      }
+      if (userData.country) {
+        setUserCountry(userData.country);
+      }
     }
   };
 
@@ -150,12 +158,14 @@ export default function Home() {
         setIsLoggedIn(false);
         setUserBalance('0.00');
         setUserCountry('');
+        setUserData(null);
         setActiveTab('home');
       }
     } catch (error) {
       console.error('Logout failed:', error);
       // Still log out locally even if server request fails
       setIsLoggedIn(false);
+      setUserData(null);
       setUserBalance('0.00');
       setUserCountry('');
       setActiveTab('home');
