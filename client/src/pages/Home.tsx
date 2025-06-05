@@ -211,7 +211,7 @@ export default function Home() {
       case 'live':
         return <LiveSection onBetClick={handleBetClick} />;
       case 'my-bets':
-        return <MyBetsSection userId={isLoggedIn ? userData?.id : undefined} />;
+        return <MyBetsSection userId={isLoggedIn ? userData?.id : undefined} userCountry={userCountry} />;
       case 'casino':
         return <CasinoSection />;
       case 'virtual':

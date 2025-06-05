@@ -21,12 +21,17 @@ interface UserBet {
 
 interface MyBetsSectionProps {
   userId?: number;
+  userCountry?: string;
 }
 
-export function MyBetsSection({ userId }: MyBetsSectionProps) {
+export function MyBetsSection({ userId, userCountry }: MyBetsSectionProps) {
   const [bets, setBets] = useState<UserBet[]>([]);
   const [loading, setLoading] = useState(true);
   const [activeFilter, setActiveFilter] = useState<'all' | 'pending' | 'won' | 'lost'>('all');
+  
+  const getCurrency = () => {
+    return userCountry === 'Uganda' ? 'UGX' : 'SSP';
+  };
 
   useEffect(() => {
     if (userId) {
@@ -46,6 +51,7 @@ export function MyBetsSection({ userId }: MyBetsSectionProps) {
         
         // Add sample bets for demonstration if no bets exist
         if (formattedBets.length === 0) {
+          const currency = getCurrency();
           formattedBets = [
             {
               id: 1,
@@ -58,7 +64,7 @@ export function MyBetsSection({ userId }: MyBetsSectionProps) {
               totalStake: '50.00',
               potentialReturn: '105.00',
               status: 'pending',
-              currency: 'SSP',
+              currency: currency,
               placedAt: new Date().toISOString()
             },
             {
@@ -79,7 +85,7 @@ export function MyBetsSection({ userId }: MyBetsSectionProps) {
               totalStake: '25.00',
               potentialReturn: '74.25',
               status: 'won',
-              currency: 'SSP',
+              currency: currency,
               placedAt: new Date(Date.now() - 86400000).toISOString(),
               settledAt: new Date(Date.now() - 3600000).toISOString()
             },
@@ -94,7 +100,7 @@ export function MyBetsSection({ userId }: MyBetsSectionProps) {
               totalStake: '30.00',
               potentialReturn: '72.00',
               status: 'lost',
-              currency: 'SSP',
+              currency: currency,
               placedAt: new Date(Date.now() - 172800000).toISOString(),
               settledAt: new Date(Date.now() - 86400000).toISOString()
             },
@@ -109,7 +115,7 @@ export function MyBetsSection({ userId }: MyBetsSectionProps) {
               totalStake: '40.00',
               potentialReturn: '76.00',
               status: 'pending',
-              currency: 'SSP',
+              currency: currency,
               placedAt: new Date(Date.now() - 7200000).toISOString()
             }
           ];
