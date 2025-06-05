@@ -9,6 +9,7 @@ interface BetslipSidebarProps {
   items: BetslipItem[];
   onRemoveItem: (id: string) => void;
   onUpdateStake: (id: string, stake: number) => void;
+  onClearBetslip: () => void;
   totalStake: number;
   totalPotentialReturn: number;
   isLoggedIn: boolean;
@@ -23,6 +24,7 @@ export function BetslipSidebar({
   items,
   onRemoveItem,
   onUpdateStake,
+  onClearBetslip,
   totalStake,
   totalPotentialReturn,
   isLoggedIn,
@@ -93,9 +95,21 @@ export function BetslipSidebar({
       <div className="p-6 h-full flex flex-col">
         <div className="flex items-center justify-between mb-6">
           <h3 className="text-xl font-bold">Betslip</h3>
-          <Button variant="ghost" size="sm" onClick={onClose}>
-            <i className="fas fa-times"></i>
-          </Button>
+          <div className="flex items-center space-x-2">
+            {items.length > 0 && (
+              <Button 
+                variant="outline" 
+                size="sm" 
+                onClick={onClearBetslip}
+                className="border-gray-600 text-gray-300 hover:bg-slate-light-custom text-xs px-2 py-1"
+              >
+                Clear
+              </Button>
+            )}
+            <Button variant="ghost" size="sm" onClick={onClose}>
+              <i className="fas fa-times"></i>
+            </Button>
+          </div>
         </div>
 
         {/* Bet Type Selection */}

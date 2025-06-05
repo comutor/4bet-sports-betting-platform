@@ -41,6 +41,7 @@ export default function Home() {
     addToBetslip,
     removeFromBetslip,
     updateStake,
+    clearBetslip,
     totalStake,
     totalPotentialReturn,
     count: betslipCount
@@ -276,6 +277,7 @@ export default function Home() {
         items={betslipItems}
         onRemoveItem={removeFromBetslip}
         onUpdateStake={updateStake}
+        onClearBetslip={clearBetslip}
         totalStake={totalStake}
         totalPotentialReturn={totalPotentialReturn}
         isLoggedIn={isLoggedIn}
