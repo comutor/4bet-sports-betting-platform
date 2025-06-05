@@ -57,6 +57,19 @@ export const casinoGames = pgTable("casino_games", {
   isLive: boolean("is_live").default(false),
 });
 
+export const userBets = pgTable("user_bets", {
+  id: serial("id").primaryKey(),
+  userId: integer("user_id").references(() => users.id).notNull(),
+  betType: text("bet_type").notNull(), // 'single' | 'accumulator'
+  selections: text("selections").notNull(), // JSON string of bet selections
+  totalStake: decimal("total_stake", { precision: 10, scale: 2 }).notNull(),
+  potentialReturn: decimal("potential_return", { precision: 10, scale: 2 }).notNull(),
+  status: text("status").notNull().default("pending"), // 'pending' | 'won' | 'lost' | 'void'
+  placedAt: timestamp("placed_at").defaultNow(),
+  settledAt: timestamp("settled_at"),
+  currency: text("currency").notNull().default("SSP")
+});
+
 export const insertUserSchema = createInsertSchema(users).pick({
   firstName: true,
   lastName: true,
@@ -70,6 +83,7 @@ export const insertSportsEventSchema = createInsertSchema(sportsEvents);
 export const insertBettingMarketSchema = createInsertSchema(bettingMarkets);
 export const insertBetslipItemSchema = createInsertSchema(betslipItems);
 export const insertCasinoGameSchema = createInsertSchema(casinoGames);
+export const insertUserBetSchema = createInsertSchema(userBets);
 
 export type User = typeof users.$inferSelect;
 export type InsertUser = z.infer<typeof insertUserSchema>;
@@ -81,3 +95,5 @@ export type BetslipItem = typeof betslipItems.$inferSelect;
 export type InsertBetslipItem = z.infer<typeof insertBetslipItemSchema>;
 export type CasinoGame = typeof casinoGames.$inferSelect;
 export type InsertCasinoGame = z.infer<typeof insertCasinoGameSchema>;
+export type UserBet = typeof userBets.$inferSelect;
+export type InsertUserBet = z.infer<typeof insertUserBetSchema>;

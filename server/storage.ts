@@ -4,6 +4,7 @@ import {
   bettingMarkets, 
   betslipItems, 
   casinoGames,
+  userBets,
   type User, 
   type InsertUser,
   type SportsEvent,
@@ -13,7 +14,9 @@ import {
   type BetslipItem,
   type InsertBetslipItem,
   type CasinoGame,
-  type InsertCasinoGame
+  type InsertCasinoGame,
+  type UserBet,
+  type InsertUserBet
 } from "@shared/schema";
 import { db } from "./db";
 import { eq } from "drizzle-orm";
