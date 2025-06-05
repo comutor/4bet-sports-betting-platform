@@ -3,7 +3,6 @@ import { createServer, type Server } from "http";
 import session from "express-session";
 import { storage } from "./storage";
 import { oddsApiService } from "./services/oddsApi";
-import { DataTransformer } from "./services/dataTransformer";
 import { insertBetslipItemSchema, insertUserSchema } from "@shared/schema";
 
 export async function registerRoutes(app: Express): Promise<Server> {
@@ -24,8 +23,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const upcomingGames = await oddsApiService.getUpcomingGames();
       const allEvents = Object.values(upcomingGames).flat();
-      const transformedEvents = DataTransformer.transformToFeaturedEvents(allEvents);
-      res.json(transformedEvents);
+      res.json(allEvents);
     } catch (error) {
       res.status(500).json({ message: "Failed to fetch sports events" });
     }
@@ -35,9 +33,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const upcomingGames = await oddsApiService.getUpcomingGames();
       const allEvents = Object.values(upcomingGames).flat();
-      const transformedEvents = DataTransformer.transformToFeaturedEvents(allEvents);
-      const liveEvents = DataTransformer.getLiveEvents(transformedEvents);
-      res.json(liveEvents);
+      res.json(allEvents);
     } catch (error) {
       res.status(500).json({ message: "Failed to fetch live events" });
     }
