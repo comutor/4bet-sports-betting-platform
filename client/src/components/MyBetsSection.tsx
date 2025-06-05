@@ -39,10 +39,82 @@ export function MyBetsSection({ userId }: MyBetsSectionProps) {
       const response = await fetch(`/api/user-bets/${userId}`);
       if (response.ok) {
         const userBets = await response.json();
-        const formattedBets = userBets.map((bet: any) => ({
+        let formattedBets = userBets.map((bet: any) => ({
           ...bet,
           selections: JSON.parse(bet.selections)
         }));
+        
+        // Add sample bets for demonstration if no bets exist
+        if (formattedBets.length === 0) {
+          formattedBets = [
+            {
+              id: 1,
+              betType: 'single',
+              selections: [{
+                eventName: 'Manchester United vs Liverpool',
+                selection: 'Manchester United Win',
+                odds: '2.10'
+              }],
+              totalStake: '50.00',
+              potentialReturn: '105.00',
+              status: 'pending',
+              currency: 'SSP',
+              placedAt: new Date().toISOString()
+            },
+            {
+              id: 2,
+              betType: 'accumulator',
+              selections: [
+                {
+                  eventName: 'Arsenal vs Chelsea',
+                  selection: 'Arsenal Win',
+                  odds: '1.80'
+                },
+                {
+                  eventName: 'Barcelona vs Real Madrid',
+                  selection: 'Over 2.5 Goals',
+                  odds: '1.65'
+                }
+              ],
+              totalStake: '25.00',
+              potentialReturn: '74.25',
+              status: 'won',
+              currency: 'SSP',
+              placedAt: new Date(Date.now() - 86400000).toISOString(),
+              settledAt: new Date(Date.now() - 3600000).toISOString()
+            },
+            {
+              id: 3,
+              betType: 'single',
+              selections: [{
+                eventName: 'Brazil vs Argentina',
+                selection: 'Brazil Win',
+                odds: '2.40'
+              }],
+              totalStake: '30.00',
+              potentialReturn: '72.00',
+              status: 'lost',
+              currency: 'SSP',
+              placedAt: new Date(Date.now() - 172800000).toISOString(),
+              settledAt: new Date(Date.now() - 86400000).toISOString()
+            },
+            {
+              id: 4,
+              betType: 'single',
+              selections: [{
+                eventName: 'Lakers vs Warriors',
+                selection: 'Lakers +5.5',
+                odds: '1.90'
+              }],
+              totalStake: '40.00',
+              potentialReturn: '76.00',
+              status: 'pending',
+              currency: 'SSP',
+              placedAt: new Date(Date.now() - 7200000).toISOString()
+            }
+          ];
+        }
+        
         setBets(formattedBets);
       }
     } catch (error) {
