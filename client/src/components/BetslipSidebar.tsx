@@ -16,6 +16,7 @@ interface BetslipSidebarProps {
   userBalance: number;
   onLoginClick: () => void;
   onDepositClick: () => void;
+  userCountry?: string;
 }
 
 export function BetslipSidebar({
@@ -30,10 +31,15 @@ export function BetslipSidebar({
   isLoggedIn,
   userBalance,
   onLoginClick,
-  onDepositClick
+  onDepositClick,
+  userCountry
 }: BetslipSidebarProps) {
   const [betType, setBetType] = useState<'single' | 'accumulator'>('accumulator');
   const [accumulatorStake, setAccumulatorStake] = useState(100);
+
+  const getCurrency = () => {
+    return userCountry === 'Uganda' ? 'UGX' : 'SSP';
+  };
 
   // Calculate accumulator odds (multiply all odds together)
   const accumulatorOdds = items.reduce((total, item) => total * parseFloat(item.odds), 1);
@@ -173,7 +179,7 @@ export function BetslipSidebar({
                   />
                 </div>
                 <div className="text-right text-sm text-success mt-1">
-                  Returns: SSP {item.potentialReturn.toFixed(2)}
+                  Returns: {getCurrency()} {item.potentialReturn.toFixed(2)}
                 </div>
               </div>
             ))
@@ -224,7 +230,7 @@ export function BetslipSidebar({
                   />
                 </div>
                 <div className="text-right text-lg text-success mt-2">
-                  Potential Win: SSP {accumulatorReturn.toFixed(2)}
+                  Potential Win: {getCurrency()} {accumulatorReturn.toFixed(2)}
                 </div>
               </div>
             </div>

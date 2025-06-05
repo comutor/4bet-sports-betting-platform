@@ -297,6 +297,7 @@ export default function Home() {
         userBalance={parseFloat(userBalance)}
         onLoginClick={handleOpenLoginModal}
         onDepositClick={() => {}} // TODO: Implement deposit functionality
+        userCountry={userCountry}
       />
 
       <HamburgerMenu 
