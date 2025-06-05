@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Calendar, Clock, Trophy, XCircle, Loader2, Filter } from 'lucide-react';
+import { Calendar, Clock, Trophy, XCircle, Loader2, Filter, FileText } from 'lucide-react';
 
 interface BetSelection {
   eventName: string;
@@ -117,40 +117,40 @@ export function MyBetsSection({ userId }: MyBetsSectionProps) {
       </div>
 
       {/* Bets Summary */}
-      <div className="grid grid-cols-2 gap-4 mb-6">
-        <div className="bg-blue-50 px-6 py-4 rounded-xl flex items-center justify-between">
+      <div className="grid grid-cols-2 gap-3 mb-6">
+        <div className="bg-blue-50 px-4 py-3 rounded-lg flex items-center justify-between">
           <div>
-            <div className="text-sm text-blue-600 font-medium">Total Bets</div>
-            <div className="text-2xl font-bold text-blue-600">{bets.length}</div>
+            <div className="text-xs text-blue-600 font-medium">Total Bets</div>
+            <div className="text-lg font-bold text-blue-600">{bets.length}</div>
           </div>
-          <Trophy className="w-8 h-8 text-blue-600 opacity-60" />
+          <FileText className="w-5 h-5 text-blue-600 opacity-60" />
         </div>
-        <div className="bg-yellow-50 px-6 py-4 rounded-xl flex items-center justify-between">
+        <div className="bg-yellow-50 px-4 py-3 rounded-lg flex items-center justify-between">
           <div>
-            <div className="text-sm text-yellow-600 font-medium">Pending</div>
-            <div className="text-2xl font-bold text-yellow-600">
+            <div className="text-xs text-yellow-600 font-medium">Pending</div>
+            <div className="text-lg font-bold text-yellow-600">
               {bets.filter(b => b.status === 'pending').length}
             </div>
           </div>
-          <Clock className="w-8 h-8 text-yellow-600 opacity-60" />
+          <Clock className="w-5 h-5 text-yellow-600 opacity-60" />
         </div>
-        <div className="bg-green-50 px-6 py-4 rounded-xl flex items-center justify-between">
+        <div className="bg-green-50 px-4 py-3 rounded-lg flex items-center justify-between">
           <div>
-            <div className="text-sm text-green-600 font-medium">Won</div>
-            <div className="text-2xl font-bold text-green-600">
+            <div className="text-xs text-green-600 font-medium">Won</div>
+            <div className="text-lg font-bold text-green-600">
               {bets.filter(b => b.status === 'won').length}
             </div>
           </div>
-          <Trophy className="w-8 h-8 text-green-600 opacity-60" />
+          <Trophy className="w-5 h-5 text-green-600 opacity-60" />
         </div>
-        <div className="bg-red-50 px-6 py-4 rounded-xl flex items-center justify-between">
+        <div className="bg-red-50 px-4 py-3 rounded-lg flex items-center justify-between">
           <div>
-            <div className="text-sm text-red-600 font-medium">Lost</div>
-            <div className="text-2xl font-bold text-red-600">
+            <div className="text-xs text-red-600 font-medium">Lost</div>
+            <div className="text-lg font-bold text-red-600">
               {bets.filter(b => b.status === 'lost').length}
             </div>
           </div>
-          <XCircle className="w-8 h-8 text-red-600 opacity-60" />
+          <XCircle className="w-5 h-5 text-red-600 opacity-60" />
         </div>
       </div>
 
