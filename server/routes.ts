@@ -586,7 +586,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
           potentialReturn: '105.00',
           status: 'pending' as const,
           currency: 'SSP',
-          placedAt: new Date().toISOString()
+          placedAt: new Date()
         },
         {
           userId,
@@ -607,8 +607,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
           potentialReturn: '74.25',
           status: 'won' as const,
           currency: 'SSP',
-          placedAt: new Date(Date.now() - 86400000).toISOString(),
-          settledAt: new Date(Date.now() - 3600000).toISOString()
+          placedAt: new Date(Date.now() - 86400000),
+          settledAt: new Date(Date.now() - 3600000)
         },
         {
           userId,
@@ -622,8 +622,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
           potentialReturn: '72.00',
           status: 'lost' as const,
           currency: 'SSP',
-          placedAt: new Date(Date.now() - 172800000).toISOString(),
-          settledAt: new Date(Date.now() - 86400000).toISOString()
+          placedAt: new Date(Date.now() - 172800000),
+          settledAt: new Date(Date.now() - 86400000)
         },
         {
           userId,
@@ -637,7 +637,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
           potentialReturn: '76.00',
           status: 'pending' as const,
           currency: 'SSP',
-          placedAt: new Date(Date.now() - 7200000).toISOString()
+          placedAt: new Date(Date.now() - 7200000)
         }
       ];
 
