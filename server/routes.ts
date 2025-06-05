@@ -568,6 +568,92 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Create sample bets for demonstration
+  app.post("/api/create-sample-bets/:userId", async (req, res) => {
+    try {
+      const userId = parseInt(req.params.userId);
+      
+      const sampleBets = [
+        {
+          userId,
+          betType: 'single' as const,
+          selections: JSON.stringify([{
+            eventName: 'Manchester United vs Liverpool',
+            selection: 'Manchester United Win',
+            odds: '2.10'
+          }]),
+          totalStake: '50.00',
+          potentialReturn: '105.00',
+          status: 'pending' as const,
+          currency: 'SSP',
+          placedAt: new Date().toISOString()
+        },
+        {
+          userId,
+          betType: 'accumulator' as const,
+          selections: JSON.stringify([
+            {
+              eventName: 'Arsenal vs Chelsea',
+              selection: 'Arsenal Win',
+              odds: '1.80'
+            },
+            {
+              eventName: 'Barcelona vs Real Madrid',
+              selection: 'Over 2.5 Goals',
+              odds: '1.65'
+            }
+          ]),
+          totalStake: '25.00',
+          potentialReturn: '74.25',
+          status: 'won' as const,
+          currency: 'SSP',
+          placedAt: new Date(Date.now() - 86400000).toISOString(),
+          settledAt: new Date(Date.now() - 3600000).toISOString()
+        },
+        {
+          userId,
+          betType: 'single' as const,
+          selections: JSON.stringify([{
+            eventName: 'Brazil vs Argentina',
+            selection: 'Brazil Win',
+            odds: '2.40'
+          }]),
+          totalStake: '30.00',
+          potentialReturn: '72.00',
+          status: 'lost' as const,
+          currency: 'SSP',
+          placedAt: new Date(Date.now() - 172800000).toISOString(),
+          settledAt: new Date(Date.now() - 86400000).toISOString()
+        },
+        {
+          userId,
+          betType: 'single' as const,
+          selections: JSON.stringify([{
+            eventName: 'Lakers vs Warriors',
+            selection: 'Lakers +5.5',
+            odds: '1.90'
+          }]),
+          totalStake: '40.00',
+          potentialReturn: '76.00',
+          status: 'pending' as const,
+          currency: 'SSP',
+          placedAt: new Date(Date.now() - 7200000).toISOString()
+        }
+      ];
+
+      const createdBets = [];
+      for (const bet of sampleBets) {
+        const createdBet = await storage.createUserBet(bet);
+        createdBets.push(createdBet);
+      }
+
+      res.json({ message: "Sample bets created successfully", bets: createdBets });
+    } catch (error) {
+      console.error("Error creating sample bets:", error);
+      res.status(500).json({ message: "Internal server error" });
+    }
+  });
+
   const httpServer = createServer(app);
   return httpServer;
 }
