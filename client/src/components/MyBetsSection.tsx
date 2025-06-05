@@ -102,11 +102,11 @@ export function MyBetsSection({ userId }: MyBetsSectionProps) {
       <div className="flex items-center justify-between mb-6">
         <h1 className="text-2xl font-bold text-white">My Bets</h1>
         <div className="flex items-center space-x-2">
-          <Filter className="w-4 h-4 text-gray-500" />
+          <Filter className="w-4 h-4 text-white" />
           <select 
             value={activeFilter}
             onChange={(e) => setActiveFilter(e.target.value as any)}
-            className="border border-gray-300 rounded-lg px-3 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="bg-white border border-gray-300 rounded-lg px-3 py-1 text-sm text-black focus:outline-none focus:ring-2 focus:ring-blue-500"
           >
             <option value="all">All Bets</option>
             <option value="pending">Pending</option>
