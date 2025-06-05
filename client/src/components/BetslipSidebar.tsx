@@ -244,11 +244,11 @@ export function BetslipSidebar({
               <>
                 <div className="flex items-center justify-between mb-2">
                   <span>Total Stake:</span>
-                  <span className="font-bold">SSP {totalStake.toFixed(2)}</span>
+                  <span className="font-bold">{getCurrency()} {totalStake.toFixed(2)}</span>
                 </div>
                 <div className="flex items-center justify-between mb-4">
                   <span>Potential Returns:</span>
-                  <span className="font-bold text-success">SSP {totalPotentialReturn.toFixed(2)}</span>
+                  <span className="font-bold text-success">{getCurrency()} {totalPotentialReturn.toFixed(2)}</span>
                 </div>
                 
                 <Button 
@@ -262,7 +262,7 @@ export function BetslipSidebar({
               <>
                 <div className="flex items-center justify-between mb-2">
                   <span>Accumulator Stake:</span>
-                  <span className="font-bold">SSP {accumulatorStake.toFixed(2)}</span>
+                  <span className="font-bold">{getCurrency()} {accumulatorStake.toFixed(2)}</span>
                 </div>
                 <div className="flex items-center justify-between mb-2">
                   <span>Combined Odds:</span>
@@ -270,7 +270,7 @@ export function BetslipSidebar({
                 </div>
                 <div className="flex items-center justify-between mb-4">
                   <span>Potential Win:</span>
-                  <span className="font-bold text-success">SSP {accumulatorReturn.toFixed(2)}</span>
+                  <span className="font-bold text-success">{getCurrency()} {accumulatorReturn.toFixed(2)}</span>
                 </div>
                 
                 <Button 
