@@ -5,6 +5,7 @@ interface BetSelection {
   eventName: string;
   selection: string;
   odds: string;
+  status?: 'won' | 'lost' | 'pending' | 'void';
 }
 
 interface UserBet {
@@ -59,7 +60,8 @@ export function MyBetsSection({ userId, userCountry }: MyBetsSectionProps) {
               selections: [{
                 eventName: 'Manchester United vs Liverpool',
                 selection: 'Manchester United Win',
-                odds: '2.10'
+                odds: '2.10',
+                status: 'pending'
               }],
               totalStake: '50.00',
               potentialReturn: '105.00',
@@ -74,12 +76,14 @@ export function MyBetsSection({ userId, userCountry }: MyBetsSectionProps) {
                 {
                   eventName: 'Arsenal vs Chelsea',
                   selection: 'Arsenal Win',
-                  odds: '1.80'
+                  odds: '1.80',
+                  status: 'won'
                 },
                 {
                   eventName: 'Barcelona vs Real Madrid',
                   selection: 'Over 2.5 Goals',
-                  odds: '1.65'
+                  odds: '1.65',
+                  status: 'won'
                 }
               ],
               totalStake: '25.00',
@@ -95,7 +99,8 @@ export function MyBetsSection({ userId, userCountry }: MyBetsSectionProps) {
               selections: [{
                 eventName: 'Brazil vs Argentina',
                 selection: 'Brazil Win',
-                odds: '2.40'
+                odds: '2.40',
+                status: 'lost'
               }],
               totalStake: '30.00',
               potentialReturn: '72.00',
@@ -106,17 +111,27 @@ export function MyBetsSection({ userId, userCountry }: MyBetsSectionProps) {
             },
             {
               id: 4,
-              betType: 'single',
-              selections: [{
-                eventName: 'Lakers vs Warriors',
-                selection: 'Lakers +5.5',
-                odds: '1.90'
-              }],
+              betType: 'accumulator',
+              selections: [
+                {
+                  eventName: 'Lakers vs Warriors',
+                  selection: 'Lakers +5.5',
+                  odds: '1.90',
+                  status: 'lost'
+                },
+                {
+                  eventName: 'Chelsea vs Manchester City',
+                  selection: 'Under 2.5 Goals',
+                  odds: '2.20',
+                  status: 'pending'
+                }
+              ],
               totalStake: '40.00',
-              potentialReturn: '76.00',
-              status: 'pending',
+              potentialReturn: '167.20',
+              status: 'lost',
               currency: currency,
-              placedAt: new Date(Date.now() - 7200000).toISOString()
+              placedAt: new Date(Date.now() - 7200000).toISOString(),
+              settledAt: new Date(Date.now() - 3600000).toISOString()
             }
           ];
         }
@@ -162,6 +177,16 @@ export function MyBetsSection({ userId, userCountry }: MyBetsSectionProps) {
       case 'lost': return 'border-red-200 bg-red-50/30';
       case 'void': return 'border-gray-200 bg-gray-50/30';
       default: return 'border-amber-200 bg-amber-50/30';
+    }
+  };
+
+  const getSelectionBgColor = (status?: string) => {
+    switch (status) {
+      case 'won': return 'bg-green-100 border-green-200';
+      case 'lost': return 'bg-red-100 border-red-200';
+      case 'void': return 'bg-gray-100 border-gray-200';
+      case 'pending': return 'bg-amber-100 border-amber-200';
+      default: return 'bg-gray-50 border-gray-200';
     }
   };
 
@@ -283,10 +308,15 @@ export function MyBetsSection({ userId, userCountry }: MyBetsSectionProps) {
               {/* Selections */}
               <div className="space-y-2 mb-4">
                 {bet.selections.map((selection, index) => (
-                  <div key={index} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                  <div key={index} className={`flex items-center justify-between p-3 rounded-lg border ${getSelectionBgColor(selection.status)}`}>
                     <div>
                       <div className="font-medium text-gray-900">{selection.eventName}</div>
                       <div className="text-sm text-gray-600">{selection.selection}</div>
+                      {selection.status && (
+                        <div className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium mt-1 ${getStatusColor(selection.status)}`}>
+                          {selection.status.charAt(0).toUpperCase() + selection.status.slice(1)}
+                        </div>
+                      )}
                     </div>
                     <div className="text-right">
                       <div className="font-medium text-gray-900">{selection.odds}</div>
