@@ -214,7 +214,7 @@ export default function Home() {
       case 'my-bets':
         return <MyBetsSection userId={isLoggedIn ? userData?.id : undefined} userCountry={userCountry} />;
       case 'settings':
-        return <SettingsSection userCountry={userCountry} isLoggedIn={isLoggedIn} />;
+        return <SettingsSection userCountry={userCountry} isLoggedIn={isLoggedIn} onBackToAccount={() => setActiveTab('account')} />;
       case 'casino':
         return <CasinoSection />;
       case 'virtual':

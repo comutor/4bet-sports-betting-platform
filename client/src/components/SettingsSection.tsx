@@ -5,9 +5,10 @@ interface SettingsSectionProps {
   userCountry?: string;
   isLoggedIn: boolean;
   onClose?: () => void;
+  onBackToAccount?: () => void;
 }
 
-export function SettingsSection({ userCountry, isLoggedIn, onClose }: SettingsSectionProps) {
+export function SettingsSection({ userCountry, isLoggedIn, onClose, onBackToAccount }: SettingsSectionProps) {
   const [activeSection, setActiveSection] = useState<'main' | 'my-account' | 'general' | 'manage-account'>('main');
 
   const getCurrency = () => {
@@ -16,7 +17,17 @@ export function SettingsSection({ userCountry, isLoggedIn, onClose }: SettingsSe
 
   const renderMainSettings = () => (
     <div className="space-y-4">
-      <h1 className="text-2xl font-bold text-white mb-6">Settings</h1>
+      <div className="flex items-center space-x-4 mb-6">
+        {onBackToAccount && (
+          <button
+            onClick={onBackToAccount}
+            className="text-white hover:text-gray-300 transition-colors"
+          >
+            <ChevronRight className="w-6 h-6 rotate-180" />
+          </button>
+        )}
+        <h1 className="text-2xl font-bold text-white">Settings</h1>
+      </div>
       
       {isLoggedIn && (
         <div className="bg-white rounded-lg p-4 mb-4">
