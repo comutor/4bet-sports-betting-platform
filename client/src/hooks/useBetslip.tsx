@@ -34,19 +34,23 @@ export function useBetslip() {
 
   const addToBetslip = useCallback((item: Omit<BetslipItem, 'id' | 'stake' | 'potentialReturn'>) => {
     setItems(prev => {
+      // First, remove any existing selection for this event (to ensure only one per match)
+      const filteredItems = prev.filter(existing => 
+        existing.eventName.trim() !== item.eventName.trim()
+      );
+      
+      // Check if the specific selection already exists
       const existingIndex = prev.findIndex(existing => 
         existing.eventName.trim() === item.eventName.trim() && 
         existing.selection.trim() === item.selection.trim()
       );
       
-      // If item exists, remove it (toggle off)
+      // If the exact same selection exists, remove it (toggle off)
       if (existingIndex !== -1) {
-        const newItems = prev.filter((_, index) => index !== existingIndex);
-        // Force a state update by creating a new array
-        return [...newItems];
+        return filteredItems;
       }
       
-      // If item doesn't exist, add it (toggle on)
+      // Add the new selection
       const newItem: BetslipItem = {
         ...item,
         id: Date.now().toString(),
@@ -54,8 +58,7 @@ export function useBetslip() {
         potentialReturn: 100 * parseFloat(item.odds)
       };
       
-      // Force a state update by creating a new array
-      return [...prev, newItem];
+      return [...filteredItems, newItem];
     });
     
     // Trigger a force refresh
