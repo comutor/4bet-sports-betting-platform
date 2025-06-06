@@ -228,55 +228,75 @@ interface CountrySectionProps {
 function CountrySection({ countryData, onBetClick, formatMatchTime, getOdds, isInBetslip }: CountrySectionProps) {
   const [expanded, setExpanded] = useState(true);
   
-  // Handle odds button click with class-based selection
-  const handleOddsClick = (event: React.MouseEvent<HTMLButtonElement>, eventName: string, selection: string, odds: string) => {
-    const button = event.currentTarget;
-    const matchId = button.dataset.match;
-    
-    // Deselect other buttons for the same match
-    document.querySelectorAll(`.odd[data-match='${matchId}']`)
-      .forEach(b => b.classList.remove("selected"));
-
-    // Check if this selection is already in betslip
-    const isCurrentlySelected = isInBetslip ? isInBetslip(eventName, selection) : false;
-    
-    if (isCurrentlySelected) {
-      // Remove from betslip (deselect)
-      button.classList.remove("selected");
-    } else {
-      // Add to betslip (select)
-      button.classList.add("selected");
-    }
-    
-    // Call the original bet click handler
-    onBetClick(eventName, selection, odds);
-  };
-
-  // Initialize button states based on betslip
+  // Global odds selection handler
   useEffect(() => {
-    countryData.games.forEach((game) => {
-      const eventName = `${game.home_team} vs ${game.away_team}`;
-      const gameId = game.id;
+    const handleOddsSelection = (event: Event) => {
+      const target = event.target as HTMLButtonElement;
+      if (!target.classList.contains('odd')) return;
+
+      const matchId = target.dataset.match;
+      const option = target.dataset.option;
+      const eventName = target.dataset.eventName;
+      const selection = target.dataset.selection;
+      const odds = target.dataset.odds;
+
+      if (!matchId || !option || !eventName || !selection || !odds) return;
+
+      // Get current selections from localStorage
+      const currentSelections = JSON.parse(localStorage.getItem('oddsSelections') || '{}');
       
-      // Check and update button states
-      const homeButton = document.querySelector(`.odd[data-match='${gameId}'][data-option='home']`) as HTMLButtonElement;
-      const drawButton = document.querySelector(`.odd[data-match='${gameId}'][data-option='draw']`) as HTMLButtonElement;
-      const awayButton = document.querySelector(`.odd[data-match='${gameId}'][data-option='away']`) as HTMLButtonElement;
+      // Check if this option is already selected
+      const isCurrentlySelected = currentSelections[matchId] === option;
       
-      if (homeButton) {
-        const isSelected = isInBetslip ? isInBetslip(eventName, game.home_team) : false;
-        homeButton.classList.toggle('selected', isSelected);
+      if (isCurrentlySelected) {
+        // Deselect
+        delete currentSelections[matchId];
+        target.classList.remove('selected');
+        
+        // Remove from betslip
+        onBetClick(eventName, selection, odds);
+      } else {
+        // Deselect other options for this match
+        document.querySelectorAll(`.odd[data-match='${matchId}']`)
+          .forEach(btn => btn.classList.remove('selected'));
+        
+        // Select this option
+        currentSelections[matchId] = option;
+        target.classList.add('selected');
+        
+        // Add to betslip
+        onBetClick(eventName, selection, odds);
       }
-      if (drawButton) {
-        const isSelected = isInBetslip ? isInBetslip(eventName, "Draw") : false;
-        drawButton.classList.toggle('selected', isSelected);
-      }
-      if (awayButton) {
-        const isSelected = isInBetslip ? isInBetslip(eventName, game.away_team) : false;
-        awayButton.classList.toggle('selected', isSelected);
-      }
-    });
-  }, [countryData.games, isInBetslip]);
+      
+      // Save selections to localStorage
+      localStorage.setItem('oddsSelections', JSON.stringify(currentSelections));
+    };
+
+    // Add event listener to document
+    document.addEventListener('click', handleOddsSelection);
+    
+    return () => {
+      document.removeEventListener('click', handleOddsSelection);
+    };
+  }, [onBetClick]);
+
+  // Restore selections from localStorage on component mount
+  useEffect(() => {
+    const restoreSelections = () => {
+      const savedSelections = JSON.parse(localStorage.getItem('oddsSelections') || '{}');
+      
+      // Apply saved selections
+      Object.entries(savedSelections).forEach(([matchId, option]) => {
+        const button = document.querySelector(`.odd[data-match='${matchId}'][data-option='${option}']`) as HTMLButtonElement;
+        if (button) {
+          button.classList.add('selected');
+        }
+      });
+    };
+
+    // Restore selections after a short delay to ensure DOM is ready
+    setTimeout(restoreSelections, 100);
+  }, [countryData.games]);
 
   return (
     <div className="bg-slate-800 rounded-lg overflow-hidden">
@@ -319,7 +339,9 @@ function CountrySection({ countryData, onBetClick, formatMatchTime, getOdds, isI
                       className="min-w-[60px] odd"
                       data-match={game.id}
                       data-option="home"
-                      onClick={(e) => handleOddsClick(e, eventName, game.home_team, odds.home)}
+                      data-event-name={eventName}
+                      data-selection={game.home_team}
+                      data-odds={odds.home}
                     >
                       {odds.home}
                     </Button>
@@ -329,7 +351,9 @@ function CountrySection({ countryData, onBetClick, formatMatchTime, getOdds, isI
                       className="min-w-[60px] odd"
                       data-match={game.id}
                       data-option="draw"
-                      onClick={(e) => handleOddsClick(e, eventName, "Draw", odds.draw)}
+                      data-event-name={eventName}
+                      data-selection="Draw"
+                      data-odds={odds.draw}
                     >
                       {odds.draw}
                     </Button>
@@ -339,7 +363,9 @@ function CountrySection({ countryData, onBetClick, formatMatchTime, getOdds, isI
                       className="min-w-[60px] odd"
                       data-match={game.id}
                       data-option="away"
-                      onClick={(e) => handleOddsClick(e, eventName, game.away_team, odds.away)}
+                      data-event-name={eventName}
+                      data-selection={game.away_team}
+                      data-odds={odds.away}
                     >
                       {odds.away}
                     </Button>
