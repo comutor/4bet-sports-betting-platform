@@ -11,11 +11,8 @@ interface AccountPageProps {
 
 export function AccountPage({ isLoggedIn = false, onClose, onSignupClick, onLoginClick, onLogout, onSettingsClick }: AccountPageProps) {
   const menuItems = [
-    { id: 'why-join', label: 'Why Join?', icon: 'fas fa-question-circle' },
     { id: 'deposit', label: 'Deposit', icon: 'fas fa-credit-card' },
-    { id: 'help-center', label: 'Help Center', icon: 'fas fa-life-ring' },
-    { id: 'download-app', label: 'Download the App', icon: 'fas fa-mobile-alt' },
-    { id: 'more-nilebet', label: 'More on NileBet', icon: 'fas fa-info-circle' }
+    { id: 'download-app', label: 'Download the App', icon: 'fas fa-mobile-alt' }
   ];
 
   return (
