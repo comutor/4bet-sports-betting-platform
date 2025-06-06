@@ -11,8 +11,7 @@ interface AccountPageProps {
 
 export function AccountPage({ isLoggedIn = false, onClose, onSignupClick, onLoginClick, onLogout, onSettingsClick }: AccountPageProps) {
   const menuItems = [
-    { id: 'deposit', label: 'Deposit', icon: 'fas fa-credit-card' },
-    { id: 'download-app', label: 'Download the App', icon: 'fas fa-mobile-alt' }
+    { id: 'deposit', label: 'Deposit', icon: 'fas fa-credit-card' }
   ];
 
   return (
