@@ -71,9 +71,12 @@ export function useBetslip() {
   }, []);
 
   const isInBetslip = useCallback((eventName: string, selection: string) => {
-    return items.some(item => 
+    const isSelected = items.some(item => 
       item.eventName === eventName && item.selection === selection
     );
+    // Debug logging to track state
+    console.log(`Checking ${eventName} - ${selection}: ${isSelected}`, items);
+    return isSelected;
   }, [items]);
 
   const totalStake = items.reduce((sum, item) => sum + item.stake, 0);
