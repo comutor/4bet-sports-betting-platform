@@ -163,6 +163,7 @@ export function FootballSection({ onBetClick, isInBetslip }: FootballSectionProp
               onBetClick={onBetClick}
               formatMatchTime={formatMatchTime}
               getOdds={getOdds}
+              isInBetslip={isInBetslip}
             />
           ))}
         </div>
@@ -181,6 +182,7 @@ export function FootballSection({ onBetClick, isInBetslip }: FootballSectionProp
               onBetClick={onBetClick}
               formatMatchTime={formatMatchTime}
               getOdds={getOdds}
+              isInBetslip={isInBetslip}
             />
           ))}
         </div>
@@ -223,7 +225,7 @@ interface CountrySectionProps {
   isInBetslip?: (eventName: string, selection: string) => boolean;
 }
 
-function CountrySection({ countryData, onBetClick, formatMatchTime, getOdds }: CountrySectionProps) {
+function CountrySection({ countryData, onBetClick, formatMatchTime, getOdds, isInBetslip }: CountrySectionProps) {
   const [expanded, setExpanded] = useState(true);
 
   return (
@@ -262,7 +264,11 @@ function CountrySection({ countryData, onBetClick, formatMatchTime, getOdds }: C
                     <Button
                       size="sm"
                       variant="outline"
-                      className="border-gray-600 text-gray-300 hover:bg-primary hover:text-white min-w-[60px]"
+                      className={`min-w-[60px] ${
+                        isInBetslip?.(`${game.home_team} vs ${game.away_team}`, game.home_team)
+                          ? 'bg-primary text-white border-primary'
+                          : 'border-gray-600 text-gray-300 hover:bg-primary hover:text-white'
+                      }`}
                       onClick={() => onBetClick(`${game.home_team} vs ${game.away_team}`, game.home_team, odds.home)}
                     >
                       {odds.home}
@@ -270,7 +276,11 @@ function CountrySection({ countryData, onBetClick, formatMatchTime, getOdds }: C
                     <Button
                       size="sm"
                       variant="outline"
-                      className="border-gray-600 text-gray-300 hover:bg-primary hover:text-white min-w-[60px]"
+                      className={`min-w-[60px] ${
+                        isInBetslip?.(`${game.home_team} vs ${game.away_team}`, "Draw")
+                          ? 'bg-primary text-white border-primary'
+                          : 'border-gray-600 text-gray-300 hover:bg-primary hover:text-white'
+                      }`}
                       onClick={() => onBetClick(`${game.home_team} vs ${game.away_team}`, "Draw", odds.draw)}
                     >
                       {odds.draw}
@@ -278,7 +288,11 @@ function CountrySection({ countryData, onBetClick, formatMatchTime, getOdds }: C
                     <Button
                       size="sm"
                       variant="outline"
-                      className="border-gray-600 text-gray-300 hover:bg-primary hover:text-white min-w-[60px]"
+                      className={`min-w-[60px] ${
+                        isInBetslip?.(`${game.home_team} vs ${game.away_team}`, game.away_team)
+                          ? 'bg-primary text-white border-primary'
+                          : 'border-gray-600 text-gray-300 hover:bg-primary hover:text-white'
+                      }`}
                       onClick={() => onBetClick(`${game.home_team} vs ${game.away_team}`, game.away_team, odds.away)}
                     >
                       {odds.away}

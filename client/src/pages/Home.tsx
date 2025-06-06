@@ -199,7 +199,7 @@ export default function Home() {
       case 'sports':
         return <SportsOverview onBetClick={handleBetClick} activeFilter={sportsFilter} />;
       case 'football':
-        return <FootballSection onBetClick={handleBetClick} />;
+        return <FootballSection onBetClick={handleBetClick} isInBetslip={isInBetslip} />;
       case 'basketball':
         return <SportSection sport="basketball" onBetClick={handleBetClick} />;
       case 'tennis':
