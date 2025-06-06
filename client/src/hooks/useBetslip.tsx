@@ -72,7 +72,8 @@ export function useBetslip() {
 
   const isInBetslip = useCallback((eventName: string, selection: string) => {
     return items.some(item => 
-      item.eventName === eventName && item.selection === selection
+      item.eventName.trim() === eventName.trim() && 
+      item.selection.trim() === selection.trim()
     );
   }, [items]);
 

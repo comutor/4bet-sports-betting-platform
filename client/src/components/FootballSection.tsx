@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useMemo } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
 import { Loader2 } from "lucide-react";
@@ -227,6 +227,11 @@ interface CountrySectionProps {
 
 function CountrySection({ countryData, onBetClick, formatMatchTime, getOdds, isInBetslip }: CountrySectionProps) {
   const [expanded, setExpanded] = useState(true);
+  
+  // Create a stable function to check betslip status
+  const checkBetslipStatus = (eventName: string, selection: string) => {
+    return isInBetslip ? isInBetslip(eventName, selection) : false;
+  };
 
   return (
     <div className="bg-slate-800 rounded-lg overflow-hidden">
@@ -248,52 +253,59 @@ function CountrySection({ countryData, onBetClick, formatMatchTime, getOdds, isI
         <div className="divide-y divide-gray-700">
           {countryData.games.slice(0, 8).map((game) => {
             const odds = getOdds(game);
+            const eventName = `${game.home_team} vs ${game.away_team}`;
+            
+            // Memoize the betslip status for each outcome
+            const homeSelected = checkBetslipStatus(eventName, game.home_team);
+            const drawSelected = checkBetslipStatus(eventName, "Draw");
+            const awaySelected = checkBetslipStatus(eventName, game.away_team);
+            
             return (
-              <div key={game.id} className="p-4 hover:bg-slate-700 transition-colors">
+              <div key={`${game.id}-${homeSelected}-${drawSelected}-${awaySelected}`} className="p-4 hover:bg-slate-700 transition-colors">
                 <div className="flex items-center justify-between">
                   <div className="flex-1">
                     <div className="text-sm text-gray-400 mb-1">
                       {game.league_name} • {formatMatchTime(game.commence_time)}
                     </div>
                     <div className="font-medium text-white">
-                      {game.home_team} vs {game.away_team}
+                      {eventName}
                     </div>
                   </div>
                   
                   <div className="flex gap-2 ml-4">
                     <Button
                       size="sm"
-                      variant={isInBetslip?.(`${game.home_team} vs ${game.away_team}`, game.home_team) ? "default" : "outline"}
+                      variant={homeSelected ? "default" : "outline"}
                       className={`min-w-[60px] ${
-                        isInBetslip?.(`${game.home_team} vs ${game.away_team}`, game.home_team)
+                        homeSelected
                           ? 'bg-primary text-white border-primary hover:bg-primary/90'
                           : 'border-gray-600 text-gray-300 hover:bg-primary hover:text-white hover:border-primary'
                       }`}
-                      onClick={() => onBetClick(`${game.home_team} vs ${game.away_team}`, game.home_team, odds.home)}
+                      onClick={() => onBetClick(eventName, game.home_team, odds.home)}
                     >
                       {odds.home}
                     </Button>
                     <Button
                       size="sm"
-                      variant={isInBetslip?.(`${game.home_team} vs ${game.away_team}`, "Draw") ? "default" : "outline"}
+                      variant={drawSelected ? "default" : "outline"}
                       className={`min-w-[60px] ${
-                        isInBetslip?.(`${game.home_team} vs ${game.away_team}`, "Draw")
+                        drawSelected
                           ? 'bg-primary text-white border-primary hover:bg-primary/90'
                           : 'border-gray-600 text-gray-300 hover:bg-primary hover:text-white hover:border-primary'
                       }`}
-                      onClick={() => onBetClick(`${game.home_team} vs ${game.away_team}`, "Draw", odds.draw)}
+                      onClick={() => onBetClick(eventName, "Draw", odds.draw)}
                     >
                       {odds.draw}
                     </Button>
                     <Button
                       size="sm"
-                      variant={isInBetslip?.(`${game.home_team} vs ${game.away_team}`, game.away_team) ? "default" : "outline"}
+                      variant={awaySelected ? "default" : "outline"}
                       className={`min-w-[60px] ${
-                        isInBetslip?.(`${game.home_team} vs ${game.away_team}`, game.away_team)
+                        awaySelected
                           ? 'bg-primary text-white border-primary hover:bg-primary/90'
                           : 'border-gray-600 text-gray-300 hover:bg-primary hover:text-white hover:border-primary'
                       }`}
-                      onClick={() => onBetClick(`${game.home_team} vs ${game.away_team}`, game.away_team, odds.away)}
+                      onClick={() => onBetClick(eventName, game.away_team, odds.away)}
                     >
                       {odds.away}
                     </Button>
