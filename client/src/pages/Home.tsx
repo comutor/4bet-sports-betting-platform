@@ -45,6 +45,7 @@ export default function Home() {
     removeFromBetslip,
     updateStake,
     clearBetslip,
+    isInBetslip,
     totalStake,
     totalPotentialReturn,
     count: betslipCount

@@ -32,18 +32,24 @@ export function useBetslip() {
   }, [items]);
 
   const addToBetslip = useCallback((item: Omit<BetslipItem, 'id' | 'stake' | 'potentialReturn'>) => {
-    const newItem: BetslipItem = {
-      ...item,
-      id: Date.now().toString(),
-      stake: 100, // Default stake in SSP
-      potentialReturn: 100 * parseFloat(item.odds)
-    };
-    
     setItems(prev => {
-      const exists = prev.find(existing => 
+      const existingIndex = prev.findIndex(existing => 
         existing.eventName === item.eventName && existing.selection === item.selection
       );
-      if (exists) return prev;
+      
+      // If item exists, remove it (toggle off)
+      if (existingIndex !== -1) {
+        return prev.filter((_, index) => index !== existingIndex);
+      }
+      
+      // If item doesn't exist, add it (toggle on)
+      const newItem: BetslipItem = {
+        ...item,
+        id: Date.now().toString(),
+        stake: 100, // Default stake in SSP
+        potentialReturn: 100 * parseFloat(item.odds)
+      };
+      
       return [...prev, newItem];
     });
   }, []);
@@ -64,6 +70,12 @@ export function useBetslip() {
     setItems([]);
   }, []);
 
+  const isInBetslip = useCallback((eventName: string, selection: string) => {
+    return items.some(item => 
+      item.eventName === eventName && item.selection === selection
+    );
+  }, [items]);
+
   const totalStake = items.reduce((sum, item) => sum + item.stake, 0);
   const totalPotentialReturn = items.reduce((sum, item) => sum + item.potentialReturn, 0);
 
@@ -75,6 +87,7 @@ export function useBetslip() {
     removeFromBetslip,
     updateStake,
     clearBetslip,
+    isInBetslip,
     totalStake,
     totalPotentialReturn,
     count: items.length

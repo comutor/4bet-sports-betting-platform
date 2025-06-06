@@ -30,9 +30,10 @@ interface CountryFootballData {
 
 interface FootballSectionProps {
   onBetClick: (eventName: string, selection: string, odds: string) => void;
+  isInBetslip?: (eventName: string, selection: string) => boolean;
 }
 
-export function FootballSection({ onBetClick }: FootballSectionProps) {
+export function FootballSection({ onBetClick, isInBetslip }: FootballSectionProps) {
   const [displayedCountries, setDisplayedCountries] = useState<number>(6);
   const [isLoadingMore, setIsLoadingMore] = useState(false);
 
@@ -219,6 +220,7 @@ interface CountrySectionProps {
   onBetClick: (eventName: string, selection: string, odds: string) => void;
   formatMatchTime: (time: string) => string;
   getOdds: (game: FootballGame) => { home: string; draw: string; away: string };
+  isInBetslip?: (eventName: string, selection: string) => boolean;
 }
 
 function CountrySection({ countryData, onBetClick, formatMatchTime, getOdds }: CountrySectionProps) {
