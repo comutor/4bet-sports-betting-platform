@@ -21,6 +21,7 @@ import { SportsOverview } from "@/components/SportsOverview";
 import { QuickAccessBoxes } from "@/components/QuickAccessBoxes";
 import { WelcomeBanner } from "@/components/WelcomeBanner";
 import { MyBetsSection } from "@/components/MyBetsSection";
+import { SettingsSection } from "@/components/SettingsSection";
 import { useBetslip } from "@/hooks/useBetslip";
 import { sampleFeaturedEvents } from "@/lib/betting-data";
 import { Button } from "@/components/ui/button";
@@ -212,6 +213,8 @@ export default function Home() {
         return <LiveSection onBetClick={handleBetClick} />;
       case 'my-bets':
         return <MyBetsSection userId={isLoggedIn ? userData?.id : undefined} userCountry={userCountry} />;
+      case 'settings':
+        return <SettingsSection userCountry={userCountry} isLoggedIn={isLoggedIn} />;
       case 'casino':
         return <CasinoSection />;
       case 'virtual':

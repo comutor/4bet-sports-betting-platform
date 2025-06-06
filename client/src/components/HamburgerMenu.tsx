@@ -145,6 +145,26 @@ export function HamburgerMenu({ isOpen, onClose, onTabChange, activeTab }: Hambu
               </div>
             </div>
 
+            {/* Settings */}
+            <div>
+              <h3 className="text-base font-bold text-white mb-2 md:mb-3">
+                Settings
+              </h3>
+              <div className="space-y-1">
+                <Button
+                  variant="ghost"
+                  className="w-full justify-between p-2 text-left text-gray-300 hover:bg-slate-light-custom active:bg-slate-600 transition-all duration-200 rounded-xl border border-slate-600 hover:border-slate-500 shadow-sm touch-manipulation"
+                  onClick={() => handleItemClick('settings')}
+                >
+                  <div className="flex items-center">
+                    <i className="fas fa-cog w-4 md:w-5 mr-3 text-gray-400"></i>
+                    <span className="text-sm font-medium">Settings</span>
+                  </div>
+                  <i className="fas fa-chevron-right text-gray-400 text-xs transition-transform duration-200"></i>
+                </Button>
+              </div>
+            </div>
+
           </div>
         </div>
       </div>
