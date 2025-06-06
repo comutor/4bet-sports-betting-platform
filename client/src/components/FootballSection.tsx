@@ -228,57 +228,31 @@ interface CountrySectionProps {
 function CountrySection({ countryData, onBetClick, formatMatchTime, getOdds, isInBetslip }: CountrySectionProps) {
   const [expanded, setExpanded] = useState(true);
   
-  // Global odds selection handler
-  useEffect(() => {
-    const handleOddsSelection = (event: Event) => {
-      const target = event.target as HTMLButtonElement;
-      if (!target.classList.contains('odd')) return;
-
-      const matchId = target.dataset.match;
-      const option = target.dataset.option;
-      const eventName = target.dataset.eventName;
-      const selection = target.dataset.selection;
-      const odds = target.dataset.odds;
-
-      if (!matchId || !option || !eventName || !selection || !odds) return;
-
-      // Get current selections from localStorage
-      const currentSelections = JSON.parse(localStorage.getItem('oddsSelections') || '{}');
-      
-      // Check if this option is already selected
-      const isCurrentlySelected = currentSelections[matchId] === option;
-      
-      if (isCurrentlySelected) {
-        // Deselect
-        delete currentSelections[matchId];
-        target.classList.remove('selected');
-        
-        // Remove from betslip
-        onBetClick(eventName, selection, odds);
-      } else {
-        // Deselect other options for this match
-        document.querySelectorAll(`.odd[data-match='${matchId}']`)
-          .forEach(btn => btn.classList.remove('selected'));
-        
-        // Select this option
-        currentSelections[matchId] = option;
-        target.classList.add('selected');
-        
-        // Add to betslip
-        onBetClick(eventName, selection, odds);
-      }
-      
-      // Save selections to localStorage
-      localStorage.setItem('oddsSelections', JSON.stringify(currentSelections));
-    };
-
-    // Add event listener to document
-    document.addEventListener('click', handleOddsSelection);
+  // Handle odds button click ensuring only one selection per match
+  const handleOddsClick = (event: React.MouseEvent<HTMLButtonElement>, eventName: string, selection: string, odds: string) => {
+    const button = event.currentTarget;
+    const matchId = button.dataset.match;
     
-    return () => {
-      document.removeEventListener('click', handleOddsSelection);
-    };
-  }, [onBetClick]);
+    if (!matchId) return;
+
+    // Check if this button is already selected
+    const isCurrentlySelected = button.classList.contains('selected');
+    
+    // Always deselect all options for this match first
+    document.querySelectorAll(`.odd[data-match='${matchId}']`)
+      .forEach(btn => btn.classList.remove('selected'));
+    
+    if (isCurrentlySelected) {
+      // If it was selected, keep it deselected (toggle off)
+      // Remove from betslip
+      onBetClick(eventName, selection, odds);
+    } else {
+      // Select this option
+      button.classList.add('selected');
+      // Add to betslip
+      onBetClick(eventName, selection, odds);
+    }
+  };
 
   // Restore selections from localStorage on component mount
   useEffect(() => {
@@ -339,9 +313,7 @@ function CountrySection({ countryData, onBetClick, formatMatchTime, getOdds, isI
                       className="min-w-[60px] odd"
                       data-match={game.id}
                       data-option="home"
-                      data-event-name={eventName}
-                      data-selection={game.home_team}
-                      data-odds={odds.home}
+                      onClick={(e) => handleOddsClick(e, eventName, game.home_team, odds.home)}
                     >
                       {odds.home}
                     </Button>
@@ -351,9 +323,7 @@ function CountrySection({ countryData, onBetClick, formatMatchTime, getOdds, isI
                       className="min-w-[60px] odd"
                       data-match={game.id}
                       data-option="draw"
-                      data-event-name={eventName}
-                      data-selection="Draw"
-                      data-odds={odds.draw}
+                      onClick={(e) => handleOddsClick(e, eventName, "Draw", odds.draw)}
                     >
                       {odds.draw}
                     </Button>
@@ -363,9 +333,7 @@ function CountrySection({ countryData, onBetClick, formatMatchTime, getOdds, isI
                       className="min-w-[60px] odd"
                       data-match={game.id}
                       data-option="away"
-                      data-event-name={eventName}
-                      data-selection={game.away_team}
-                      data-odds={odds.away}
+                      onClick={(e) => handleOddsClick(e, eventName, game.away_team, odds.away)}
                     >
                       {odds.away}
                     </Button>
