@@ -11,7 +11,6 @@ export function HamburgerMenu({ isOpen, onClose, onTabChange, activeTab }: Hambu
   const mainSections = [
     { id: 'sports', label: 'Sports', icon: 'fas fa-futbol' },
     { id: 'live', label: 'In-Play', icon: 'fas fa-broadcast-tower' },
-    { id: 'my-bets', label: 'My Bets', icon: 'fas fa-receipt' },
     { id: 'casino', label: 'Casino', icon: 'fas fa-dice' },
     { id: 'virtual', label: 'Virtual', icon: 'fas fa-robot' },
     { id: 'aviator', label: 'Aviator', icon: 'fas fa-plane' }
