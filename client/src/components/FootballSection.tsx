@@ -227,10 +227,18 @@ interface CountrySectionProps {
 
 function CountrySection({ countryData, onBetClick, formatMatchTime, getOdds, isInBetslip }: CountrySectionProps) {
   const [expanded, setExpanded] = useState(true);
+  const [forceUpdate, setForceUpdate] = useState(0);
   
   // Create a stable function to check betslip status
   const checkBetslipStatus = (eventName: string, selection: string) => {
     return isInBetslip ? isInBetslip(eventName, selection) : false;
+  };
+
+  // Enhanced click handler with force update
+  const handleBetClick = (eventName: string, selection: string, odds: string) => {
+    onBetClick(eventName, selection, odds);
+    // Force component update to ensure highlighting persists
+    setForceUpdate(prev => prev + 1);
   };
 
   return (
@@ -261,7 +269,7 @@ function CountrySection({ countryData, onBetClick, formatMatchTime, getOdds, isI
             const awaySelected = checkBetslipStatus(eventName, game.away_team);
             
             return (
-              <div key={`${game.id}-${homeSelected}-${drawSelected}-${awaySelected}`} className="p-4 hover:bg-slate-700 transition-colors">
+              <div key={`${game.id}-${homeSelected}-${drawSelected}-${awaySelected}-${forceUpdate}`} className="p-4 hover:bg-slate-700 transition-colors">
                 <div className="flex items-center justify-between">
                   <div className="flex-1">
                     <div className="text-sm text-gray-400 mb-1">
@@ -275,40 +283,40 @@ function CountrySection({ countryData, onBetClick, formatMatchTime, getOdds, isI
                   <div className="flex gap-2 ml-4">
                     <Button
                       size="sm"
-                      variant="outline"
-                      className={`min-w-[60px] ${
+                      variant={homeSelected ? "default" : "outline"}
+                      className={`min-w-[60px] transition-all duration-200 ${
                         homeSelected
-                          ? 'odds-button-selected'
-                          : 'odds-button-unselected'
+                          ? 'bg-green-600 text-white border-green-600 hover:bg-green-700'
+                          : 'border-gray-600 text-gray-300 hover:bg-green-600 hover:text-white hover:border-green-600'
                       }`}
-                      data-selected={homeSelected}
-                      onClick={() => onBetClick(eventName, game.home_team, odds.home)}
+                      style={homeSelected ? { backgroundColor: '#16a34a', borderColor: '#16a34a', color: 'white' } : {}}
+                      onClick={() => handleBetClick(eventName, game.home_team, odds.home)}
                     >
                       {odds.home}
                     </Button>
                     <Button
                       size="sm"
-                      variant="outline"
-                      className={`min-w-[60px] ${
+                      variant={drawSelected ? "default" : "outline"}
+                      className={`min-w-[60px] transition-all duration-200 ${
                         drawSelected
-                          ? 'odds-button-selected'
-                          : 'odds-button-unselected'
+                          ? 'bg-green-600 text-white border-green-600 hover:bg-green-700'
+                          : 'border-gray-600 text-gray-300 hover:bg-green-600 hover:text-white hover:border-green-600'
                       }`}
-                      data-selected={drawSelected}
-                      onClick={() => onBetClick(eventName, "Draw", odds.draw)}
+                      style={drawSelected ? { backgroundColor: '#16a34a', borderColor: '#16a34a', color: 'white' } : {}}
+                      onClick={() => handleBetClick(eventName, "Draw", odds.draw)}
                     >
                       {odds.draw}
                     </Button>
                     <Button
                       size="sm"
-                      variant="outline"
-                      className={`min-w-[60px] ${
+                      variant={awaySelected ? "default" : "outline"}
+                      className={`min-w-[60px] transition-all duration-200 ${
                         awaySelected
-                          ? 'odds-button-selected'
-                          : 'odds-button-unselected'
+                          ? 'bg-green-600 text-white border-green-600 hover:bg-green-700'
+                          : 'border-gray-600 text-gray-300 hover:bg-green-600 hover:text-white hover:border-green-600'
                       }`}
-                      data-selected={awaySelected}
-                      onClick={() => onBetClick(eventName, game.away_team, odds.away)}
+                      style={awaySelected ? { backgroundColor: '#16a34a', borderColor: '#16a34a', color: 'white' } : {}}
+                      onClick={() => handleBetClick(eventName, game.away_team, odds.away)}
                     >
                       {odds.away}
                     </Button>
