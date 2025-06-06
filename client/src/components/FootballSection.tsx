@@ -227,59 +227,56 @@ interface CountrySectionProps {
 
 function CountrySection({ countryData, onBetClick, formatMatchTime, getOdds, isInBetslip }: CountrySectionProps) {
   const [expanded, setExpanded] = useState(true);
-  const [forceUpdate, setForceUpdate] = useState(0);
-  const buttonRefs = useRef<Map<string, HTMLButtonElement>>(new Map());
   
-  // Create a stable function to check betslip status
-  const checkBetslipStatus = (eventName: string, selection: string) => {
-    return isInBetslip ? isInBetslip(eventName, selection) : false;
+  // Handle odds button click with class-based selection
+  const handleOddsClick = (event: React.MouseEvent<HTMLButtonElement>, eventName: string, selection: string, odds: string) => {
+    const button = event.currentTarget;
+    const matchId = button.dataset.match;
+    
+    // Deselect other buttons for the same match
+    document.querySelectorAll(`.odd[data-match='${matchId}']`)
+      .forEach(b => b.classList.remove("selected"));
+
+    // Check if this selection is already in betslip
+    const isCurrentlySelected = isInBetslip ? isInBetslip(eventName, selection) : false;
+    
+    if (isCurrentlySelected) {
+      // Remove from betslip (deselect)
+      button.classList.remove("selected");
+    } else {
+      // Add to betslip (select)
+      button.classList.add("selected");
+    }
+    
+    // Call the original bet click handler
+    onBetClick(eventName, selection, odds);
   };
 
-  // Apply highlighting directly to DOM elements
-  const applyHighlighting = () => {
-    buttonRefs.current.forEach((button, key) => {
-      const [eventName, selection] = key.split(':::');
-      const isSelected = checkBetslipStatus(eventName, selection);
+  // Initialize button states based on betslip
+  useEffect(() => {
+    countryData.games.forEach((game) => {
+      const eventName = `${game.home_team} vs ${game.away_team}`;
+      const gameId = game.id;
       
-      if (isSelected) {
-        button.style.backgroundColor = 'hsl(var(--primary))';
-        button.style.borderColor = 'hsl(var(--primary))';
-        button.style.color = 'white';
-        button.classList.remove('border-gray-600', 'text-gray-300');
-        button.classList.add('bg-primary', 'text-white', 'border-primary');
-      } else {
-        button.style.backgroundColor = 'transparent';
-        button.style.borderColor = '#475569';
-        button.style.color = '#d1d5db';
-        button.classList.remove('bg-primary', 'text-white', 'border-primary');
-        button.classList.add('border-gray-600', 'text-gray-300');
+      // Check and update button states
+      const homeButton = document.querySelector(`.odd[data-match='${gameId}'][data-option='home']`) as HTMLButtonElement;
+      const drawButton = document.querySelector(`.odd[data-match='${gameId}'][data-option='draw']`) as HTMLButtonElement;
+      const awayButton = document.querySelector(`.odd[data-match='${gameId}'][data-option='away']`) as HTMLButtonElement;
+      
+      if (homeButton) {
+        const isSelected = isInBetslip ? isInBetslip(eventName, game.home_team) : false;
+        homeButton.classList.toggle('selected', isSelected);
+      }
+      if (drawButton) {
+        const isSelected = isInBetslip ? isInBetslip(eventName, "Draw") : false;
+        drawButton.classList.toggle('selected', isSelected);
+      }
+      if (awayButton) {
+        const isSelected = isInBetslip ? isInBetslip(eventName, game.away_team) : false;
+        awayButton.classList.toggle('selected', isSelected);
       }
     });
-  };
-
-  // Apply highlighting after component updates
-  useEffect(() => {
-    applyHighlighting();
-  }, [forceUpdate, countryData.games]);
-
-  // Enhanced click handler with direct DOM update
-  const handleBetClick = (eventName: string, selection: string, odds: string) => {
-    onBetClick(eventName, selection, odds);
-    // Force component update
-    setForceUpdate(prev => prev + 1);
-    // Apply highlighting immediately
-    setTimeout(() => applyHighlighting(), 10);
-  };
-
-  // Set button ref
-  const setButtonRef = (element: HTMLButtonElement | null, eventName: string, selection: string) => {
-    const key = `${eventName}:::${selection}`;
-    if (element) {
-      buttonRefs.current.set(key, element);
-    } else {
-      buttonRefs.current.delete(key);
-    }
-  };
+  }, [countryData.games, isInBetslip]);
 
   return (
     <div className="bg-slate-800 rounded-lg overflow-hidden">
@@ -303,13 +300,8 @@ function CountrySection({ countryData, onBetClick, formatMatchTime, getOdds, isI
             const odds = getOdds(game);
             const eventName = `${game.home_team} vs ${game.away_team}`;
             
-            // Memoize the betslip status for each outcome
-            const homeSelected = checkBetslipStatus(eventName, game.home_team);
-            const drawSelected = checkBetslipStatus(eventName, "Draw");
-            const awaySelected = checkBetslipStatus(eventName, game.away_team);
-            
             return (
-              <div key={`${game.id}-${homeSelected}-${drawSelected}-${awaySelected}-${forceUpdate}`} className="p-4 hover:bg-slate-700 transition-colors">
+              <div key={game.id} className="p-4 hover:bg-slate-700 transition-colors">
                 <div className="flex items-center justify-between">
                   <div className="flex-1">
                     <div className="text-sm text-gray-400 mb-1">
@@ -324,27 +316,30 @@ function CountrySection({ countryData, onBetClick, formatMatchTime, getOdds, isI
                     <Button
                       size="sm"
                       variant="outline"
-                      className="min-w-[60px] odds-button"
-                      data-odds-selected={homeSelected}
-                      onClick={() => handleBetClick(eventName, game.home_team, odds.home)}
+                      className="min-w-[60px] odd"
+                      data-match={game.id}
+                      data-option="home"
+                      onClick={(e) => handleOddsClick(e, eventName, game.home_team, odds.home)}
                     >
                       {odds.home}
                     </Button>
                     <Button
                       size="sm"
                       variant="outline"
-                      className="min-w-[60px] odds-button"
-                      data-odds-selected={drawSelected}
-                      onClick={() => handleBetClick(eventName, "Draw", odds.draw)}
+                      className="min-w-[60px] odd"
+                      data-match={game.id}
+                      data-option="draw"
+                      onClick={(e) => handleOddsClick(e, eventName, "Draw", odds.draw)}
                     >
                       {odds.draw}
                     </Button>
                     <Button
                       size="sm"
                       variant="outline"
-                      className="min-w-[60px] odds-button"
-                      data-odds-selected={awaySelected}
-                      onClick={() => handleBetClick(eventName, game.away_team, odds.away)}
+                      className="min-w-[60px] odd"
+                      data-match={game.id}
+                      data-option="away"
+                      onClick={(e) => handleOddsClick(e, eventName, game.away_team, odds.away)}
                     >
                       {odds.away}
                     </Button>
