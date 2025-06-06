@@ -322,40 +322,28 @@ function CountrySection({ countryData, onBetClick, formatMatchTime, getOdds, isI
                   
                   <div className="flex gap-2 ml-4">
                     <Button
-                      ref={(el) => setButtonRef(el, eventName, game.home_team)}
                       size="sm"
-                      variant={homeSelected ? "default" : "outline"}
-                      className={`min-w-[60px] ${
-                        homeSelected
-                          ? 'bg-primary text-white border-primary hover:bg-primary/90'
-                          : 'border-gray-600 text-gray-300 hover:bg-primary hover:text-white hover:border-primary'
-                      }`}
+                      variant="outline"
+                      className="min-w-[60px] odds-button"
+                      data-odds-selected={homeSelected}
                       onClick={() => handleBetClick(eventName, game.home_team, odds.home)}
                     >
                       {odds.home}
                     </Button>
                     <Button
-                      ref={(el) => setButtonRef(el, eventName, "Draw")}
                       size="sm"
-                      variant={drawSelected ? "default" : "outline"}
-                      className={`min-w-[60px] ${
-                        drawSelected
-                          ? 'bg-primary text-white border-primary hover:bg-primary/90'
-                          : 'border-gray-600 text-gray-300 hover:bg-primary hover:text-white hover:border-primary'
-                      }`}
+                      variant="outline"
+                      className="min-w-[60px] odds-button"
+                      data-odds-selected={drawSelected}
                       onClick={() => handleBetClick(eventName, "Draw", odds.draw)}
                     >
                       {odds.draw}
                     </Button>
                     <Button
-                      ref={(el) => setButtonRef(el, eventName, game.away_team)}
                       size="sm"
-                      variant={awaySelected ? "default" : "outline"}
-                      className={`min-w-[60px] ${
-                        awaySelected
-                          ? 'bg-primary text-white border-primary hover:bg-primary/90'
-                          : 'border-gray-600 text-gray-300 hover:bg-primary hover:text-white hover:border-primary'
-                      }`}
+                      variant="outline"
+                      className="min-w-[60px] odds-button"
+                      data-odds-selected={awaySelected}
                       onClick={() => handleBetClick(eventName, game.away_team, odds.away)}
                     >
                       {odds.away}

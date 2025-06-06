@@ -153,20 +153,27 @@
     scrollbar-color: #475569 #1e293b;
   }
 
-  /* Odds button highlighting - CSS-based for persistence */
-  .odds-button-selected {
+  /* Odds button highlighting - Data attribute based for absolute persistence */
+  [data-odds-selected="true"] {
     background-color: hsl(var(--primary)) !important;
     color: white !important;
     border-color: hsl(var(--primary)) !important;
   }
   
-  .odds-button-unselected {
+  [data-odds-selected="false"] {
     border-color: #475569 !important;
     color: #d1d5db !important;
     background-color: transparent !important;
   }
   
-  .odds-button-unselected:hover {
+  [data-odds-selected="false"]:hover {
+    background-color: hsl(var(--primary)) !important;
+    color: white !important;
+    border-color: hsl(var(--primary)) !important;
+  }
+
+  /* Force override any conflicting styles */
+  .odds-button[data-odds-selected="true"] {
     background-color: hsl(var(--primary)) !important;
     color: white !important;
     border-color: hsl(var(--primary)) !important;
