@@ -152,6 +152,25 @@
     scrollbar-width: thin;
     scrollbar-color: #475569 #1e293b;
   }
+
+  /* Odds button highlighting - CSS-based for persistence */
+  .odds-button-selected {
+    background-color: hsl(var(--primary)) !important;
+    color: white !important;
+    border-color: hsl(var(--primary)) !important;
+  }
+  
+  .odds-button-unselected {
+    border-color: #475569 !important;
+    color: #d1d5db !important;
+    background-color: transparent !important;
+  }
+  
+  .odds-button-unselected:hover {
+    background-color: hsl(var(--primary)) !important;
+    color: white !important;
+    border-color: hsl(var(--primary)) !important;
+  }
   
   .text-live {
     color: hsl(var(--live-orange));

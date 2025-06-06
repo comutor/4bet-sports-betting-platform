@@ -12,6 +12,7 @@ export interface BetslipItem {
 export function useBetslip() {
   const [items, setItems] = useState<BetslipItem[]>([]);
   const [isOpen, setIsOpen] = useState(false);
+  const [refreshTrigger, setRefreshTrigger] = useState(0);
 
   // Load betslip from localStorage on mount
   useEffect(() => {
@@ -34,12 +35,15 @@ export function useBetslip() {
   const addToBetslip = useCallback((item: Omit<BetslipItem, 'id' | 'stake' | 'potentialReturn'>) => {
     setItems(prev => {
       const existingIndex = prev.findIndex(existing => 
-        existing.eventName === item.eventName && existing.selection === item.selection
+        existing.eventName.trim() === item.eventName.trim() && 
+        existing.selection.trim() === item.selection.trim()
       );
       
       // If item exists, remove it (toggle off)
       if (existingIndex !== -1) {
-        return prev.filter((_, index) => index !== existingIndex);
+        const newItems = prev.filter((_, index) => index !== existingIndex);
+        // Force a state update by creating a new array
+        return [...newItems];
       }
       
       // If item doesn't exist, add it (toggle on)
@@ -50,8 +54,12 @@ export function useBetslip() {
         potentialReturn: 100 * parseFloat(item.odds)
       };
       
+      // Force a state update by creating a new array
       return [...prev, newItem];
     });
+    
+    // Trigger a force refresh
+    setRefreshTrigger(prev => prev + 1);
   }, []);
 
   const removeFromBetslip = useCallback((id: string) => {
@@ -91,6 +99,7 @@ export function useBetslip() {
     isInBetslip,
     totalStake,
     totalPotentialReturn,
-    count: items.length
+    count: items.length,
+    refreshTrigger
   };
 }

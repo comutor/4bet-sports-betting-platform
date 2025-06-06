@@ -275,36 +275,39 @@ function CountrySection({ countryData, onBetClick, formatMatchTime, getOdds, isI
                   <div className="flex gap-2 ml-4">
                     <Button
                       size="sm"
-                      variant={homeSelected ? "default" : "outline"}
+                      variant="outline"
                       className={`min-w-[60px] ${
                         homeSelected
-                          ? 'bg-primary text-white border-primary hover:bg-primary/90'
-                          : 'border-gray-600 text-gray-300 hover:bg-primary hover:text-white hover:border-primary'
+                          ? 'odds-button-selected'
+                          : 'odds-button-unselected'
                       }`}
+                      data-selected={homeSelected}
                       onClick={() => onBetClick(eventName, game.home_team, odds.home)}
                     >
                       {odds.home}
                     </Button>
                     <Button
                       size="sm"
-                      variant={drawSelected ? "default" : "outline"}
+                      variant="outline"
                       className={`min-w-[60px] ${
                         drawSelected
-                          ? 'bg-primary text-white border-primary hover:bg-primary/90'
-                          : 'border-gray-600 text-gray-300 hover:bg-primary hover:text-white hover:border-primary'
+                          ? 'odds-button-selected'
+                          : 'odds-button-unselected'
                       }`}
+                      data-selected={drawSelected}
                       onClick={() => onBetClick(eventName, "Draw", odds.draw)}
                     >
                       {odds.draw}
                     </Button>
                     <Button
                       size="sm"
-                      variant={awaySelected ? "default" : "outline"}
+                      variant="outline"
                       className={`min-w-[60px] ${
                         awaySelected
-                          ? 'bg-primary text-white border-primary hover:bg-primary/90'
-                          : 'border-gray-600 text-gray-300 hover:bg-primary hover:text-white hover:border-primary'
+                          ? 'odds-button-selected'
+                          : 'odds-button-unselected'
                       }`}
+                      data-selected={awaySelected}
                       onClick={() => onBetClick(eventName, game.away_team, odds.away)}
                     >
                       {odds.away}
