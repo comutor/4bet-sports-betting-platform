@@ -228,49 +228,61 @@ interface CountrySectionProps {
 function CountrySection({ countryData, onBetClick, formatMatchTime, getOdds, isInBetslip }: CountrySectionProps) {
   const [expanded, setExpanded] = useState(true);
   
+  // Track selected odds per match
+  const [selectedOdds, setSelectedOdds] = useState<Map<string, string>>(new Map());
+
   // Handle odds button click ensuring only one selection per match
   const handleOddsClick = (event: React.MouseEvent<HTMLButtonElement>, eventName: string, selection: string, odds: string) => {
+    event.preventDefault();
+    event.stopPropagation();
+    
     const button = event.currentTarget;
     const matchId = button.dataset.match;
+    const option = button.dataset.option;
     
-    if (!matchId) return;
+    if (!matchId || !option) return;
 
-    // Check if this button is already selected
-    const isCurrentlySelected = button.classList.contains('selected');
+    // Get current selection for this match
+    const currentSelection = selectedOdds.get(matchId);
+    const isCurrentlySelected = currentSelection === option;
     
-    // Always deselect all options for this match first
+    // Create new selections map
+    const newSelections = new Map(selectedOdds);
+    
+    // Remove visual selection from all buttons for this match
     document.querySelectorAll(`.odd[data-match='${matchId}']`)
       .forEach(btn => btn.classList.remove('selected'));
     
     if (isCurrentlySelected) {
-      // If it was selected, keep it deselected (toggle off)
-      // Remove from betslip
-      onBetClick(eventName, selection, odds);
+      // Deselect current option
+      newSelections.delete(matchId);
+      button.classList.remove('selected');
     } else {
-      // Select this option
+      // Select new option
+      newSelections.set(matchId, option);
       button.classList.add('selected');
-      // Add to betslip
-      onBetClick(eventName, selection, odds);
     }
+    
+    // Update state
+    setSelectedOdds(newSelections);
+    
+    // Call betslip handler
+    onBetClick(eventName, selection, odds);
   };
 
-  // Restore selections from localStorage on component mount
+  // Apply visual state based on selectedOdds
   useEffect(() => {
-    const restoreSelections = () => {
-      const savedSelections = JSON.parse(localStorage.getItem('oddsSelections') || '{}');
-      
-      // Apply saved selections
-      Object.entries(savedSelections).forEach(([matchId, option]) => {
-        const button = document.querySelector(`.odd[data-match='${matchId}'][data-option='${option}']`) as HTMLButtonElement;
-        if (button) {
-          button.classList.add('selected');
-        }
-      });
-    };
-
-    // Restore selections after a short delay to ensure DOM is ready
-    setTimeout(restoreSelections, 100);
-  }, [countryData.games]);
+    // Clear all selections first
+    document.querySelectorAll('.odd.selected').forEach(btn => btn.classList.remove('selected'));
+    
+    // Apply current selections
+    selectedOdds.forEach((option, matchId) => {
+      const button = document.querySelector(`.odd[data-match='${matchId}'][data-option='${option}']`) as HTMLButtonElement;
+      if (button) {
+        button.classList.add('selected');
+      }
+    });
+  }, [selectedOdds, countryData.games]);
 
   return (
     <div className="bg-slate-800 rounded-lg overflow-hidden">
