@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, useMemo } from "react";
+import { useState, useEffect, useCallback, useMemo, useRef } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
 import { Loader2 } from "lucide-react";
@@ -228,17 +228,57 @@ interface CountrySectionProps {
 function CountrySection({ countryData, onBetClick, formatMatchTime, getOdds, isInBetslip }: CountrySectionProps) {
   const [expanded, setExpanded] = useState(true);
   const [forceUpdate, setForceUpdate] = useState(0);
+  const buttonRefs = useRef<Map<string, HTMLButtonElement>>(new Map());
   
   // Create a stable function to check betslip status
   const checkBetslipStatus = (eventName: string, selection: string) => {
     return isInBetslip ? isInBetslip(eventName, selection) : false;
   };
 
-  // Enhanced click handler with force update
+  // Apply highlighting directly to DOM elements
+  const applyHighlighting = () => {
+    buttonRefs.current.forEach((button, key) => {
+      const [eventName, selection] = key.split(':::');
+      const isSelected = checkBetslipStatus(eventName, selection);
+      
+      if (isSelected) {
+        button.style.backgroundColor = 'hsl(var(--primary))';
+        button.style.borderColor = 'hsl(var(--primary))';
+        button.style.color = 'white';
+        button.classList.remove('border-gray-600', 'text-gray-300');
+        button.classList.add('bg-primary', 'text-white', 'border-primary');
+      } else {
+        button.style.backgroundColor = 'transparent';
+        button.style.borderColor = '#475569';
+        button.style.color = '#d1d5db';
+        button.classList.remove('bg-primary', 'text-white', 'border-primary');
+        button.classList.add('border-gray-600', 'text-gray-300');
+      }
+    });
+  };
+
+  // Apply highlighting after component updates
+  useEffect(() => {
+    applyHighlighting();
+  }, [forceUpdate, countryData.games]);
+
+  // Enhanced click handler with direct DOM update
   const handleBetClick = (eventName: string, selection: string, odds: string) => {
     onBetClick(eventName, selection, odds);
-    // Force component update to ensure highlighting persists
+    // Force component update
     setForceUpdate(prev => prev + 1);
+    // Apply highlighting immediately
+    setTimeout(() => applyHighlighting(), 10);
+  };
+
+  // Set button ref
+  const setButtonRef = (element: HTMLButtonElement | null, eventName: string, selection: string) => {
+    const key = `${eventName}:::${selection}`;
+    if (element) {
+      buttonRefs.current.set(key, element);
+    } else {
+      buttonRefs.current.delete(key);
+    }
   };
 
   return (
@@ -282,6 +322,7 @@ function CountrySection({ countryData, onBetClick, formatMatchTime, getOdds, isI
                   
                   <div className="flex gap-2 ml-4">
                     <Button
+                      ref={(el) => setButtonRef(el, eventName, game.home_team)}
                       size="sm"
                       variant={homeSelected ? "default" : "outline"}
                       className={`min-w-[60px] ${
@@ -294,6 +335,7 @@ function CountrySection({ countryData, onBetClick, formatMatchTime, getOdds, isI
                       {odds.home}
                     </Button>
                     <Button
+                      ref={(el) => setButtonRef(el, eventName, "Draw")}
                       size="sm"
                       variant={drawSelected ? "default" : "outline"}
                       className={`min-w-[60px] ${
@@ -306,6 +348,7 @@ function CountrySection({ countryData, onBetClick, formatMatchTime, getOdds, isI
                       {odds.draw}
                     </Button>
                     <Button
+                      ref={(el) => setButtonRef(el, eventName, game.away_team)}
                       size="sm"
                       variant={awaySelected ? "default" : "outline"}
                       className={`min-w-[60px] ${
