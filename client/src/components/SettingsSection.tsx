@@ -30,28 +30,28 @@ export function SettingsSection({ userCountry, isLoggedIn, onClose, onBackToAcco
       </div>
       
       {isLoggedIn && (
-        <div className="bg-white rounded-lg p-4 mb-4">
+        <div className="bg-slate-light-custom rounded-lg p-4 mb-4 border border-slate-600">
           <div 
             className="flex items-center justify-between cursor-pointer"
             onClick={() => setActiveSection('my-account')}
           >
             <div className="flex items-center space-x-3">
-              <User className="w-5 h-5 text-blue-600" />
-              <span className="font-medium text-gray-900">My Account</span>
+              <User className="w-5 h-5 text-gray-400" />
+              <span className="font-medium text-gray-300">My Account</span>
             </div>
             <ChevronRight className="w-5 h-5 text-gray-400" />
           </div>
         </div>
       )}
 
-      <div className="bg-white rounded-lg p-4">
+      <div className="bg-slate-light-custom rounded-lg p-4 border border-slate-600">
         <div 
           className="flex items-center justify-between cursor-pointer"
           onClick={() => setActiveSection('general')}
         >
           <div className="flex items-center space-x-3">
-            <Info className="w-5 h-5 text-blue-600" />
-            <span className="font-medium text-gray-900">General</span>
+            <Info className="w-5 h-5 text-gray-400" />
+            <span className="font-medium text-gray-300">General</span>
           </div>
           <ChevronRight className="w-5 h-5 text-gray-400" />
         </div>
@@ -72,36 +72,36 @@ export function SettingsSection({ userCountry, isLoggedIn, onClose, onBackToAcco
       </div>
 
       {/* Statements */}
-      <div className="bg-white rounded-lg p-4">
+      <div className="bg-slate-light-custom rounded-lg p-4 border border-slate-600">
         <div className="flex items-center justify-between cursor-pointer">
           <div className="flex items-center space-x-3">
-            <Bell className="w-5 h-5 text-blue-600" />
-            <span className="font-medium text-gray-900">Statements</span>
+            <Bell className="w-5 h-5 text-gray-400" />
+            <span className="font-medium text-gray-300">Statements</span>
           </div>
           <ChevronRight className="w-5 h-5 text-gray-400" />
         </div>
       </div>
 
       {/* Notifications */}
-      <div className="bg-white rounded-lg p-4">
+      <div className="bg-slate-light-custom rounded-lg p-4 border border-slate-600">
         <div className="flex items-center justify-between cursor-pointer">
           <div className="flex items-center space-x-3">
-            <Bell className="w-5 h-5 text-blue-600" />
-            <span className="font-medium text-gray-900">Notifications</span>
+            <Bell className="w-5 h-5 text-gray-400" />
+            <span className="font-medium text-gray-300">Notifications</span>
           </div>
           <ChevronRight className="w-5 h-5 text-gray-400" />
         </div>
       </div>
 
       {/* Manage My Account */}
-      <div className="bg-white rounded-lg p-4">
+      <div className="bg-slate-light-custom rounded-lg p-4 border border-slate-600">
         <div 
           className="flex items-center justify-between cursor-pointer"
           onClick={() => setActiveSection('manage-account')}
         >
           <div className="flex items-center space-x-3">
-            <Shield className="w-5 h-5 text-blue-600" />
-            <span className="font-medium text-gray-900">Manage My Account</span>
+            <Shield className="w-5 h-5 text-gray-400" />
+            <span className="font-medium text-gray-300">Manage My Account</span>
           </div>
           <ChevronRight className="w-5 h-5 text-gray-400" />
         </div>
@@ -122,22 +122,22 @@ export function SettingsSection({ userCountry, isLoggedIn, onClose, onBackToAcco
       </div>
 
       {/* Change Password */}
-      <div className="bg-white rounded-lg p-4">
+      <div className="bg-slate-light-custom rounded-lg p-4 border border-slate-600">
         <div className="flex items-center justify-between cursor-pointer">
           <div className="flex items-center space-x-3">
-            <Lock className="w-5 h-5 text-blue-600" />
-            <span className="font-medium text-gray-900">Change Password</span>
+            <Lock className="w-5 h-5 text-gray-400" />
+            <span className="font-medium text-gray-300">Change Password</span>
           </div>
           <ChevronRight className="w-5 h-5 text-gray-400" />
         </div>
       </div>
 
       {/* Self-Exclusion */}
-      <div className="bg-white rounded-lg p-4">
+      <div className="bg-slate-light-custom rounded-lg p-4 border border-slate-600">
         <div className="flex items-center justify-between cursor-pointer">
           <div className="flex items-center space-x-3">
-            <UserX className="w-5 h-5 text-red-600" />
-            <span className="font-medium text-gray-900">Self-Exclusion</span>
+            <UserX className="w-5 h-5 text-red-400" />
+            <span className="font-medium text-gray-300">Self-Exclusion</span>
           </div>
           <ChevronRight className="w-5 h-5 text-gray-400" />
         </div>
@@ -158,33 +158,33 @@ export function SettingsSection({ userCountry, isLoggedIn, onClose, onBackToAcco
       </div>
 
       {/* Why Join? */}
-      <div className="bg-white rounded-lg p-4">
+      <div className="bg-slate-light-custom rounded-lg p-4 border border-slate-600">
         <div className="flex items-center justify-between cursor-pointer">
           <div className="flex items-center space-x-3">
-            <Users className="w-5 h-5 text-blue-600" />
-            <span className="font-medium text-gray-900">Why Join?</span>
+            <Users className="w-5 h-5 text-gray-400" />
+            <span className="font-medium text-gray-300">Why Join?</span>
           </div>
           <ChevronRight className="w-5 h-5 text-gray-400" />
         </div>
       </div>
 
       {/* Help Center */}
-      <div className="bg-white rounded-lg p-4">
+      <div className="bg-slate-light-custom rounded-lg p-4 border border-slate-600">
         <div className="flex items-center justify-between cursor-pointer">
           <div className="flex items-center space-x-3">
-            <HelpCircle className="w-5 h-5 text-blue-600" />
-            <span className="font-medium text-gray-900">Help Center</span>
+            <HelpCircle className="w-5 h-5 text-gray-400" />
+            <span className="font-medium text-gray-300">Help Center</span>
           </div>
           <ChevronRight className="w-5 h-5 text-gray-400" />
         </div>
       </div>
 
       {/* More on NileBet */}
-      <div className="bg-white rounded-lg p-4">
+      <div className="bg-slate-light-custom rounded-lg p-4 border border-slate-600">
         <div className="flex items-center justify-between cursor-pointer">
           <div className="flex items-center space-x-3">
-            <Info className="w-5 h-5 text-blue-600" />
-            <span className="font-medium text-gray-900">More on NileBet</span>
+            <Info className="w-5 h-5 text-gray-400" />
+            <span className="font-medium text-gray-300">More on NileBet</span>
           </div>
           <ChevronRight className="w-5 h-5 text-gray-400" />
         </div>
