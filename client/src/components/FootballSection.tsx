@@ -284,12 +284,11 @@ function CountrySection({ countryData, onBetClick, formatMatchTime, getOdds, isI
                     <Button
                       size="sm"
                       variant={homeSelected ? "default" : "outline"}
-                      className={`min-w-[60px] transition-all duration-200 ${
+                      className={`min-w-[60px] ${
                         homeSelected
-                          ? 'bg-green-600 text-white border-green-600 hover:bg-green-700'
-                          : 'border-gray-600 text-gray-300 hover:bg-green-600 hover:text-white hover:border-green-600'
+                          ? 'bg-primary text-white border-primary hover:bg-primary/90'
+                          : 'border-gray-600 text-gray-300 hover:bg-primary hover:text-white hover:border-primary'
                       }`}
-                      style={homeSelected ? { backgroundColor: '#16a34a', borderColor: '#16a34a', color: 'white' } : {}}
                       onClick={() => handleBetClick(eventName, game.home_team, odds.home)}
                     >
                       {odds.home}
@@ -297,12 +296,11 @@ function CountrySection({ countryData, onBetClick, formatMatchTime, getOdds, isI
                     <Button
                       size="sm"
                       variant={drawSelected ? "default" : "outline"}
-                      className={`min-w-[60px] transition-all duration-200 ${
+                      className={`min-w-[60px] ${
                         drawSelected
-                          ? 'bg-green-600 text-white border-green-600 hover:bg-green-700'
-                          : 'border-gray-600 text-gray-300 hover:bg-green-600 hover:text-white hover:border-green-600'
+                          ? 'bg-primary text-white border-primary hover:bg-primary/90'
+                          : 'border-gray-600 text-gray-300 hover:bg-primary hover:text-white hover:border-primary'
                       }`}
-                      style={drawSelected ? { backgroundColor: '#16a34a', borderColor: '#16a34a', color: 'white' } : {}}
                       onClick={() => handleBetClick(eventName, "Draw", odds.draw)}
                     >
                       {odds.draw}
@@ -310,12 +308,11 @@ function CountrySection({ countryData, onBetClick, formatMatchTime, getOdds, isI
                     <Button
                       size="sm"
                       variant={awaySelected ? "default" : "outline"}
-                      className={`min-w-[60px] transition-all duration-200 ${
+                      className={`min-w-[60px] ${
                         awaySelected
-                          ? 'bg-green-600 text-white border-green-600 hover:bg-green-700'
-                          : 'border-gray-600 text-gray-300 hover:bg-green-600 hover:text-white hover:border-green-600'
+                          ? 'bg-primary text-white border-primary hover:bg-primary/90'
+                          : 'border-gray-600 text-gray-300 hover:bg-primary hover:text-white hover:border-primary'
                       }`}
-                      style={awaySelected ? { backgroundColor: '#16a34a', borderColor: '#16a34a', color: 'white' } : {}}
                       onClick={() => handleBetClick(eventName, game.away_team, odds.away)}
                     >
                       {odds.away}
