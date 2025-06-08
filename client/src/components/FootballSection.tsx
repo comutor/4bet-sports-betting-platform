@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback, useMemo, useRef } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
 import { Loader2 } from "lucide-react";
+import { MoreMarketsModal } from "@/components/MoreMarketsModal";
 
 interface FootballGame {
   id: string;
@@ -36,6 +37,17 @@ interface FootballSectionProps {
 export function FootballSection({ onBetClick, isInBetslip }: FootballSectionProps) {
   const [displayedCountries, setDisplayedCountries] = useState<number>(6);
   const [isLoadingMore, setIsLoadingMore] = useState(false);
+  const [moreMarketsModal, setMoreMarketsModal] = useState<{
+    isOpen: boolean;
+    eventName: string;
+    homeTeam: string;
+    awayTeam: string;
+  }>({
+    isOpen: false,
+    eventName: '',
+    homeTeam: '',
+    awayTeam: ''
+  });
 
   const { data: footballData, isLoading, error } = useQuery<CountryFootballData[]>({
     queryKey: ['/api/football/countries'],
@@ -268,30 +280,48 @@ function MatchCard({ game, onBetClick, formatMatchTime, getOdds }: {
           </div>
         </div>
         
-        <div className="flex gap-2">
+        <div className="flex gap-2 items-center">
+          <div className="flex gap-2">
+            <Button
+              size="sm"
+              variant="outline"
+              className={`min-w-[60px] odd-btn ${selected === 'home' ? 'selected' : ''}`}
+              onClick={() => handleSelect('home', eventName, game.home_team, odds.home)}
+            >
+              {odds.home}
+            </Button>
+            <Button
+              size="sm"
+              variant="outline"
+              className={`min-w-[60px] odd-btn ${selected === 'draw' ? 'selected' : ''}`}
+              onClick={() => handleSelect('draw', eventName, "Draw", odds.draw)}
+            >
+              {odds.draw}
+            </Button>
+            <Button
+              size="sm"
+              variant="outline"
+              className={`min-w-[60px] odd-btn ${selected === 'away' ? 'selected' : ''}`}
+              onClick={() => handleSelect('away', eventName, game.away_team, odds.away)}
+            >
+              {odds.away}
+            </Button>
+          </div>
+          
           <Button
             size="sm"
-            variant="outline"
-            className={`min-w-[60px] odd-btn ${selected === 'home' ? 'selected' : ''}`}
-            onClick={() => handleSelect('home', eventName, game.home_team, odds.home)}
+            variant="ghost"
+            className="text-blue-400 hover:text-blue-300 hover:bg-blue-500/10 px-2 min-w-[70px]"
+            onClick={() => {
+              setMoreMarketsModal({
+                isOpen: true,
+                eventName,
+                homeTeam: game.home_team,
+                awayTeam: game.away_team
+              });
+            }}
           >
-            {odds.home}
-          </Button>
-          <Button
-            size="sm"
-            variant="outline"
-            className={`min-w-[60px] odd-btn ${selected === 'draw' ? 'selected' : ''}`}
-            onClick={() => handleSelect('draw', eventName, "Draw", odds.draw)}
-          >
-            {odds.draw}
-          </Button>
-          <Button
-            size="sm"
-            variant="outline"
-            className={`min-w-[60px] odd-btn ${selected === 'away' ? 'selected' : ''}`}
-            onClick={() => handleSelect('away', eventName, game.away_team, odds.away)}
-          >
-            {odds.away}
+            <span className="text-xs font-medium">+25</span>
           </Button>
         </div>
       </div>
