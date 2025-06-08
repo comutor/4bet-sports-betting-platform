@@ -7,9 +7,10 @@ interface AccountPageProps {
   onLoginClick?: () => void;
   onLogout?: () => void;
   onSettingsClick?: () => void;
+  userData?: any;
 }
 
-export function AccountPage({ isLoggedIn = false, onClose, onSignupClick, onLoginClick, onLogout, onSettingsClick }: AccountPageProps) {
+export function AccountPage({ isLoggedIn = false, onClose, onSignupClick, onLoginClick, onLogout, onSettingsClick, userData }: AccountPageProps) {
   const menuItems = [
     { id: 'deposit', label: 'Deposit', icon: 'fas fa-credit-card' }
   ];
@@ -18,7 +19,12 @@ export function AccountPage({ isLoggedIn = false, onClose, onSignupClick, onLogi
     <div className="min-h-screen bg-slate-custom text-white pb-20">
       {/* Header */}
       <div className="bg-slate-800 p-6 border-b border-gray-700 flex items-center justify-between">
-        <h1 className="text-2xl font-bold text-white">Account</h1>
+        <div>
+          <h1 className="text-2xl font-bold text-white">Account</h1>
+          {isLoggedIn && userData?.phoneNumber && (
+            <p className="text-sm text-gray-400 mt-1">{userData.phoneNumber}</p>
+          )}
+        </div>
         {onClose && (
           <Button
             variant="ghost"
