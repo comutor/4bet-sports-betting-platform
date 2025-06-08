@@ -252,40 +252,32 @@ interface CountrySectionProps {
   formatMatchTime: (time: string) => string;
   getOdds: (game: FootballGame) => { home: string; draw: string; away: string };
   isInBetslip?: (eventName: string, selection: string) => boolean;
+  selectedOdds: Map<string, string>;
+  setSelectedOdds: React.Dispatch<React.SetStateAction<Map<string, string>>>;
 }
 
-function CountrySection({ countryData, onBetClick, formatMatchTime, getOdds, isInBetslip }: CountrySectionProps) {
+function CountrySection({ countryData, onBetClick, formatMatchTime, getOdds, isInBetslip, selectedOdds, setSelectedOdds }: CountrySectionProps) {
   const [expanded, setExpanded] = useState(true);
 
-  // Simple click handler that relies on betslip logic for single selection
-  const handleOddsClick = (eventName: string, selection: string, odds: string) => {
+  // Enhanced click handler with local state management
+  const handleOddsClick = (eventName: string, selection: string, odds: string, gameId: string, option: string) => {
+    // Update local selected odds state
+    const currentSelection = selectedOdds.get(gameId);
+    const newSelectedOdds = new Map(selectedOdds);
+    
+    if (currentSelection === option) {
+      // Deselect current option
+      newSelectedOdds.delete(gameId);
+    } else {
+      // Select new option (this automatically replaces any existing selection for this match)
+      newSelectedOdds.set(gameId, option);
+    }
+    
+    setSelectedOdds(newSelectedOdds);
+    
+    // Call betslip handler
     onBetClick(eventName, selection, odds);
   };
-
-  // Update visual state based on betslip
-  useEffect(() => {
-    countryData.games.forEach((game) => {
-      const eventName = `${game.home_team} vs ${game.away_team}`;
-      
-      // Update visual state for each option
-      const homeButton = document.querySelector(`.odd[data-match='${game.id}'][data-option='home']`) as HTMLButtonElement;
-      const drawButton = document.querySelector(`.odd[data-match='${game.id}'][data-option='draw']`) as HTMLButtonElement;
-      const awayButton = document.querySelector(`.odd[data-match='${game.id}'][data-option='away']`) as HTMLButtonElement;
-      
-      if (homeButton) {
-        const isSelected = isInBetslip ? isInBetslip(eventName, game.home_team) : false;
-        homeButton.classList.toggle('selected', isSelected);
-      }
-      if (drawButton) {
-        const isSelected = isInBetslip ? isInBetslip(eventName, "Draw") : false;
-        drawButton.classList.toggle('selected', isSelected);
-      }
-      if (awayButton) {
-        const isSelected = isInBetslip ? isInBetslip(eventName, game.away_team) : false;
-        awayButton.classList.toggle('selected', isSelected);
-      }
-    });
-  }, [countryData.games, isInBetslip]);
 
   return (
     <div className="bg-slate-800 rounded-lg overflow-hidden">
@@ -325,30 +317,30 @@ function CountrySection({ countryData, onBetClick, formatMatchTime, getOdds, isI
                     <Button
                       size="sm"
                       variant="outline"
-                      className="min-w-[60px] odd"
+                      className={`min-w-[60px] odd ${selectedOdds.get(game.id) === 'home' ? 'selected' : ''}`}
                       data-match={game.id}
                       data-option="home"
-                      onClick={() => handleOddsClick(eventName, game.home_team, odds.home)}
+                      onClick={() => handleOddsClick(eventName, game.home_team, odds.home, game.id, 'home')}
                     >
                       {odds.home}
                     </Button>
                     <Button
                       size="sm"
                       variant="outline"
-                      className="min-w-[60px] odd"
+                      className={`min-w-[60px] odd ${selectedOdds.get(game.id) === 'draw' ? 'selected' : ''}`}
                       data-match={game.id}
                       data-option="draw"
-                      onClick={() => handleOddsClick(eventName, "Draw", odds.draw)}
+                      onClick={() => handleOddsClick(eventName, "Draw", odds.draw, game.id, 'draw')}
                     >
                       {odds.draw}
                     </Button>
                     <Button
                       size="sm"
                       variant="outline"
-                      className="min-w-[60px] odd"
+                      className={`min-w-[60px] odd ${selectedOdds.get(game.id) === 'away' ? 'selected' : ''}`}
                       data-match={game.id}
                       data-option="away"
-                      onClick={() => handleOddsClick(eventName, game.away_team, odds.away)}
+                      onClick={() => handleOddsClick(eventName, game.away_team, odds.away, game.id, 'away')}
                     >
                       {odds.away}
                     </Button>
