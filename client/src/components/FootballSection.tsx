@@ -259,9 +259,9 @@ function MatchCard({ game, onBetClick, formatMatchTime, getOdds }: {
   return (
     <div className="bg-slate-700 p-4 rounded-lg border border-slate-600">
       <div className="flex items-center justify-between">
-        <div className="flex items-center gap-3">
-          <div className="text-xs text-gray-400">
-            {formatMatchTime(game.commence_time)}
+        <div className="flex-1">
+          <div className="text-xs text-gray-400 mb-1">
+            {game.league_name} • {formatMatchTime(game.commence_time)}
           </div>
           <div className="text-sm font-medium text-white">
             {eventName}
