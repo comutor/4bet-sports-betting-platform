@@ -36,7 +36,6 @@ interface FootballSectionProps {
 export function FootballSection({ onBetClick, isInBetslip }: FootballSectionProps) {
   const [displayedCountries, setDisplayedCountries] = useState<number>(6);
   const [isLoadingMore, setIsLoadingMore] = useState(false);
-  const [selectedOdds, setSelectedOdds] = useState<Map<string, string>>(new Map());
 
   const { data: footballData, isLoading, error } = useQuery<CountryFootballData[]>({
     queryKey: ['/api/football/countries'],
@@ -44,29 +43,7 @@ export function FootballSection({ onBetClick, isInBetslip }: FootballSectionProp
     refetchInterval: 2 * 60 * 1000, // 2 minutes
   });
 
-  // Sync selected odds state with betslip
-  useEffect(() => {
-    if (!footballData || !isInBetslip) return;
-    
-    const newSelectedOdds = new Map<string, string>();
-    
-    footballData.forEach(countryData => {
-      countryData.games.forEach(game => {
-        const eventName = `${game.home_team} vs ${game.away_team}`;
-        
-        // Check which option is in betslip
-        if (isInBetslip(eventName, game.home_team)) {
-          newSelectedOdds.set(game.id, 'home');
-        } else if (isInBetslip(eventName, "Draw")) {
-          newSelectedOdds.set(game.id, 'draw');
-        } else if (isInBetslip(eventName, game.away_team)) {
-          newSelectedOdds.set(game.id, 'away');
-        }
-      });
-    });
-    
-    setSelectedOdds(newSelectedOdds);
-  }, [footballData, isInBetslip]);
+
 
   const handleScroll = useCallback(() => {
     if (
@@ -189,8 +166,6 @@ export function FootballSection({ onBetClick, isInBetslip }: FootballSectionProp
               formatMatchTime={formatMatchTime}
               getOdds={getOdds}
               isInBetslip={isInBetslip}
-              selectedOdds={selectedOdds}
-              setSelectedOdds={setSelectedOdds}
             />
           ))}
         </div>
@@ -210,8 +185,6 @@ export function FootballSection({ onBetClick, isInBetslip }: FootballSectionProp
               formatMatchTime={formatMatchTime}
               getOdds={getOdds}
               isInBetslip={isInBetslip}
-              selectedOdds={selectedOdds}
-              setSelectedOdds={setSelectedOdds}
             />
           ))}
         </div>
@@ -252,32 +225,82 @@ interface CountrySectionProps {
   formatMatchTime: (time: string) => string;
   getOdds: (game: FootballGame) => { home: string; draw: string; away: string };
   isInBetslip?: (eventName: string, selection: string) => boolean;
-  selectedOdds: Map<string, string>;
-  setSelectedOdds: React.Dispatch<React.SetStateAction<Map<string, string>>>;
 }
 
-function CountrySection({ countryData, onBetClick, formatMatchTime, getOdds, isInBetslip, selectedOdds, setSelectedOdds }: CountrySectionProps) {
-  const [expanded, setExpanded] = useState(true);
+// Individual match component with its own selection state
+function MatchCard({ game, onBetClick, formatMatchTime, getOdds }: { 
+  game: FootballGame; 
+  onBetClick: (eventName: string, selection: string, odds: string) => void;
+  formatMatchTime: (time: string) => string;
+  getOdds: (game: FootballGame) => { home: string; draw: string; away: string };
+}) {
+  const [selected, setSelected] = useState<string | null>(() => {
+    const saved = localStorage.getItem(`match_${game.id}`);
+    return saved || null;
+  });
 
-  // Enhanced click handler with local state management
-  const handleOddsClick = (eventName: string, selection: string, odds: string, gameId: string, option: string) => {
-    // Update local selected odds state
-    const currentSelection = selectedOdds.get(gameId);
-    const newSelectedOdds = new Map(selectedOdds);
-    
-    if (currentSelection === option) {
-      // Deselect current option
-      newSelectedOdds.delete(gameId);
+  const handleSelect = (option: string, eventName: string, selection: string, oddsValue: string) => {
+    if (selected === option) {
+      // Deselect if clicking the same option
+      setSelected(null);
+      localStorage.removeItem(`match_${game.id}`);
     } else {
-      // Select new option (this automatically replaces any existing selection for this match)
-      newSelectedOdds.set(gameId, option);
+      // Select new option
+      setSelected(option);
+      localStorage.setItem(`match_${game.id}`, option);
     }
     
-    setSelectedOdds(newSelectedOdds);
-    
-    // Call betslip handler
-    onBetClick(eventName, selection, odds);
+    onBetClick(eventName, selection, oddsValue);
   };
+
+  const eventName = `${game.home_team} vs ${game.away_team}`;
+  const odds = getOdds(game);
+
+  return (
+    <div className="bg-slate-700 p-4 rounded-lg border border-slate-600">
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-3">
+          <div className="text-xs text-gray-400">
+            {formatMatchTime(game.commence_time)}
+          </div>
+          <div className="text-sm font-medium text-white">
+            {eventName}
+          </div>
+        </div>
+        
+        <div className="flex gap-2">
+          <Button
+            size="sm"
+            variant="outline"
+            className={`min-w-[60px] odd-btn ${selected === 'home' ? 'selected' : ''}`}
+            onClick={() => handleSelect('home', eventName, game.home_team, odds.home)}
+          >
+            {odds.home}
+          </Button>
+          <Button
+            size="sm"
+            variant="outline"
+            className={`min-w-[60px] odd-btn ${selected === 'draw' ? 'selected' : ''}`}
+            onClick={() => handleSelect('draw', eventName, "Draw", odds.draw)}
+          >
+            {odds.draw}
+          </Button>
+          <Button
+            size="sm"
+            variant="outline"
+            className={`min-w-[60px] odd-btn ${selected === 'away' ? 'selected' : ''}`}
+            onClick={() => handleSelect('away', eventName, game.away_team, odds.away)}
+          >
+            {odds.away}
+          </Button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function CountrySection({ countryData, onBetClick, formatMatchTime, getOdds, isInBetslip }: CountrySectionProps) {
+  const [expanded, setExpanded] = useState(true);
 
   return (
     <div className="bg-slate-800 rounded-lg overflow-hidden">
@@ -296,62 +319,19 @@ function CountrySection({ countryData, onBetClick, formatMatchTime, getOdds, isI
 
       {/* Games List */}
       {expanded && (
-        <div className="divide-y divide-gray-700">
-          {countryData.games.slice(0, 8).map((game) => {
-            const odds = getOdds(game);
-            const eventName = `${game.home_team} vs ${game.away_team}`;
-            
-            return (
-              <div key={game.id} className="p-4 hover:bg-slate-700 transition-colors">
-                <div className="flex items-center justify-between">
-                  <div className="flex-1">
-                    <div className="text-sm text-gray-400 mb-1">
-                      {game.league_name} • {formatMatchTime(game.commence_time)}
-                    </div>
-                    <div className="font-medium text-white">
-                      {eventName}
-                    </div>
-                  </div>
-                  
-                  <div className="flex gap-2 ml-4">
-                    <Button
-                      size="sm"
-                      variant="outline"
-                      className={`min-w-[60px] odd ${selectedOdds.get(game.id) === 'home' ? 'selected' : ''}`}
-                      data-match={game.id}
-                      data-option="home"
-                      onClick={() => handleOddsClick(eventName, game.home_team, odds.home, game.id, 'home')}
-                    >
-                      {odds.home}
-                    </Button>
-                    <Button
-                      size="sm"
-                      variant="outline"
-                      className={`min-w-[60px] odd ${selectedOdds.get(game.id) === 'draw' ? 'selected' : ''}`}
-                      data-match={game.id}
-                      data-option="draw"
-                      onClick={() => handleOddsClick(eventName, "Draw", odds.draw, game.id, 'draw')}
-                    >
-                      {odds.draw}
-                    </Button>
-                    <Button
-                      size="sm"
-                      variant="outline"
-                      className={`min-w-[60px] odd ${selectedOdds.get(game.id) === 'away' ? 'selected' : ''}`}
-                      data-match={game.id}
-                      data-option="away"
-                      onClick={() => handleOddsClick(eventName, game.away_team, odds.away, game.id, 'away')}
-                    >
-                      {odds.away}
-                    </Button>
-                  </div>
-                </div>
-              </div>
-            );
-          })}
+        <div className="p-4 space-y-3">
+          {countryData.games.slice(0, 8).map((game) => (
+            <MatchCard
+              key={game.id}
+              game={game}
+              onBetClick={onBetClick}
+              formatMatchTime={formatMatchTime}
+              getOdds={getOdds}
+            />
+          ))}
           
           {countryData.games.length > 8 && (
-            <div className="p-3 text-center">
+            <div className="text-center">
               <button className="text-sm text-primary hover:text-primary-light">
                 View all {countryData.games.length} matches
               </button>
