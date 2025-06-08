@@ -36,12 +36,37 @@ interface FootballSectionProps {
 export function FootballSection({ onBetClick, isInBetslip }: FootballSectionProps) {
   const [displayedCountries, setDisplayedCountries] = useState<number>(6);
   const [isLoadingMore, setIsLoadingMore] = useState(false);
+  const [selectedOdds, setSelectedOdds] = useState<Map<string, string>>(new Map());
 
   const { data: footballData, isLoading, error } = useQuery<CountryFootballData[]>({
     queryKey: ['/api/football/countries'],
     staleTime: 5 * 60 * 1000, // 5 minutes
     refetchInterval: 2 * 60 * 1000, // 2 minutes
   });
+
+  // Sync selected odds state with betslip
+  useEffect(() => {
+    if (!footballData || !isInBetslip) return;
+    
+    const newSelectedOdds = new Map<string, string>();
+    
+    footballData.forEach(countryData => {
+      countryData.games.forEach(game => {
+        const eventName = `${game.home_team} vs ${game.away_team}`;
+        
+        // Check which option is in betslip
+        if (isInBetslip(eventName, game.home_team)) {
+          newSelectedOdds.set(game.id, 'home');
+        } else if (isInBetslip(eventName, "Draw")) {
+          newSelectedOdds.set(game.id, 'draw');
+        } else if (isInBetslip(eventName, game.away_team)) {
+          newSelectedOdds.set(game.id, 'away');
+        }
+      });
+    });
+    
+    setSelectedOdds(newSelectedOdds);
+  }, [footballData, isInBetslip]);
 
   const handleScroll = useCallback(() => {
     if (
@@ -164,6 +189,8 @@ export function FootballSection({ onBetClick, isInBetslip }: FootballSectionProp
               formatMatchTime={formatMatchTime}
               getOdds={getOdds}
               isInBetslip={isInBetslip}
+              selectedOdds={selectedOdds}
+              setSelectedOdds={setSelectedOdds}
             />
           ))}
         </div>
@@ -183,6 +210,8 @@ export function FootballSection({ onBetClick, isInBetslip }: FootballSectionProp
               formatMatchTime={formatMatchTime}
               getOdds={getOdds}
               isInBetslip={isInBetslip}
+              selectedOdds={selectedOdds}
+              setSelectedOdds={setSelectedOdds}
             />
           ))}
         </div>
