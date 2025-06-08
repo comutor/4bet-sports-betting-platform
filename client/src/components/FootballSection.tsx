@@ -178,6 +178,7 @@ export function FootballSection({ onBetClick, isInBetslip }: FootballSectionProp
               formatMatchTime={formatMatchTime}
               getOdds={getOdds}
               isInBetslip={isInBetslip}
+              setMoreMarketsModal={setMoreMarketsModal}
             />
           ))}
         </div>
@@ -197,6 +198,7 @@ export function FootballSection({ onBetClick, isInBetslip }: FootballSectionProp
               formatMatchTime={formatMatchTime}
               getOdds={getOdds}
               isInBetslip={isInBetslip}
+              setMoreMarketsModal={setMoreMarketsModal}
             />
           ))}
         </div>
@@ -227,6 +229,16 @@ export function FootballSection({ onBetClick, isInBetslip }: FootballSectionProp
           <p className="text-gray-500">All countries loaded</p>
         </div>
       )}
+
+      {/* More Markets Modal */}
+      <MoreMarketsModal
+        isOpen={moreMarketsModal.isOpen}
+        onClose={() => setMoreMarketsModal({ ...moreMarketsModal, isOpen: false })}
+        eventName={moreMarketsModal.eventName}
+        homeTeam={moreMarketsModal.homeTeam}
+        awayTeam={moreMarketsModal.awayTeam}
+        onBetClick={onBetClick}
+      />
     </div>
   );
 }
@@ -237,14 +249,16 @@ interface CountrySectionProps {
   formatMatchTime: (time: string) => string;
   getOdds: (game: FootballGame) => { home: string; draw: string; away: string };
   isInBetslip?: (eventName: string, selection: string) => boolean;
+  setMoreMarketsModal: (modal: { isOpen: boolean; eventName: string; homeTeam: string; awayTeam: string }) => void;
 }
 
 // Individual match component with its own selection state
-function MatchCard({ game, onBetClick, formatMatchTime, getOdds }: { 
+function MatchCard({ game, onBetClick, formatMatchTime, getOdds, setMoreMarketsModal }: { 
   game: FootballGame; 
   onBetClick: (eventName: string, selection: string, odds: string) => void;
   formatMatchTime: (time: string) => string;
   getOdds: (game: FootballGame) => { home: string; draw: string; away: string };
+  setMoreMarketsModal: (modal: { isOpen: boolean; eventName: string; homeTeam: string; awayTeam: string }) => void;
 }) {
   const [selected, setSelected] = useState<string | null>(() => {
     const saved = localStorage.getItem(`match_${game.id}`);
@@ -329,7 +343,7 @@ function MatchCard({ game, onBetClick, formatMatchTime, getOdds }: {
   );
 }
 
-function CountrySection({ countryData, onBetClick, formatMatchTime, getOdds, isInBetslip }: CountrySectionProps) {
+function CountrySection({ countryData, onBetClick, formatMatchTime, getOdds, isInBetslip, setMoreMarketsModal }: CountrySectionProps) {
   const [expanded, setExpanded] = useState(true);
 
   return (
@@ -357,6 +371,7 @@ function CountrySection({ countryData, onBetClick, formatMatchTime, getOdds, isI
               onBetClick={onBetClick}
               formatMatchTime={formatMatchTime}
               getOdds={getOdds}
+              setMoreMarketsModal={setMoreMarketsModal}
             />
           ))}
           
