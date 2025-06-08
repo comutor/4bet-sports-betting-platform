@@ -153,6 +153,13 @@
     scrollbar-color: #475569 #1e293b;
   }
 
+  /* Odds button selection styles */
+  .odd-btn.selected {
+    background-color: #3b82f6 !important;
+    border-color: #2563eb !important;
+    color: white !important;
+  }
+
   /* Odds button highlighting - Simple class-based approach */
   .odd {
     border: 1px solid #475569;
