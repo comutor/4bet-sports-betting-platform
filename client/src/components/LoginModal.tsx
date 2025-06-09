@@ -7,9 +7,10 @@ interface LoginModalProps {
   isOpen: boolean;
   onClose: () => void;
   onSuccess: (userData?: any) => void;
+  onSignupClick?: () => void;
 }
 
-export function LoginModal({ isOpen, onClose, onSuccess }: LoginModalProps) {
+export function LoginModal({ isOpen, onClose, onSuccess, onSignupClick }: LoginModalProps) {
   const [formData, setFormData] = useState({
     country: 'South Sudan',
     phoneNumber: '',
@@ -188,7 +189,9 @@ export function LoginModal({ isOpen, onClose, onSuccess }: LoginModalProps) {
               className="text-blue-400 hover:text-blue-300"
               onClick={() => {
                 onClose();
-                // This could trigger opening the signup form
+                if (onSignupClick) {
+                  onSignupClick();
+                }
               }}
             >
               Sign up here

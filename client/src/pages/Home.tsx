@@ -331,6 +331,7 @@ export default function Home() {
         isOpen={showLoginModal}
         onClose={handleCloseLoginModal}
         onSuccess={handleLoginSuccess}
+        onSignupClick={handleOpenSignupPage}
       />
     </div>
   );
