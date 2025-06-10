@@ -295,11 +295,11 @@ function MatchCard({ game, onBetClick, formatMatchTime, getOdds, setMoreMarketsM
         </div>
         
         <div className="flex gap-2 items-center">
-          <div className="flex gap-2">
+          <div className="flex gap-2 flex-1 lg:flex-none lg:gap-3">
             <Button
               size="sm"
               variant="outline"
-              className={`min-w-[60px] odd-btn ${selected === 'home' ? 'selected' : ''}`}
+              className={`flex-1 lg:flex-none lg:min-w-[70px] xl:min-w-[80px] odd-btn ${selected === 'home' ? 'selected' : ''}`}
               onClick={() => handleSelect('home', eventName, game.home_team, odds.home)}
             >
               {odds.home}
@@ -307,7 +307,7 @@ function MatchCard({ game, onBetClick, formatMatchTime, getOdds, setMoreMarketsM
             <Button
               size="sm"
               variant="outline"
-              className={`min-w-[60px] odd-btn ${selected === 'draw' ? 'selected' : ''}`}
+              className={`flex-1 lg:flex-none lg:min-w-[70px] xl:min-w-[80px] odd-btn ${selected === 'draw' ? 'selected' : ''}`}
               onClick={() => handleSelect('draw', eventName, "Draw", odds.draw)}
             >
               {odds.draw}
@@ -315,7 +315,7 @@ function MatchCard({ game, onBetClick, formatMatchTime, getOdds, setMoreMarketsM
             <Button
               size="sm"
               variant="outline"
-              className={`min-w-[60px] odd-btn ${selected === 'away' ? 'selected' : ''}`}
+              className={`flex-1 lg:flex-none lg:min-w-[70px] xl:min-w-[80px] odd-btn ${selected === 'away' ? 'selected' : ''}`}
               onClick={() => handleSelect('away', eventName, game.away_team, odds.away)}
             >
               {odds.away}
@@ -325,7 +325,7 @@ function MatchCard({ game, onBetClick, formatMatchTime, getOdds, setMoreMarketsM
           <Button
             size="sm"
             variant="ghost"
-            className="text-blue-400 hover:text-blue-300 hover:bg-blue-500/10 px-2 min-w-[70px]"
+            className="text-blue-400 hover:text-blue-300 hover:bg-blue-500/10 px-3 lg:px-4 xl:px-5 lg:min-w-[80px] xl:min-w-[90px] ml-2"
             onClick={() => {
               setMoreMarketsModal({
                 isOpen: true,
