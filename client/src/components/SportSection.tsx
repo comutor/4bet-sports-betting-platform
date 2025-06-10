@@ -332,11 +332,11 @@ function LeagueSection({ leagueData, onBetClick, formatMatchTime, getOdds, sport
                     </div>
                   </div>
                   
-                  <div className="flex gap-2 ml-4">
+                  <div className="flex gap-2 ml-4 flex-1 lg:gap-3">
                     <Button
                       size="sm"
                       variant="outline"
-                      className="border-gray-600 text-gray-300 hover:bg-primary hover:text-white min-w-[60px]"
+                      className="border-gray-600 text-gray-300 hover:bg-primary hover:text-white flex-1"
                       onClick={() => onBetClick(`${game.home_team} vs ${game.away_team}`, game.home_team, odds.home)}
                     >
                       {odds.home}
@@ -345,7 +345,7 @@ function LeagueSection({ leagueData, onBetClick, formatMatchTime, getOdds, sport
                       <Button
                         size="sm"
                         variant="outline"
-                        className="border-gray-600 text-gray-300 hover:bg-primary hover:text-white min-w-[60px]"
+                        className="border-gray-600 text-gray-300 hover:bg-primary hover:text-white flex-1"
                         onClick={() => onBetClick(`${game.home_team} vs ${game.away_team}`, "Draw", odds.draw!)}
                       >
                         {odds.draw}
@@ -354,7 +354,7 @@ function LeagueSection({ leagueData, onBetClick, formatMatchTime, getOdds, sport
                     <Button
                       size="sm"
                       variant="outline"
-                      className="border-gray-600 text-gray-300 hover:bg-primary hover:text-white min-w-[60px]"
+                      className="border-gray-600 text-gray-300 hover:bg-primary hover:text-white flex-1"
                       onClick={() => onBetClick(`${game.home_team} vs ${game.away_team}`, game.away_team, odds.away)}
                     >
                       {odds.away}
