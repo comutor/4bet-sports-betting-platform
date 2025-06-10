@@ -93,7 +93,7 @@ export function BetslipSidebar({
 
   return (
     <div 
-      className={`fixed top-0 right-0 w-1/2 h-full bg-slate-custom transform transition-transform duration-300 z-50 ${
+      className={`fixed top-0 right-0 w-full lg:w-1/2 h-full bg-slate-custom transform transition-transform duration-300 z-50 ${
         isOpen ? 'translate-x-0' : 'translate-x-full'
       }`}
       onTouchMove={handleTouchMove}

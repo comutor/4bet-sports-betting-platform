@@ -145,7 +145,7 @@ export function SignupPage({ onClose, onSuccess }: SignupPageProps) {
       ></div>
       
       {/* Sliding panel */}
-      <div className="ml-auto bg-slate-custom text-white w-1/2 h-full overflow-y-auto relative z-10 transform transition-transform duration-300 ease-in-out translate-x-0">
+      <div className="ml-auto bg-slate-custom text-white w-full lg:w-1/2 h-full overflow-y-auto relative z-10 transform transition-transform duration-300 ease-in-out translate-x-0">
         {/* Header */}
         <div className="bg-slate-800 p-6 border-b border-gray-700 flex items-center justify-between">
           <h1 className="text-2xl font-bold text-white">
