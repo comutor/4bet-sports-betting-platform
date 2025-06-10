@@ -49,7 +49,7 @@ export function HamburgerMenu({ isOpen, onClose, onTabChange, activeTab }: Hambu
       />
       
       {/* Sidebar Menu */}
-      <div className={`fixed top-0 left-0 h-full w-full bg-slate-custom z-50 transform transition-transform duration-300 ${
+      <div className={`fixed top-0 left-0 h-full w-1/2 bg-slate-custom z-50 transform transition-transform duration-300 ${
         isOpen ? 'translate-x-0' : '-translate-x-full'
       }`}>
         <div className="flex flex-col h-full">
