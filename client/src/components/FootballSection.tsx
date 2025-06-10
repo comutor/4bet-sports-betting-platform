@@ -295,11 +295,11 @@ function MatchCard({ game, onBetClick, formatMatchTime, getOdds, setMoreMarketsM
         </div>
         
         <div className="flex gap-2 items-center">
-          <div className="flex gap-2 flex-1 lg:flex-none lg:gap-3">
+          <div className="flex gap-2 flex-1 lg:gap-3">
             <Button
               size="sm"
               variant="outline"
-              className={`flex-1 lg:flex-none lg:min-w-[70px] xl:min-w-[80px] odd-btn ${selected === 'home' ? 'selected' : ''}`}
+              className={`flex-1 odd-btn ${selected === 'home' ? 'selected' : ''}`}
               onClick={() => handleSelect('home', eventName, game.home_team, odds.home)}
             >
               {odds.home}
@@ -307,7 +307,7 @@ function MatchCard({ game, onBetClick, formatMatchTime, getOdds, setMoreMarketsM
             <Button
               size="sm"
               variant="outline"
-              className={`flex-1 lg:flex-none lg:min-w-[70px] xl:min-w-[80px] odd-btn ${selected === 'draw' ? 'selected' : ''}`}
+              className={`flex-1 odd-btn ${selected === 'draw' ? 'selected' : ''}`}
               onClick={() => handleSelect('draw', eventName, "Draw", odds.draw)}
             >
               {odds.draw}
@@ -315,7 +315,7 @@ function MatchCard({ game, onBetClick, formatMatchTime, getOdds, setMoreMarketsM
             <Button
               size="sm"
               variant="outline"
-              className={`flex-1 lg:flex-none lg:min-w-[70px] xl:min-w-[80px] odd-btn ${selected === 'away' ? 'selected' : ''}`}
+              className={`flex-1 odd-btn ${selected === 'away' ? 'selected' : ''}`}
               onClick={() => handleSelect('away', eventName, game.away_team, odds.away)}
             >
               {odds.away}
