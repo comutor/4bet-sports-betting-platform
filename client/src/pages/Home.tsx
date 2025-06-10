@@ -259,80 +259,80 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-background">
-      <TopNavigation 
-        activeTab={activeTab} 
-        onTabChange={setActiveTab} 
-        userBalance={userBalance}
-        userCountry={userCountry}
-        isLoggedIn={isLoggedIn}
-        isMenuOpen={isMenuOpen}
-        onMenuToggle={() => setIsMenuOpen(!isMenuOpen)}
-        onSignupClick={handleOpenSignupPage}
-        onLoginClick={handleOpenLoginModal}
-        sportsFilter={sportsFilter}
-        onSportsFilterChange={setSportsFilter}
-      />
-      
-
-      
-      <main className="pb-20 md:pb-4">
-        {renderMainContent()}
-      </main>
-
-      <BottomNavigation 
-        activeTab={isMenuOpen ? 'menu' : activeTab} 
-        onTabChange={setActiveTab}
-        onBetslipOpen={() => setBetslipOpen(true)}
-        onMenuOpen={() => setIsMenuOpen(true)}
-        onSignupClick={handleOpenSignupPage}
-        betslipCount={betslipCount}
-        isLoggedIn={isLoggedIn}
-        isMenuOpen={isMenuOpen}
-      />
-
-      <BetslipSidebar 
-        isOpen={betslipOpen}
-        onClose={() => setBetslipOpen(false)}
-        items={betslipItems}
-        onRemoveItem={removeFromBetslip}
-        onUpdateStake={updateStake}
-        onClearBetslip={clearBetslip}
-        totalStake={totalStake}
-        totalPotentialReturn={totalPotentialReturn}
-        isLoggedIn={isLoggedIn}
-        userBalance={parseFloat(userBalance)}
-        onLoginClick={handleOpenLoginModal}
-        onDepositClick={() => {}} // TODO: Implement deposit functionality
-        userCountry={userCountry}
-      />
-
-      <HamburgerMenu 
-        isOpen={isMenuOpen}
-        onClose={() => setIsMenuOpen(false)}
-        onTabChange={setActiveTab}
-        activeTab={activeTab}
-      />
-
-      <LoginPrompt 
-        isOpen={showLoginPrompt}
-        onClose={() => setShowLoginPrompt(false)}
-        onLogin={handleLogin}
-        onSignup={handleSignup}
-      />
-
-      {showSignupPage && (
-        <SignupPage 
-          onClose={handleCloseSignupPage}
-          onSuccess={handleSignupSuccess}
+      <div className="max-w-md mx-auto lg:max-w-lg xl:max-w-xl bg-background min-h-screen relative">
+        <TopNavigation 
+          activeTab={activeTab} 
+          onTabChange={setActiveTab} 
+          userBalance={userBalance}
+          userCountry={userCountry}
+          isLoggedIn={isLoggedIn}
+          isMenuOpen={isMenuOpen}
+          onMenuToggle={() => setIsMenuOpen(!isMenuOpen)}
+          onSignupClick={handleOpenSignupPage}
+          onLoginClick={handleOpenLoginModal}
+          sportsFilter={sportsFilter}
+          onSportsFilterChange={setSportsFilter}
         />
-      )}
+        
+        <main className="pb-20 md:pb-4">
+          {renderMainContent()}
+        </main>
 
-      <LoginModal
-        isOpen={showLoginModal}
-        onClose={handleCloseLoginModal}
-        onSuccess={handleLoginSuccess}
-        onSignupClick={handleOpenSignupPage}
-      />
+        <BottomNavigation 
+          activeTab={isMenuOpen ? 'menu' : activeTab} 
+          onTabChange={setActiveTab}
+          onBetslipOpen={() => setBetslipOpen(true)}
+          onMenuOpen={() => setIsMenuOpen(true)}
+          onSignupClick={handleOpenSignupPage}
+          betslipCount={betslipCount}
+          isLoggedIn={isLoggedIn}
+          isMenuOpen={isMenuOpen}
+        />
+
+        <BetslipSidebar 
+          isOpen={betslipOpen}
+          onClose={() => setBetslipOpen(false)}
+          items={betslipItems}
+          onRemoveItem={removeFromBetslip}
+          onUpdateStake={updateStake}
+          onClearBetslip={clearBetslip}
+          totalStake={totalStake}
+          totalPotentialReturn={totalPotentialReturn}
+          isLoggedIn={isLoggedIn}
+          userBalance={parseFloat(userBalance)}
+          onLoginClick={handleOpenLoginModal}
+          onDepositClick={() => {}} // TODO: Implement deposit functionality
+          userCountry={userCountry}
+        />
+
+        <HamburgerMenu 
+          isOpen={isMenuOpen}
+          onClose={() => setIsMenuOpen(false)}
+          onTabChange={setActiveTab}
+          activeTab={activeTab}
+        />
+
+        <LoginPrompt 
+          isOpen={showLoginPrompt}
+          onClose={() => setShowLoginPrompt(false)}
+          onLogin={handleLogin}
+          onSignup={handleSignup}
+        />
+
+        {showSignupPage && (
+          <SignupPage 
+            onClose={handleCloseSignupPage}
+            onSuccess={handleSignupSuccess}
+          />
+        )}
+
+        <LoginModal
+          isOpen={showLoginModal}
+          onClose={handleCloseLoginModal}
+          onSuccess={handleLoginSuccess}
+          onSignupClick={handleOpenSignupPage}
+        />
+      </div>
     </div>
   );
 }
