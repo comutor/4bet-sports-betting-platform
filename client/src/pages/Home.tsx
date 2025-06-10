@@ -259,7 +259,7 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-background">
-      <div className="max-w-md mx-auto lg:max-w-2xl xl:max-w-4xl bg-background min-h-screen relative px-4">
+      <div className="mx-auto lg:max-w-2xl xl:max-w-4xl bg-background min-h-screen relative px-4">
         <TopNavigation 
           activeTab={activeTab} 
           onTabChange={setActiveTab} 
