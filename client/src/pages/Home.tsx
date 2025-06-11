@@ -184,6 +184,7 @@ export default function Home() {
   const handleDepositSuccess = (amount: number) => {
     const currentBalance = parseFloat(userBalance.replace(/,/g, ''));
     const newBalance = currentBalance + amount;
+    console.log('Deposit success:', { currentBalance, amount, newBalance });
     setUserBalance(newBalance.toLocaleString());
     setShowDepositModal(false);
   };
@@ -325,7 +326,7 @@ export default function Home() {
           totalStake={totalStake}
           totalPotentialReturn={totalPotentialReturn}
           isLoggedIn={isLoggedIn}
-          userBalance={parseFloat(userBalance)}
+          userBalance={parseFloat(userBalance.replace(/,/g, ''))}
           onLoginClick={handleOpenLoginModal}
           onDepositClick={handleOpenDepositModal}
           onPlaceBet={handlePlaceBet}

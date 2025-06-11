@@ -37,7 +37,7 @@ export function BetslipSidebar({
   userCountry
 }: BetslipSidebarProps) {
   const [betType, setBetType] = useState<'single' | 'accumulator'>('accumulator');
-  const [accumulatorStake, setAccumulatorStake] = useState(100);
+  const [accumulatorStake, setAccumulatorStake] = useState(0);
 
   const getCurrency = () => {
     return userCountry === 'Uganda' ? 'UGX' : 'SSP';
