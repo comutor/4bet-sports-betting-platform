@@ -328,6 +328,7 @@ export default function Home() {
           userBalance={parseFloat(userBalance)}
           onLoginClick={handleOpenLoginModal}
           onDepositClick={handleOpenDepositModal}
+          onPlaceBet={handlePlaceBet}
           userCountry={userCountry}
         />
 
