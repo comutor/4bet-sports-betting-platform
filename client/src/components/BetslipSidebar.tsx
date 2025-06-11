@@ -235,11 +235,12 @@ export function BetslipSidebar({
                   <span className="font-bold">{item.odds}</span>
                   <Input
                     type="number"
-                    value={item.stake}
-                    onChange={(e) => onUpdateStake(item.id, parseFloat(e.target.value) || 0)}
+                    value={item.stake === 0 ? '' : item.stake}
+                    onChange={(e) => onUpdateStake(item.id, e.target.value === '' ? 0 : parseFloat(e.target.value) || 0)}
                     className="bg-slate-custom w-16 text-center py-1 px-2"
                     min="0"
-                    step="0.01"
+                    step="1"
+                    placeholder="0"
                   />
                 </div>
                 <div className="text-right text-sm text-success mt-1">
@@ -286,11 +287,12 @@ export function BetslipSidebar({
                   <span className="text-sm">Stake:</span>
                   <Input
                     type="number"
-                    value={accumulatorStake}
-                    onChange={(e) => setAccumulatorStake(parseFloat(e.target.value) || 0)}
+                    value={accumulatorStake === 0 ? '' : accumulatorStake}
+                    onChange={(e) => setAccumulatorStake(e.target.value === '' ? 0 : parseFloat(e.target.value) || 0)}
                     className="bg-slate-custom w-24 text-center py-1 px-2"
                     min="0"
                     step="1"
+                    placeholder="0"
                   />
                 </div>
                 <div className="text-right text-lg text-success mt-2">
