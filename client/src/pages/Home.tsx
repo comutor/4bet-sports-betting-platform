@@ -22,6 +22,7 @@ import { QuickAccessBoxes } from "@/components/QuickAccessBoxes";
 import { WelcomeBanner } from "@/components/WelcomeBanner";
 import { MyBetsSection } from "@/components/MyBetsSection";
 import { SettingsSection } from "@/components/SettingsSection";
+import { DepositModal } from "@/components/DepositModal";
 import { useBetslip } from "@/hooks/useBetslip";
 import { sampleFeaturedEvents } from "@/lib/betting-data";
 import { Button } from "@/components/ui/button";
@@ -36,6 +37,7 @@ export default function Home() {
   const [showLoginPrompt, setShowLoginPrompt] = useState(false);
   const [showSignupPage, setShowSignupPage] = useState(false);
   const [showLoginModal, setShowLoginModal] = useState(false);
+  const [showDepositModal, setShowDepositModal] = useState(false);
   const [sportsFilter, setSportsFilter] = useState<'upcoming' | 'popular' | 'live'>('upcoming');
   const {
     items: betslipItems,
@@ -174,6 +176,17 @@ export default function Home() {
     }
   };
 
+  const handleOpenDepositModal = () => {
+    setShowDepositModal(true);
+  };
+
+  const handleDepositSuccess = (amount: number) => {
+    const currentBalance = parseFloat(userBalance.replace(/,/g, ''));
+    const newBalance = currentBalance + amount;
+    setUserBalance(newBalance.toLocaleString());
+    setShowDepositModal(false);
+  };
+
   const renderMainContent = () => {
     switch (activeTab) {
       case 'home':
@@ -301,7 +314,7 @@ export default function Home() {
           isLoggedIn={isLoggedIn}
           userBalance={parseFloat(userBalance)}
           onLoginClick={handleOpenLoginModal}
-          onDepositClick={() => {}} // TODO: Implement deposit functionality
+          onDepositClick={handleOpenDepositModal}
           userCountry={userCountry}
         />
 
@@ -331,6 +344,14 @@ export default function Home() {
           onClose={handleCloseLoginModal}
           onSuccess={handleLoginSuccess}
           onSignupClick={handleOpenSignupPage}
+        />
+
+        <DepositModal
+          isOpen={showDepositModal}
+          onClose={() => setShowDepositModal(false)}
+          userCountry={userCountry}
+          currentBalance={userBalance}
+          onDepositSuccess={handleDepositSuccess}
         />
       </div>
     </div>
