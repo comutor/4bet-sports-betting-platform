@@ -284,6 +284,7 @@ export default function Home() {
           onMenuToggle={() => setIsMenuOpen(!isMenuOpen)}
           onSignupClick={handleOpenSignupPage}
           onLoginClick={handleOpenLoginModal}
+          onDepositClick={handleOpenDepositModal}
           sportsFilter={sportsFilter}
           onSportsFilterChange={setSportsFilter}
         />

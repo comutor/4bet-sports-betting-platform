@@ -13,11 +13,12 @@ interface TopNavigationProps {
   onMenuToggle?: () => void;
   onSignupClick?: () => void;
   onLoginClick?: () => void;
+  onDepositClick?: () => void;
   sportsFilter?: 'upcoming' | 'popular' | 'live';
   onSportsFilterChange?: (filter: 'upcoming' | 'popular' | 'live') => void;
 }
 
-export function TopNavigation({ activeTab, onTabChange, userBalance, userCountry, isLoggedIn = false, isMenuOpen = false, onMenuToggle, onSignupClick, onLoginClick, sportsFilter = 'upcoming', onSportsFilterChange }: TopNavigationProps) {
+export function TopNavigation({ activeTab, onTabChange, userBalance, userCountry, isLoggedIn = false, isMenuOpen = false, onMenuToggle, onSignupClick, onLoginClick, onDepositClick, sportsFilter = 'upcoming', onSportsFilterChange }: TopNavigationProps) {
   const [isServicesDropdownOpen, setIsServicesDropdownOpen] = useState(false);
   const [isDateDropdownOpen, setIsDateDropdownOpen] = useState(false);
   const [isSportDropdownOpen, setIsSportDropdownOpen] = useState(false);
@@ -96,11 +97,17 @@ export function TopNavigation({ activeTab, onTabChange, userBalance, userCountry
             
             {isLoggedIn ? (
               <>
-                <div className="flex items-center bg-gradient-to-r from-blue-600/20 to-emerald-600/20 border border-blue-500/30 rounded-lg px-2 md:px-3 py-1 md:py-2">
+                <div 
+                  className="flex items-center bg-gradient-to-r from-blue-600/20 to-emerald-600/20 border border-blue-500/30 rounded-lg px-2 md:px-3 py-1 md:py-2 cursor-pointer hover:bg-gradient-to-r hover:from-blue-600/30 hover:to-emerald-600/30 transition-all duration-200"
+                  onClick={onDepositClick}
+                >
                   <i className="fas fa-wallet bg-gradient-to-r from-blue-400 to-emerald-400 bg-clip-text text-transparent mr-1 md:mr-2 text-sm md:text-base"></i>
                   <span className="font-bold text-sm md:text-base bg-gradient-to-r from-blue-400 to-emerald-400 bg-clip-text text-transparent">{getCurrencyDisplay(userBalance, userCountry)}</span>
                 </div>
-                <Button className="bg-primary hover:bg-primary-blue-dark font-bold text-sm md:text-base px-2 md:px-4 py-1 md:py-2">
+                <Button 
+                  className="bg-primary hover:bg-primary-blue-dark font-bold text-sm md:text-base px-2 md:px-4 py-1 md:py-2"
+                  onClick={onDepositClick}
+                >
                   Deposit
                 </Button>
               </>
