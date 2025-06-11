@@ -96,7 +96,30 @@ export function BetslipSidebar({
       };
     }
 
+    const minimumStake = 100;
     const requiredBalance = betType === 'single' ? totalStake : accumulatorStake;
+    
+    // Check minimum stake requirement
+    if (betType === 'single') {
+      const hasInvalidStake = items.some(item => item.stake < minimumStake);
+      if (hasInvalidStake) {
+        return {
+          text: `MINIMUM STAKE IS ${getCurrency()} ${minimumStake}`,
+          onClick: () => {},
+          className: "w-full bg-gray-600 cursor-not-allowed font-bold"
+        };
+      }
+    } else {
+      if (accumulatorStake < minimumStake) {
+        return {
+          text: `MINIMUM STAKE IS ${getCurrency()} ${minimumStake}`,
+          onClick: () => {},
+          className: "w-full bg-gray-600 cursor-not-allowed font-bold"
+        };
+      }
+    }
+
+    // Check sufficient balance
     if (userBalance < requiredBalance) {
       return {
         text: "DEPOSIT TO PLACE YOUR BET",
