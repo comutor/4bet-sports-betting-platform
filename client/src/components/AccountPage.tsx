@@ -7,10 +7,11 @@ interface AccountPageProps {
   onLoginClick?: () => void;
   onLogout?: () => void;
   onSettingsClick?: () => void;
+  onDepositClick?: () => void;
   userData?: any;
 }
 
-export function AccountPage({ isLoggedIn = false, onClose, onSignupClick, onLoginClick, onLogout, onSettingsClick, userData }: AccountPageProps) {
+export function AccountPage({ isLoggedIn = false, onClose, onSignupClick, onLoginClick, onLogout, onSettingsClick, onDepositClick, userData }: AccountPageProps) {
   const menuItems = [
     { id: 'deposit', label: 'Deposit', icon: 'fas fa-credit-card' }
   ];
@@ -59,7 +60,10 @@ export function AccountPage({ isLoggedIn = false, onClose, onSignupClick, onLogi
             </div>
           ) : (
             <div className="grid grid-cols-2 gap-3">
-              <Button className="bg-primary hover:bg-primary/90 text-white font-bold py-4">
+              <Button 
+                className="bg-primary hover:bg-primary/90 text-white font-bold py-4"
+                onClick={onDepositClick}
+              >
                 DEPOSIT
               </Button>
               <Button variant="outline" className="border-gray-400 text-gray-300 hover:bg-slate-700 font-bold py-4">
@@ -76,6 +80,11 @@ export function AccountPage({ isLoggedIn = false, onClose, onSignupClick, onLogi
               key={item.id}
               variant="ghost"
               className="w-full justify-between p-4 text-left text-gray-300 hover:bg-slate-light-custom transition-all duration-200 rounded-xl border border-slate-600 hover:border-slate-500"
+              onClick={() => {
+                if (item.id === 'deposit' && onDepositClick) {
+                  onDepositClick();
+                }
+              }}
             >
               <div className="flex items-center">
                 <i className={`${item.icon} w-5 mr-3 text-gray-400`}></i>
