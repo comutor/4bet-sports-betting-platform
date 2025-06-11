@@ -16,6 +16,7 @@ interface BetslipSidebarProps {
   userBalance: number;
   onLoginClick: () => void;
   onDepositClick: () => void;
+  onPlaceBet: (betData: any) => void;
   userCountry?: string;
 }
 
@@ -32,6 +33,7 @@ export function BetslipSidebar({
   userBalance,
   onLoginClick,
   onDepositClick,
+  onPlaceBet,
   userCountry
 }: BetslipSidebarProps) {
   const [betType, setBetType] = useState<'single' | 'accumulator'>('accumulator');
@@ -44,6 +46,45 @@ export function BetslipSidebar({
   // Calculate accumulator odds (multiply all odds together)
   const accumulatorOdds = items.reduce((total, item) => total * parseFloat(item.odds), 1);
   const accumulatorReturn = accumulatorStake * accumulatorOdds;
+
+  const handlePlaceBet = () => {
+    if (betType === 'single') {
+      // Place individual single bets
+      items.forEach(item => {
+        const betData = {
+          id: Date.now() + Math.random(), // Generate unique ID
+          eventName: item.eventName,
+          selection: item.selection,
+          odds: parseFloat(item.odds),
+          stake: item.stake,
+          potentialReturn: item.stake * parseFloat(item.odds),
+          type: 'single',
+          status: 'pending',
+          placedAt: new Date().toISOString()
+        };
+        onPlaceBet(betData);
+      });
+    } else {
+      // Place accumulator bet
+      const betData = {
+        id: Date.now() + Math.random(),
+        eventName: `Accumulator (${items.length} selections)`,
+        selection: items.map(item => `${item.eventName}: ${item.selection}`).join(', '),
+        odds: accumulatorOdds,
+        stake: accumulatorStake,
+        potentialReturn: accumulatorReturn,
+        type: 'accumulator',
+        status: 'pending',
+        placedAt: new Date().toISOString(),
+        selections: items
+      };
+      onPlaceBet(betData);
+    }
+    
+    // Clear betslip and close after placing bet
+    onClearBetslip();
+    onClose();
+  };
 
   // Determine button state and text
   const getButtonConfig = () => {
@@ -68,8 +109,8 @@ export function BetslipSidebar({
       text: betType === 'single' 
         ? `Place ${items.length} Single Bet${items.length > 1 ? 's' : ''}`
         : "Place Accumulator",
-      onClick: () => {}, // Actual bet placement logic
-      className: "w-full bg-primary hover:bg-primary-blue-dark font-bold"
+      onClick: handlePlaceBet,
+      className: "w-full bg-success hover:bg-success/90 font-bold"
     };
   };
 

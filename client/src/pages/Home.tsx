@@ -38,6 +38,7 @@ export default function Home() {
   const [showSignupPage, setShowSignupPage] = useState(false);
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [showDepositModal, setShowDepositModal] = useState(false);
+  const [placedBets, setPlacedBets] = useState<any[]>([]);
   const [sportsFilter, setSportsFilter] = useState<'upcoming' | 'popular' | 'live'>('upcoming');
   const {
     items: betslipItems,
@@ -185,6 +186,16 @@ export default function Home() {
     const newBalance = currentBalance + amount;
     setUserBalance(newBalance.toLocaleString());
     setShowDepositModal(false);
+  };
+
+  const handlePlaceBet = (betData: any) => {
+    // Add bet to placed bets list
+    setPlacedBets(prev => [...prev, betData]);
+    
+    // Deduct stake from user balance
+    const currentBalance = parseFloat(userBalance.replace(/,/g, ''));
+    const newBalance = currentBalance - betData.stake;
+    setUserBalance(newBalance.toLocaleString());
   };
 
   const renderMainContent = () => {
