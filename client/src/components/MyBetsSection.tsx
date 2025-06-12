@@ -30,9 +30,22 @@ export function MyBetsSection({ userId, userCountry, placedBets = [] }: MyBetsSe
   const [bets, setBets] = useState<UserBet[]>([]);
   const [loading, setLoading] = useState(true);
   const [activeFilter, setActiveFilter] = useState<'all' | 'pending' | 'won' | 'lost'>('all');
+  const [expandedBets, setExpandedBets] = useState<Set<number>>(new Set());
   
   const getCurrency = () => {
     return userCountry === 'Uganda' ? 'UGX' : 'SSP';
+  };
+
+  const toggleBetExpansion = (betId: number) => {
+    setExpandedBets(prev => {
+      const newSet = new Set(prev);
+      if (newSet.has(betId)) {
+        newSet.delete(betId);
+      } else {
+        newSet.add(betId);
+      }
+      return newSet;
+    });
   };
 
   useEffect(() => {

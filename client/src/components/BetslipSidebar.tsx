@@ -1,7 +1,15 @@
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { BetslipItem } from "@/hooks/useBetslip";
-import { useState, useEffect } from "react";
+import { useState, useEffect } from 'react';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+
+export interface BetslipItem {
+  id: string;
+  eventName: string;
+  selection: string;
+  odds: string;
+  stake: number;
+  potentialReturn: number;
+}
 
 interface BetslipSidebarProps {
   isOpen: boolean;
@@ -38,7 +46,6 @@ export function BetslipSidebar({
 }: BetslipSidebarProps) {
   const [betType, setBetType] = useState<'single' | 'accumulator'>('accumulator');
   const [accumulatorStake, setAccumulatorStake] = useState(0);
-  const [isExpanded, setIsExpanded] = useState(false);
 
   const getCurrency = () => {
     return userCountry === 'Uganda' ? 'UGX' : 'SSP';
@@ -164,127 +171,61 @@ export function BetslipSidebar({
       onTouchMove={handleTouchMove}
     >
       <div className="p-6 h-full flex flex-col">
-        {/* Betslip Header - Always Visible */}
-        <div 
-          className="flex items-center justify-between mb-6 cursor-pointer"
-          onClick={() => setIsExpanded(!isExpanded)}
-        >
+        <div className="flex items-center justify-between mb-6">
+          <h3 className="text-xl font-bold">Betslip</h3>
           <div className="flex items-center space-x-2">
-            <h3 className="text-xl font-bold">Betslip</h3>
             {items.length > 0 && (
-              <span className="bg-primary text-white text-xs px-2 py-1 rounded-full">
-                {items.length}
-              </span>
-            )}
-          </div>
-          <div className="flex items-center space-x-2">
-            {items.length > 0 && isExpanded && (
               <Button 
                 variant="outline" 
                 size="sm" 
-                onClick={(e) => {
-                  e.stopPropagation();
-                  onClearBetslip();
-                }}
+                onClick={onClearBetslip}
                 className="border-gray-600 text-gray-300 hover:bg-slate-light-custom text-xs px-2 py-1"
               >
                 Clear
               </Button>
             )}
-            <Button 
-              variant="ghost" 
-              size="sm" 
-              onClick={(e) => {
-                e.stopPropagation();
-                onClose();
-              }}
-            >
+            <Button variant="ghost" size="sm" onClick={onClose}>
               <i className="fas fa-times"></i>
             </Button>
-            {items.length > 0 && (
-              <Button variant="ghost" size="sm">
-                <i className={`fas fa-chevron-${isExpanded ? 'up' : 'down'} transition-transform`}></i>
-              </Button>
-            )}
           </div>
         </div>
 
-        {/* Collapsed Summary View */}
-        {!isExpanded && items.length > 0 && (
-          <div className="mb-4">
-            <div className="bg-slate-light-custom rounded-lg p-4">
-              <div className="flex items-center justify-between mb-2">
-                <span className="text-sm text-gray-400">
-                  {betType === 'single' ? `${items.length} Single Bet${items.length > 1 ? 's' : ''}` : 'Accumulator'}
-                </span>
-                <span className="text-sm font-bold">
-                  {betType === 'single' ? 
-                    `${getCurrency()} ${totalStake.toFixed(0)}` : 
-                    `${getCurrency()} ${accumulatorStake}`
-                  }
-                </span>
-              </div>
-              <div className="flex items-center justify-between">
-                <span className="text-sm text-gray-400">Potential Return:</span>
-                <span className="font-bold text-success">
-                  {betType === 'single' ? 
-                    `${getCurrency()} ${totalPotentialReturn.toFixed(0)}` : 
-                    `${getCurrency()} ${accumulatorReturn.toFixed(0)}`
-                  }
-                </span>
-              </div>
-              <div className="mt-3 text-center">
-                <Button 
-                  className={getButtonConfig().className}
-                  onClick={getButtonConfig().onClick}
-                  size="sm"
-                >
-                  {getButtonConfig().text}
-                </Button>
-              </div>
-            </div>
+        {/* Bet Type Selection */}
+        {items.length > 1 && (
+          <div className="flex mb-4 bg-slate-light-custom rounded-lg p-1">
+            <button
+              onClick={() => setBetType('single')}
+              className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-colors ${
+                betType === 'single'
+                  ? 'bg-primary text-white'
+                  : 'text-gray-400 hover:text-white'
+              }`}
+            >
+              Single Bets
+            </button>
+            <button
+              onClick={() => setBetType('accumulator')}
+              className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-colors ${
+                betType === 'accumulator'
+                  ? 'bg-primary text-white'
+                  : 'text-gray-400 hover:text-white'
+              }`}
+            >
+              Accumulator
+            </button>
           </div>
         )}
-
-        {/* Expanded Content - Only shown when expanded */}
-        {isExpanded && (
-          <>
-            {/* Bet Type Selection */}
-            {items.length > 1 && (
-              <div className="flex mb-4 bg-slate-light-custom rounded-lg p-1">
-                <button
-                  onClick={() => setBetType('single')}
-                  className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-colors ${
-                    betType === 'single'
-                      ? 'bg-primary text-white'
-                      : 'text-gray-400 hover:text-white'
-                  }`}
-                >
-                  Single Bets
-                </button>
-                <button
-                  onClick={() => setBetType('accumulator')}
-                  className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-colors ${
-                    betType === 'accumulator'
-                      ? 'bg-primary text-white'
-                      : 'text-gray-400 hover:text-white'
-                  }`}
-                >
-                  Accumulator
-                </button>
-              </div>
-            )}
         
-            {/* Betslip Items */}
-            <div className="flex-1 overflow-y-auto space-y-4 mb-6 overscroll-contain" style={{ WebkitOverflowScrolling: 'touch' }}>
-              {items.length === 0 ? (
-                <div className="text-center text-gray-400 py-8">
-                  <i className="fas fa-receipt text-4xl mb-4"></i>
-                  <p>Your betslip is empty</p>
-                  <p className="text-sm">Add some bets to get started!</p>
-                </div>
-              ) : betType === 'single' ? (
-                items.map((item) => (
+        {/* Betslip Items */}
+        <div className="flex-1 overflow-y-auto space-y-4 mb-6 overscroll-contain" style={{ WebkitOverflowScrolling: 'touch' }}>
+          {items.length === 0 ? (
+            <div className="text-center text-gray-400 py-8">
+              <i className="fas fa-receipt text-4xl mb-4"></i>
+              <p>Your betslip is empty</p>
+              <p className="text-sm">Add some bets to get started!</p>
+            </div>
+          ) : betType === 'single' ? (
+            items.map((item) => (
               <div key={item.id} className="bg-slate-light-custom rounded-lg p-4">
                 <div className="flex items-center justify-between mb-2">
                   <span className="font-medium text-sm">{item.eventName}</span>
@@ -415,8 +356,6 @@ export function BetslipSidebar({
               </>
             )}
           </div>
-        )}
-          </>
         )}
       </div>
     </div>
