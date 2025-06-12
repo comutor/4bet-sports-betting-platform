@@ -4,9 +4,10 @@ import { Loader2 } from "lucide-react";
 
 interface FeaturedEventsProps {
   onBetClick: (eventName: string, selection: string, odds: string) => void;
+  onTabChange?: (tab: string) => void;
 }
 
-export function FeaturedEvents({ onBetClick }: FeaturedEventsProps) {
+export function FeaturedEvents({ onBetClick, onTabChange }: FeaturedEventsProps) {
   const { data: footballData, isLoading: footballLoading } = useQuery({
     queryKey: ['/api/football/matches'],
   });
@@ -142,7 +143,18 @@ export function FeaturedEvents({ onBetClick }: FeaturedEventsProps) {
           <Button 
             variant="outline" 
             className="text-primary border-primary hover:bg-primary hover:text-white"
-            onClick={() => {/* Navigate to sport section */}}
+            onClick={() => {
+              const navigationMap: { [key: string]: string } = {
+                'football': 'football',
+                'basketball': 'basketball',
+                'tennis': 'tennis',
+                'live': 'live'
+              };
+              const targetTab = navigationMap[sportType];
+              if (targetTab) {
+                onTabChange?.(targetTab);
+              }
+            }}
           >
             View All ({totalMatches})
           </Button>

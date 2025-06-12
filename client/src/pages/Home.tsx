@@ -218,7 +218,7 @@ export default function Home() {
               }}
             />
 
-            <FeaturedEvents onBetClick={handleBetClick} />
+            <FeaturedEvents onBetClick={handleBetClick} onTabChange={setActiveTab} />
           </>
         );
       case 'sports':
