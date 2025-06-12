@@ -147,7 +147,9 @@ export function SportsOverview({ onBetClick, activeFilter, onTabChange }: Sports
           <Button 
             variant="outline" 
             className="border-gray-600 text-gray-300 hover:bg-slate-light-custom hover:text-white"
-            onClick={() => {
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
               if (activeFilter === 'live') {
                 onTabChange?.('live');
               } else if (activeFilter === 'upcoming') {

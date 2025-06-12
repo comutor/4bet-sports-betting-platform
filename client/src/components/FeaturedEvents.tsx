@@ -143,7 +143,9 @@ export function FeaturedEvents({ onBetClick, onTabChange }: FeaturedEventsProps)
           <Button 
             variant="outline" 
             className="text-primary border-primary hover:bg-primary hover:text-white"
-            onClick={() => {
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
               const navigationMap: { [key: string]: string } = {
                 'football': 'football',
                 'basketball': 'basketball',
@@ -151,8 +153,8 @@ export function FeaturedEvents({ onBetClick, onTabChange }: FeaturedEventsProps)
                 'live': 'live'
               };
               const targetTab = navigationMap[sportType];
-              if (targetTab) {
-                onTabChange?.(targetTab);
+              if (targetTab && onTabChange) {
+                onTabChange(targetTab);
               }
             }}
           >

@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { TopNavigation } from "@/components/TopNavigation";
 import { BottomNavigation } from "@/components/BottomNavigation";
 import { BetslipSidebar } from "@/components/BetslipSidebar";
@@ -77,14 +77,21 @@ export default function Home() {
     checkAuth();
   }, []);
 
-  const handleBetClick = (eventName: string, selection: string, odds: string) => {
+  const handleBetClick = useCallback((eventName: string, selection: string, odds: string) => {
     // Temporarily disabled for betslip development
     // if (!isLoggedIn) {
     //   setShowLoginPrompt(true);
     //   return;
     // }
     addToBetslip({ eventName, selection, odds });
-  };
+  }, [addToBetslip]);
+
+  const handleTabChange = useCallback((tab: string) => {
+    // Small delay to ensure proper state processing
+    setTimeout(() => {
+      setActiveTab(tab);
+    }, 0);
+  }, []);
 
   const handleLogin = () => {
     setIsLoggedIn(true);
@@ -218,11 +225,11 @@ export default function Home() {
               }}
             />
 
-            <FeaturedEvents onBetClick={handleBetClick} onTabChange={setActiveTab} />
+            <FeaturedEvents onBetClick={handleBetClick} onTabChange={handleTabChange} />
           </>
         );
       case 'sports':
-        return <SportsOverview onBetClick={handleBetClick} activeFilter={sportsFilter} onTabChange={setActiveTab} />;
+        return <SportsOverview onBetClick={handleBetClick} activeFilter={sportsFilter} onTabChange={handleTabChange} />;
       case 'football':
         return <FootballSection onBetClick={handleBetClick} isInBetslip={isInBetslip} />;
       case 'basketball':
