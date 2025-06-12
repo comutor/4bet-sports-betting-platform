@@ -129,13 +129,14 @@ export function MyBetsSection({ userId, userCountry, placedBets = [] }: MyBetsSe
 
   return (
     <div className="bg-slate-custom rounded-lg p-6">
-      <div className="flex items-center justify-between mb-6">
-        <h2 className="text-xl font-bold flex items-center">
-          <FileText className="w-5 h-5 mr-2" />
-          My Bets
-        </h2>
-        
-        {/* Filter Buttons */}
+      {/* Title */}
+      <h2 className="text-xl font-bold flex items-center mb-4">
+        <FileText className="w-5 h-5 mr-2" />
+        My Bets
+      </h2>
+      
+      {/* Filter Buttons */}
+      <div className="flex justify-center mb-6">
         <div className="flex bg-slate-light-custom rounded-lg p-1">
           {(Object.keys(filterCounts) as Array<keyof typeof filterCounts>).map((filter) => (
             <button
