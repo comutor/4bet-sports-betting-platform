@@ -222,7 +222,7 @@ export default function Home() {
           </>
         );
       case 'sports':
-        return <SportsOverview onBetClick={handleBetClick} activeFilter={sportsFilter} />;
+        return <SportsOverview onBetClick={handleBetClick} activeFilter={sportsFilter} onTabChange={setActiveTab} />;
       case 'football':
         return <FootballSection onBetClick={handleBetClick} isInBetslip={isInBetslip} />;
       case 'basketball':

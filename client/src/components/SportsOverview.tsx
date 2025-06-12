@@ -19,9 +19,10 @@ interface SportEvent {
 interface SportsOverviewProps {
   onBetClick: (eventName: string, selection: string, odds: string) => void;
   activeFilter: 'upcoming' | 'popular' | 'live';
+  onTabChange?: (tab: string) => void;
 }
 
-export function SportsOverview({ onBetClick, activeFilter }: SportsOverviewProps) {
+export function SportsOverview({ onBetClick, activeFilter, onTabChange }: SportsOverviewProps) {
 
   // Fetch upcoming events
   const { data: upcomingEvents = [], isLoading: loadingUpcoming } = useQuery<SportEvent[]>({
@@ -143,8 +144,20 @@ export function SportsOverview({ onBetClick, activeFilter }: SportsOverviewProps
       {/* View All Button */}
       {currentEvents && currentEvents.length > 5 && (
         <div className="text-center">
-          <Button variant="outline" className="border-gray-600 text-gray-300">
-            View All {activeFilter === 'upcoming' ? 'Upcoming' : 'Live'} Matches
+          <Button 
+            variant="outline" 
+            className="border-gray-600 text-gray-300 hover:bg-slate-light-custom hover:text-white"
+            onClick={() => {
+              if (activeFilter === 'live') {
+                onTabChange?.('live');
+              } else if (activeFilter === 'upcoming') {
+                onTabChange?.('sports');
+              } else {
+                onTabChange?.(activeFilter);
+              }
+            }}
+          >
+            View All {activeFilter === 'upcoming' ? 'Upcoming' : activeFilter === 'live' ? 'Live' : 'Popular'} Matches
           </Button>
         </div>
       )}
