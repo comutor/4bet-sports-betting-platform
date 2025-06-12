@@ -136,13 +136,13 @@ export function MyBetsSection({ userId, userCountry, placedBets = [] }: MyBetsSe
       </h2>
       
       {/* Filter Buttons */}
-      <div className="flex justify-center mb-6">
-        <div className="flex bg-slate-light-custom rounded-lg p-1">
+      <div className="mb-6">
+        <div className="flex bg-slate-light-custom rounded-lg p-2 w-full">
           {(Object.keys(filterCounts) as Array<keyof typeof filterCounts>).map((filter) => (
             <button
               key={filter}
               onClick={() => setActiveFilter(filter)}
-              className={`px-3 py-1 rounded text-sm font-medium transition-colors ${
+              className={`flex-1 py-3 px-4 rounded-md text-base font-medium transition-colors ${
                 activeFilter === filter
                   ? 'bg-primary text-white'
                   : 'text-gray-400 hover:text-white'
@@ -150,7 +150,7 @@ export function MyBetsSection({ userId, userCountry, placedBets = [] }: MyBetsSe
             >
               {filter.charAt(0).toUpperCase() + filter.slice(1)}
               {filterCounts[filter] > 0 && (
-                <span className="ml-1 text-xs">({filterCounts[filter]})</span>
+                <span className="ml-1 text-sm">({filterCounts[filter]})</span>
               )}
             </button>
           ))}
