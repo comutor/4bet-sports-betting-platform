@@ -8,6 +8,7 @@ interface AccountPageProps {
   onLogout?: () => void;
   onSettingsClick?: () => void;
   onDepositClick?: () => void;
+  onWithdrawClick?: () => void;
   userData?: any;
 }
 

@@ -23,6 +23,7 @@ import { WelcomeBanner } from "@/components/WelcomeBanner";
 import { MyBetsSection } from "@/components/MyBetsSection";
 import { SettingsSection } from "@/components/SettingsSection";
 import { DepositModal } from "@/components/DepositModal";
+import { WithdrawalModal } from "@/components/WithdrawalModal";
 import { useBetslip } from "@/hooks/useBetslip";
 import { sampleFeaturedEvents } from "@/lib/betting-data";
 import { Button } from "@/components/ui/button";
@@ -38,6 +39,7 @@ export default function Home() {
   const [showSignupPage, setShowSignupPage] = useState(false);
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [showDepositModal, setShowDepositModal] = useState(false);
+  const [showWithdrawalModal, setShowWithdrawalModal] = useState(false);
   const [placedBets, setPlacedBets] = useState<any[]>([]);
   const [sportsFilter, setSportsFilter] = useState<'upcoming' | 'popular' | 'live'>('upcoming');
   const {
@@ -194,6 +196,18 @@ export default function Home() {
     console.log('Deposit success:', { currentBalance, amount, newBalance });
     setUserBalance(newBalance.toLocaleString());
     setShowDepositModal(false);
+  };
+
+  const handleOpenWithdrawalModal = () => {
+    setShowWithdrawalModal(true);
+  };
+
+  const handleWithdrawalSuccess = (amount: number) => {
+    const currentBalance = parseFloat(userBalance.replace(/,/g, ''));
+    const newBalance = Math.max(0, currentBalance - amount);
+    console.log('Withdrawal success:', { currentBalance, amount, newBalance });
+    setUserBalance(newBalance.toLocaleString());
+    setShowWithdrawalModal(false);
   };
 
   const handlePlaceBet = (betData: any) => {
@@ -374,6 +388,14 @@ export default function Home() {
           userCountry={userCountry}
           currentBalance={userBalance}
           onDepositSuccess={handleDepositSuccess}
+        />
+
+        <WithdrawalModal
+          isOpen={showWithdrawalModal}
+          onClose={() => setShowWithdrawalModal(false)}
+          userCountry={userCountry}
+          currentBalance={userBalance}
+          onWithdrawalSuccess={handleWithdrawalSuccess}
         />
       </div>
     </div>
