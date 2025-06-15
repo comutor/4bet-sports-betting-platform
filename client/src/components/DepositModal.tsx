@@ -14,7 +14,7 @@ interface DepositModalProps {
 export function DepositModal({ isOpen, onClose, userCountry, currentBalance, onDepositSuccess }: DepositModalProps) {
   const [selectedMethod, setSelectedMethod] = useState<string>('mobile-money');
   const [amount, setAmount] = useState<string>('');
-  const [phoneNumber, setPhoneNumber] = useState<string>('');
+
   const [isProcessing, setIsProcessing] = useState(false);
 
   // Prevent body scroll when modal is open
@@ -187,32 +187,12 @@ export function DepositModal({ isOpen, onClose, userCountry, currentBalance, onD
             </div>
           </div>
 
-          {/* Phone Number for Mobile Money */}
-          {selectedMethod === 'mobile-money' && (
-            <div>
-              <Label htmlFor="phone" className="text-white font-medium mb-2 block">
-                Phone Number
-              </Label>
-              <div className="relative">
-                <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400">
-                  {userCountry === 'Uganda' ? '+256' : '+211'}
-                </span>
-                <Input
-                  id="phone"
-                  type="tel"
-                  value={phoneNumber}
-                  onChange={(e) => setPhoneNumber(e.target.value)}
-                  placeholder="7XXXXXXXX"
-                  className="pl-16 bg-slate-700 border-gray-600 text-white placeholder-gray-400"
-                />
-              </div>
-            </div>
-          )}
+
 
           {/* Deposit Button */}
           <Button
             onClick={handleDeposit}
-            disabled={!amount || !selectedMethod || isProcessing || (selectedMethod === 'mobile-money' && !phoneNumber)}
+            disabled={!amount || !selectedMethod || isProcessing}
             className="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3 text-lg"
           >
             {isProcessing ? (
