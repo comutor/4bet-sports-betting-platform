@@ -44,19 +44,7 @@ export function DepositModal({ isOpen, onClose, userCountry, currentBalance, onD
       id: 'mobile-money',
       name: 'Mobile Money',
       icon: '📱',
-      description: userCountry === 'Uganda' ? 'MTN Mobile Money, Airtel Money' : 'Zain Cash, MTN Money'
-    },
-    {
-      id: 'bank-card',
-      name: 'Bank Card',
-      icon: '💳',
-      description: 'Visa, Mastercard'
-    },
-    {
-      id: 'bank-transfer',
-      name: 'Bank Transfer',
-      icon: '🏦',
-      description: 'Direct bank transfer'
+      description: userCountry === 'Uganda' ? 'MTN Mobile Money, Airtel Money' : 'MTN Money'
     }
   ];
 
