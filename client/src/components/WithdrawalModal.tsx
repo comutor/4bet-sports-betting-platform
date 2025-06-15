@@ -57,8 +57,9 @@ export function WithdrawalModal({ isOpen, onClose, userCountry, currentBalance, 
 
   const getMaxWithdrawal = () => {
     const balance = getCurrentBalanceNumber();
-    // Allow withdrawal up to current balance
-    return balance;
+    const maxLimit = userCountry === 'Uganda' ? 7000000 : 5000000;
+    // Return the smaller of balance or maximum limit
+    return Math.min(balance, maxLimit);
   };
 
   const handleWithdrawal = async () => {
@@ -66,9 +67,14 @@ export function WithdrawalModal({ isOpen, onClose, userCountry, currentBalance, 
 
     const withdrawalAmount = parseFloat(amount.replace(',', ''));
     const availableBalance = getCurrentBalanceNumber();
+    const maxWithdrawal = getMaxWithdrawal();
 
-    if (withdrawalAmount > availableBalance) {
-      alert(`Insufficient balance. Maximum withdrawal: ${getCurrency()} ${availableBalance.toLocaleString()}`);
+    if (withdrawalAmount > maxWithdrawal) {
+      if (availableBalance < (userCountry === 'Uganda' ? 7000000 : 5000000)) {
+        alert(`Insufficient balance. Maximum withdrawal: ${getCurrency()} ${availableBalance.toLocaleString()}`);
+      } else {
+        alert(`Maximum withdrawal limit exceeded. Daily limit: ${getCurrency()} ${(userCountry === 'Uganda' ? 7000000 : 5000000).toLocaleString()}`);
+      }
       return;
     }
 
@@ -128,7 +134,10 @@ export function WithdrawalModal({ isOpen, onClose, userCountry, currentBalance, 
             <div className="text-sm text-gray-400">Available Balance</div>
             <div className="text-2xl font-bold text-green-400">{getCurrency()} {currentBalance}</div>
             <div className="text-xs text-gray-400 mt-1">
-              Maximum withdrawal: {getCurrency()} {getCurrentBalanceNumber().toLocaleString()}
+              Maximum withdrawal: {getCurrency()} {getMaxWithdrawal().toLocaleString()}
+            </div>
+            <div className="text-xs text-yellow-400 mt-1">
+              Daily limit: {getCurrency()} {(userCountry === 'Uganda' ? 7000000 : 5000000).toLocaleString()}
             </div>
           </div>
 
@@ -177,7 +186,7 @@ export function WithdrawalModal({ isOpen, onClose, userCountry, currentBalance, 
             <div className="grid grid-cols-3 gap-2">
               {quickAmounts.map((quickAmount) => {
                 const numAmount = parseFloat(quickAmount.replace(',', ''));
-                const isDisabled = numAmount > getCurrentBalanceNumber();
+                const isDisabled = numAmount > getMaxWithdrawal();
                 return (
                   <Button
                     key={quickAmount}
