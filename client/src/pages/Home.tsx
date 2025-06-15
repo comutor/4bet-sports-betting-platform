@@ -279,6 +279,7 @@ export default function Home() {
           onLogout={handleLogout}
           onSettingsClick={() => setActiveTab('settings')}
           onDepositClick={handleOpenDepositModal}
+          onWithdrawClick={handleOpenWithdrawalModal}
           userData={userData}
         />;
       case 'signup':

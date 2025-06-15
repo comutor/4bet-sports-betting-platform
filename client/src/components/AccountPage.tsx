@@ -12,9 +12,10 @@ interface AccountPageProps {
   userData?: any;
 }
 
-export function AccountPage({ isLoggedIn = false, onClose, onSignupClick, onLoginClick, onLogout, onSettingsClick, onDepositClick, userData }: AccountPageProps) {
+export function AccountPage({ isLoggedIn = false, onClose, onSignupClick, onLoginClick, onLogout, onSettingsClick, onDepositClick, onWithdrawClick, userData }: AccountPageProps) {
   const menuItems = [
-    { id: 'deposit', label: 'Deposit', icon: 'fas fa-credit-card' }
+    { id: 'deposit', label: 'Deposit', icon: 'fas fa-credit-card' },
+    { id: 'withdraw', label: 'Withdraw', icon: 'fas fa-money-bill-wave' }
   ];
 
   return (
@@ -67,7 +68,11 @@ export function AccountPage({ isLoggedIn = false, onClose, onSignupClick, onLogi
               >
                 DEPOSIT
               </Button>
-              <Button variant="outline" className="border-gray-400 text-gray-300 hover:bg-slate-700 font-bold py-4">
+              <Button 
+                variant="outline" 
+                className="border-gray-400 text-gray-300 hover:bg-slate-700 font-bold py-4"
+                onClick={onWithdrawClick}
+              >
                 WITHDRAW
               </Button>
             </div>
@@ -84,6 +89,8 @@ export function AccountPage({ isLoggedIn = false, onClose, onSignupClick, onLogi
               onClick={() => {
                 if (item.id === 'deposit' && onDepositClick) {
                   onDepositClick();
+                } else if (item.id === 'withdraw' && onWithdrawClick) {
+                  onWithdrawClick();
                 }
               }}
             >
