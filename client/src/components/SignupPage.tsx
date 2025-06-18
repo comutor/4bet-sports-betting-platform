@@ -34,15 +34,32 @@ export function SignupPage({ onClose, onSuccess }: SignupPageProps) {
 
 
 
+  const validatePhoneNumber = (phoneNumber: string, country: string) => {
+    if (!phoneNumber) return 'Phone number is required';
+    if (phoneNumber.length !== 9) return 'Phone number must be exactly 9 digits';
+    
+    if (country === 'Uganda') {
+      // MTN Uganda: 76, 77, 78, 79
+      // Airtel Uganda: 70, 74, 75
+      const validPrefixes = ['76', '77', '78', '79', '70', '74', '75'];
+      const prefix = phoneNumber.substring(0, 2);
+      
+      if (!validPrefixes.includes(prefix)) {
+        return 'Invalid number. Use MTN (76x, 77x, 78x, 79x) or Airtel (70x, 74x, 75x) numbers';
+      }
+    }
+    
+    return null;
+  };
+
   const validateForm = () => {
     const newErrors: { [key: string]: string } = {};
 
     if (!formData.country) newErrors.country = 'Country is required';
-    if (!formData.phoneNumber) {
-      newErrors.phoneNumber = 'Phone number is required';
-    } else if (formData.phoneNumber.length !== 9) {
-      newErrors.phoneNumber = 'Phone number must be exactly 9 digits';
-    }
+    
+    const phoneError = validatePhoneNumber(formData.phoneNumber, formData.country);
+    if (phoneError) newErrors.phoneNumber = phoneError;
+    
     if (!formData.password) newErrors.password = 'Password is required';
     
     if (!isLogin) {
