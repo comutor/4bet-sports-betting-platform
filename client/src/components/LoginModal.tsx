@@ -54,6 +54,13 @@ export function LoginModal({ isOpen, onClose, onSuccess, onSignupClick }: LoginM
       if (!validPrefixes.includes(prefix)) {
         return 'Invalid number. Use MTN (76x, 77x, 78x, 79x) or Airtel (70x, 74x, 75x) numbers';
       }
+    } else if (country === 'South Sudan') {
+      // South Sudan: 92x prefix
+      const prefix = phoneNumber.substring(0, 2);
+      
+      if (prefix !== '92') {
+        return 'Invalid number. South Sudan numbers must start with 92x';
+      }
     }
     
     return null;
