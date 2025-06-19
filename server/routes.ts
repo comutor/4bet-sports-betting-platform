@@ -497,7 +497,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       });
     } catch (error) {
       console.error("Update balance error:", error);
-      if (error.message === "Insufficient balance") {
+      if (error instanceof Error && error.message === "Insufficient balance") {
         return res.status(400).json({ message: "Insufficient balance" });
       }
       res.status(500).json({ message: "Failed to update balance" });
@@ -566,7 +566,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       });
     } catch (error) {
       console.error("Place bet error:", error);
-      if (error.message === "Insufficient balance") {
+      if (error instanceof Error && error.message === "Insufficient balance") {
         return res.status(400).json({ message: "Insufficient balance" });
       }
       res.status(500).json({ message: "Failed to place bet" });

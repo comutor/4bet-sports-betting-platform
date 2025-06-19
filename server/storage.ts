@@ -556,7 +556,7 @@ export class DatabaseStorage implements IStorage {
       // Clear user's betslip after successful bet placement
       await this.clearBetslip(userId);
 
-      return { bet, newBalance: updatedUser.balance };
+      return { bet, newBalance: updatedUser.balance || '0' };
     });
   }
 
