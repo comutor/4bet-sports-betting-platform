@@ -13,7 +13,7 @@ export function TATAbetsLogo({ size = 'md', className = '' }: TATAbetsLogoProps)
   const config = sizeConfig[size];
 
   return (
-    <div className={`${config.container} ${className} flex items-end logo-container`} 
+    <div className={`${config.container} ${className} flex items-center logo-container`} 
          style={{ gap: config.gap }}>
       {/* Circle letters for "tata" */}
       {['t', 'a', 't', 'a'].map((letter, index) => (
