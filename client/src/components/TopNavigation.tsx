@@ -182,7 +182,7 @@ export function TopNavigation({ activeTab, onTabChange, userBalance, userCountry
                   <Button
                     variant="ghost"
                     size="sm"
-                    className={`flex items-center gap-1.5 px-4 py-1.5 rounded-full font-bold transition-all duration-200 whitespace-nowrap shrink-0 mr-2 ${
+                    className={`flex items-center gap-1.5 px-4 lg:px-8 py-1.5 rounded-full font-bold transition-all duration-200 whitespace-nowrap shrink-0 mr-2 lg:mr-4 ${
                       sportsFilter === 'upcoming'
                         ? 'bg-primary text-white shadow-sm'
                         : 'text-gray-300 hover:bg-slate-light-custom hover:text-white'
@@ -199,7 +199,7 @@ export function TopNavigation({ activeTab, onTabChange, userBalance, userCountry
                   <Button
                     variant="ghost"
                     size="sm"
-                    className={`flex items-center gap-1.5 px-4 py-1.5 rounded-full font-bold transition-all duration-200 whitespace-nowrap shrink-0 mr-2 ${
+                    className={`flex items-center gap-1.5 px-4 lg:px-8 py-1.5 rounded-full font-bold transition-all duration-200 whitespace-nowrap shrink-0 mr-2 lg:mr-4 ${
                       sportsFilter === 'popular'
                         ? 'bg-primary text-white shadow-sm'
                         : 'text-gray-300 hover:bg-slate-light-custom hover:text-white'
@@ -216,7 +216,7 @@ export function TopNavigation({ activeTab, onTabChange, userBalance, userCountry
                   <Button
                     variant="ghost"
                     size="sm"
-                    className={`flex items-center gap-1.5 px-4 py-1.5 rounded-full font-bold transition-all duration-200 whitespace-nowrap shrink-0 mr-2 ${
+                    className={`flex items-center gap-1.5 px-4 lg:px-8 py-1.5 rounded-full font-bold transition-all duration-200 whitespace-nowrap shrink-0 mr-2 lg:mr-4 ${
                       sportsFilter === 'live'
                         ? 'bg-primary text-white shadow-sm'
                         : 'text-gray-300 hover:bg-slate-light-custom hover:text-white'
@@ -240,7 +240,7 @@ export function TopNavigation({ activeTab, onTabChange, userBalance, userCountry
                       key={item.id}
                       variant="ghost"
                       size="sm"
-                      className={`flex items-center gap-1.5 px-4 py-1.5 rounded-full font-bold transition-all duration-200 whitespace-nowrap shrink-0 mr-2 ${
+                      className={`flex items-center gap-1.5 px-4 lg:px-8 py-1.5 rounded-full font-bold transition-all duration-200 whitespace-nowrap shrink-0 mr-2 lg:mr-4 ${
                         activeTab === item.id 
                           ? 'bg-primary text-white shadow-sm' 
                           : 'text-gray-300 hover:bg-slate-light-custom hover:text-white'
@@ -286,27 +286,27 @@ export function TopNavigation({ activeTab, onTabChange, userBalance, userCountry
           
           {/* Sports Filter Dropdowns */}
           {activeTab === 'sports' && (
-            <div className="flex items-center gap-1.5 mt-3 px-2 overflow-x-auto scrollbar-hide">
+            <div className="flex items-center gap-1.5 lg:gap-3 mt-3 px-2 overflow-x-auto scrollbar-hide">
               <div 
-                className="bg-slate-800 border border-gray-600 rounded-md px-2.5 py-1.5 flex items-center gap-1.5 cursor-pointer hover:bg-slate-700 transition-colors whitespace-nowrap shrink-0"
+                className="bg-slate-800 border border-gray-600 rounded-md px-2.5 lg:px-4 py-1.5 flex items-center gap-1.5 cursor-pointer hover:bg-slate-700 transition-colors whitespace-nowrap shrink-0"
                 onClick={() => {
                   setIsServicesDropdownOpen(false); // Close services dropdown
                   setIsSportDropdownOpen(!isSportDropdownOpen);
                 }}
               >
                 <i className="fas fa-futbol text-xs text-gray-300"></i>
-                <span className="text-xs text-gray-300">{selectedSport}</span>
+                <span className="text-xs lg:text-sm text-gray-300">{selectedSport}</span>
                 <i className={`fas fa-chevron-down text-xs text-gray-400 transition-transform ${isSportDropdownOpen ? 'rotate-180' : ''}`}></i>
               </div>
               <div 
-                className="bg-slate-800 border border-gray-600 rounded-md px-2.5 py-1.5 flex items-center gap-1.5 cursor-pointer hover:bg-slate-700 transition-colors whitespace-nowrap shrink-0"
+                className="bg-slate-800 border border-gray-600 rounded-md px-2.5 lg:px-4 py-1.5 flex items-center gap-1.5 cursor-pointer hover:bg-slate-700 transition-colors whitespace-nowrap shrink-0"
                 onClick={() => {
                   setIsServicesDropdownOpen(false); // Close services dropdown
                   setIsLeaguesDropdownOpen(!isLeaguesDropdownOpen);
                 }}
               >
                 <i className="fas fa-trophy text-xs text-gray-300"></i>
-                <span className="text-xs text-gray-300">{selectedLeague}</span>
+                <span className="text-xs lg:text-sm text-gray-300">{selectedLeague}</span>
                 <i className={`fas fa-chevron-down text-xs text-gray-400 transition-transform ${isLeaguesDropdownOpen ? 'rotate-180' : ''}`}></i>
               </div>
               <div 
