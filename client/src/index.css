@@ -241,6 +241,21 @@
       transform: scale(0.95);
     }
   }
+
+  /* Force betslip odds to be white - override any blue inheritance */
+  .betslip-odds, 
+  span.font-bold.text-white,
+  div[class*="betslip"] span.font-bold,
+  div[class*="BetslipSidebar"] span.font-bold,
+  span.betslip-odds {
+    color: #ffffff !important;
+    font-weight: 700 !important;
+  }
+
+  /* Additional override for any primary color inheritance */
+  .betslip-odds {
+    color: white !important;
+  }
   
   /* Light yellow hover effect for logo elements */
   .logo-container:hover .circle-letter {
