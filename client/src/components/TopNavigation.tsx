@@ -101,7 +101,7 @@ export function TopNavigation({ activeTab, onTabChange, userBalance, userCountry
                   <span className="font-bold text-sm md:text-base text-white">{getCurrencyDisplay(userBalance, userCountry)}</span>
                 </div>
                 <Button 
-                  className="bg-transparent border-2 border-white text-black hover:bg-yellow-400 hover:text-black hover:border-yellow-400 transition-all duration-300 hover:scale-105 font-bold text-sm md:text-base px-2 md:px-4 py-1 md:py-2"
+                  className="bg-transparent border-2 border-white text-white hover:bg-yellow-400 hover:text-black hover:border-yellow-400 transition-all duration-300 hover:scale-105 font-bold text-sm md:text-base px-2 md:px-4 py-1 md:py-2"
                   onClick={onDepositClick}
                 >
                   Deposit
@@ -111,7 +111,7 @@ export function TopNavigation({ activeTab, onTabChange, userBalance, userCountry
               <>
                 <Button 
                   variant="outline" 
-                  className="border-2 border-white text-black hover:bg-yellow-400 hover:text-black hover:border-yellow-400 transition-all duration-300 hover:scale-105 font-medium text-sm md:text-base px-2 md:px-3 py-1 md:py-2"
+                  className="border-2 border-white text-white hover:bg-yellow-400 hover:text-black hover:border-yellow-400 transition-all duration-300 hover:scale-105 font-medium text-sm md:text-base px-2 md:px-3 py-1 md:py-2"
                   onClick={onLoginClick}
                 >
                   Login
@@ -461,7 +461,7 @@ export function TopNavigation({ activeTab, onTabChange, userBalance, userCountry
                   <Button
                     key={service.id}
                     variant="ghost"
-                    className={`flex flex-col items-center justify-center p-2 h-14 rounded-lg transition-all duration-200 ${service.color} hover:opacity-80`}
+                    className="flex flex-col items-center justify-center p-2 h-14 rounded-lg transition-all duration-200 bg-slate-700 border border-gray-600 hover:scale-105"
                     onClick={() => {
                       onTabChange(service.id);
                       setIsServicesDropdownOpen(false);

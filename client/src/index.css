@@ -197,9 +197,9 @@
     transform: scale(1.05);
   }
   
-  /* Ensure strong black text by default */
+  /* Ensure strong white text by default */
   button {
-    color: #000000 !important;
+    color: #ffffff !important;
     border-color: #ffffff;
     font-weight: bold !important;
     background-color: transparent;

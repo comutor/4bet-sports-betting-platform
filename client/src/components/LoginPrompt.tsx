@@ -32,7 +32,7 @@ export function LoginPrompt({ isOpen, onClose, onLogin, onSignup }: LoginPromptP
             <Button 
               onClick={onLogin}
               variant="outline" 
-              className="w-full border-2 border-white text-black hover:bg-yellow-400 hover:text-black hover:border-yellow-400 transition-all duration-300 hover:scale-105 font-bold py-3"
+              className="w-full border-2 border-white text-white hover:bg-yellow-400 hover:text-black hover:border-yellow-400 transition-all duration-300 hover:scale-105 font-bold py-3"
             >
               LOG IN
             </Button>
