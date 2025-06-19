@@ -101,6 +101,10 @@ The application uses PostgreSQL with the following core entities:
 ## Changelog
 ```
 Changelog:
+- June 19, 2025. Implemented secure database integration: Added PostgreSQL storage for user balances, bet history, and transaction tracking with balance_transactions table
+- June 19, 2025. Created secure API endpoints: /api/user/balance, /api/user/bets/place, /api/user/transactions for database-backed operations
+- June 19, 2025. Added bet management hooks: usePlaceBet, useBalance, useUpdateBalance for frontend database integration
+- June 19, 2025. Enhanced storage layer: Implemented DatabaseStorage with secure balance management and bet persistence
 - June 19, 2025. Fixed betslip odds styling: Changed odds text from blue to bold white for consistency across single and accumulator bets
 - June 19, 2025. Optimized button responsiveness: Eliminated delayed responses by removing CSS conflicts, faster transitions, and improved mobile touch handling
 - June 19, 2025. Complete styling overhaul: Implemented yellow hover theme with black text default, betslip circle always yellow, sign up buttons always yellow with black text

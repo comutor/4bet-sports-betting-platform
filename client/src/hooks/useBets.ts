@@ -66,10 +66,7 @@ export function useUpdateBalance() {
       type: string; 
       description?: string; 
     }) => {
-      return await apiRequest('/api/user/balance/update', {
-        method: 'POST',
-        body: JSON.stringify({ amount, type, description }),
-      });
+      return await apiRequest('/api/user/balance/update', 'POST', { amount, type, description });
     },
     onSuccess: () => {
       // Invalidate and refetch balance and user data

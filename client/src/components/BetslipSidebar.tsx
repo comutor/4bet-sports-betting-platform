@@ -47,6 +47,14 @@ export function BetslipSidebar({
   onPlaceBet,
   userCountry
 }: BetslipSidebarProps) {
+  const { toast } = useToast();
+  const placeBetMutation = usePlaceBet();
+  
+  // Get current user data for balance validation
+  const { data: currentUser } = useQuery({
+    queryKey: ['/api/auth/me'],
+    enabled: isLoggedIn,
+  });
   const [betType, setBetType] = useState<'single' | 'accumulator'>('accumulator');
   const [accumulatorStake, setAccumulatorStake] = useState(0);
 
