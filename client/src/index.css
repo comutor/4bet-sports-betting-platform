@@ -190,7 +190,8 @@
 
   /* Global button hover effects */
   button, .btn {
-    transition: all 0.3s ease !important;
+    transition: all 0.2s ease;
+    cursor: pointer;
   }
   
   button:hover, .btn:hover {
@@ -199,27 +200,27 @@
   
   /* Ensure strong white text by default */
   button {
-    color: #ffffff !important;
+    color: #ffffff;
     border-color: #ffffff;
-    font-weight: bold !important;
+    font-weight: bold;
     background-color: transparent;
   }
   
   /* Remove any blue/primary colors */
   .bg-primary {
-    background-color: transparent !important;
-    border: 2px solid #ffffff !important;
-    color: #ffffff !important;
-    font-weight: bold !important;
+    background-color: transparent;
+    border: 2px solid #ffffff;
+    color: #ffffff;
+    font-weight: bold;
   }
   
   /* Yellow hover for all interactive elements except logo */
   button:hover:not(.no-hover):not(.logo-container), 
   .hover-yellow:hover,
   [role="button"]:hover:not(.logo-container) {
-    background-color: #fbbf24 !important;
-    color: #000000 !important;
-    border-color: #fbbf24 !important;
+    background-color: #fbbf24;
+    color: #000000;
+    border-color: #fbbf24;
   }
   
   /* Light yellow hover effect for logo elements */

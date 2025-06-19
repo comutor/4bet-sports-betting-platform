@@ -80,7 +80,11 @@ export function TopNavigation({ activeTab, onTabChange, userBalance, userCountry
             </Button>
             <button 
               className="flex items-center justify-center space-x-2 hover:opacity-80 transition-opacity cursor-pointer logo-container py-1"
-              onClick={() => onTabChange('home')}
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                onTabChange('home');
+              }}
             >
               <TATAbetsLogo size="md" />
             </button>
@@ -144,7 +148,11 @@ export function TopNavigation({ activeTab, onTabChange, userBalance, userCountry
                         ? 'bg-primary text-white shadow-sm'
                         : 'text-gray-300 hover:bg-slate-light-custom hover:text-white'
                     }`}
-                    onClick={() => onSportsFilterChange?.('upcoming')}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      onSportsFilterChange?.('upcoming');
+                    }}
                   >
                     <i className="fas fa-calendar text-sm flex-shrink-0"></i>
                     <span className="text-sm font-bold uppercase">UPCOMING</span>
@@ -157,7 +165,11 @@ export function TopNavigation({ activeTab, onTabChange, userBalance, userCountry
                         ? 'bg-primary text-white shadow-sm'
                         : 'text-gray-300 hover:bg-slate-light-custom hover:text-white'
                     }`}
-                    onClick={() => onSportsFilterChange?.('popular')}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      onSportsFilterChange?.('popular');
+                    }}
                   >
                     <i className="fas fa-fire text-sm flex-shrink-0"></i>
                     <span className="text-sm font-bold uppercase">POPULAR</span>
@@ -170,7 +182,11 @@ export function TopNavigation({ activeTab, onTabChange, userBalance, userCountry
                         ? 'bg-primary text-white shadow-sm'
                         : 'text-gray-300 hover:bg-slate-light-custom hover:text-white'
                     }`}
-                    onClick={() => onSportsFilterChange?.('live')}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      onSportsFilterChange?.('live');
+                    }}
                   >
                     <i className="fas fa-broadcast-tower text-sm flex-shrink-0"></i>
                     <span className="text-sm font-bold uppercase">LIVE NOW</span>
@@ -190,7 +206,11 @@ export function TopNavigation({ activeTab, onTabChange, userBalance, userCountry
                           ? 'bg-primary text-white shadow-sm' 
                           : 'text-gray-300 hover:bg-slate-light-custom hover:text-white'
                       }`}
-                      onClick={() => onTabChange(item.id)}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        onTabChange(item.id);
+                      }}
                     >
                       <i className={`${item.icon} text-sm flex-shrink-0`}></i>
                       <span className="text-sm font-bold uppercase">{item.label}</span>
@@ -211,7 +231,11 @@ export function TopNavigation({ activeTab, onTabChange, userBalance, userCountry
                     variant="ghost"
                     size="sm"
                     className="flex items-center justify-center w-8 h-8 rounded-md font-medium transition-all duration-200 shrink-0 text-gray-300 hover:bg-slate-700 hover:text-white"
-                    onClick={() => setIsServicesDropdownOpen(!isServicesDropdownOpen)}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      setIsServicesDropdownOpen(!isServicesDropdownOpen);
+                    }}
                   >
                     <i className={`fas fa-chevron-down text-xs transition-transform duration-200 ${isServicesDropdownOpen ? 'rotate-180' : ''}`}></i>
                   </Button>
