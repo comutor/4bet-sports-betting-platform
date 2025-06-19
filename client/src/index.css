@@ -203,10 +203,10 @@
     border-color: #ffffff;
   }
   
-  /* Yellow hover for all interactive elements */
-  button:hover:not(.no-hover), 
+  /* Yellow hover for all interactive elements except logo */
+  button:hover:not(.no-hover):not(.logo-container), 
   .hover-yellow:hover,
-  [role="button"]:hover {
+  [role="button"]:hover:not(.logo-container) {
     background-color: #fbbf24 !important;
     color: #000000 !important;
     border-color: #fbbf24 !important;

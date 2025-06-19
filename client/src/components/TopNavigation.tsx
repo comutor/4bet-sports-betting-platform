@@ -78,7 +78,7 @@ export function TopNavigation({ activeTab, onTabChange, userBalance, userCountry
               <i className="fas fa-bars text-lg md:text-xl"></i>
             </Button>
             <button 
-              className="flex items-center space-x-2 hover:opacity-80 transition-opacity cursor-pointer"
+              className="flex items-center space-x-2 hover:opacity-80 transition-opacity cursor-pointer logo-container"
               onClick={() => onTabChange('home')}
             >
               <TATAbetsLogo size="md" />
