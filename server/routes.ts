@@ -449,6 +449,130 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Balance management endpoints
+  app.get("/api/user/balance", async (req, res) => {
+    try {
+      const userId = (req.session as any)?.userId;
+      if (!userId) {
+        return res.status(401).json({ message: "Not authenticated" });
+      }
+
+      const balance = await storage.getUserBalance(userId);
+      res.json({ balance });
+    } catch (error) {
+      console.error("Get balance error:", error);
+      res.status(500).json({ message: "Failed to fetch balance" });
+    }
+  });
+
+  app.post("/api/user/balance/update", async (req, res) => {
+    try {
+      const userId = (req.session as any)?.userId;
+      if (!userId) {
+        return res.status(401).json({ message: "Not authenticated" });
+      }
+
+      const { amount, type, description } = req.body;
+      
+      if (!amount || !type) {
+        return res.status(400).json({ message: "Amount and type are required" });
+      }
+
+      // Validate amount is a valid number
+      const numAmount = parseFloat(amount);
+      if (isNaN(numAmount)) {
+        return res.status(400).json({ message: "Invalid amount" });
+      }
+
+      // Validate transaction type
+      const validTypes = ['deposit', 'withdrawal', 'bet_placed', 'bet_won', 'bet_refund'];
+      if (!validTypes.includes(type)) {
+        return res.status(400).json({ message: "Invalid transaction type" });
+      }
+
+      const updatedUser = await storage.updateUserBalance(userId, amount, type, description);
+      res.json({ 
+        message: "Balance updated successfully",
+        newBalance: updatedUser.balance 
+      });
+    } catch (error) {
+      console.error("Update balance error:", error);
+      if (error.message === "Insufficient balance") {
+        return res.status(400).json({ message: "Insufficient balance" });
+      }
+      res.status(500).json({ message: "Failed to update balance" });
+    }
+  });
+
+  app.get("/api/user/transactions", async (req, res) => {
+    try {
+      const userId = (req.session as any)?.userId;
+      if (!userId) {
+        return res.status(401).json({ message: "Not authenticated" });
+      }
+
+      const limit = parseInt(req.query.limit as string) || 50;
+      const transactions = await storage.getBalanceTransactions(userId, limit);
+      res.json(transactions);
+    } catch (error) {
+      console.error("Get transactions error:", error);
+      res.status(500).json({ message: "Failed to fetch transactions" });
+    }
+  });
+
+  // Bet management endpoints
+  app.get("/api/user/bets", async (req, res) => {
+    try {
+      const userId = (req.session as any)?.userId;
+      if (!userId) {
+        return res.status(401).json({ message: "Not authenticated" });
+      }
+
+      const status = req.query.status as string;
+      const bets = await storage.getUserBets(userId, status);
+      res.json(bets);
+    } catch (error) {
+      console.error("Get user bets error:", error);
+      res.status(500).json({ message: "Failed to fetch bets" });
+    }
+  });
+
+  app.post("/api/user/bets/place", async (req, res) => {
+    try {
+      const userId = (req.session as any)?.userId;
+      if (!userId) {
+        return res.status(401).json({ message: "Not authenticated" });
+      }
+
+      const betData = req.body;
+      
+      // Validate required fields
+      if (!betData.betType || !betData.selections || !betData.totalStake || !betData.potentialReturn) {
+        return res.status(400).json({ message: "Missing required bet data" });
+      }
+
+      // Validate stake is positive
+      const stake = parseFloat(betData.totalStake);
+      if (isNaN(stake) || stake <= 0) {
+        return res.status(400).json({ message: "Invalid stake amount" });
+      }
+
+      const result = await storage.placeBet(userId, betData);
+      
+      res.json({
+        message: "Bet placed successfully",
+        bet: result.bet,
+        newBalance: result.newBalance
+      });
+    } catch (error) {
+      console.error("Place bet error:", error);
+      if (error.message === "Insufficient balance") {
+        return res.status(400).json({ message: "Insufficient balance" });
+      }
+      res.status(500).json({ message: "Failed to place bet" });
+    }
+  });
+
   app.get("/api/odds/basketball/leagues", async (req, res) => {
     try {
       const leagues = await oddsApiService.getBasketballLeagues();

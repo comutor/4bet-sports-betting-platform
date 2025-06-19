@@ -22,7 +22,7 @@ import {
   type InsertBalanceTransaction
 } from "@shared/schema";
 import { db } from "./db";
-import { eq } from "drizzle-orm";
+import { eq, and, desc } from "drizzle-orm";
 
 export interface IStorage {
   getUser(id: number): Promise<User | undefined>;
@@ -479,13 +479,15 @@ export class DatabaseStorage implements IStorage {
 
   // Enhanced bet management methods
   async getUserBets(userId: number, status?: string): Promise<UserBet[]> {
-    let query = db.select().from(userBets).where(eq(userBets.userId, userId));
-    
     if (status) {
-      query = query.where(eq(userBets.status, status));
+      return await db.select().from(userBets)
+        .where(and(eq(userBets.userId, userId), eq(userBets.status, status)))
+        .orderBy(desc(userBets.placedAt));
     }
     
-    return await query.orderBy(userBets.placedAt);
+    return await db.select().from(userBets)
+      .where(eq(userBets.userId, userId))
+      .orderBy(desc(userBets.placedAt));
   }
 
   async createUserBet(bet: InsertUserBet): Promise<UserBet> {
@@ -538,11 +540,18 @@ export class DatabaseStorage implements IStorage {
 
       const [bet] = await tx.insert(userBets).values(betRecord).returning();
 
-      // Update balance transaction with bet ID
-      await tx.update(balanceTransactions)
-        .set({ relatedBetId: bet.id })
+      // Update the most recent balance transaction with bet ID
+      const recentTransaction = await tx.select()
+        .from(balanceTransactions)
         .where(eq(balanceTransactions.userId, userId))
-        .orderBy(balanceTransactions.createdAt);
+        .orderBy(desc(balanceTransactions.createdAt))
+        .limit(1);
+      
+      if (recentTransaction.length > 0) {
+        await tx.update(balanceTransactions)
+          .set({ relatedBetId: bet.id })
+          .where(eq(balanceTransactions.id, recentTransaction[0].id));
+      }
 
       // Clear user's betslip after successful bet placement
       await this.clearBetslip(userId);
@@ -564,20 +573,7 @@ export class DatabaseStorage implements IStorage {
     return created;
   }
 
-  async getUserBets(userId: number): Promise<UserBet[]> {
-    return await db.select().from(userBets).where(eq(userBets.userId, userId)).orderBy(userBets.placedAt);
-  }
 
-  async createUserBet(bet: InsertUserBet): Promise<UserBet> {
-    const [created] = await db.insert(userBets).values(bet).returning();
-    return created;
-  }
-
-  async updateBetStatus(betId: number, status: string): Promise<void> {
-    await db.update(userBets)
-      .set({ status, settledAt: new Date() })
-      .where(eq(userBets.id, betId));
-  }
 }
 
 export const storage = new DatabaseStorage();
