@@ -5,9 +5,9 @@ interface TATAbetsLogoProps {
 
 export function TATAbetsLogo({ size = 'md', className = '' }: TATAbetsLogoProps) {
   const sizeConfig = {
-    sm: { container: 'h-8', circleSize: '16px', fontSize: '12px', gap: '4px' },
-    md: { container: 'h-10', circleSize: '24px', fontSize: '16px', gap: '6px' },
-    lg: { container: 'h-12', circleSize: '32px', fontSize: '20px', gap: '8px' }
+    sm: { container: 'h-8', circleSize: '16px', fontSize: '12px', gap: '0px' },
+    md: { container: 'h-10', circleSize: '24px', fontSize: '16px', gap: '0px' },
+    lg: { container: 'h-12', circleSize: '32px', fontSize: '20px', gap: '0px' }
   };
 
   const config = sizeConfig[size];
