@@ -160,30 +160,56 @@
     color: white !important;
   }
 
-  /* Odds button highlighting - Simple class-based approach */
+  /* Global hover effects - Yellow theme */
   .odd {
-    border: 1px solid #475569;
-    color: #d1d5db;
+    border: 1px solid #ffffff;
+    color: #ffffff;
     background-color: transparent;
-    transition: all 0.2s ease;
+    transition: all 0.3s ease;
   }
   
   .odd:hover {
-    background-color: hsl(var(--primary));
-    color: white;
-    border-color: hsl(var(--primary));
+    background-color: #fbbf24;
+    color: #000000;
+    border-color: #fbbf24;
+    transform: scale(1.05);
   }
   
   .odd.selected {
-    background-color: hsl(var(--primary)) !important;
-    color: white !important;
-    border-color: hsl(var(--primary)) !important;
+    background-color: #fbbf24 !important;
+    color: #000000 !important;
+    border-color: #fbbf24 !important;
   }
   
   .odd.selected:hover {
-    background-color: hsl(var(--primary)) !important;
-    color: white !important;
-    border-color: hsl(var(--primary)) !important;
+    background-color: #f59e0b !important;
+    color: #000000 !important;
+    border-color: #f59e0b !important;
+    transform: scale(1.05);
+  }
+
+  /* Global button hover effects */
+  button, .btn {
+    transition: all 0.3s ease !important;
+  }
+  
+  button:hover, .btn:hover {
+    transform: scale(1.05);
+  }
+  
+  /* Ensure strong white text by default */
+  button {
+    color: #ffffff !important;
+    border-color: #ffffff;
+  }
+  
+  /* Yellow hover for all interactive elements */
+  button:hover:not(.no-hover), 
+  .hover-yellow:hover,
+  [role="button"]:hover {
+    background-color: #fbbf24 !important;
+    color: #000000 !important;
+    border-color: #fbbf24 !important;
   }
   
   .text-live {

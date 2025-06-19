@@ -101,7 +101,7 @@ export function TopNavigation({ activeTab, onTabChange, userBalance, userCountry
                   <span className="font-bold text-sm md:text-base bg-gradient-to-r from-blue-400 to-emerald-400 bg-clip-text text-transparent">{getCurrencyDisplay(userBalance, userCountry)}</span>
                 </div>
                 <Button 
-                  className="bg-primary hover:bg-primary-blue-dark font-bold text-sm md:text-base px-2 md:px-4 py-1 md:py-2"
+                  className="bg-transparent border-2 border-white text-white hover:bg-yellow-400 hover:text-black hover:border-yellow-400 transition-all duration-300 hover:scale-105 font-bold text-sm md:text-base px-2 md:px-4 py-1 md:py-2"
                   onClick={onDepositClick}
                 >
                   Deposit
@@ -111,13 +111,13 @@ export function TopNavigation({ activeTab, onTabChange, userBalance, userCountry
               <>
                 <Button 
                   variant="outline" 
-                  className="border-gray-600 text-gray-300 hover:bg-slate-light-custom font-medium text-sm md:text-base px-2 md:px-3 py-1 md:py-2"
+                  className="border-2 border-white text-white hover:bg-yellow-400 hover:text-black hover:border-yellow-400 transition-all duration-300 hover:scale-105 font-medium text-sm md:text-base px-2 md:px-3 py-1 md:py-2"
                   onClick={onLoginClick}
                 >
                   Login
                 </Button>
                 <Button 
-                  className="bg-primary hover:bg-primary-blue-dark font-bold text-sm md:text-base px-2 md:px-3 py-1 md:py-2"
+                  className="bg-transparent border-2 border-white text-white hover:bg-yellow-400 hover:text-black hover:border-yellow-400 transition-all duration-300 hover:scale-105 font-bold text-sm md:text-base px-2 md:px-3 py-1 md:py-2"
                   onClick={onSignupClick}
                 >
                   Sign Up

@@ -79,10 +79,10 @@ export function HamburgerMenu({ isOpen, onClose, onTabChange, activeTab }: Hambu
                   <Button
                     key={section.id}
                     variant={activeTab === section.id ? "default" : "secondary"}
-                    className={`p-3 min-h-16 flex flex-col items-center justify-center text-center transition-all duration-200 rounded-xl border shadow-sm ${
+                    className={`p-3 min-h-16 flex flex-col items-center justify-center text-center transition-all duration-300 rounded-xl border-2 shadow-sm hover:scale-105 ${
                       activeTab === section.id 
-                        ? 'bg-primary text-white border-primary/20' 
-                        : 'bg-slate-custom hover:bg-slate-light-custom border-slate-600 hover:border-slate-500'
+                        ? 'bg-yellow-400 text-black border-yellow-400' 
+                        : 'bg-transparent border-white text-white hover:bg-yellow-400 hover:text-black hover:border-yellow-400'
                     }`}
                     onClick={() => handleItemClick(section.id)}
                   >
@@ -103,10 +103,10 @@ export function HamburgerMenu({ isOpen, onClose, onTabChange, activeTab }: Hambu
                   <Button
                     key={sport.id}
                     variant={activeTab === sport.id ? "default" : "secondary"}
-                    className={`p-3 min-h-16 flex flex-col items-center justify-center text-center transition-all duration-200 rounded-xl border shadow-sm ${
+                    className={`p-3 min-h-16 flex flex-col items-center justify-center text-center transition-all duration-300 rounded-xl border-2 shadow-sm hover:scale-105 ${
                       activeTab === sport.id 
-                        ? 'bg-primary text-white border-primary/20' 
-                        : 'bg-slate-custom hover:bg-slate-light-custom border-slate-600 hover:border-slate-500'
+                        ? 'bg-yellow-400 text-black border-yellow-400' 
+                        : 'bg-transparent border-white text-white hover:bg-yellow-400 hover:text-black hover:border-yellow-400'
                     }`}
                     onClick={() => handleItemClick(sport.id)}
                   >
