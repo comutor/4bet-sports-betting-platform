@@ -13,7 +13,7 @@ export function TATAbetsLogo({ size = 'md', className = '' }: TATAbetsLogoProps)
   const config = sizeConfig[size];
 
   return (
-    <div className={`${config.container} ${className} flex items-center transition-all duration-300 hover:scale-105`} 
+    <div className={`${config.container} ${className} flex items-end transition-all duration-300 hover:scale-105`} 
          style={{ gap: config.gap }}>
       {/* Circle letters for "tata" */}
       {['t', 'a', 't', 'a'].map((letter, index) => (
@@ -31,10 +31,10 @@ export function TATAbetsLogo({ size = 'md', className = '' }: TATAbetsLogoProps)
         </div>
       ))}
       
-      {/* "bets" text */}
+      {/* "bets" text aligned to bottom */}
       <div 
         className="font-black text-white lowercase transition-all duration-300 hover:text-yellow-400"
-        style={{ fontSize: config.fontSize }}
+        style={{ fontSize: config.fontSize, lineHeight: '1' }}
       >
         bets
       </div>
