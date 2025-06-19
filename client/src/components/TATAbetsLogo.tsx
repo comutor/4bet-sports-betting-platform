@@ -31,9 +31,9 @@ export function TATAbetsLogo({ size = 'md', className = '' }: TATAbetsLogoProps)
         </div>
       ))}
       
-      {/* "bets" text aligned to bottom */}
+      {/* "bets" text in solid rectangle */}
       <div 
-        className="font-black text-white lowercase transition-all duration-300 hover:text-yellow-400"
+        className="font-black text-white lowercase transition-all duration-300 hover:text-yellow-400 bg-white/20 border border-white px-2 py-1 rounded-md"
         style={{ fontSize: config.fontSize, lineHeight: '1' }}
       >
         bets
