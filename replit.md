@@ -1,8 +1,8 @@
-# NileBet - Premier Betting Platform
+# TATAbets - Premier Betting Platform
 
 ## Overview
 
-NileBet is a comprehensive sports betting platform designed for users in South Sudan and Uganda. The application provides a full-stack betting experience with real-time sports data, casino games, virtual sports, and user management. Built with a modern tech stack, it offers both web and mobile-responsive interfaces for placing bets, managing accounts, and accessing various gaming options.
+TATAbets is a comprehensive sports betting platform designed for users in South Sudan and Uganda. The application provides a full-stack betting experience with real-time sports data, casino games, virtual sports, and user management. Built with a modern tech stack, it offers both web and mobile-responsive interfaces for placing bets, managing accounts, and accessing various gaming options.
 
 ## System Architecture
 
@@ -101,8 +101,14 @@ The application uses PostgreSQL with the following core entities:
 ## Changelog
 ```
 Changelog:
+- June 19, 2025. Company rebrand: Changed from NileBet to TATAbets throughout application
+- June 19, 2025. Added phone number validation for Uganda (MTN/Airtel) and South Sudan (92x prefix)
 - June 15, 2025. Initial setup
 ```
+
+## Domain Configuration
+- Production domain will be: TATAbets.ss or TATAbets.com
+- Current development environment supports both South Sudan and Uganda markets
 
 ## User Preferences
 

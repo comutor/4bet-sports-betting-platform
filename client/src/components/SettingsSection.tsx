@@ -179,12 +179,12 @@ export function SettingsSection({ userCountry, isLoggedIn, onClose, onBackToAcco
         </div>
       </div>
 
-      {/* More on NileBet */}
+      {/* More on TATAbets */}
       <div className="bg-slate-light-custom rounded-lg p-4 border border-slate-600">
         <div className="flex items-center justify-between cursor-pointer">
           <div className="flex items-center space-x-3">
             <Info className="w-5 h-5 text-gray-400" />
-            <span className="font-medium text-gray-300">More on NileBet</span>
+            <span className="font-medium text-gray-300">More on TATAbets</span>
           </div>
           <ChevronRight className="w-5 h-5 text-gray-400" />
         </div>

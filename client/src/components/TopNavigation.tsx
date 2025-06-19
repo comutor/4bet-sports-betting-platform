@@ -84,7 +84,7 @@ export function TopNavigation({ activeTab, onTabChange, userBalance, userCountry
                 <i className="fas fa-dice text-white text-lg md:text-xl"></i>
               </div>
               <span className="text-xl md:text-3xl tracking-tight bg-gradient-to-r from-blue-400 to-emerald-400 bg-clip-text text-transparent italic" style={{ fontFamily: 'Nunito', fontWeight: '800', fontStyle: 'italic' }}>
-                NileBet
+                TATAbets
               </span>
             </button>
           </div>

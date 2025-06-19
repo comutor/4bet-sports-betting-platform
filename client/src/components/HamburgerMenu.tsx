@@ -63,7 +63,7 @@ export function HamburgerMenu({ isOpen, onClose, onTabChange, activeTab }: Hambu
                 <i className="fas fa-dice text-white text-xl"></i>
               </div>
               <span className="text-2xl tracking-tight bg-gradient-to-r from-blue-400 to-emerald-400 bg-clip-text text-transparent italic" style={{ fontFamily: 'Nunito', fontWeight: '800', fontStyle: 'italic' }}>
-                NileBet
+                TATAbets
               </span>
             </button>
             <Button variant="ghost" onClick={onClose} className="p-2 text-gray-400 hover:text-white">
