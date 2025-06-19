@@ -17,17 +17,29 @@ export function TATAbetsLogo({ size = 'md', className = '' }: TATAbetsLogoProps)
          style={{ gap: config.gap }}>
       {/* Circle letters for "tata" */}
       {['t', 'a', 't', 'a'].map((letter, index) => (
-        <div
-          key={index}
-          className="circle-letter flex items-center justify-center bg-transparent border-2 border-white border-t-transparent rounded-full font-black text-white transition-all duration-300 hover:border-yellow-400"
-          style={{
-            width: config.circleSize,
-            height: config.circleSize,
-            fontSize: config.fontSize,
-            borderTopWidth: size === 'sm' ? '4px' : size === 'md' ? '6px' : '8px'
-          }}
-        >
-          {letter}
+        <div key={index} className="relative">
+          <div
+            className="circle-letter flex items-center justify-center bg-transparent border-2 border-white rounded-full font-black text-white transition-all duration-300 hover:border-yellow-400"
+            style={{
+              width: config.circleSize,
+              height: config.circleSize,
+              fontSize: config.fontSize
+            }}
+          >
+            {letter}
+          </div>
+          {/* T cross-bar extension for "t" letters */}
+          {letter === 't' && (
+            <div 
+              className="absolute bg-white transition-all duration-300 hover:bg-yellow-400"
+              style={{
+                width: size === 'sm' ? '8px' : size === 'md' ? '12px' : '16px',
+                height: '2px',
+                top: size === 'sm' ? '6px' : size === 'md' ? '8px' : '10px',
+                right: '-2px'
+              }}
+            />
+          )}
         </div>
       ))}
       
