@@ -101,6 +101,7 @@ The application uses PostgreSQL with the following core entities:
 ## Changelog
 ```
 Changelog:
+- June 19, 2025. Fixed services dropdown auto-close: Added click-outside detection and automatic closure when interacting with other UI elements
 - June 19, 2025. Implemented secure database integration: Added PostgreSQL storage for user balances, bet history, and transaction tracking with balance_transactions table
 - June 19, 2025. Created secure API endpoints: /api/user/balance, /api/user/bets/place, /api/user/transactions for database-backed operations
 - June 19, 2025. Added bet management hooks: usePlaceBet, useBalance, useUpdateBalance for frontend database integration
