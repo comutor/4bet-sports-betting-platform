@@ -5,6 +5,7 @@ import {
   betslipItems, 
   casinoGames,
   userBets,
+  balanceTransactions,
   type User, 
   type InsertUser,
   type SportsEvent,
@@ -16,7 +17,9 @@ import {
   type CasinoGame,
   type InsertCasinoGame,
   type UserBet,
-  type InsertUserBet
+  type InsertUserBet,
+  type BalanceTransaction,
+  type InsertBalanceTransaction
 } from "@shared/schema";
 import { db } from "./db";
 import { eq } from "drizzle-orm";
@@ -26,6 +29,11 @@ export interface IStorage {
   getUserByUsername(username: string): Promise<User | undefined>;
   getUserByPhoneNumber(phoneNumber: string): Promise<User | undefined>;
   createUser(user: InsertUser): Promise<User>;
+  
+  // Balance management with secure transactions
+  getUserBalance(userId: number): Promise<string>;
+  updateUserBalance(userId: number, amount: string, type: string, description?: string, relatedBetId?: number): Promise<User>;
+  getBalanceTransactions(userId: number, limit?: number): Promise<BalanceTransaction[]>;
   
   getSportsEvents(): Promise<SportsEvent[]>;
   getLiveEvents(): Promise<SportsEvent[]>;
@@ -38,14 +46,17 @@ export interface IStorage {
   getBetslipItems(userId: number): Promise<BetslipItem[]>;
   addToBetslip(item: InsertBetslipItem): Promise<BetslipItem>;
   removeFromBetslip(id: number): Promise<void>;
+  clearBetslip(userId: number): Promise<void>;
   
   getCasinoGames(): Promise<CasinoGame[]>;
   getCasinoGamesByCategory(category: string): Promise<CasinoGame[]>;
   createCasinoGame(game: InsertCasinoGame): Promise<CasinoGame>;
   
-  getUserBets(userId: number): Promise<UserBet[]>;
+  // Enhanced bet management
+  getUserBets(userId: number, status?: string): Promise<UserBet[]>;
   createUserBet(bet: InsertUserBet): Promise<UserBet>;
-  updateBetStatus(betId: number, status: string): Promise<void>;
+  updateBetStatus(betId: number, status: string, actualReturn?: string): Promise<void>;
+  placeBet(userId: number, betData: any): Promise<{ bet: UserBet; newBalance: string }>;
 }
 
 export class MemStorage implements IStorage {
@@ -369,6 +380,59 @@ export class DatabaseStorage implements IStorage {
     return user;
   }
 
+  // Secure balance management methods
+  async getUserBalance(userId: number): Promise<string> {
+    const [user] = await db.select({ balance: users.balance }).from(users).where(eq(users.id, userId));
+    return user?.balance || "0.00";
+  }
+
+  async updateUserBalance(userId: number, amount: string, type: string, description?: string, relatedBetId?: number): Promise<User> {
+    return await db.transaction(async (tx) => {
+      // Get current balance with row lock
+      const [currentUser] = await tx.select().from(users).where(eq(users.id, userId));
+      if (!currentUser) {
+        throw new Error("User not found");
+      }
+
+      const currentBalance = parseFloat(currentUser.balance);
+      const changeAmount = parseFloat(amount);
+      const newBalance = currentBalance + changeAmount;
+
+      if (newBalance < 0) {
+        throw new Error("Insufficient balance");
+      }
+
+      // Update user balance
+      const [updatedUser] = await tx
+        .update(users)
+        .set({ balance: newBalance.toFixed(2) })
+        .where(eq(users.id, userId))
+        .returning();
+
+      // Record transaction in audit trail
+      await tx.insert(balanceTransactions).values({
+        userId,
+        type,
+        amount: amount,
+        balanceBefore: currentBalance.toFixed(2),
+        balanceAfter: newBalance.toFixed(2),
+        description,
+        relatedBetId
+      });
+
+      return updatedUser;
+    });
+  }
+
+  async getBalanceTransactions(userId: number, limit: number = 50): Promise<BalanceTransaction[]> {
+    return await db
+      .select()
+      .from(balanceTransactions)
+      .where(eq(balanceTransactions.userId, userId))
+      .orderBy(balanceTransactions.createdAt)
+      .limit(limit);
+  }
+
   // Placeholder implementations for other methods (keeping interface compatibility)
   async getSportsEvents(): Promise<SportsEvent[]> {
     return [];
@@ -407,6 +471,84 @@ export class DatabaseStorage implements IStorage {
 
   async removeFromBetslip(id: number): Promise<void> {
     await db.delete(betslipItems).where(eq(betslipItems.id, id));
+  }
+
+  async clearBetslip(userId: number): Promise<void> {
+    await db.delete(betslipItems).where(eq(betslipItems.userId, userId));
+  }
+
+  // Enhanced bet management methods
+  async getUserBets(userId: number, status?: string): Promise<UserBet[]> {
+    let query = db.select().from(userBets).where(eq(userBets.userId, userId));
+    
+    if (status) {
+      query = query.where(eq(userBets.status, status));
+    }
+    
+    return await query.orderBy(userBets.placedAt);
+  }
+
+  async createUserBet(bet: InsertUserBet): Promise<UserBet> {
+    const [created] = await db.insert(userBets).values(bet).returning();
+    return created;
+  }
+
+  async updateBetStatus(betId: number, status: string, actualReturn?: string): Promise<void> {
+    const updateData: any = { 
+      status, 
+      settledAt: new Date()
+    };
+    
+    if (actualReturn !== undefined) {
+      updateData.actualReturn = actualReturn;
+    }
+    
+    await db.update(userBets).set(updateData).where(eq(userBets.id, betId));
+  }
+
+  async placeBet(userId: number, betData: any): Promise<{ bet: UserBet; newBalance: string }> {
+    return await db.transaction(async (tx) => {
+      // Validate user has sufficient balance
+      const currentBalance = await this.getUserBalance(userId);
+      const stake = parseFloat(betData.totalStake);
+      
+      if (parseFloat(currentBalance) < stake) {
+        throw new Error("Insufficient balance");
+      }
+
+      // Deduct stake from balance
+      const updatedUser = await this.updateUserBalance(
+        userId, 
+        (-stake).toString(), 
+        'bet_placed', 
+        `Bet placed: ${betData.betType}`,
+        undefined
+      );
+
+      // Create bet record
+      const betRecord: InsertUserBet = {
+        userId,
+        betType: betData.betType,
+        selections: JSON.stringify(betData.selections),
+        totalStake: betData.totalStake,
+        potentialReturn: betData.potentialReturn,
+        currency: betData.currency || 'SSP',
+        status: 'pending'
+      };
+
+      const [bet] = await tx.insert(userBets).values(betRecord).returning();
+
+      // Update balance transaction with bet ID
+      await tx.update(balanceTransactions)
+        .set({ relatedBetId: bet.id })
+        .where(eq(balanceTransactions.userId, userId))
+        .orderBy(balanceTransactions.createdAt);
+
+      // Clear user's betslip after successful bet placement
+      await this.clearBetslip(userId);
+
+      return { bet, newBalance: updatedUser.balance };
+    });
   }
 
   async getCasinoGames(): Promise<CasinoGame[]> {

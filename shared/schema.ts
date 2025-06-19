@@ -64,10 +64,24 @@ export const userBets = pgTable("user_bets", {
   selections: text("selections").notNull(), // JSON string of bet selections
   totalStake: decimal("total_stake", { precision: 10, scale: 2 }).notNull(),
   potentialReturn: decimal("potential_return", { precision: 10, scale: 2 }).notNull(),
+  actualReturn: decimal("actual_return", { precision: 10, scale: 2 }).default("0.00"),
   status: text("status").notNull().default("pending"), // 'pending' | 'won' | 'lost' | 'void'
   placedAt: timestamp("placed_at").defaultNow(),
   settledAt: timestamp("settled_at"),
   currency: text("currency").notNull().default("SSP")
+});
+
+// Add balance transaction history table for audit trail
+export const balanceTransactions = pgTable("balance_transactions", {
+  id: serial("id").primaryKey(),
+  userId: integer("user_id").references(() => users.id).notNull(),
+  type: text("type").notNull(), // 'deposit' | 'withdrawal' | 'bet_placed' | 'bet_won' | 'bet_refund'
+  amount: decimal("amount", { precision: 10, scale: 2 }).notNull(),
+  balanceBefore: decimal("balance_before", { precision: 10, scale: 2 }).notNull(),
+  balanceAfter: decimal("balance_after", { precision: 10, scale: 2 }).notNull(),
+  description: text("description"),
+  relatedBetId: integer("related_bet_id").references(() => userBets.id),
+  createdAt: timestamp("created_at").defaultNow()
 });
 
 export const insertUserSchema = createInsertSchema(users).pick({
@@ -84,6 +98,7 @@ export const insertBettingMarketSchema = createInsertSchema(bettingMarkets);
 export const insertBetslipItemSchema = createInsertSchema(betslipItems);
 export const insertCasinoGameSchema = createInsertSchema(casinoGames);
 export const insertUserBetSchema = createInsertSchema(userBets);
+export const insertBalanceTransactionSchema = createInsertSchema(balanceTransactions);
 
 export type User = typeof users.$inferSelect;
 export type InsertUser = z.infer<typeof insertUserSchema>;
@@ -97,3 +112,5 @@ export type CasinoGame = typeof casinoGames.$inferSelect;
 export type InsertCasinoGame = z.infer<typeof insertCasinoGameSchema>;
 export type UserBet = typeof userBets.$inferSelect;
 export type InsertUserBet = z.infer<typeof insertUserBetSchema>;
+export type BalanceTransaction = typeof balanceTransactions.$inferSelect;
+export type InsertBalanceTransaction = z.infer<typeof insertBalanceTransactionSchema>;
