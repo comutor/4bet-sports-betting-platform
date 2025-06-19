@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { HamburgerMenu } from "./HamburgerMenu";
 import { TATAbetsLogo } from "./TATAbetsLogo";
+import { LiveIndicator } from "./LiveIndicator";
 
 interface TopNavigationProps {
   activeTab: string;
@@ -173,9 +174,7 @@ export function TopNavigation({ activeTab, onTabChange, userBalance, userCountry
                   >
                     <i className="fas fa-broadcast-tower text-sm flex-shrink-0"></i>
                     <span className="text-sm font-bold uppercase">LIVE NOW</span>
-                    {sportsFilter === 'live' && (
-                      <span className="w-1.5 h-1.5 bg-live rounded-full animate-pulse ml-1 flex-shrink-0"></span>
-                    )}
+                    <LiveIndicator size="sm" className="ml-1" />
                   </Button>
                 </>
               ) : (
@@ -196,7 +195,7 @@ export function TopNavigation({ activeTab, onTabChange, userBalance, userCountry
                       <i className={`${item.icon} text-sm flex-shrink-0`}></i>
                       <span className="text-sm font-bold uppercase">{item.label}</span>
                       {item.hasIndicator && (
-                        <span className="w-1.5 h-1.5 bg-live rounded-full animate-pulse ml-1 flex-shrink-0"></span>
+                        <LiveIndicator size="sm" className="ml-1" />
                       )}
                     </Button>
                   ))}
