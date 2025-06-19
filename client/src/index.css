@@ -212,6 +212,24 @@
     border-color: #fbbf24 !important;
   }
   
+  /* Light yellow hover effect for logo elements */
+  .logo-container:hover .circle-letter {
+    color: #fde047 !important;
+    border-color: #fde047 !important;
+    transition: all 0.3s ease;
+  }
+  
+  .logo-container:hover .t-crossbar {
+    background-color: #fde047 !important;
+    transition: all 0.3s ease;
+  }
+  
+  .logo-container:hover .bets-text {
+    color: #fde047 !important;
+    border-color: #fde047 !important;
+    transition: all 0.3s ease;
+  }
+  
   .text-live {
     color: hsl(var(--live-orange));
   }

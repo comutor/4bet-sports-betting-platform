@@ -31,7 +31,7 @@ export function TATAbetsLogo({ size = 'md', className = '' }: TATAbetsLogoProps)
           {/* T cross-bar extension for "t" letters */}
           {letter === 't' && (
             <div 
-              className="absolute bg-white"
+              className="absolute bg-white t-crossbar"
               style={{
                 width: size === 'sm' ? '8px' : size === 'md' ? '12px' : '16px',
                 height: '2px',
@@ -45,7 +45,7 @@ export function TATAbetsLogo({ size = 'md', className = '' }: TATAbetsLogoProps)
       
       {/* "bets" text in solid rectangle */}
       <div 
-        className="font-black text-white lowercase bg-white/20 border border-white px-2 py-1 rounded-md"
+        className="font-black text-white lowercase bg-white/20 border border-white px-2 py-1 rounded-md bets-text"
         style={{ fontSize: config.fontSize, lineHeight: '1' }}
       >
         bets
