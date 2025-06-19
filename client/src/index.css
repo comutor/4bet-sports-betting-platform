@@ -155,9 +155,9 @@
 
   /* Odds button selection styles */
   .odd-btn.selected {
-    background-color: #3b82f6 !important;
-    border-color: #2563eb !important;
-    color: white !important;
+    background-color: #fbbf24 !important;
+    border-color: #fbbf24 !important;
+    color: #000000 !important;
   }
 
   /* Global hover effects - Yellow theme */
@@ -201,6 +201,16 @@
   button {
     color: #ffffff !important;
     border-color: #ffffff;
+    font-weight: bold !important;
+    background-color: transparent;
+  }
+  
+  /* Remove any blue/primary colors */
+  .bg-primary {
+    background-color: transparent !important;
+    border: 2px solid #ffffff !important;
+    color: #ffffff !important;
+    font-weight: bold !important;
   }
   
   /* Yellow hover for all interactive elements except logo */
