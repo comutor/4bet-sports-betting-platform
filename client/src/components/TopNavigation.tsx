@@ -131,13 +131,13 @@ export function TopNavigation({ activeTab, onTabChange, userBalance, userCountry
         <div className="pb-3 relative">
           <div className="flex items-center">
             {/* Scrollable Navigation Pills */}
-            <div className={`flex items-center ${activeTab === 'sports' ? 'w-full' : 'gap-1'} overflow-x-auto scrollbar-hide flex-1 ${activeTab === 'sports' ? '' : 'pr-12'}`}>
+            <div className={`flex items-center ${activeTab === 'sports' ? 'w-full' : 'gap-1'} overflow-x-auto scrollbar-hide flex-1 ${activeTab === 'sports' ? '' : 'pr-10'}`}>
               {activeTab === 'sports' ? (
                 // Sports-specific navigation with full-width filter box
                 <div className="w-full">
                   <div className="flex bg-slate-light-custom rounded-lg p-2 w-full">
                     <button
-                      className={`flex-1 flex items-center justify-center gap-2 py-3 px-4 rounded-md text-base font-medium transition-colors ${
+                      className={`flex-1 flex items-center justify-center gap-2 py-3 px-4 rounded-md text-base font-bold transition-colors ${
                         sportsFilter === 'upcoming'
                           ? 'bg-primary text-white'
                           : 'text-gray-400 hover:text-white'
@@ -145,10 +145,10 @@ export function TopNavigation({ activeTab, onTabChange, userBalance, userCountry
                       onClick={() => onSportsFilterChange?.('upcoming')}
                     >
                       <i className="fas fa-calendar text-sm"></i>
-                      <span>Upcoming</span>
+                      <span className="uppercase">UPCOMING</span>
                     </button>
                     <button
-                      className={`flex-1 flex items-center justify-center gap-2 py-3 px-4 rounded-md text-base font-medium transition-colors ${
+                      className={`flex-1 flex items-center justify-center gap-2 py-3 px-4 rounded-md text-base font-bold transition-colors ${
                         sportsFilter === 'popular'
                           ? 'bg-primary text-white'
                           : 'text-gray-400 hover:text-white'
@@ -156,10 +156,10 @@ export function TopNavigation({ activeTab, onTabChange, userBalance, userCountry
                       onClick={() => onSportsFilterChange?.('popular')}
                     >
                       <i className="fas fa-fire text-sm"></i>
-                      <span>Popular</span>
+                      <span className="uppercase">POPULAR</span>
                     </button>
                     <button
-                      className={`flex-1 flex items-center justify-center gap-2 py-3 px-4 rounded-md text-base font-medium transition-colors ${
+                      className={`flex-1 flex items-center justify-center gap-2 py-3 px-4 rounded-md text-base font-bold transition-colors ${
                         sportsFilter === 'live'
                           ? 'bg-primary text-white'
                           : 'text-gray-400 hover:text-white'
@@ -167,7 +167,7 @@ export function TopNavigation({ activeTab, onTabChange, userBalance, userCountry
                       onClick={() => onSportsFilterChange?.('live')}
                     >
                       <i className="fas fa-broadcast-tower text-sm"></i>
-                      <span>Live Now</span>
+                      <span className="uppercase">LIVE NOW</span>
                       {sportsFilter === 'live' && (
                         <span className="w-1.5 h-1.5 bg-live rounded-full animate-pulse ml-1"></span>
                       )}
@@ -175,23 +175,23 @@ export function TopNavigation({ activeTab, onTabChange, userBalance, userCountry
                   </div>
                 </div>
               ) : (
-                // Regular navigation
+                // Regular navigation - stretched to fill space
                 allNavItems.map((item) => (
                   <Button
                     key={item.id}
                     variant="ghost"
                     size="sm"
-                    className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full font-medium transition-all duration-200 whitespace-nowrap shrink-0 ${
+                    className={`flex items-center gap-1.5 px-2 py-1.5 rounded-full font-bold transition-all duration-200 whitespace-nowrap flex-1 min-w-0 ${
                       activeTab === item.id 
                         ? 'bg-primary text-white shadow-sm' 
                         : 'text-gray-300 hover:bg-slate-light-custom hover:text-white'
                     }`}
                     onClick={() => onTabChange(item.id)}
                   >
-                    <i className={`${item.icon} text-sm`}></i>
-                    <span className="text-sm font-medium">{item.label}</span>
+                    <i className={`${item.icon} text-sm flex-shrink-0`}></i>
+                    <span className="text-sm font-bold uppercase truncate">{item.label}</span>
                     {item.hasIndicator && (
-                      <span className="w-1.5 h-1.5 bg-live rounded-full animate-pulse"></span>
+                      <span className="w-1.5 h-1.5 bg-live rounded-full animate-pulse ml-1 flex-shrink-0"></span>
                     )}
                   </Button>
                 ))
@@ -200,7 +200,7 @@ export function TopNavigation({ activeTab, onTabChange, userBalance, userCountry
             
             {/* Fixed Dropdown Button - Only show when not in sports mode */}
             {activeTab !== 'sports' && (
-              <div className="absolute right-0 top-0 bottom-0 flex items-center bg-gradient-to-l from-slate-custom via-slate-custom to-transparent pl-8">
+              <div className="absolute right-0 top-0 bottom-0 flex items-center bg-gradient-to-l from-slate-custom via-slate-custom to-transparent pl-4">
                 <div className="bg-slate-800 border border-gray-700 rounded-lg p-1">
                   <Button
                     variant="ghost"
