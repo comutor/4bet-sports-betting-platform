@@ -133,47 +133,51 @@ export function TopNavigation({ activeTab, onTabChange, userBalance, userCountry
             {/* Scrollable Navigation Pills */}
             <div className="flex items-center overflow-x-auto scrollbar-hide flex-1 pr-12">
               {activeTab === 'sports' ? (
-                // Sports-specific navigation with full-width filter box
-                <div className="w-full min-w-fit">
-                  <div className="flex bg-slate-light-custom rounded-lg p-2 w-full">
-                    <button
-                      className={`flex-1 flex items-center justify-center gap-2 py-3 px-4 rounded-md text-base font-bold transition-colors ${
-                        sportsFilter === 'upcoming'
-                          ? 'bg-primary text-white'
-                          : 'text-gray-400 hover:text-white'
-                      }`}
-                      onClick={() => onSportsFilterChange?.('upcoming')}
-                    >
-                      <i className="fas fa-calendar text-sm"></i>
-                      <span className="uppercase">UPCOMING</span>
-                    </button>
-                    <button
-                      className={`flex-1 flex items-center justify-center gap-2 py-3 px-4 rounded-md text-base font-bold transition-colors ${
-                        sportsFilter === 'popular'
-                          ? 'bg-primary text-white'
-                          : 'text-gray-400 hover:text-white'
-                      }`}
-                      onClick={() => onSportsFilterChange?.('popular')}
-                    >
-                      <i className="fas fa-fire text-sm"></i>
-                      <span className="uppercase">POPULAR</span>
-                    </button>
-                    <button
-                      className={`flex-1 flex items-center justify-center gap-2 py-3 px-4 rounded-md text-base font-bold transition-colors ${
-                        sportsFilter === 'live'
-                          ? 'bg-primary text-white'
-                          : 'text-gray-400 hover:text-white'
-                      }`}
-                      onClick={() => onSportsFilterChange?.('live')}
-                    >
-                      <i className="fas fa-broadcast-tower text-sm"></i>
-                      <span className="uppercase">LIVE NOW</span>
-                      {sportsFilter === 'live' && (
-                        <span className="w-1.5 h-1.5 bg-live rounded-full animate-pulse ml-1"></span>
-                      )}
-                    </button>
-                  </div>
-                </div>
+                // Sports navigation - same style as home navigation
+                <>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className={`flex items-center gap-1.5 px-4 py-1.5 rounded-full font-bold transition-all duration-200 whitespace-nowrap shrink-0 mr-2 ${
+                      sportsFilter === 'upcoming'
+                        ? 'bg-primary text-white shadow-sm'
+                        : 'text-gray-300 hover:bg-slate-light-custom hover:text-white'
+                    }`}
+                    onClick={() => onSportsFilterChange?.('upcoming')}
+                  >
+                    <i className="fas fa-calendar text-sm flex-shrink-0"></i>
+                    <span className="text-sm font-bold uppercase">UPCOMING</span>
+                  </Button>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className={`flex items-center gap-1.5 px-4 py-1.5 rounded-full font-bold transition-all duration-200 whitespace-nowrap shrink-0 mr-2 ${
+                      sportsFilter === 'popular'
+                        ? 'bg-primary text-white shadow-sm'
+                        : 'text-gray-300 hover:bg-slate-light-custom hover:text-white'
+                    }`}
+                    onClick={() => onSportsFilterChange?.('popular')}
+                  >
+                    <i className="fas fa-fire text-sm flex-shrink-0"></i>
+                    <span className="text-sm font-bold uppercase">POPULAR</span>
+                  </Button>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className={`flex items-center gap-1.5 px-4 py-1.5 rounded-full font-bold transition-all duration-200 whitespace-nowrap shrink-0 mr-2 ${
+                      sportsFilter === 'live'
+                        ? 'bg-primary text-white shadow-sm'
+                        : 'text-gray-300 hover:bg-slate-light-custom hover:text-white'
+                    }`}
+                    onClick={() => onSportsFilterChange?.('live')}
+                  >
+                    <i className="fas fa-broadcast-tower text-sm flex-shrink-0"></i>
+                    <span className="text-sm font-bold uppercase">LIVE NOW</span>
+                    {sportsFilter === 'live' && (
+                      <span className="w-1.5 h-1.5 bg-live rounded-full animate-pulse ml-1 flex-shrink-0"></span>
+                    )}
+                  </Button>
+                </>
               ) : (
                 // Regular navigation - scrollable buttons with proper spacing
                 <>
