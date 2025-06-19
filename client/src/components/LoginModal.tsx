@@ -198,7 +198,7 @@ export function LoginModal({ isOpen, onClose, onSuccess, onSignupClick }: LoginM
           {/* Submit Button */}
           <Button
             type="submit"
-            className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 mt-6"
+            className="w-full bg-transparent border-2 border-white text-white hover:bg-yellow-400 hover:text-black hover:border-yellow-400 transition-all duration-300 hover:scale-105 font-bold py-2 mt-6"
           >
             LOG IN
           </Button>
