@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { HamburgerMenu } from "./HamburgerMenu";
@@ -30,6 +30,25 @@ export function TopNavigation({ activeTab, onTabChange, userBalance, userCountry
   const [selectedSport, setSelectedSport] = useState('Football');
   const [selectedMarket, setSelectedMarket] = useState('1X2');
   const [selectedLeague, setSelectedLeague] = useState('All Leagues');
+  
+  const servicesDropdownRef = useRef<HTMLDivElement>(null);
+
+  // Close services dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (servicesDropdownRef.current && !servicesDropdownRef.current.contains(event.target as Node)) {
+        setIsServicesDropdownOpen(false);
+      }
+    };
+
+    if (isServicesDropdownOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [isServicesDropdownOpen]);
 
   const getCurrencyDisplay = (balance: string, country?: string) => {
     if (country === 'Uganda') {
@@ -229,6 +248,7 @@ export function TopNavigation({ activeTab, onTabChange, userBalance, userCountry
                       onClick={(e) => {
                         e.preventDefault();
                         e.stopPropagation();
+                        setIsServicesDropdownOpen(false); // Close services dropdown
                         onTabChange(item.id);
                       }}
                     >
@@ -269,7 +289,10 @@ export function TopNavigation({ activeTab, onTabChange, userBalance, userCountry
             <div className="flex items-center gap-1.5 mt-3 px-2 overflow-x-auto scrollbar-hide">
               <div 
                 className="bg-slate-800 border border-gray-600 rounded-md px-2.5 py-1.5 flex items-center gap-1.5 cursor-pointer hover:bg-slate-700 transition-colors whitespace-nowrap shrink-0"
-                onClick={() => setIsSportDropdownOpen(!isSportDropdownOpen)}
+                onClick={() => {
+                  setIsServicesDropdownOpen(false); // Close services dropdown
+                  setIsSportDropdownOpen(!isSportDropdownOpen);
+                }}
               >
                 <i className="fas fa-futbol text-xs text-gray-300"></i>
                 <span className="text-xs text-gray-300">{selectedSport}</span>
@@ -277,7 +300,10 @@ export function TopNavigation({ activeTab, onTabChange, userBalance, userCountry
               </div>
               <div 
                 className="bg-slate-800 border border-gray-600 rounded-md px-2.5 py-1.5 flex items-center gap-1.5 cursor-pointer hover:bg-slate-700 transition-colors whitespace-nowrap shrink-0"
-                onClick={() => setIsLeaguesDropdownOpen(!isLeaguesDropdownOpen)}
+                onClick={() => {
+                  setIsServicesDropdownOpen(false); // Close services dropdown
+                  setIsLeaguesDropdownOpen(!isLeaguesDropdownOpen);
+                }}
               >
                 <i className="fas fa-trophy text-xs text-gray-300"></i>
                 <span className="text-xs text-gray-300">{selectedLeague}</span>
@@ -285,7 +311,10 @@ export function TopNavigation({ activeTab, onTabChange, userBalance, userCountry
               </div>
               <div 
                 className="bg-slate-800 border border-gray-600 rounded-md px-2.5 py-1.5 flex items-center gap-1.5 cursor-pointer hover:bg-slate-700 transition-colors whitespace-nowrap shrink-0"
-                onClick={() => setIsMarketsDropdownOpen(!isMarketsDropdownOpen)}
+                onClick={() => {
+                  setIsServicesDropdownOpen(false); // Close services dropdown
+                  setIsMarketsDropdownOpen(!isMarketsDropdownOpen);
+                }}
               >
                 <i className="fas fa-chart-line text-xs text-gray-300"></i>
                 <span className="text-xs text-gray-300">{selectedMarket}</span>
@@ -293,7 +322,10 @@ export function TopNavigation({ activeTab, onTabChange, userBalance, userCountry
               </div>
               <div 
                 className="bg-slate-800 border border-gray-600 rounded-md px-2.5 py-1.5 flex items-center gap-1.5 cursor-pointer hover:bg-slate-700 transition-colors whitespace-nowrap shrink-0 relative"
-                onClick={() => setIsDateDropdownOpen(!isDateDropdownOpen)}
+                onClick={() => {
+                  setIsServicesDropdownOpen(false); // Close services dropdown
+                  setIsDateDropdownOpen(!isDateDropdownOpen);
+                }}
               >
                 <i className="fas fa-calendar text-xs text-gray-300"></i>
                 <span className="text-xs text-gray-300">{selectedDateFilter}</span>
