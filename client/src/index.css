@@ -247,13 +247,81 @@
   span.font-bold.text-white,
   div[class*="betslip"] span.font-bold,
   div[class*="BetslipSidebar"] span.font-bold,
-  span.betslip-odds {
+  span.betslip-odds,
+  span[class*="font-bold"],
+  .bg-slate-light-custom span.font-bold,
+  .bg-slate-light-custom .betslip-odds {
     color: #ffffff !important;
     font-weight: 700 !important;
   }
 
   /* Additional override for any primary color inheritance */
   .betslip-odds {
+    color: white !important;
+  }
+
+  /* Nuclear option - override ALL possible blue color sources in betslip */
+  [class*="betslip"] span,
+  [class*="BetslipSidebar"] span,
+  div[class*="bg-slate-light-custom"] span.font-bold {
+    color: inherit !important;
+  }
+
+  /* Ensure betslip odds are always white regardless of parent styles */
+  span.betslip-odds,
+  .betslip-odds {
+    color: #ffffff !important;
+    font-weight: bold !important;
+    text-decoration: none !important;
+  }
+
+  /* Target all possible odds containers and force white text */
+  .bg-slate-light-custom span,
+  .bg-slate-light-custom .font-bold,
+  div[class*="slate-light"] span.font-bold,
+  div[class*="rounded-lg"] span.font-bold {
+    color: #ffffff !important;
+  }
+
+  /* Override any link or anchor styling in betslip */
+  .bg-slate-light-custom a,
+  .bg-slate-light-custom a span,
+  div[class*="betslip"] a,
+  div[class*="betslip"] a span {
+    color: #ffffff !important;
+    text-decoration: none !important;
+  }
+
+  /* Ultimate nuclear option - force ALL text in betslip containers to white */
+  div[class*="bg-slate-light-custom"] *,
+  div[class*="bg-slate-light-custom"] span,
+  div[class*="bg-slate-light-custom"] .font-bold,
+  .bg-slate-light-custom * {
+    color: #ffffff !important;
+  }
+
+  /* Specific targeting for betslip odds regardless of nesting */
+  .bg-slate-light-custom span.font-bold,
+  .bg-slate-light-custom span.betslip-odds,
+  .bg-slate-light-custom .betslip-odds,
+  div.bg-slate-light-custom span,
+  div.bg-slate-light-custom .font-bold {
+    color: #ffffff !important;
+    font-weight: 700 !important;
+  }
+
+  /* Override Tailwind text-primary and any blue color utilities */
+  .bg-slate-light-custom .text-primary,
+  .bg-slate-light-custom [class*="text-blue"],
+  .bg-slate-light-custom [class*="text-primary"],
+  div[class*="betslip"] .text-primary,
+  div[class*="betslip"] [class*="text-blue"] {
+    color: #ffffff !important;
+  }
+
+  /* Final override for any remaining blue text in betslip */
+  .bg-slate-light-custom span,
+  .bg-slate-light-custom .font-bold {
     color: white !important;
   }
   
