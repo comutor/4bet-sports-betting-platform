@@ -57,7 +57,7 @@ export function HamburgerMenu({ isOpen, onClose, onTabChange, activeTab }: Hambu
           {/* Header */}
           <div className="flex items-center justify-between p-6 border-b border-gray-700">
             <button 
-              className="flex items-center space-x-3 hover:opacity-80 transition-opacity cursor-pointer"
+              className="flex items-center space-x-3 hover:opacity-80 transition-opacity cursor-pointer logo-container"
               onClick={() => handleItemClick('home')}
             >
               <TATAbetsLogo size="lg" />
