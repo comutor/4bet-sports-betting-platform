@@ -310,25 +310,25 @@ export function TopNavigation({ activeTab, onTabChange, userBalance, userCountry
                 <i className={`fas fa-chevron-down text-xs text-gray-400 transition-transform ${isLeaguesDropdownOpen ? 'rotate-180' : ''}`}></i>
               </div>
               <div 
-                className="bg-slate-800 border border-gray-600 rounded-md px-2.5 py-1.5 flex items-center gap-1.5 cursor-pointer hover:bg-slate-700 transition-colors whitespace-nowrap shrink-0"
+                className="bg-slate-800 border border-gray-600 rounded-md px-2.5 lg:px-4 py-1.5 flex items-center gap-1.5 cursor-pointer hover:bg-slate-700 transition-colors whitespace-nowrap shrink-0"
                 onClick={() => {
                   setIsServicesDropdownOpen(false); // Close services dropdown
                   setIsMarketsDropdownOpen(!isMarketsDropdownOpen);
                 }}
               >
                 <i className="fas fa-chart-line text-xs text-gray-300"></i>
-                <span className="text-xs text-gray-300">{selectedMarket}</span>
+                <span className="text-xs lg:text-sm text-gray-300">{selectedMarket}</span>
                 <i className={`fas fa-chevron-down text-xs text-gray-400 transition-transform ${isMarketsDropdownOpen ? 'rotate-180' : ''}`}></i>
               </div>
               <div 
-                className="bg-slate-800 border border-gray-600 rounded-md px-2.5 py-1.5 flex items-center gap-1.5 cursor-pointer hover:bg-slate-700 transition-colors whitespace-nowrap shrink-0 relative"
+                className="bg-slate-800 border border-gray-600 rounded-md px-2.5 lg:px-4 py-1.5 flex items-center gap-1.5 cursor-pointer hover:bg-slate-700 transition-colors whitespace-nowrap shrink-0 relative"
                 onClick={() => {
                   setIsServicesDropdownOpen(false); // Close services dropdown
                   setIsDateDropdownOpen(!isDateDropdownOpen);
                 }}
               >
                 <i className="fas fa-calendar text-xs text-gray-300"></i>
-                <span className="text-xs text-gray-300">{selectedDateFilter}</span>
+                <span className="text-xs lg:text-sm text-gray-300">{selectedDateFilter}</span>
                 <i className={`fas fa-chevron-down text-xs text-gray-400 transition-transform ${isDateDropdownOpen ? 'rotate-180' : ''}`}></i>
                 
 
