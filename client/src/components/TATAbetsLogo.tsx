@@ -13,13 +13,13 @@ export function TATAbetsLogo({ size = 'md', className = '' }: TATAbetsLogoProps)
   const config = sizeConfig[size];
 
   return (
-    <div className={`${config.container} ${className} flex items-end transition-all duration-300 hover:scale-105`} 
+    <div className={`${config.container} ${className} flex items-end transition-all duration-300 hover:scale-105 group`} 
          style={{ gap: config.gap }}>
       {/* Circle letters for "tata" */}
       {['t', 'a', 't', 'a'].map((letter, index) => (
         <div key={index} className="relative">
           <div
-            className="circle-letter flex items-center justify-center bg-transparent border-2 border-white rounded-full font-black text-white transition-all duration-300 hover:border-yellow-400"
+            className="circle-letter flex items-center justify-center bg-transparent border-2 border-white rounded-full font-black text-white transition-all duration-300 group-hover:border-yellow-400 group-hover:text-yellow-400"
             style={{
               width: config.circleSize,
               height: config.circleSize,
@@ -31,7 +31,7 @@ export function TATAbetsLogo({ size = 'md', className = '' }: TATAbetsLogoProps)
           {/* T cross-bar extension for "t" letters */}
           {letter === 't' && (
             <div 
-              className="absolute bg-white transition-all duration-300 hover:bg-yellow-400"
+              className="absolute bg-white transition-all duration-300 group-hover:bg-yellow-400"
               style={{
                 width: size === 'sm' ? '8px' : size === 'md' ? '12px' : '16px',
                 height: '2px',
@@ -45,7 +45,7 @@ export function TATAbetsLogo({ size = 'md', className = '' }: TATAbetsLogoProps)
       
       {/* "bets" text in solid rectangle */}
       <div 
-        className="font-black text-white lowercase transition-all duration-300 hover:text-yellow-400 bg-white/20 border border-white px-2 py-1 rounded-md"
+        className="font-black text-white lowercase transition-all duration-300 group-hover:text-yellow-400 group-hover:border-yellow-400 bg-white/20 border border-white px-2 py-1 rounded-md"
         style={{ fontSize: config.fontSize, lineHeight: '1' }}
       >
         bets
