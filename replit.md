@@ -101,6 +101,7 @@ The application uses PostgreSQL with the following core entities:
 ## Changelog
 ```
 Changelog:
+- June 19, 2025. Complete styling overhaul: Implemented yellow hover theme with black text default, betslip circle always yellow, sign up buttons always yellow with black text
 - June 19, 2025. Company rebrand: Changed from NileBet to TATAbets throughout application
 - June 19, 2025. Added phone number validation for Uganda (MTN/Airtel) and South Sudan (92x prefix)
 - June 15, 2025. Initial setup
