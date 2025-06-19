@@ -131,10 +131,10 @@ export function TopNavigation({ activeTab, onTabChange, userBalance, userCountry
         <div className="pb-3 relative">
           <div className="flex items-center">
             {/* Scrollable Navigation Pills */}
-            <div className={`flex items-center ${activeTab === 'sports' ? 'w-full' : 'gap-1'} overflow-x-auto scrollbar-hide flex-1 ${activeTab === 'sports' ? '' : 'pr-10'}`}>
+            <div className="flex items-center overflow-x-auto scrollbar-hide flex-1 pr-12">
               {activeTab === 'sports' ? (
                 // Sports-specific navigation with full-width filter box
-                <div className="w-full">
+                <div className="w-full min-w-fit">
                   <div className="flex bg-slate-light-custom rounded-lg p-2 w-full">
                     <button
                       className={`flex-1 flex items-center justify-center gap-2 py-3 px-4 rounded-md text-base font-bold transition-colors ${
@@ -175,26 +175,28 @@ export function TopNavigation({ activeTab, onTabChange, userBalance, userCountry
                   </div>
                 </div>
               ) : (
-                // Regular navigation - stretched to fill space
-                allNavItems.map((item) => (
-                  <Button
-                    key={item.id}
-                    variant="ghost"
-                    size="sm"
-                    className={`flex items-center gap-1.5 px-2 py-1.5 rounded-full font-bold transition-all duration-200 whitespace-nowrap flex-1 min-w-0 ${
-                      activeTab === item.id 
-                        ? 'bg-primary text-white shadow-sm' 
-                        : 'text-gray-300 hover:bg-slate-light-custom hover:text-white'
-                    }`}
-                    onClick={() => onTabChange(item.id)}
-                  >
-                    <i className={`${item.icon} text-sm flex-shrink-0`}></i>
-                    <span className="text-sm font-bold uppercase truncate">{item.label}</span>
-                    {item.hasIndicator && (
-                      <span className="w-1.5 h-1.5 bg-live rounded-full animate-pulse ml-1 flex-shrink-0"></span>
-                    )}
-                  </Button>
-                ))
+                // Regular navigation - scrollable buttons with proper spacing
+                <>
+                  {allNavItems.map((item) => (
+                    <Button
+                      key={item.id}
+                      variant="ghost"
+                      size="sm"
+                      className={`flex items-center gap-1.5 px-4 py-1.5 rounded-full font-bold transition-all duration-200 whitespace-nowrap shrink-0 mr-2 ${
+                        activeTab === item.id 
+                          ? 'bg-primary text-white shadow-sm' 
+                          : 'text-gray-300 hover:bg-slate-light-custom hover:text-white'
+                      }`}
+                      onClick={() => onTabChange(item.id)}
+                    >
+                      <i className={`${item.icon} text-sm flex-shrink-0`}></i>
+                      <span className="text-sm font-bold uppercase">{item.label}</span>
+                      {item.hasIndicator && (
+                        <span className="w-1.5 h-1.5 bg-live rounded-full animate-pulse ml-1 flex-shrink-0"></span>
+                      )}
+                    </Button>
+                  ))}
+                </>
               )}
             </div>
             
