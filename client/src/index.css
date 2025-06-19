@@ -190,8 +190,10 @@
 
   /* Global button hover effects */
   button, .btn {
-    transition: all 0.2s ease;
+    transition: all 0.15s ease;
     cursor: pointer;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
   }
   
   button:hover, .btn:hover {
@@ -221,6 +223,23 @@
     background-color: #fbbf24;
     color: #000000;
     border-color: #fbbf24;
+  }
+
+  /* Add active state for better mobile feedback */
+  button:active, .btn:active {
+    transform: scale(0.98);
+  }
+
+  /* Optimize mobile touch handling */
+  @media (pointer: coarse) {
+    button, .btn {
+      min-height: 44px;
+      transition: all 0.1s ease;
+    }
+    
+    button:active, .btn:active {
+      transform: scale(0.95);
+    }
   }
   
   /* Light yellow hover effect for logo elements */

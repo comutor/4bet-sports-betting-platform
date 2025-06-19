@@ -74,7 +74,11 @@ export function TopNavigation({ activeTab, onTabChange, userBalance, userCountry
             <Button 
               variant="ghost" 
               className="p-1 md:p-2 text-gray-400 hover:text-white"
-              onClick={onMenuToggle}
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                onMenuToggle && onMenuToggle();
+              }}
             >
               <i className="fas fa-bars text-lg md:text-xl"></i>
             </Button>
@@ -100,14 +104,22 @@ export function TopNavigation({ activeTab, onTabChange, userBalance, userCountry
               <>
                 <div 
                   className="flex items-center bg-white/10 border border-white/30 rounded-lg px-2 md:px-3 py-1 md:py-2 cursor-pointer hover:bg-yellow-400/20 hover:border-yellow-400/50 transition-all duration-200"
-                  onClick={onDepositClick}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    onDepositClick && onDepositClick();
+                  }}
                 >
                   <i className="fas fa-wallet text-white mr-1 md:mr-2 text-sm md:text-base"></i>
                   <span className="font-bold text-sm md:text-base text-white">{getCurrencyDisplay(userBalance, userCountry)}</span>
                 </div>
                 <Button 
                   className="bg-transparent border-2 border-white text-white hover:bg-yellow-400 hover:text-black hover:border-yellow-400 transition-all duration-300 hover:scale-105 font-bold text-sm md:text-base px-2 md:px-4 py-1 md:py-2"
-                  onClick={onDepositClick}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    onDepositClick && onDepositClick();
+                  }}
                 >
                   Deposit
                 </Button>
@@ -117,13 +129,21 @@ export function TopNavigation({ activeTab, onTabChange, userBalance, userCountry
                 <Button 
                   variant="outline" 
                   className="border-2 border-white text-white hover:bg-yellow-400 hover:text-black hover:border-yellow-400 transition-all duration-300 hover:scale-105 font-medium text-sm md:text-base px-2 md:px-3 py-1 md:py-2"
-                  onClick={onLoginClick}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    onLoginClick && onLoginClick();
+                  }}
                 >
                   Login
                 </Button>
                 <Button 
                   className="bg-yellow-400 border-2 border-yellow-400 text-black hover:bg-yellow-500 hover:border-yellow-500 transition-all duration-300 hover:scale-105 font-bold text-sm md:text-base px-2 md:px-3 py-1 md:py-2"
-                  onClick={onSignupClick}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    onSignupClick && onSignupClick();
+                  }}
                 >
                   Sign Up
                 </Button>
