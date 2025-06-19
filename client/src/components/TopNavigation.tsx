@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { HamburgerMenu } from "./HamburgerMenu";
+import { TATAbetsLogo } from "./TATAbetsLogo";
 
 interface TopNavigationProps {
   activeTab: string;
@@ -80,9 +81,7 @@ export function TopNavigation({ activeTab, onTabChange, userBalance, userCountry
               className="flex items-center space-x-2 hover:opacity-80 transition-opacity cursor-pointer"
               onClick={() => onTabChange('home')}
             >
-              <span className="text-xl md:text-3xl tracking-tight bg-gradient-to-r from-blue-400 to-emerald-400 bg-clip-text text-transparent italic" style={{ fontFamily: 'Nunito', fontWeight: '800', fontStyle: 'italic' }}>
-                TATAbets
-              </span>
+              <TATAbetsLogo size="md" />
             </button>
           </div>
           

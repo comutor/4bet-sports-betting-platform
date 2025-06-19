@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { TATAbetsLogo } from "./TATAbetsLogo";
 
 interface HamburgerMenuProps {
   isOpen: boolean;
@@ -59,9 +60,7 @@ export function HamburgerMenu({ isOpen, onClose, onTabChange, activeTab }: Hambu
               className="flex items-center space-x-3 hover:opacity-80 transition-opacity cursor-pointer"
               onClick={() => handleItemClick('home')}
             >
-              <span className="text-2xl tracking-tight bg-gradient-to-r from-blue-400 to-emerald-400 bg-clip-text text-transparent italic" style={{ fontFamily: 'Nunito', fontWeight: '800', fontStyle: 'italic' }}>
-                TATAbets
-              </span>
+              <TATAbetsLogo size="lg" />
             </button>
             <Button variant="ghost" onClick={onClose} className="p-2 text-gray-400 hover:text-white">
               <i className="fas fa-times text-2xl"></i>
