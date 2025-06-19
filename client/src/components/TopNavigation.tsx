@@ -94,11 +94,11 @@ export function TopNavigation({ activeTab, onTabChange, userBalance, userCountry
             {isLoggedIn ? (
               <>
                 <div 
-                  className="flex items-center bg-gradient-to-r from-blue-600/20 to-emerald-600/20 border border-blue-500/30 rounded-lg px-2 md:px-3 py-1 md:py-2 cursor-pointer hover:bg-gradient-to-r hover:from-blue-600/30 hover:to-emerald-600/30 transition-all duration-200"
+                  className="flex items-center bg-white/10 border border-white/30 rounded-lg px-2 md:px-3 py-1 md:py-2 cursor-pointer hover:bg-yellow-400/20 hover:border-yellow-400/50 transition-all duration-200"
                   onClick={onDepositClick}
                 >
-                  <i className="fas fa-wallet bg-gradient-to-r from-blue-400 to-emerald-400 bg-clip-text text-transparent mr-1 md:mr-2 text-sm md:text-base"></i>
-                  <span className="font-bold text-sm md:text-base bg-gradient-to-r from-blue-400 to-emerald-400 bg-clip-text text-transparent">{getCurrencyDisplay(userBalance, userCountry)}</span>
+                  <i className="fas fa-wallet text-white mr-1 md:mr-2 text-sm md:text-base"></i>
+                  <span className="font-bold text-sm md:text-base text-white">{getCurrencyDisplay(userBalance, userCountry)}</span>
                 </div>
                 <Button 
                   className="bg-transparent border-2 border-white text-white hover:bg-yellow-400 hover:text-black hover:border-yellow-400 transition-all duration-300 hover:scale-105 font-bold text-sm md:text-base px-2 md:px-4 py-1 md:py-2"
@@ -117,7 +117,7 @@ export function TopNavigation({ activeTab, onTabChange, userBalance, userCountry
                   Login
                 </Button>
                 <Button 
-                  className="bg-transparent border-2 border-white text-white hover:bg-yellow-400 hover:text-black hover:border-yellow-400 transition-all duration-300 hover:scale-105 font-bold text-sm md:text-base px-2 md:px-3 py-1 md:py-2"
+                  className="bg-yellow-400 border-2 border-yellow-400 text-black hover:bg-yellow-500 hover:border-yellow-500 transition-all duration-300 hover:scale-105 font-bold text-sm md:text-base px-2 md:px-3 py-1 md:py-2"
                   onClick={onSignupClick}
                 >
                   Sign Up

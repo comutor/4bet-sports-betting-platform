@@ -336,7 +336,7 @@ export function SignupPage({ onClose, onSuccess }: SignupPageProps) {
         {/* Submit Button */}
         <Button
           type="submit"
-          className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3"
+          className="w-full bg-yellow-400 border-2 border-yellow-400 text-black hover:bg-yellow-500 hover:border-yellow-500 transition-all duration-300 hover:scale-105 font-bold py-3"
         >
           {isLogin ? 'LOG IN' : 'CREATE ACCOUNT'}
         </Button>

@@ -77,8 +77,8 @@ export function BottomNavigation({
               {index === 2 ? (
                 // Special circular design for betslip button
                 <div className="flex flex-col items-center -mt-6">
-                  <div className="w-14 h-14 bg-transparent border-2 border-white rounded-full flex items-center justify-center mb-2 relative shadow-lg">
-                    <i className={`${item.icon} text-white text-lg`}></i>
+                  <div className="w-14 h-14 bg-yellow-400 border-2 border-yellow-400 rounded-full flex items-center justify-center mb-2 relative shadow-lg">
+                    <i className={`${item.icon} text-black text-lg`}></i>
                     <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs w-5 h-5 rounded-full flex items-center justify-center font-bold">
                       {item.count || 0}
                     </span>

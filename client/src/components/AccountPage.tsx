@@ -47,14 +47,14 @@ export function AccountPage({ isLoggedIn = false, onClose, onSignupClick, onLogi
           {!isLoggedIn ? (
             <div className="grid grid-cols-2 gap-3">
               <Button 
-                className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 text-sm"
+                className="bg-yellow-400 border-2 border-yellow-400 text-black hover:bg-yellow-500 hover:border-yellow-500 transition-all duration-300 hover:scale-105 font-bold py-4 text-sm"
                 onClick={onSignupClick}
               >
                 SIGN UP
               </Button>
               <Button 
                 variant="outline" 
-                className="border-2 border-gray-400 text-gray-300 hover:bg-slate-700 font-bold py-4 text-sm"
+                className="border-2 border-white text-white hover:bg-yellow-400 hover:text-black hover:border-yellow-400 transition-all duration-300 hover:scale-105 font-bold py-4 text-sm"
                 onClick={onLoginClick}
               >
                 LOG IN
