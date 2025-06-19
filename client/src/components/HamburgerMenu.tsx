@@ -59,9 +59,6 @@ export function HamburgerMenu({ isOpen, onClose, onTabChange, activeTab }: Hambu
               className="flex items-center space-x-3 hover:opacity-80 transition-opacity cursor-pointer"
               onClick={() => handleItemClick('home')}
             >
-              <div className="bg-gradient-to-r from-blue-600 to-emerald-600 w-10 h-10 rounded-lg flex items-center justify-center">
-                <i className="fas fa-dice text-white text-xl"></i>
-              </div>
               <span className="text-2xl tracking-tight bg-gradient-to-r from-blue-400 to-emerald-400 bg-clip-text text-transparent italic" style={{ fontFamily: 'Nunito', fontWeight: '800', fontStyle: 'italic' }}>
                 TATAbets
               </span>
