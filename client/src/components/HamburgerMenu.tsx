@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { FourBetLogo } from "./FourBetLogo";
 
@@ -9,6 +10,7 @@ interface HamburgerMenuProps {
 }
 
 export function HamburgerMenu({ isOpen, onClose, onTabChange, activeTab }: HamburgerMenuProps) {
+  const [countriesExpanded, setCountriesExpanded] = useState(false);
   const mainSections = [
     { id: 'sports', label: 'Sports', icon: 'fas fa-futbol' },
     { id: 'live', label: 'In-Play', icon: 'fas fa-broadcast-tower' },
@@ -108,22 +110,45 @@ export function HamburgerMenu({ isOpen, onClose, onTabChange, activeTab }: Hambu
               </div>
             </div>
 
-            {/* Countries */}
+            {/* Countries Dropdown */}
             <div>
               <h3 className="section-title">
                 Countries
               </h3>
-              <div className="menu-grid">
-                {countryCategories.map((country) => (
-                  <div
-                    key={country.id}
-                    className={`menu-item ${activeTab === country.id ? 'active' : ''}`}
-                    onClick={() => handleItemClick(country.id)}
-                  >
-                    <i className={country.icon}></i>
-                    <span>{country.label}</span>
+              <div className="px-3">
+                <Button
+                  variant="ghost"
+                  className="w-full justify-between p-3 text-left text-gray-300 hover:bg-slate-700 transition-all duration-200 rounded-xl border border-slate-600 hover:border-slate-500 shadow-sm"
+                  onClick={() => setCountriesExpanded(!countriesExpanded)}
+                >
+                  <div className="flex items-center">
+                    <i className="fas fa-globe w-5 mr-3 text-gray-400"></i>
+                    <span className="text-sm font-medium">Select Country</span>
                   </div>
-                ))}
+                  <i className={`fas fa-chevron-${countriesExpanded ? 'up' : 'down'} text-gray-400 text-xs transition-transform duration-200`}></i>
+                </Button>
+                
+                {countriesExpanded && (
+                  <div className="mt-2 space-y-1 ml-4">
+                    {countryCategories.map((country) => (
+                      <Button
+                        key={country.id}
+                        variant="ghost"
+                        className={`w-full justify-start p-2 text-left transition-all duration-200 rounded-lg ${
+                          activeTab === country.id 
+                            ? 'bg-blue-600 text-white' 
+                            : 'text-gray-400 hover:bg-slate-700 hover:text-white'
+                        }`}
+                        onClick={() => handleItemClick(country.id)}
+                      >
+                        <div className="flex items-center">
+                          <i className={`${country.icon} w-4 mr-3`}></i>
+                          <span className="text-sm">{country.label}</span>
+                        </div>
+                      </Button>
+                    ))}
+                  </div>
+                )}
               </div>
             </div>
 
