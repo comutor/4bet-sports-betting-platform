@@ -67,9 +67,9 @@ export function HamburgerMenu({ isOpen, onClose, onTabChange, activeTab }: Hambu
       />
       
       {/* Sidebar Menu */}
-      <div className={`fixed top-0 left-0 h-full w-full lg:w-1/2 bg-slate-custom z-50 transform transition-transform duration-300 ${
-        isOpen ? 'translate-x-0' : '-translate-x-full'
-      }`}>
+      <div className={`fixed top-0 left-0 h-full w-full lg:w-1/2 bg-slate-custom z-50 ${
+        isOpen ? 'slide-in-left' : 'slide-out-left'
+      }`} style={{ transform: isOpen ? 'translateX(0)' : 'translateX(-100%)' }}>
         <div className="flex flex-col h-full">
           {/* Header */}
           <div className="flex items-center justify-between p-6 border-b border-gray-700">

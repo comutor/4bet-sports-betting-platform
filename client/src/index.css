@@ -128,6 +128,79 @@
   background-color: #4b5563;
 }
 
+/* Slide In Animations - From Screen Edge */
+.slide-in-left {
+  animation: slideInFromLeft 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+.slide-out-left {
+  animation: slideOutToLeft 0.3s cubic-bezier(0.55, 0.06, 0.68, 0.19) forwards;
+}
+
+.slide-in-right {
+  animation: slideInFromRight 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+.slide-out-right {
+  animation: slideOutToRight 0.3s cubic-bezier(0.55, 0.06, 0.68, 0.19) forwards;
+}
+
+@keyframes slideInFromLeft {
+  0% {
+    transform: translateX(-100%);
+    visibility: visible;
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideOutToLeft {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-100%);
+    visibility: hidden;
+  }
+}
+
+@keyframes slideInFromRight {
+  0% {
+    transform: translateX(100%);
+    visibility: visible;
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideOutToRight {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(100%);
+    visibility: hidden;
+  }
+}
+
+/* Slide Down Animation for Dropdowns */
+.animate-slide-down {
+  animation: slideDown 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+@keyframes slideDown {
+  0% {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 .dark {
   --background: 240 10% 3.9%;
   --foreground: 0 0% 98%;
