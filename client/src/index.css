@@ -34,7 +34,7 @@
   --slate-light: 215 20% 25%; /* #334155 */
   --success-green: 142 76% 36%; /* #10B981 */
   --danger-red: 0 84% 60%; /* #EF4444 */
-  --warning-teal: 180 83% 47%; /* #14B8A6 */
+  --warning-blue: 224 71% 36%; /* #1E40AF */
   --live-orange: 14 100% 57%; /* #FF6B35 */
 }
 
@@ -155,12 +155,12 @@
 
   /* Odds button selection styles */
   .odd-btn.selected {
-    background-color: #14b8a6 !important;
-    border-color: #14b8a6 !important;
-    color: #000000 !important;
+    background-color: #1e40af !important;
+    border-color: #1e40af !important;
+    color: #ffffff !important;
   }
 
-  /* Global hover effects - Teal theme */
+  /* Global hover effects - Blue theme */
   .odd {
     border: 1px solid #ffffff;
     color: #ffffff;
@@ -169,22 +169,22 @@
   }
   
   .odd:hover {
-    background-color: #14b8a6;
-    color: #000000;
-    border-color: #14b8a6;
+    background-color: #1e40af;
+    color: #ffffff;
+    border-color: #1e40af;
     transform: scale(1.05);
   }
   
   .odd.selected {
-    background-color: #14b8a6 !important;
-    color: #000000 !important;
-    border-color: #14b8a6 !important;
+    background-color: #1e40af !important;
+    color: #ffffff !important;
+    border-color: #1e40af !important;
   }
   
   .odd.selected:hover {
-    background-color: #0d9488 !important;
-    color: #000000 !important;
-    border-color: #0d9488 !important;
+    background-color: #1e3a8a !important;
+    color: #ffffff !important;
+    border-color: #1e3a8a !important;
     transform: scale(1.05);
   }
 
@@ -216,13 +216,13 @@
     font-weight: bold;
   }
   
-  /* Teal hover for all interactive elements except logo */
+  /* Blue hover for all interactive elements except logo */
   button:hover:not(.no-hover):not(.logo-container), 
-  .hover-teal:hover,
+  .hover-blue:hover,
   [role="button"]:hover:not(.logo-container) {
-    background-color: #14b8a6;
-    color: #000000;
-    border-color: #14b8a6;
+    background-color: #1e40af;
+    color: #ffffff;
+    border-color: #1e40af;
   }
 
   /* Add active state for better mobile feedback */

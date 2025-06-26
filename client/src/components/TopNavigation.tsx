@@ -122,7 +122,7 @@ export function TopNavigation({ activeTab, onTabChange, userBalance, userCountry
             {isLoggedIn ? (
               <>
                 <div 
-                  className="flex items-center bg-white/10 border border-white/30 rounded-lg px-2 md:px-3 py-1 md:py-2 cursor-pointer hover:bg-teal-500/20 hover:border-teal-500/50 transition-all duration-200"
+                  className="flex items-center bg-white/10 border border-white/30 rounded-lg px-2 md:px-3 py-1 md:py-2 cursor-pointer hover:bg-blue-600/20 hover:border-blue-600/50 transition-all duration-200"
                   onClick={(e) => {
                     e.preventDefault();
                     e.stopPropagation();
@@ -133,7 +133,7 @@ export function TopNavigation({ activeTab, onTabChange, userBalance, userCountry
                   <span className="font-bold text-sm md:text-base text-white">{getCurrencyDisplay(userBalance, userCountry)}</span>
                 </div>
                 <Button 
-                  className="bg-transparent border-2 border-white text-white hover:bg-teal-500 hover:text-black hover:border-teal-500 transition-all duration-300 hover:scale-105 font-bold text-sm md:text-base px-2 md:px-4 py-1 md:py-2"
+                  className="bg-transparent border-2 border-white text-white hover:bg-blue-600 hover:text-white hover:border-blue-600 transition-all duration-300 hover:scale-105 font-bold text-sm md:text-base px-2 md:px-4 py-1 md:py-2"
                   onClick={(e) => {
                     e.preventDefault();
                     e.stopPropagation();
@@ -147,7 +147,7 @@ export function TopNavigation({ activeTab, onTabChange, userBalance, userCountry
               <>
                 <Button 
                   variant="outline" 
-                  className="border-2 border-white text-white hover:bg-teal-500 hover:text-black hover:border-teal-500 transition-all duration-300 hover:scale-105 font-medium text-sm md:text-base px-2 md:px-3 py-1 md:py-2"
+                  className="border-2 border-white text-white hover:bg-blue-600 hover:text-white hover:border-blue-600 transition-all duration-300 hover:scale-105 font-medium text-sm md:text-base px-2 md:px-3 py-1 md:py-2"
                   onClick={(e) => {
                     e.preventDefault();
                     e.stopPropagation();
@@ -157,7 +157,7 @@ export function TopNavigation({ activeTab, onTabChange, userBalance, userCountry
                   Login
                 </Button>
                 <Button 
-                  className="bg-teal-500 border-2 border-teal-500 text-black hover:bg-teal-600 hover:border-teal-600 transition-all duration-300 hover:scale-105 font-bold text-sm md:text-base px-2 md:px-3 py-1 md:py-2"
+                  className="bg-blue-600 border-2 border-blue-600 text-white hover:bg-blue-700 hover:border-blue-700 transition-all duration-300 hover:scale-105 font-bold text-sm md:text-base px-2 md:px-3 py-1 md:py-2"
                   onClick={(e) => {
                     e.preventDefault();
                     e.stopPropagation();
