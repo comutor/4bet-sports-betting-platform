@@ -101,6 +101,8 @@ The application uses PostgreSQL with the following core entities:
 ## Changelog
 ```
 Changelog:
+- June 26, 2025. Added visual separation lines: Implemented border lines between main menu, popular sports, and countries sections in hamburger menu for better visual organization
+- June 26, 2025. Enhanced slide animations: Updated hamburger menu and betslip sidebar to slide from actual screen edges using custom CSS animations with cubic-bezier easing
 - June 26, 2025. Enhanced hamburger menu design: Implemented CSS grid layout with 90x90px boxes, professional shadows, hover effects, and separate icon/text styling for improved user experience
 - June 26, 2025. Fixed deposit security vulnerability: Added authentication checks to prevent unauthorized transactions, shows login prompt for unauthenticated users
 - June 19, 2025. Fixed services dropdown auto-close: Added click-outside detection and automatic closure when interacting with other UI elements

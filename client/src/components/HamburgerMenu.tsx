@@ -105,6 +105,9 @@ export function HamburgerMenu({ isOpen, onClose, onTabChange, activeTab }: Hambu
               </div>
             </div>
             
+            {/* Separator Line */}
+            <div className="border-t border-gray-600 mx-2"></div>
+            
             {/* Sports Categories */}
             <div>
               <h3 className="section-title">
@@ -123,6 +126,9 @@ export function HamburgerMenu({ isOpen, onClose, onTabChange, activeTab }: Hambu
                 ))}
               </div>
             </div>
+
+            {/* Separator Line */}
+            <div className="border-t border-gray-600 mx-2"></div>
 
             {/* Countries Dropdowns */}
             <div>
