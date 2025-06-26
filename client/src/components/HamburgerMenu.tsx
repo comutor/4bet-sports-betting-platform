@@ -43,8 +43,58 @@ export function HamburgerMenu({ isOpen, onClose, onTabChange, activeTab }: Hambu
     { id: 'volleyball', label: 'Volleyball', icon: 'fas fa-volleyball' }
   ];
 
+  const topCountries = [
+    { 
+      id: 'england', 
+      label: 'England', 
+      flag: '🏴󠁧󠁢󠁥󠁮󠁧󠁿',
+      leagues: ['Premier League', 'Championship', 'League One', 'League Two', 'FA Cup', 'EFL Cup']
+    },
+    { 
+      id: 'spain', 
+      label: 'Spain', 
+      flag: '🇪🇸',
+      leagues: ['La Liga', 'Segunda División', 'Copa del Rey', 'Supercopa de España']
+    },
+    { 
+      id: 'italy', 
+      label: 'Italy', 
+      flag: '🇮🇹',
+      leagues: ['Serie A', 'Serie B', 'Coppa Italia', 'Supercoppa Italiana']
+    },
+    { 
+      id: 'germany', 
+      label: 'Germany', 
+      flag: '🇩🇪',
+      leagues: ['Bundesliga', '2. Bundesliga', 'DFB-Pokal', 'DFL-Supercup']
+    },
+    { 
+      id: 'france', 
+      label: 'France', 
+      flag: '🇫🇷',
+      leagues: ['Ligue 1', 'Ligue 2', 'Coupe de France', 'Trophée des Champions']
+    },
+    { 
+      id: 'netherlands', 
+      label: 'Netherlands', 
+      flag: '🇳🇱',
+      leagues: ['Eredivisie', 'Eerste Divisie', 'KNVB Cup', 'Johan Cruyff Shield']
+    },
+    { 
+      id: 'belgium', 
+      label: 'Belgium', 
+      flag: '🇧🇪',
+      leagues: ['Pro League', 'First Division B', 'Belgian Cup', 'Belgian Super Cup']
+    },
+    { 
+      id: 'switzerland', 
+      label: 'Switzerland', 
+      flag: '🇨🇭',
+      leagues: ['Super League', 'Challenge League', 'Swiss Cup']
+    }
+  ];
+
   const countryCategories = [
-    { id: 'top-countries', label: 'Top Countries', icon: 'fas fa-flag' },
     { id: 'international', label: 'International', icon: 'fas fa-globe' },
     { id: 'other-countries', label: 'Other Countries', icon: 'fas fa-map' }
   ];
@@ -130,10 +180,65 @@ export function HamburgerMenu({ isOpen, onClose, onTabChange, activeTab }: Hambu
             {/* Separator Line */}
             <div className="border-t border-gray-600 mx-2"></div>
 
-            {/* Countries Dropdowns */}
+            {/* Top Countries */}
             <div>
               <h3 className="section-title">
-                Countries
+                Top Countries
+              </h3>
+              <div className="px-3 space-y-2">
+                {topCountries.map((country) => (
+                  <div key={country.id}>
+                    <Button
+                      variant="ghost"
+                      className={`w-full justify-between p-3 text-left transition-all duration-200 rounded-xl border border-slate-600 hover:border-slate-500 shadow-sm ${
+                        activeTab === country.id 
+                          ? 'bg-blue-600 text-white border-blue-600' 
+                          : 'text-gray-300 hover:bg-slate-700'
+                      }`}
+                      onClick={() => {
+                        if (expandedCountry === country.id) {
+                          setExpandedCountry(null);
+                        } else {
+                          setExpandedCountry(country.id);
+                          handleItemClick(country.id);
+                        }
+                      }}
+                    >
+                      <div className="flex items-center">
+                        <span className="text-lg mr-3">{country.flag}</span>
+                        <span className="text-sm font-medium">{country.label}</span>
+                      </div>
+                      <i className={`fas fa-chevron-${expandedCountry === country.id ? 'up' : 'down'} text-gray-400 text-xs transition-transform duration-200`}></i>
+                    </Button>
+                    
+                    {expandedCountry === country.id && (
+                      <div className="mt-2 ml-6 p-3 bg-slate-800 rounded-lg border border-slate-600 animate-slide-down">
+                        <div className="text-xs text-gray-400 mb-3">Available leagues and competitions</div>
+                        <div className="grid grid-cols-1 gap-2">
+                          {country.leagues.map((league, index) => (
+                            <button
+                              key={index}
+                              className="text-left px-3 py-2 text-xs text-gray-300 hover:text-white hover:bg-slate-700 rounded-lg transition-colors duration-200"
+                              onClick={() => handleItemClick(`${country.id}-${league.toLowerCase().replace(/\s+/g, '-')}`)}
+                            >
+                              {league}
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Separator Line */}
+            <div className="border-t border-gray-600 mx-2"></div>
+
+            {/* Other Country Categories */}
+            <div>
+              <h3 className="section-title">
+                Other Regions
               </h3>
               <div className="px-3 space-y-2">
                 {countryCategories.map((country) => (
@@ -164,12 +269,7 @@ export function HamburgerMenu({ isOpen, onClose, onTabChange, activeTab }: Hambu
                     {expandedCountry === country.id && (
                       <div className="mt-2 ml-6 p-3 bg-slate-800 rounded-lg border border-slate-600">
                         <div className="text-xs text-gray-400 mb-2">Available leagues and competitions</div>
-                        <div className="space-y-1">
-                          <div className="text-sm text-gray-300">• Premier League</div>
-                          <div className="text-sm text-gray-300">• Champions League</div>
-                          <div className="text-sm text-gray-300">• World Cup Qualifiers</div>
-                          <div className="text-sm text-gray-300">• Regional Tournaments</div>
-                        </div>
+                        <div className="text-xs text-gray-300">Coming soon...</div>
                       </div>
                     )}
                   </div>

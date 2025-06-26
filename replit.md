@@ -101,6 +101,7 @@ The application uses PostgreSQL with the following core entities:
 ## Changelog
 ```
 Changelog:
+- June 26, 2025. Enhanced countries section: Replaced generic country categories with specific top European countries (England, Spain, Italy, Germany, France, Netherlands, Belgium, Switzerland) each with their own league dropdowns
 - June 26, 2025. Added visual separation lines: Implemented border lines between main menu, popular sports, and countries sections in hamburger menu for better visual organization
 - June 26, 2025. Enhanced slide animations: Updated hamburger menu and betslip sidebar to slide from actual screen edges using custom CSS animations with cubic-bezier easing
 - June 26, 2025. Enhanced hamburger menu design: Implemented CSS grid layout with 90x90px boxes, professional shadows, hover effects, and separate icon/text styling for improved user experience
