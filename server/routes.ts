@@ -8,7 +8,7 @@ import { insertBetslipItemSchema, insertUserSchema, insertUserBetSchema } from "
 export async function registerRoutes(app: Express): Promise<Server> {
   // Configure session middleware
   app.use(session({
-    secret: 'nilebet-secret-key-2024',
+    secret: '4bet-secret-key-2024',
     resave: false,
     saveUninitialized: false,
     cookie: {

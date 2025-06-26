@@ -109,13 +109,14 @@ Changelog:
 - June 19, 2025. Fixed betslip odds styling: Changed odds text from blue to bold white for consistency across single and accumulator bets
 - June 19, 2025. Optimized button responsiveness: Eliminated delayed responses by removing CSS conflicts, faster transitions, and improved mobile touch handling
 - June 19, 2025. Complete styling overhaul: Implemented yellow hover theme with black text default, betslip circle always yellow, sign up buttons always yellow with black text
+- June 26, 2025. Company rebrand: Changed from TATAbets to 4bet throughout application with new logo design and 4betssd.com domain
 - June 19, 2025. Company rebrand: Changed from NileBet to TATAbets throughout application
 - June 19, 2025. Added phone number validation for Uganda (MTN/Airtel) and South Sudan (92x prefix)
 - June 15, 2025. Initial setup
 ```
 
 ## Domain Configuration
-- Production domain will be: TATAbets.ss or TATAbets.com
+- Production domain will be: 4betssd.com
 - Current development environment supports both South Sudan and Uganda markets
 
 ## User Preferences
