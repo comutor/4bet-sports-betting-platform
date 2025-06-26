@@ -74,21 +74,22 @@ export function HamburgerMenu({ isOpen, onClose, onTabChange, activeTab }: Hambu
               <h3 className="text-base font-bold text-white mb-2 md:mb-3">
                 Main Menu
               </h3>
-              <div className="grid grid-cols-2 gap-2">
+              <div className="grid grid-cols-3 gap-3">
                 {mainSections.map((section) => (
-                  <Button
-                    key={section.id}
-                    variant={activeTab === section.id ? "default" : "secondary"}
-                    className={`p-3 min-h-16 flex flex-col items-center justify-center text-center transition-all duration-300 rounded-xl border-2 shadow-sm hover:scale-105 ${
-                      activeTab === section.id 
-                        ? 'bg-blue-600 text-white border-blue-600' 
-                        : 'bg-transparent border-white text-white hover:bg-blue-600 hover:text-white hover:border-blue-600'
-                    }`}
-                    onClick={() => handleItemClick(section.id)}
-                  >
-                    <i className={`${section.icon} text-xl mb-1`}></i>
-                    <div className="font-medium text-center leading-tight whitespace-normal text-sm">{section.label}</div>
-                  </Button>
+                  <div key={section.id} className="flex flex-col items-center">
+                    <Button
+                      variant={activeTab === section.id ? "default" : "secondary"}
+                      className={`w-16 h-16 p-0 flex items-center justify-center transition-all duration-300 rounded-xl border-2 shadow-sm hover:scale-105 ${
+                        activeTab === section.id 
+                          ? 'bg-blue-600 text-white border-blue-600' 
+                          : 'bg-transparent border-white text-white hover:bg-blue-600 hover:text-white hover:border-blue-600'
+                      }`}
+                      onClick={() => handleItemClick(section.id)}
+                    >
+                      <i className={`${section.icon} text-2xl`}></i>
+                    </Button>
+                    <div className="font-medium text-center leading-tight text-xs mt-2 text-white">{section.label}</div>
+                  </div>
                 ))}
               </div>
             </div>
@@ -98,21 +99,22 @@ export function HamburgerMenu({ isOpen, onClose, onTabChange, activeTab }: Hambu
               <h3 className="text-base font-bold text-white mb-2 md:mb-3">
                 Popular Sports
               </h3>
-              <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
+              <div className="grid grid-cols-3 gap-3">
                 {sportsCategories.map((sport) => (
-                  <Button
-                    key={sport.id}
-                    variant={activeTab === sport.id ? "default" : "secondary"}
-                    className={`p-3 min-h-16 flex flex-col items-center justify-center text-center transition-all duration-300 rounded-xl border-2 shadow-sm hover:scale-105 ${
-                      activeTab === sport.id 
-                        ? 'bg-blue-600 text-white border-blue-600' 
-                        : 'bg-transparent border-white text-white hover:bg-blue-600 hover:text-white hover:border-blue-600'
-                    }`}
-                    onClick={() => handleItemClick(sport.id)}
-                  >
-                    <i className={`${sport.icon} text-xl mb-1`}></i>
-                    <div className={`font-medium text-center leading-tight whitespace-normal text-sm`}>{sport.label}</div>
-                  </Button>
+                  <div key={sport.id} className="flex flex-col items-center">
+                    <Button
+                      variant={activeTab === sport.id ? "default" : "secondary"}
+                      className={`w-16 h-16 p-0 flex items-center justify-center transition-all duration-300 rounded-xl border-2 shadow-sm hover:scale-105 ${
+                        activeTab === sport.id 
+                          ? 'bg-blue-600 text-white border-blue-600' 
+                          : 'bg-transparent border-white text-white hover:bg-blue-600 hover:text-white hover:border-blue-600'
+                      }`}
+                      onClick={() => handleItemClick(sport.id)}
+                    >
+                      <i className={`${sport.icon} text-2xl`}></i>
+                    </Button>
+                    <div className="font-medium text-center leading-tight text-xs mt-2 text-white">{sport.label}</div>
+                  </div>
                 ))}
               </div>
             </div>
