@@ -1,8 +1,8 @@
-# TATAbets - Premier Betting Platform
+# 4bet - Premier Betting Platform
 
 ## Overview
 
-TATAbets is a comprehensive sports betting platform designed for users in South Sudan and Uganda. The application provides a full-stack betting experience with real-time sports data, casino games, virtual sports, and user management. Built with a modern tech stack, it offers both web and mobile-responsive interfaces for placing bets, managing accounts, and accessing various gaming options.
+4bet is a comprehensive sports betting platform designed for users in South Sudan and Uganda. The application provides a full-stack betting experience with real-time sports data, casino games, virtual sports, and user management. Built with a modern tech stack, it offers both web and mobile-responsive interfaces for placing bets, managing accounts, and accessing various gaming options.
 
 ## System Architecture
 

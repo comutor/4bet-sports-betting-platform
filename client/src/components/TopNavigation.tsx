@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { HamburgerMenu } from "./HamburgerMenu";
-import { TATAbetsLogo } from "./TATAbetsLogo";
+import { FourBetLogo } from "./FourBetLogo";
 import { LiveIndicator } from "./LiveIndicator";
 
 interface TopNavigationProps {
@@ -109,7 +109,7 @@ export function TopNavigation({ activeTab, onTabChange, userBalance, userCountry
                 onTabChange('home');
               }}
             >
-              <TATAbetsLogo size="md" />
+              <FourBetLogo size="md" />
             </button>
           </div>
           

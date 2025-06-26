@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { TATAbetsLogo } from "./TATAbetsLogo";
+import { FourBetLogo } from "./FourBetLogo";
 
 interface HamburgerMenuProps {
   isOpen: boolean;
@@ -60,7 +60,7 @@ export function HamburgerMenu({ isOpen, onClose, onTabChange, activeTab }: Hambu
               className="flex items-center space-x-3 hover:opacity-80 transition-opacity cursor-pointer logo-container"
               onClick={() => handleItemClick('home')}
             >
-              <TATAbetsLogo size="lg" />
+              <FourBetLogo size="lg" />
             </button>
             <Button variant="ghost" onClick={onClose} className="p-2 text-gray-400 hover:text-white">
               <i className="fas fa-times text-2xl"></i>
