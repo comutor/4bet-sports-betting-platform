@@ -24,7 +24,7 @@ export function LoginPrompt({ isOpen, onClose, onLogin, onSignup }: LoginPromptP
           <div className="space-y-3">
             <Button 
               onClick={onSignup}
-              className="w-full bg-yellow-400 border-2 border-yellow-400 text-black hover:bg-yellow-500 hover:border-yellow-500 transition-all duration-300 hover:scale-105 font-bold py-3"
+              className="w-full bg-blue-600 border-2 border-blue-600 text-white hover:bg-blue-700 hover:border-blue-700 transition-all duration-300 hover:scale-105 font-bold py-3"
             >
               SIGN UP
             </Button>
@@ -32,7 +32,7 @@ export function LoginPrompt({ isOpen, onClose, onLogin, onSignup }: LoginPromptP
             <Button 
               onClick={onLogin}
               variant="outline" 
-              className="w-full border-2 border-white text-white hover:bg-yellow-400 hover:text-black hover:border-yellow-400 transition-all duration-300 hover:scale-105 font-bold py-3"
+              className="w-full border-2 border-white text-white hover:bg-blue-600 hover:text-white hover:border-blue-600 transition-all duration-300 hover:scale-105 font-bold py-3"
             >
               LOG IN
             </Button>

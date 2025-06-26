@@ -103,7 +103,7 @@ export function MyBetsSection({ userId, userCountry, placedBets = [] }: MyBetsSe
       case 'lost':
         return 'border-red-500 bg-red-500/10 text-red-400';
       case 'pending':
-        return 'border-yellow-500 bg-yellow-500/10 text-yellow-400';
+        return 'border-blue-500 bg-blue-500/10 text-blue-400';
       case 'void':
         return 'border-gray-500 bg-gray-500/10 text-gray-400';
       default:

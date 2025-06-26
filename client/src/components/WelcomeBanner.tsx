@@ -64,7 +64,7 @@ export function WelcomeBanner() {
             </div>
             <h1 className="text-3xl md:text-5xl font-bold mb-3 text-white">{currentBanner.title}</h1>
             <p className="text-lg md:text-xl text-gray-200 mb-5">{currentBanner.subtitle}</p>
-            <Button className="bg-warning hover:bg-yellow-500 text-black px-6 py-2.5 text-base font-bold transition-colors">
+            <Button className="bg-warning hover:bg-blue-700 text-white px-6 py-2.5 text-base font-bold transition-colors">
               {currentBanner.buttonText}
             </Button>
           </div>

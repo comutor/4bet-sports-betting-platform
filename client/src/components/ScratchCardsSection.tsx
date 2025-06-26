@@ -84,7 +84,7 @@ export function ScratchCardsSection() {
             <div 
               className={`w-40 h-40 rounded-xl border-2 border-gray-600 flex items-center justify-center cursor-pointer transition-all duration-300 ${
                 card.isScratched 
-                  ? 'bg-gradient-to-br from-yellow-400 to-orange-500 border-yellow-400' 
+                  ? 'bg-gradient-to-br from-blue-400 to-blue-600 border-blue-400' 
                   : 'bg-gradient-to-br from-gray-700 to-gray-800 hover:from-gray-600 hover:to-gray-700'
               }`}
               onClick={() => !card.isScratched && canPlayAgain && scratchCard(card.id)}

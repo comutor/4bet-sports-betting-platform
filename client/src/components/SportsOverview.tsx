@@ -50,7 +50,7 @@ export function SportsOverview({ onBetClick, activeFilter, onTabChange }: Sports
   const quickAccessItems = [
     { id: 'football', name: 'Football', icon: '⚽', color: 'bg-green-600' },
     { id: 'basketball', name: 'Basketball', icon: '🏀', color: 'bg-orange-600' },
-    { id: 'tennis', name: 'Tennis', icon: '🎾', color: 'bg-yellow-600' },
+    { id: 'tennis', name: 'Tennis', icon: '🎾', color: 'bg-blue-600' },
     { id: 'hockey', name: 'Hockey', icon: '🏒', color: 'bg-blue-600' },
     { id: 'leagues', name: 'Leagues', icon: '🏆', color: 'bg-purple-600' },
     { id: 'calendar', name: 'Calendar', icon: '📅', color: 'bg-red-600' }

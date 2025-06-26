@@ -91,7 +91,7 @@ export function CountriesSection({ selectedCategory = 'top-countries', onBetClic
                     variant="ghost"
                     className="w-full justify-start text-gray-300 hover:text-white hover:bg-slate-700"
                   >
-                    <i className="fas fa-trophy mr-3 text-yellow-500"></i>
+                    <i className="fas fa-trophy mr-3 text-blue-500"></i>
                     {league}
                   </Button>
                 ))}
