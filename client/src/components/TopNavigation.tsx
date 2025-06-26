@@ -77,7 +77,7 @@ export function TopNavigation({ activeTab, onTabChange, userBalance, userCountry
     { id: 'promotions', label: 'Promotions', icon: 'fas fa-gift', color: 'bg-pink-600' },
     { id: 'football', label: 'Football', icon: 'fas fa-futbol', color: 'bg-green-500' },
     { id: 'basketball', label: 'Basketball', icon: 'fas fa-basketball', color: 'bg-orange-500' },
-    { id: 'tennis', label: 'Tennis', icon: 'fas fa-table-tennis', color: 'bg-yellow-600' },
+    { id: 'tennis', label: 'Tennis', icon: 'fas fa-table-tennis', color: 'bg-blue-600' },
     { id: 'hockey', label: 'Ice Hockey', icon: 'fas fa-hockey-puck', color: 'bg-blue-500' },
     { id: 'baseball', label: 'Baseball', icon: 'fas fa-baseball', color: 'bg-red-500' },
     { id: 'volleyball', label: 'Volleyball', icon: 'fas fa-volleyball', color: 'bg-indigo-600' }

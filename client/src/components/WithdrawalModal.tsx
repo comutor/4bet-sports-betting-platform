@@ -136,7 +136,7 @@ export function WithdrawalModal({ isOpen, onClose, userCountry, currentBalance, 
             <div className="text-xs text-gray-400 mt-1">
               Maximum withdrawal: {getCurrency()} {getMaxWithdrawal().toLocaleString()}
             </div>
-            <div className="text-xs text-yellow-400 mt-1">
+            <div className="text-xs text-blue-400 mt-1">
               Daily limit: {getCurrency()} {(userCountry === 'Uganda' ? 7000000 : 5000000).toLocaleString()}
             </div>
           </div>
