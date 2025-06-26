@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { FourBetLogo } from "./FourBetLogo";
 
@@ -11,6 +11,20 @@ interface HamburgerMenuProps {
 
 export function HamburgerMenu({ isOpen, onClose, onTabChange, activeTab }: HamburgerMenuProps) {
   const [countriesExpanded, setCountriesExpanded] = useState(false);
+
+  // Prevent body scroll when menu is open
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+
+    // Cleanup on unmount
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [isOpen]);
   const mainSections = [
     { id: 'sports', label: 'Sports', icon: 'fas fa-futbol' },
     { id: 'live', label: 'In-Play', icon: 'fas fa-broadcast-tower' },
@@ -71,7 +85,7 @@ export function HamburgerMenu({ isOpen, onClose, onTabChange, activeTab }: Hambu
           </div>
           
           {/* Content */}
-          <div className="flex-1 overflow-y-auto overflow-x-hidden p-3 md:p-4 space-y-3 md:space-y-4 hamburger-scroll">
+          <div className="flex-1 hamburger-content p-3 md:p-4 space-y-3 md:space-y-4">
             {/* Main Sections */}
             <div>
               <h3 className="section-title">
