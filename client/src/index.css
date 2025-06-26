@@ -160,7 +160,7 @@
     color: #000000 !important;
   }
 
-  /* Global hover effects - Yellow theme */
+  /* Global hover effects - Teal theme */
   .odd {
     border: 1px solid #ffffff;
     color: #ffffff;
@@ -169,22 +169,22 @@
   }
   
   .odd:hover {
-    background-color: #fbbf24;
+    background-color: #14b8a6;
     color: #000000;
-    border-color: #fbbf24;
+    border-color: #14b8a6;
     transform: scale(1.05);
   }
   
   .odd.selected {
-    background-color: #fbbf24 !important;
+    background-color: #14b8a6 !important;
     color: #000000 !important;
-    border-color: #fbbf24 !important;
+    border-color: #14b8a6 !important;
   }
   
   .odd.selected:hover {
-    background-color: #f59e0b !important;
+    background-color: #0d9488 !important;
     color: #000000 !important;
-    border-color: #f59e0b !important;
+    border-color: #0d9488 !important;
     transform: scale(1.05);
   }
 
