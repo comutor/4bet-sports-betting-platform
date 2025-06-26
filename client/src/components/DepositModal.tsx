@@ -9,9 +9,11 @@ interface DepositModalProps {
   userCountry?: string;
   currentBalance: string;
   onDepositSuccess: (amount: number) => void;
+  isLoggedIn: boolean;
+  onLoginRequired?: () => void;
 }
 
-export function DepositModal({ isOpen, onClose, userCountry, currentBalance, onDepositSuccess }: DepositModalProps) {
+export function DepositModal({ isOpen, onClose, userCountry, currentBalance, onDepositSuccess, isLoggedIn, onLoginRequired }: DepositModalProps) {
   const [selectedMethod, setSelectedMethod] = useState<string>('mobile-money');
   const [amount, setAmount] = useState<string>('');
 
@@ -53,6 +55,16 @@ export function DepositModal({ isOpen, onClose, userCountry, currentBalance, onD
   };
 
   const handleDeposit = async () => {
+    // Check authentication first
+    if (!isLoggedIn) {
+      alert('You must be logged in to make a deposit');
+      onClose();
+      if (onLoginRequired) {
+        onLoginRequired();
+      }
+      return;
+    }
+
     if (!amount || !selectedMethod) return;
 
     setIsProcessing(true);
@@ -76,6 +88,40 @@ export function DepositModal({ isOpen, onClose, userCountry, currentBalance, onD
   };
 
   if (!isOpen) return null;
+
+  // Show login prompt if user is not authenticated
+  if (!isLoggedIn) {
+    return (
+      <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4">
+        <div className="fixed inset-0 bg-black bg-opacity-50" onClick={onClose} />
+        <div className="bg-slate-custom text-white w-full max-w-sm rounded-lg relative z-10 p-6">
+          <div className="text-center">
+            <i className="fas fa-lock text-4xl text-blue-500 mb-4"></i>
+            <h2 className="text-xl font-bold mb-2">Login Required</h2>
+            <p className="text-gray-400 mb-6">You need to be logged in to make a deposit</p>
+            <div className="space-y-3">
+              <Button 
+                onClick={() => {
+                  onClose();
+                  if (onLoginRequired) onLoginRequired();
+                }}
+                className="w-full bg-blue-600 hover:bg-blue-700"
+              >
+                Login Now
+              </Button>
+              <Button 
+                variant="outline" 
+                onClick={onClose}
+                className="w-full border-gray-600 text-gray-400 hover:text-white"
+              >
+                Cancel
+              </Button>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4 overflow-hidden">

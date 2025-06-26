@@ -389,6 +389,8 @@ export default function Home() {
           userCountry={userCountry}
           currentBalance={userBalance}
           onDepositSuccess={handleDepositSuccess}
+          isLoggedIn={isLoggedIn}
+          onLoginRequired={handleOpenLoginModal}
         />
 
         <WithdrawalModal
