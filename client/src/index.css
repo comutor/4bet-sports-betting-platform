@@ -38,6 +38,70 @@
   --live-orange: 14 100% 57%; /* #FF6B35 */
 }
 
+/* Hamburger Menu Grid Layout */
+.menu-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
+  gap: 20px;
+  padding: 15px 10px;
+  justify-items: center;
+  align-items: center;
+}
+
+/* Menu Item Styling */
+.menu-item {
+  background-color: #1f2a37;
+  border-radius: 12px;
+  padding: 15px;
+  width: 90px;
+  height: 90px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  border: 1px solid #3b3f45;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  transition: transform 0.2s ease, background-color 0.2s ease;
+  cursor: pointer;
+  box-sizing: border-box;
+}
+
+.menu-item:hover {
+  transform: translateY(-2px);
+  background-color: #2d3748;
+}
+
+.menu-item.active {
+  background-color: #1E40AF;
+  border-color: #1E40AF;
+}
+
+.menu-item.active:hover {
+  background-color: #1E3A8A;
+}
+
+/* Icon and Text Styling */
+.menu-item i {
+  font-size: 24px;
+  margin-bottom: 8px;
+}
+
+.menu-item span {
+  font-size: 13px;
+  text-align: center;
+  line-height: 1.2;
+}
+
+/* Section Title Styling */
+.section-title {
+  margin: 25px 0 10px;
+  font-weight: 600;
+  font-size: 16px;
+  color: #e2e8f0;
+  padding-left: 15px;
+}
+
 .dark {
   --background: 240 10% 3.9%;
   --foreground: 0 0% 98%;

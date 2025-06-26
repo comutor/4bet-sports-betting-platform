@@ -71,24 +71,18 @@ export function HamburgerMenu({ isOpen, onClose, onTabChange, activeTab }: Hambu
           <div className="flex-1 overflow-y-auto overflow-x-hidden p-3 md:p-4 space-y-3 md:space-y-4 hamburger-scroll">
             {/* Main Sections */}
             <div>
-              <h3 className="text-base font-bold text-white mb-2 md:mb-3">
+              <h3 className="section-title">
                 Main Menu
               </h3>
-              <div className="grid grid-cols-3 gap-3">
+              <div className="menu-grid">
                 {mainSections.map((section) => (
-                  <div key={section.id} className="flex flex-col items-center">
-                    <Button
-                      variant={activeTab === section.id ? "default" : "secondary"}
-                      className={`w-16 h-16 p-0 flex items-center justify-center transition-all duration-300 rounded-xl border-2 shadow-sm hover:scale-105 ${
-                        activeTab === section.id 
-                          ? 'bg-blue-600 text-white border-blue-600' 
-                          : 'bg-transparent border-white text-white hover:bg-blue-600 hover:text-white hover:border-blue-600'
-                      }`}
-                      onClick={() => handleItemClick(section.id)}
-                    >
-                      <i className={`${section.icon} text-2xl`}></i>
-                    </Button>
-                    <div className="font-medium text-center leading-tight text-xs mt-2 text-white">{section.label}</div>
+                  <div
+                    key={section.id}
+                    className={`menu-item ${activeTab === section.id ? 'active' : ''}`}
+                    onClick={() => handleItemClick(section.id)}
+                  >
+                    <i className={section.icon}></i>
+                    <span>{section.label}</span>
                   </div>
                 ))}
               </div>
@@ -96,24 +90,18 @@ export function HamburgerMenu({ isOpen, onClose, onTabChange, activeTab }: Hambu
             
             {/* Sports Categories */}
             <div>
-              <h3 className="text-base font-bold text-white mb-2 md:mb-3">
+              <h3 className="section-title">
                 Popular Sports
               </h3>
-              <div className="grid grid-cols-3 gap-3">
+              <div className="menu-grid">
                 {sportsCategories.map((sport) => (
-                  <div key={sport.id} className="flex flex-col items-center">
-                    <Button
-                      variant={activeTab === sport.id ? "default" : "secondary"}
-                      className={`w-16 h-16 p-0 flex items-center justify-center transition-all duration-300 rounded-xl border-2 shadow-sm hover:scale-105 ${
-                        activeTab === sport.id 
-                          ? 'bg-blue-600 text-white border-blue-600' 
-                          : 'bg-transparent border-white text-white hover:bg-blue-600 hover:text-white hover:border-blue-600'
-                      }`}
-                      onClick={() => handleItemClick(sport.id)}
-                    >
-                      <i className={`${sport.icon} text-2xl`}></i>
-                    </Button>
-                    <div className="font-medium text-center leading-tight text-xs mt-2 text-white">{sport.label}</div>
+                  <div
+                    key={sport.id}
+                    className={`menu-item ${activeTab === sport.id ? 'active' : ''}`}
+                    onClick={() => handleItemClick(sport.id)}
+                  >
+                    <i className={sport.icon}></i>
+                    <span>{sport.label}</span>
                   </div>
                 ))}
               </div>
@@ -121,23 +109,19 @@ export function HamburgerMenu({ isOpen, onClose, onTabChange, activeTab }: Hambu
 
             {/* Countries */}
             <div>
-              <h3 className="text-base font-bold text-white mb-2 md:mb-3">
+              <h3 className="section-title">
                 Countries
               </h3>
-              <div className="space-y-1">
+              <div className="menu-grid">
                 {countryCategories.map((country) => (
-                  <Button
+                  <div
                     key={country.id}
-                    variant="ghost"
-                    className="w-full justify-between p-2 text-left text-gray-300 hover:bg-slate-light-custom active:bg-slate-600 transition-all duration-200 rounded-xl border border-slate-600 hover:border-slate-500 shadow-sm touch-manipulation"
+                    className={`menu-item ${activeTab === country.id ? 'active' : ''}`}
                     onClick={() => handleItemClick(country.id)}
                   >
-                    <div className="flex items-center">
-                      <i className={`${country.icon} w-4 md:w-5 mr-3 text-gray-400`}></i>
-                      <span className="text-sm font-medium">{country.label}</span>
-                    </div>
-                    <i className="fas fa-chevron-right text-gray-400 text-xs transition-transform duration-200"></i>
-                  </Button>
+                    <i className={country.icon}></i>
+                    <span>{country.label}</span>
+                  </div>
                 ))}
               </div>
             </div>
