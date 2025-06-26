@@ -10,7 +10,7 @@ interface HamburgerMenuProps {
 }
 
 export function HamburgerMenu({ isOpen, onClose, onTabChange, activeTab }: HamburgerMenuProps) {
-  const [countriesExpanded, setCountriesExpanded] = useState(false);
+  const [expandedCountry, setExpandedCountry] = useState<string | null>(null);
 
   // Prevent body scroll when menu is open
   useEffect(() => {
@@ -124,45 +124,50 @@ export function HamburgerMenu({ isOpen, onClose, onTabChange, activeTab }: Hambu
               </div>
             </div>
 
-            {/* Countries Dropdown */}
+            {/* Countries Dropdowns */}
             <div>
               <h3 className="section-title">
                 Countries
               </h3>
-              <div className="px-3">
-                <Button
-                  variant="ghost"
-                  className="w-full justify-between p-3 text-left text-gray-300 hover:bg-slate-700 transition-all duration-200 rounded-xl border border-slate-600 hover:border-slate-500 shadow-sm"
-                  onClick={() => setCountriesExpanded(!countriesExpanded)}
-                >
-                  <div className="flex items-center">
-                    <i className="fas fa-globe w-5 mr-3 text-gray-400"></i>
-                    <span className="text-sm font-medium">Select Country</span>
-                  </div>
-                  <i className={`fas fa-chevron-${countriesExpanded ? 'up' : 'down'} text-gray-400 text-xs transition-transform duration-200`}></i>
-                </Button>
-                
-                {countriesExpanded && (
-                  <div className="mt-2 space-y-1 ml-4">
-                    {countryCategories.map((country) => (
-                      <Button
-                        key={country.id}
-                        variant="ghost"
-                        className={`w-full justify-start p-2 text-left transition-all duration-200 rounded-lg ${
-                          activeTab === country.id 
-                            ? 'bg-blue-600 text-white' 
-                            : 'text-gray-400 hover:bg-slate-700 hover:text-white'
-                        }`}
-                        onClick={() => handleItemClick(country.id)}
-                      >
-                        <div className="flex items-center">
-                          <i className={`${country.icon} w-4 mr-3`}></i>
-                          <span className="text-sm">{country.label}</span>
+              <div className="px-3 space-y-2">
+                {countryCategories.map((country) => (
+                  <div key={country.id}>
+                    <Button
+                      variant="ghost"
+                      className={`w-full justify-between p-3 text-left transition-all duration-200 rounded-xl border border-slate-600 hover:border-slate-500 shadow-sm ${
+                        activeTab === country.id 
+                          ? 'bg-blue-600 text-white border-blue-600' 
+                          : 'text-gray-300 hover:bg-slate-700'
+                      }`}
+                      onClick={() => {
+                        if (expandedCountry === country.id) {
+                          setExpandedCountry(null);
+                        } else {
+                          setExpandedCountry(country.id);
+                          handleItemClick(country.id);
+                        }
+                      }}
+                    >
+                      <div className="flex items-center">
+                        <i className={`${country.icon} w-5 mr-3 text-gray-400`}></i>
+                        <span className="text-sm font-medium">{country.label}</span>
+                      </div>
+                      <i className={`fas fa-chevron-${expandedCountry === country.id ? 'up' : 'down'} text-gray-400 text-xs transition-transform duration-200`}></i>
+                    </Button>
+                    
+                    {expandedCountry === country.id && (
+                      <div className="mt-2 ml-6 p-3 bg-slate-800 rounded-lg border border-slate-600">
+                        <div className="text-xs text-gray-400 mb-2">Available leagues and competitions</div>
+                        <div className="space-y-1">
+                          <div className="text-sm text-gray-300">• Premier League</div>
+                          <div className="text-sm text-gray-300">• Champions League</div>
+                          <div className="text-sm text-gray-300">• World Cup Qualifiers</div>
+                          <div className="text-sm text-gray-300">• Regional Tournaments</div>
                         </div>
-                      </Button>
-                    ))}
+                      </div>
+                    )}
                   </div>
-                )}
+                ))}
               </div>
             </div>
 
