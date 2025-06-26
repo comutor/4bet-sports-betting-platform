@@ -14,7 +14,8 @@ export function HamburgerMenu({ isOpen, onClose, onTabChange, activeTab }: Hambu
     { id: 'live', label: 'In-Play', icon: 'fas fa-broadcast-tower' },
     { id: 'casino', label: 'Casino', icon: 'fas fa-dice' },
     { id: 'virtual', label: 'Virtual', icon: 'fas fa-robot' },
-    { id: 'aviator', label: 'Aviator', icon: 'fas fa-plane' }
+    { id: 'aviator', label: 'Aviator', icon: 'fas fa-plane' },
+    { id: 'scratch-cards', label: 'Scratch Cards', icon: 'fas fa-credit-card' }
   ];
 
   const sportsCategories = [
