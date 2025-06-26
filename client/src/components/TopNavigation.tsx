@@ -84,11 +84,12 @@ export function TopNavigation({ activeTab, onTabChange, userBalance, userCountry
   ];
 
   return (
-    <nav className="bg-slate-custom border-b border-gray-700 sticky top-0 z-40">
-      <div className="max-w-7xl mx-auto px-4">
-        {/* Top Row - Hamburger, Logo, Search, Balance */}
-        <div className="flex items-center justify-between h-14 md:h-16">
-          {/* Left side - Hamburger and Logo */}
+    <nav className="bg-slate-custom sticky top-0 z-40">
+      <div className="max-w-7xl mx-auto">
+        {/* Top Header - Hamburger, Logo, Search, Balance */}
+        <div className="bg-slate-900/95 backdrop-blur-sm border-b border-gray-600/50 shadow-lg">
+          <div className="px-4 flex items-center justify-between h-16 md:h-18">
+            {/* Left side - Hamburger and Logo */}
           <div className="flex items-center space-x-2 md:space-x-3">
             <Button 
               variant="ghost" 
@@ -172,7 +173,7 @@ export function TopNavigation({ activeTab, onTabChange, userBalance, userCountry
         </div>
         
         {/* Bottom Row - Navigation Tabs */}
-        <div className="pb-3 relative">
+        <div className="bg-slate-custom/90 backdrop-blur-sm px-4 pb-3 relative border-b border-gray-700/30">
           <div className="flex items-center">
             {/* Scrollable Navigation Pills */}
             <div className="flex items-center overflow-x-auto scrollbar-hide flex-1 pr-12">
@@ -556,6 +557,7 @@ export function TopNavigation({ activeTab, onTabChange, userBalance, userCountry
             </div>
           )}
         </div>
+      </div>
       </div>
       
       {/* Hamburger Menu */}
