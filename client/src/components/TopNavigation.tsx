@@ -286,49 +286,49 @@ export function TopNavigation({ activeTab, onTabChange, userBalance, userCountry
           
           {/* Sports Filter Dropdowns */}
           {activeTab === 'sports' && (
-            <div className="flex items-center gap-1.5 lg:gap-3 mt-3 px-2 overflow-x-auto scrollbar-hide">
+            <div className="flex items-center gap-2 lg:gap-6 mt-3 px-2 overflow-x-auto scrollbar-hide">
               <div 
-                className="bg-slate-800 border border-gray-600 rounded-md px-2.5 lg:px-4 py-1.5 flex items-center gap-1.5 cursor-pointer hover:bg-slate-700 transition-colors whitespace-nowrap shrink-0"
+                className="bg-slate-800 border border-gray-600 rounded-md px-4 lg:px-8 py-2 lg:py-3 flex items-center gap-2 cursor-pointer hover:bg-slate-700 transition-colors whitespace-nowrap shrink-0 min-w-[120px] lg:min-w-[160px]"
                 onClick={() => {
                   setIsServicesDropdownOpen(false); // Close services dropdown
                   setIsSportDropdownOpen(!isSportDropdownOpen);
                 }}
               >
-                <i className="fas fa-futbol text-xs text-gray-300"></i>
-                <span className="text-xs lg:text-sm text-gray-300">{selectedSport}</span>
+                <i className="fas fa-futbol text-sm text-gray-300"></i>
+                <span className="text-sm lg:text-base text-gray-300 font-medium">{selectedSport}</span>
                 <i className={`fas fa-chevron-down text-xs text-gray-400 transition-transform ${isSportDropdownOpen ? 'rotate-180' : ''}`}></i>
               </div>
               <div 
-                className="bg-slate-800 border border-gray-600 rounded-md px-2.5 lg:px-4 py-1.5 flex items-center gap-1.5 cursor-pointer hover:bg-slate-700 transition-colors whitespace-nowrap shrink-0"
+                className="bg-slate-800 border border-gray-600 rounded-md px-4 lg:px-8 py-2 lg:py-3 flex items-center gap-2 cursor-pointer hover:bg-slate-700 transition-colors whitespace-nowrap shrink-0 min-w-[120px] lg:min-w-[160px]"
                 onClick={() => {
                   setIsServicesDropdownOpen(false); // Close services dropdown
                   setIsLeaguesDropdownOpen(!isLeaguesDropdownOpen);
                 }}
               >
-                <i className="fas fa-trophy text-xs text-gray-300"></i>
-                <span className="text-xs lg:text-sm text-gray-300">{selectedLeague}</span>
+                <i className="fas fa-trophy text-sm text-gray-300"></i>
+                <span className="text-sm lg:text-base text-gray-300 font-medium">{selectedLeague}</span>
                 <i className={`fas fa-chevron-down text-xs text-gray-400 transition-transform ${isLeaguesDropdownOpen ? 'rotate-180' : ''}`}></i>
               </div>
               <div 
-                className="bg-slate-800 border border-gray-600 rounded-md px-2.5 lg:px-4 py-1.5 flex items-center gap-1.5 cursor-pointer hover:bg-slate-700 transition-colors whitespace-nowrap shrink-0"
+                className="bg-slate-800 border border-gray-600 rounded-md px-4 lg:px-8 py-2 lg:py-3 flex items-center gap-2 cursor-pointer hover:bg-slate-700 transition-colors whitespace-nowrap shrink-0 min-w-[120px] lg:min-w-[160px]"
                 onClick={() => {
                   setIsServicesDropdownOpen(false); // Close services dropdown
                   setIsMarketsDropdownOpen(!isMarketsDropdownOpen);
                 }}
               >
-                <i className="fas fa-chart-line text-xs text-gray-300"></i>
-                <span className="text-xs lg:text-sm text-gray-300">{selectedMarket}</span>
+                <i className="fas fa-chart-line text-sm text-gray-300"></i>
+                <span className="text-sm lg:text-base text-gray-300 font-medium">{selectedMarket}</span>
                 <i className={`fas fa-chevron-down text-xs text-gray-400 transition-transform ${isMarketsDropdownOpen ? 'rotate-180' : ''}`}></i>
               </div>
               <div 
-                className="bg-slate-800 border border-gray-600 rounded-md px-2.5 lg:px-4 py-1.5 flex items-center gap-1.5 cursor-pointer hover:bg-slate-700 transition-colors whitespace-nowrap shrink-0 relative"
+                className="bg-slate-800 border border-gray-600 rounded-md px-4 lg:px-8 py-2 lg:py-3 flex items-center gap-2 cursor-pointer hover:bg-slate-700 transition-colors whitespace-nowrap shrink-0 min-w-[120px] lg:min-w-[160px] relative"
                 onClick={() => {
                   setIsServicesDropdownOpen(false); // Close services dropdown
                   setIsDateDropdownOpen(!isDateDropdownOpen);
                 }}
               >
-                <i className="fas fa-calendar text-xs text-gray-300"></i>
-                <span className="text-xs lg:text-sm text-gray-300">{selectedDateFilter}</span>
+                <i className="fas fa-calendar text-sm text-gray-300"></i>
+                <span className="text-sm lg:text-base text-gray-300 font-medium">{selectedDateFilter}</span>
                 <i className={`fas fa-chevron-down text-xs text-gray-400 transition-transform ${isDateDropdownOpen ? 'rotate-180' : ''}`}></i>
                 
 
