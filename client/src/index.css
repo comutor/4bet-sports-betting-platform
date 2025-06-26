@@ -34,7 +34,7 @@
   --slate-light: 215 20% 25%; /* #334155 */
   --success-green: 142 76% 36%; /* #10B981 */
   --danger-red: 0 84% 60%; /* #EF4444 */
-  --warning-yellow: 43 96% 56%; /* #F59E0B */
+  --warning-teal: 180 83% 47%; /* #14B8A6 */
   --live-orange: 14 100% 57%; /* #FF6B35 */
 }
 
@@ -155,8 +155,8 @@
 
   /* Odds button selection styles */
   .odd-btn.selected {
-    background-color: #fbbf24 !important;
-    border-color: #fbbf24 !important;
+    background-color: #14b8a6 !important;
+    border-color: #14b8a6 !important;
     color: #000000 !important;
   }
 
@@ -216,13 +216,13 @@
     font-weight: bold;
   }
   
-  /* Yellow hover for all interactive elements except logo */
+  /* Teal hover for all interactive elements except logo */
   button:hover:not(.no-hover):not(.logo-container), 
-  .hover-yellow:hover,
+  .hover-teal:hover,
   [role="button"]:hover:not(.logo-container) {
-    background-color: #fbbf24;
+    background-color: #14b8a6;
     color: #000000;
-    border-color: #fbbf24;
+    border-color: #14b8a6;
   }
 
   /* Add active state for better mobile feedback */
