@@ -47,14 +47,14 @@ export function AccountPage({ isLoggedIn = false, onClose, onSignupClick, onLogi
           {!isLoggedIn ? (
             <div className="grid grid-cols-2 gap-3">
               <Button 
-                className="bg-yellow-400 border-2 border-yellow-400 text-black hover:bg-yellow-500 hover:border-yellow-500 transition-all duration-300 hover:scale-105 font-bold py-4 text-sm"
+                className="bg-blue-600 border-2 border-blue-600 text-white hover:bg-blue-700 hover:border-blue-700 transition-all duration-300 hover:scale-105 font-bold py-4 text-sm"
                 onClick={onSignupClick}
               >
                 SIGN UP
               </Button>
               <Button 
                 variant="outline" 
-                className="border-2 border-white text-white hover:bg-yellow-400 hover:text-black hover:border-yellow-400 transition-all duration-300 hover:scale-105 font-bold py-4 text-sm"
+                className="border-2 border-white text-white hover:bg-blue-600 hover:text-white hover:border-blue-600 transition-all duration-300 hover:scale-105 font-bold py-4 text-sm"
                 onClick={onLoginClick}
               >
                 LOG IN
@@ -63,14 +63,14 @@ export function AccountPage({ isLoggedIn = false, onClose, onSignupClick, onLogi
           ) : (
             <div className="grid grid-cols-2 gap-3">
               <Button 
-                className="bg-transparent border-2 border-white text-white hover:bg-yellow-400 hover:text-black hover:border-yellow-400 transition-all duration-300 hover:scale-105 font-bold py-4"
+                className="bg-transparent border-2 border-white text-white hover:bg-blue-600 hover:text-white hover:border-blue-600 transition-all duration-300 hover:scale-105 font-bold py-4"
                 onClick={onDepositClick}
               >
                 DEPOSIT
               </Button>
               <Button 
                 variant="outline" 
-                className="border-2 border-white text-white hover:bg-yellow-400 hover:text-black hover:border-yellow-400 transition-all duration-300 hover:scale-105 font-bold py-4"
+                className="border-2 border-white text-white hover:bg-blue-600 hover:text-white hover:border-blue-600 transition-all duration-300 hover:scale-105 font-bold py-4"
                 onClick={onWithdrawClick}
               >
                 WITHDRAW

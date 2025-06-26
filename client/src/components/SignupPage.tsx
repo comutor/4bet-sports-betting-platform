@@ -193,7 +193,7 @@ export function SignupPage({ onClose, onSuccess }: SignupPageProps) {
           <Button
             type="button"
             variant={!isLogin ? "default" : "ghost"}
-            className={`flex-1 ${!isLogin ? 'bg-yellow-400 text-black' : 'text-gray-400'}`}
+            className={`flex-1 ${!isLogin ? 'bg-blue-600 text-white' : 'text-gray-400'}`}
             onClick={() => setIsLogin(false)}
           >
             Sign Up
@@ -201,7 +201,7 @@ export function SignupPage({ onClose, onSuccess }: SignupPageProps) {
           <Button
             type="button"
             variant={isLogin ? "default" : "ghost"}
-            className={`flex-1 ${isLogin ? 'bg-yellow-400 text-black' : 'text-gray-400'}`}
+            className={`flex-1 ${isLogin ? 'bg-blue-600 text-white' : 'text-gray-400'}`}
             onClick={() => setIsLogin(true)}
           >
             Log In
@@ -336,7 +336,7 @@ export function SignupPage({ onClose, onSuccess }: SignupPageProps) {
         {/* Submit Button */}
         <Button
           type="submit"
-          className="w-full bg-yellow-400 border-2 border-yellow-400 text-black hover:bg-yellow-500 hover:border-yellow-500 transition-all duration-300 hover:scale-105 font-bold py-3"
+          className="w-full bg-blue-600 border-2 border-blue-600 text-white hover:bg-blue-700 hover:border-blue-700 transition-all duration-300 hover:scale-105 font-bold py-3"
         >
           {isLogin ? 'LOG IN' : 'CREATE ACCOUNT'}
         </Button>

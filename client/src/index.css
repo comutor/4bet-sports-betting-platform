@@ -115,11 +115,11 @@
   }
   
   .text-warning {
-    color: hsl(var(--warning-yellow));
+    color: hsl(var(--warning-blue));
   }
   
   .bg-warning {
-    background-color: hsl(var(--warning-yellow));
+    background-color: hsl(var(--warning-blue));
   }
 
   /* Custom scrollbar styles for hamburger menu */
