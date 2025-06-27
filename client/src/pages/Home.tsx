@@ -25,6 +25,7 @@ import { SettingsSection } from "@/components/SettingsSection";
 import { DepositModal } from "@/components/DepositModal";
 import { WithdrawalModal } from "@/components/WithdrawalModal";
 import { LoadingScreen } from "@/components/LoadingScreen";
+import { VirtualFootballSection } from "@/components/VirtualFootballSection";
 import { useBetslip } from "@/hooks/useBetslip";
 import { sampleFeaturedEvents } from "@/lib/betting-data";
 import { Button } from "@/components/ui/button";

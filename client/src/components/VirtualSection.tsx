@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
+import { VirtualFootballSection } from "./VirtualFootballSection";
+import { VirtualHorseRacingSection } from "./VirtualHorseRacingSection";
 
 interface VirtualSectionProps {
   onBetClick: (eventName: string, selection: string, odds: string) => void;
@@ -111,58 +113,68 @@ export function VirtualSection({ onBetClick }: VirtualSectionProps) {
         </div>
       )}
 
-      {/* Upcoming Matches */}
-      <div className="space-y-4">
-        <h3 className="text-lg font-semibold text-white">Upcoming Matches</h3>
-        {sampleMatches.map((match) => (
-          <div key={match.id} className="bg-slate-800 rounded-lg border border-gray-700 p-4">
-            <div className="flex items-center justify-between mb-3">
-              <div>
-                <div className="font-medium text-white">
-                  {match.homeTeam} vs {match.awayTeam}
+      {/* Virtual Game Content */}
+      {selectedGame === 'virtual-football' && (
+        <VirtualFootballSection onBetClick={onBetClick} />
+      )}
+      
+      {selectedGame === 'virtual-horse-racing' && (
+        <VirtualHorseRacingSection onBetClick={onBetClick} />
+      )}
+      
+      {selectedGame !== 'virtual-football' && selectedGame !== 'virtual-horse-racing' && (
+        <div className="space-y-4">
+          <h3 className="text-lg font-semibold text-white">Upcoming Matches</h3>
+          {sampleMatches.map((match) => (
+            <div key={match.id} className="bg-slate-800 rounded-lg border border-gray-700 p-4">
+              <div className="flex items-center justify-between mb-3">
+                <div>
+                  <div className="font-medium text-white">
+                    {match.homeTeam} vs {match.awayTeam}
+                  </div>
+                  <div className="text-sm text-gray-400">{match.time}</div>
                 </div>
-                <div className="text-sm text-gray-400">{match.time}</div>
+              </div>
+              
+              <div className="grid grid-cols-3 gap-2">
+                <Button
+                  size="sm"
+                  variant="outline"
+                  className="border-gray-600 hover:border-blue-500 hover:bg-blue-500/10"
+                  onClick={() => onBetClick(`${match.homeTeam} vs ${match.awayTeam}`, match.homeTeam, match.odds.home)}
+                >
+                  <div className="text-center">
+                    <div className="text-xs text-gray-400">1</div>
+                    <div className="font-bold">{match.odds.home}</div>
+                  </div>
+                </Button>
+                <Button
+                  size="sm"
+                  variant="outline"
+                  className="border-gray-600 hover:border-blue-500 hover:bg-blue-500/10"
+                  onClick={() => onBetClick(`${match.homeTeam} vs ${match.awayTeam}`, "Draw", match.odds.draw)}
+                >
+                  <div className="text-center">
+                    <div className="text-xs text-gray-400">X</div>
+                    <div className="font-bold">{match.odds.draw}</div>
+                  </div>
+                </Button>
+                <Button
+                  size="sm"
+                  variant="outline"
+                  className="border-gray-600 hover:border-blue-500 hover:bg-blue-500/10"
+                  onClick={() => onBetClick(`${match.homeTeam} vs ${match.awayTeam}`, match.awayTeam, match.odds.away)}
+                >
+                  <div className="text-center">
+                    <div className="text-xs text-gray-400">2</div>
+                    <div className="font-bold">{match.odds.away}</div>
+                  </div>
+                </Button>
               </div>
             </div>
-            
-            <div className="grid grid-cols-3 gap-2">
-              <Button
-                size="sm"
-                variant="outline"
-                className="border-gray-600 hover:border-blue-500 hover:bg-blue-500/10"
-                onClick={() => onBetClick(`${match.homeTeam} vs ${match.awayTeam}`, match.homeTeam, match.odds.home)}
-              >
-                <div className="text-center">
-                  <div className="text-xs text-gray-400">1</div>
-                  <div className="font-bold">{match.odds.home}</div>
-                </div>
-              </Button>
-              <Button
-                size="sm"
-                variant="outline"
-                className="border-gray-600 hover:border-blue-500 hover:bg-blue-500/10"
-                onClick={() => onBetClick(`${match.homeTeam} vs ${match.awayTeam}`, "Draw", match.odds.draw)}
-              >
-                <div className="text-center">
-                  <div className="text-xs text-gray-400">X</div>
-                  <div className="font-bold">{match.odds.draw}</div>
-                </div>
-              </Button>
-              <Button
-                size="sm"
-                variant="outline"
-                className="border-gray-600 hover:border-blue-500 hover:bg-blue-500/10"
-                onClick={() => onBetClick(`${match.homeTeam} vs ${match.awayTeam}`, match.awayTeam, match.odds.away)}
-              >
-                <div className="text-center">
-                  <div className="text-xs text-gray-400">2</div>
-                  <div className="font-bold">{match.odds.away}</div>
-                </div>
-              </Button>
-            </div>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
+      )}
 
       {/* Info Banner */}
       <div className="bg-blue-900/20 border border-blue-500/30 rounded-lg p-4">
