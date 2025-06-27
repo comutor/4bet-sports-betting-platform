@@ -314,7 +314,7 @@ export function HamburgerMenu({ isOpen, onClose, onTabChange, activeTab }: Hambu
                     <Button
                       variant="ghost"
                       className={`w-full justify-between p-3 text-left transition-all duration-200 rounded-xl border border-slate-600 hover:border-slate-500 shadow-sm ${
-                        activeTab === country.id 
+                        expandedCountry === country.id 
                           ? 'bg-blue-600 text-white border-blue-600' 
                           : 'text-gray-300 hover:bg-slate-700'
                       }`}
@@ -323,7 +323,7 @@ export function HamburgerMenu({ isOpen, onClose, onTabChange, activeTab }: Hambu
                           setExpandedCountry(null);
                         } else {
                           setExpandedCountry(country.id);
-                          handleItemClick(country.id);
+                          // Don't call handleItemClick to prevent menu from closing
                         }
                       }}
                     >
@@ -369,7 +369,7 @@ export function HamburgerMenu({ isOpen, onClose, onTabChange, activeTab }: Hambu
                     <Button
                       variant="ghost"
                       className={`w-full justify-between p-3 text-left transition-all duration-200 rounded-xl border border-slate-600 hover:border-slate-500 shadow-sm ${
-                        activeTab === country.id 
+                        expandedCountry === country.id 
                           ? 'bg-blue-600 text-white border-blue-600' 
                           : 'text-gray-300 hover:bg-slate-700'
                       }`}
@@ -378,7 +378,7 @@ export function HamburgerMenu({ isOpen, onClose, onTabChange, activeTab }: Hambu
                           setExpandedCountry(null);
                         } else {
                           setExpandedCountry(country.id);
-                          handleItemClick(country.id);
+                          // Don't call handleItemClick to prevent menu from closing
                         }
                       }}
                     >
