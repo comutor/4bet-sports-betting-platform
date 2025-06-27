@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { VirtualFootballSection } from "./VirtualFootballSection";
 import { VirtualHorseRacingSection } from "./VirtualHorseRacingSection";
+import { VirtualBasketballSection } from "./VirtualBasketballSection";
 
 interface VirtualSectionProps {
   onBetClick: (eventName: string, selection: string, odds: string) => void;
@@ -122,7 +123,11 @@ export function VirtualSection({ onBetClick }: VirtualSectionProps) {
         <VirtualHorseRacingSection onBetClick={onBetClick} />
       )}
       
-      {selectedGame !== 'virtual-football' && selectedGame !== 'virtual-horse-racing' && (
+      {selectedGame === 'virtual-basketball' && (
+        <VirtualBasketballSection onBetClick={onBetClick} />
+      )}
+      
+      {selectedGame !== 'virtual-football' && selectedGame !== 'virtual-horse-racing' && selectedGame !== 'virtual-basketball' && (
         <div className="space-y-4">
           <h3 className="text-lg font-semibold text-white">Upcoming Matches</h3>
           {sampleMatches.map((match) => (
