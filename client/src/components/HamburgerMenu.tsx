@@ -11,6 +11,7 @@ interface HamburgerMenuProps {
 
 export function HamburgerMenu({ isOpen, onClose, onTabChange, activeTab }: HamburgerMenuProps) {
   const [expandedCountry, setExpandedCountry] = useState<string | null>(null);
+  const [expandedSubCountry, setExpandedSubCountry] = useState<string | null>(null);
 
   // Prevent body scroll when menu is open
   useEffect(() => {
@@ -409,16 +410,15 @@ export function HamburgerMenu({ isOpen, onClose, onTabChange, activeTab }: Hambu
                                 <Button
                                   variant="ghost"
                                   className={`w-full justify-between p-2 text-left transition-all duration-200 rounded-lg border border-slate-700 hover:border-slate-500 ${
-                                    expandedCountry === `other-${countryItem.id}` 
+                                    expandedSubCountry === countryItem.id 
                                       ? 'bg-slate-700 text-white border-slate-500' 
                                       : 'text-gray-300 hover:bg-slate-800'
                                   }`}
                                   onClick={() => {
-                                    const countryKey = `other-${countryItem.id}`;
-                                    if (expandedCountry === countryKey) {
-                                      setExpandedCountry(null);
+                                    if (expandedSubCountry === countryItem.id) {
+                                      setExpandedSubCountry(null);
                                     } else {
-                                      setExpandedCountry(countryKey);
+                                      setExpandedSubCountry(countryItem.id);
                                     }
                                   }}
                                 >
@@ -426,10 +426,10 @@ export function HamburgerMenu({ isOpen, onClose, onTabChange, activeTab }: Hambu
                                     <span className="text-sm mr-2">{countryItem.flag}</span>
                                     <span className="text-xs font-medium">{countryItem.label}</span>
                                   </div>
-                                  <i className={`fas fa-chevron-${expandedCountry === `other-${countryItem.id}` ? 'up' : 'down'} text-gray-400 text-xs transition-transform duration-200`}></i>
+                                  <i className={`fas fa-chevron-${expandedSubCountry === countryItem.id ? 'up' : 'down'} text-gray-400 text-xs transition-transform duration-200`}></i>
                                 </Button>
                                 
-                                {expandedCountry === `other-${countryItem.id}` && (
+                                {expandedSubCountry === countryItem.id && (
                                   <div className="mt-1 ml-4 space-y-1 animate-slide-down">
                                     {countryItem.leagues.map((league, leagueIndex) => (
                                       <button
