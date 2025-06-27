@@ -24,6 +24,7 @@ import { MyBetsSection } from "@/components/MyBetsSection";
 import { SettingsSection } from "@/components/SettingsSection";
 import { DepositModal } from "@/components/DepositModal";
 import { WithdrawalModal } from "@/components/WithdrawalModal";
+import { LoadingScreen } from "@/components/LoadingScreen";
 import { useBetslip } from "@/hooks/useBetslip";
 import { sampleFeaturedEvents } from "@/lib/betting-data";
 import { Button } from "@/components/ui/button";
@@ -44,6 +45,7 @@ export default function Home() {
   const [sportsFilter, setSportsFilter] = useState<'upcoming' | 'popular' | 'live'>('upcoming');
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
+  const [isAppLoading, setIsAppLoading] = useState(true);
   const {
     items: betslipItems,
     isOpen: betslipOpen,
@@ -75,6 +77,9 @@ export default function Home() {
         }
       } catch (error) {
         // No existing session
+      } finally {
+        // Hide loading screen after authentication check
+        setTimeout(() => setIsAppLoading(false), 1500);
       }
     };
     
@@ -306,6 +311,11 @@ export default function Home() {
         );
     }
   };
+
+  // Show loading screen during app initialization
+  if (isAppLoading) {
+    return <LoadingScreen />;
+  }
 
   return (
     <div className="min-h-screen bg-background">

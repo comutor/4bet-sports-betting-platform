@@ -201,6 +201,20 @@
   }
 }
 
+/* Loading Spinner Animation */
+.animate-spin {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 .dark {
   --background: 240 10% 3.9%;
   --foreground: 0 0% 98%;
