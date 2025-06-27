@@ -101,6 +101,7 @@ The application uses PostgreSQL with the following core entities:
 ## Changelog
 ```
 Changelog:
+- June 26, 2025. Added footer with legal information: Copyright by Wobo Gaming Limited, South Sudan Gaming Board licensing, payment processing details, and 18+ age restriction warning
 - June 26, 2025. Added loading screen: Created professional startup screen with 4bet logo and thin blue spinning circle animation with pulsing dots
 - June 26, 2025. Enhanced search functionality: Added auto-close detection for search bar (click outside, Escape key) and improved user interaction patterns
 - June 26, 2025. Added search functionality: Implemented search bar that appears between title bar and top navigation with smooth animations, auto-focus, clear/close buttons, and search results placeholder
