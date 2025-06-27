@@ -112,9 +112,114 @@ export function HamburgerMenu({ isOpen, onClose, onTabChange, activeTab }: Hambu
     'Asian Cup'
   ];
 
+  const otherCountries = [
+    { 
+      id: 'brazil', 
+      label: 'Brazil', 
+      flag: '🇧🇷',
+      leagues: ['Campeonato Brasileiro Série A', 'Campeonato Brasileiro Série B', 'Copa do Brasil']
+    },
+    { 
+      id: 'argentina', 
+      label: 'Argentina', 
+      flag: '🇦🇷',
+      leagues: ['Primera División', 'Primera Nacional', 'Copa Argentina']
+    },
+    { 
+      id: 'usa', 
+      label: 'United States', 
+      flag: '🇺🇸',
+      leagues: ['Major League Soccer', 'USL Championship', 'US Open Cup']
+    },
+    { 
+      id: 'mexico', 
+      label: 'Mexico', 
+      flag: '🇲🇽',
+      leagues: ['Liga MX', 'Liga de Expansión MX', 'Copa MX']
+    },
+    { 
+      id: 'japan', 
+      label: 'Japan', 
+      flag: '🇯🇵',
+      leagues: ['J1 League', 'J2 League', 'J3 League', 'Emperor\'s Cup']
+    },
+    { 
+      id: 'australia', 
+      label: 'Australia', 
+      flag: '🇦🇺',
+      leagues: ['A-League Men', 'A-League Women', 'FFA Cup']
+    },
+    { 
+      id: 'russia', 
+      label: 'Russia', 
+      flag: '🇷🇺',
+      leagues: ['Premier League', 'First League', 'Russian Cup']
+    },
+    { 
+      id: 'china', 
+      label: 'China', 
+      flag: '🇨🇳',
+      leagues: ['Super League', 'League One', 'FA Cup']
+    },
+    { 
+      id: 'south-korea', 
+      label: 'South Korea', 
+      flag: '🇰🇷',
+      leagues: ['K League 1', 'K League 2', 'FA Cup']
+    },
+    { 
+      id: 'greece', 
+      label: 'Greece', 
+      flag: '🇬🇷',
+      leagues: ['Super League', 'Super League 2', 'Greek Cup']
+    },
+    { 
+      id: 'scotland', 
+      label: 'Scotland', 
+      flag: '🏴󠁧󠁢󠁳󠁣󠁴󠁿',
+      leagues: ['Premiership', 'Championship', 'Scottish Cup']
+    },
+    { 
+      id: 'norway', 
+      label: 'Norway', 
+      flag: '🇳🇴',
+      leagues: ['Eliteserien', 'OBOS-ligaen', 'Norwegian Cup']
+    },
+    { 
+      id: 'sweden', 
+      label: 'Sweden', 
+      flag: '🇸🇪',
+      leagues: ['Allsvenskan', 'Superettan', 'Svenska Cupen']
+    },
+    { 
+      id: 'denmark', 
+      label: 'Denmark', 
+      flag: '🇩🇰',
+      leagues: ['Superliga', '1st Division', 'Danish Cup']
+    },
+    { 
+      id: 'austria', 
+      label: 'Austria', 
+      flag: '🇦🇹',
+      leagues: ['Bundesliga', '2. Liga', 'ÖFB Cup']
+    },
+    { 
+      id: 'poland', 
+      label: 'Poland', 
+      flag: '🇵🇱',
+      leagues: ['Ekstraklasa', 'I Liga', 'Polish Cup']
+    },
+    { 
+      id: 'chile', 
+      label: 'Chile', 
+      flag: '🇨🇱',
+      leagues: ['Primera División', 'Primera B', 'Copa Chile']
+    }
+  ];
+
   const countryCategories = [
     { id: 'international', label: 'International', icon: 'fas fa-globe', competitions: internationalCompetitions },
-    { id: 'other-countries', label: 'Other Countries', icon: 'fas fa-map' }
+    { id: 'other-countries', label: 'Other Countries', icon: 'fas fa-map', countries: otherCountries }
   ];
 
 
@@ -297,6 +402,26 @@ export function HamburgerMenu({ isOpen, onClose, onTabChange, activeTab }: Hambu
                               >
                                 {competition}
                               </button>
+                            ))
+                          ) : country.id === 'other-countries' && country.countries ? (
+                            country.countries.map((countryItem, index) => (
+                              <div key={index} className="mb-3">
+                                <div className="flex items-center mb-2 px-2">
+                                  <span className="text-sm mr-2">{countryItem.flag}</span>
+                                  <span className="text-xs font-medium text-gray-200">{countryItem.label}</span>
+                                </div>
+                                <div className="ml-6 space-y-1">
+                                  {countryItem.leagues.map((league, leagueIndex) => (
+                                    <button
+                                      key={leagueIndex}
+                                      className="block w-full text-left px-3 py-1 text-xs text-gray-300 hover:text-white hover:bg-slate-700 rounded transition-colors duration-200"
+                                      onClick={() => handleItemClick(`${countryItem.id}-${league.toLowerCase().replace(/\s+/g, '-')}`)}
+                                    >
+                                      {league}
+                                    </button>
+                                  ))}
+                                </div>
+                              </div>
                             ))
                           ) : (
                             <div className="text-xs text-gray-300">Coming soon...</div>
