@@ -405,22 +405,43 @@ export function HamburgerMenu({ isOpen, onClose, onTabChange, activeTab }: Hambu
                             ))
                           ) : country.id === 'other-countries' && country.countries ? (
                             country.countries.map((countryItem, index) => (
-                              <div key={index} className="mb-3">
-                                <div className="flex items-center mb-2 px-2">
-                                  <span className="text-sm mr-2">{countryItem.flag}</span>
-                                  <span className="text-xs font-medium text-gray-200">{countryItem.label}</span>
-                                </div>
-                                <div className="ml-6 space-y-1">
-                                  {countryItem.leagues.map((league, leagueIndex) => (
-                                    <button
-                                      key={leagueIndex}
-                                      className="block w-full text-left px-3 py-1 text-xs text-gray-300 hover:text-white hover:bg-slate-700 rounded transition-colors duration-200"
-                                      onClick={() => handleItemClick(`${countryItem.id}-${league.toLowerCase().replace(/\s+/g, '-')}`)}
-                                    >
-                                      {league}
-                                    </button>
-                                  ))}
-                                </div>
+                              <div key={index} className="mb-2">
+                                <Button
+                                  variant="ghost"
+                                  className={`w-full justify-between p-2 text-left transition-all duration-200 rounded-lg border border-slate-700 hover:border-slate-500 ${
+                                    expandedCountry === `other-${countryItem.id}` 
+                                      ? 'bg-slate-700 text-white border-slate-500' 
+                                      : 'text-gray-300 hover:bg-slate-800'
+                                  }`}
+                                  onClick={() => {
+                                    const countryKey = `other-${countryItem.id}`;
+                                    if (expandedCountry === countryKey) {
+                                      setExpandedCountry(null);
+                                    } else {
+                                      setExpandedCountry(countryKey);
+                                    }
+                                  }}
+                                >
+                                  <div className="flex items-center">
+                                    <span className="text-sm mr-2">{countryItem.flag}</span>
+                                    <span className="text-xs font-medium">{countryItem.label}</span>
+                                  </div>
+                                  <i className={`fas fa-chevron-${expandedCountry === `other-${countryItem.id}` ? 'up' : 'down'} text-gray-400 text-xs transition-transform duration-200`}></i>
+                                </Button>
+                                
+                                {expandedCountry === `other-${countryItem.id}` && (
+                                  <div className="mt-1 ml-4 space-y-1 animate-slide-down">
+                                    {countryItem.leagues.map((league, leagueIndex) => (
+                                      <button
+                                        key={leagueIndex}
+                                        className="block w-full text-left px-3 py-1 text-xs text-gray-300 hover:text-white hover:bg-slate-700 rounded transition-colors duration-200"
+                                        onClick={() => handleItemClick(`${countryItem.id}-${league.toLowerCase().replace(/\s+/g, '-')}`)}
+                                      >
+                                        {league}
+                                      </button>
+                                    ))}
+                                  </div>
+                                )}
                               </div>
                             ))
                           ) : (

@@ -101,6 +101,7 @@ The application uses PostgreSQL with the following core entities:
 ## Changelog
 ```
 Changelog:
+- June 26, 2025. Optimized country navigation: Converted Other Countries section to individual dropdown buttons for each country to reduce scrolling and improve user experience
 - June 26, 2025. Fixed dropdown navigation: Prevented menu from closing when clicking country dropdown buttons, allowing proper expansion of International and Other Countries sections
 - June 26, 2025. Populated other countries section: Added 17 countries with real league data from odds API including Brazil, Argentina, USA, Mexico, Japan, Australia, Russia, and European nations not in top countries
 - June 26, 2025. Added international competitions: Populated International section with major competitions including UEFA Champions League, Europa League, Conference League, CONMEBOL Libertadores, and other continental tournaments
