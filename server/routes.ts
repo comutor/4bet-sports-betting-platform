@@ -1,8 +1,10 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
+import { WebSocketServer, WebSocket } from "ws";
 import session from "express-session";
 import { storage } from "./storage";
 import { oddsApiService } from "./services/oddsApi";
+import { aviatorGame } from "./services/aviatorGame";
 import { insertBetslipItemSchema, insertUserSchema, insertUserBetSchema } from "@shared/schema";
 
 export async function registerRoutes(app: Express): Promise<Server> {
@@ -778,6 +780,129 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Aviator game endpoints
+  app.get("/api/aviator/state", (req, res) => {
+    const gameState = aviatorGame.getCurrentGameState();
+    const recentResults = aviatorGame.getRecentResults();
+    
+    res.json({
+      gameState,
+      recentResults
+    });
+  });
+
+  app.post("/api/aviator/bet", (req, res) => {
+    const { amount } = req.body;
+    const session = req.session as any;
+    
+    if (!session.user) {
+      return res.status(401).json({ message: "Authentication required" });
+    }
+
+    if (!amount || amount <= 0) {
+      return res.status(400).json({ message: "Invalid bet amount" });
+    }
+
+    const success = aviatorGame.placeBet(session.user.id, amount);
+    
+    if (success) {
+      res.json({ success: true, message: "Bet placed successfully" });
+    } else {
+      res.status(400).json({ message: "Unable to place bet" });
+    }
+  });
+
+  app.post("/api/aviator/cashout", (req, res) => {
+    const { betIndex = 0 } = req.body;
+    const session = req.session as any;
+    
+    if (!session.user) {
+      return res.status(401).json({ message: "Authentication required" });
+    }
+
+    const result = aviatorGame.cashOut(session.user.id, betIndex);
+    
+    if (result.success) {
+      res.json(result);
+    } else {
+      res.status(400).json({ message: "Unable to cash out" });
+    }
+  });
+
+  app.get("/api/aviator/my-bets", (req, res) => {
+    const session = req.session as any;
+    
+    if (!session.user) {
+      return res.status(401).json({ message: "Authentication required" });
+    }
+
+    const userBets = aviatorGame.getUserBets(session.user.id);
+    res.json(userBets);
+  });
+
   const httpServer = createServer(app);
+
+  // WebSocket server for real-time Aviator updates
+  const wss = new WebSocketServer({ server: httpServer, path: '/ws/aviator' });
+
+  const connectedClients = new Set<WebSocket>();
+
+  wss.on('connection', (ws: WebSocket) => {
+    connectedClients.add(ws);
+    
+    // Send current game state immediately
+    const gameState = aviatorGame.getCurrentGameState();
+    const recentResults = aviatorGame.getRecentResults();
+    
+    ws.send(JSON.stringify({
+      type: 'gameState',
+      data: { gameState, recentResults }
+    }));
+
+    ws.on('close', () => {
+      connectedClients.delete(ws);
+    });
+
+    ws.on('error', (error) => {
+      console.error('WebSocket error:', error);
+      connectedClients.delete(ws);
+    });
+  });
+
+  // Broadcast game events to all connected clients
+  function broadcast(message: any) {
+    const data = JSON.stringify(message);
+    connectedClients.forEach(ws => {
+      if (ws.readyState === WebSocket.OPEN) {
+        ws.send(data);
+      }
+    });
+  }
+
+  // Listen to aviator game events
+  aviatorGame.on('roundWaiting', (data) => {
+    broadcast({ type: 'roundWaiting', data });
+  });
+
+  aviatorGame.on('roundStarted', (data) => {
+    broadcast({ type: 'roundStarted', data });
+  });
+
+  aviatorGame.on('multiplierUpdate', (data) => {
+    broadcast({ type: 'multiplierUpdate', data });
+  });
+
+  aviatorGame.on('roundCrashed', (data) => {
+    broadcast({ type: 'roundCrashed', data });
+  });
+
+  aviatorGame.on('betPlaced', (data) => {
+    broadcast({ type: 'betPlaced', data });
+  });
+
+  aviatorGame.on('betCashedOut', (data) => {
+    broadcast({ type: 'betCashedOut', data });
+  });
+
   return httpServer;
 }
