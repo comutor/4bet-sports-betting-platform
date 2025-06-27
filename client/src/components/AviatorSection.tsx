@@ -248,10 +248,12 @@ export function AviatorSection() {
         {/* Game Controls */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* Bet 1 */}
-          <div className="bg-slate-light-custom rounded-lg p-4">
+          <div className="bg-slate-700 rounded-lg p-4 border border-slate-600">
             <div className="flex items-center justify-between mb-3">
-              <span className="font-medium">Bet 1</span>
-              <span className="text-success">Active</span>
+              <span className="font-medium text-white">Bet 1</span>
+              <span className={`text-sm ${bet1Placed ? 'text-green-400' : 'text-slate-400'}`}>
+                {bet1Placed ? 'Active' : 'Inactive'}
+              </span>
             </div>
             
             <div className="space-y-3">
@@ -260,7 +262,8 @@ export function AviatorSection() {
                   variant="secondary"
                   size="sm"
                   onClick={() => setBet1Amount(Math.max(1, bet1Amount - 1))}
-                  className="bg-slate-custom hover:bg-gray-600"
+                  className="bg-slate-600 hover:bg-slate-500 text-white"
+                  disabled={!canBet}
                 >
                   -
                 </Button>
@@ -268,29 +271,46 @@ export function AviatorSection() {
                   type="number" 
                   value={bet1Amount} 
                   onChange={(e) => setBet1Amount(parseFloat(e.target.value) || 0)}
-                  className="bg-slate-custom text-center flex-1" 
+                  className="bg-slate-600 text-center flex-1 text-white border-slate-500" 
+                  disabled={!canBet}
                 />
                 <Button 
                   variant="secondary"
                   size="sm"
                   onClick={() => setBet1Amount(bet1Amount + 1)}
-                  className="bg-slate-custom hover:bg-gray-600"
+                  className="bg-slate-600 hover:bg-slate-500 text-white"
+                  disabled={!canBet}
                 >
                   +
                 </Button>
               </div>
               
-              <Button className="w-full bg-success hover:bg-green-600 font-bold transition-colors">
-                CASH OUT ${(bet1Amount * currentMultiplier).toFixed(2)}
-              </Button>
+              {bet1Placed && canCashOut ? (
+                <Button 
+                  className="w-full bg-green-600 hover:bg-green-700 font-bold transition-colors text-white"
+                  onClick={() => cashOut(0)}
+                >
+                  CASH OUT ${(bet1Amount * (gameState?.currentMultiplier || 1)).toFixed(2)}
+                </Button>
+              ) : (
+                <Button 
+                  className="w-full bg-blue-600 hover:bg-blue-700 font-bold transition-colors text-white"
+                  onClick={() => placeBet(bet1Amount, 0)}
+                  disabled={!canBet || bet1Placed}
+                >
+                  BET ${bet1Amount.toFixed(2)}
+                </Button>
+              )}
             </div>
           </div>
           
           {/* Bet 2 */}
-          <div className="bg-slate-light-custom rounded-lg p-4">
+          <div className="bg-slate-700 rounded-lg p-4 border border-slate-600">
             <div className="flex items-center justify-between mb-3">
-              <span className="font-medium">Bet 2</span>
-              <span className="text-gray-400">Inactive</span>
+              <span className="font-medium text-white">Bet 2</span>
+              <span className={`text-sm ${bet2Placed ? 'text-green-400' : 'text-slate-400'}`}>
+                {bet2Placed ? 'Active' : 'Inactive'}
+              </span>
             </div>
             
             <div className="space-y-3">
@@ -299,7 +319,8 @@ export function AviatorSection() {
                   variant="secondary"
                   size="sm"
                   onClick={() => setBet2Amount(Math.max(1, bet2Amount - 1))}
-                  className="bg-slate-custom hover:bg-gray-600"
+                  className="bg-slate-600 hover:bg-slate-500 text-white"
+                  disabled={!canBet}
                 >
                   -
                 </Button>
@@ -307,38 +328,53 @@ export function AviatorSection() {
                   type="number" 
                   value={bet2Amount} 
                   onChange={(e) => setBet2Amount(parseFloat(e.target.value) || 0)}
-                  className="bg-slate-custom text-center flex-1" 
+                  className="bg-slate-600 text-center flex-1 text-white border-slate-500" 
+                  disabled={!canBet}
                 />
                 <Button 
                   variant="secondary"
                   size="sm"
                   onClick={() => setBet2Amount(bet2Amount + 1)}
-                  className="bg-slate-custom hover:bg-gray-600"
+                  className="bg-slate-600 hover:bg-slate-500 text-white"
+                  disabled={!canBet}
                 >
                   +
                 </Button>
               </div>
               
-              <Button className="w-full bg-primary hover:bg-primary-blue-dark font-bold transition-colors">
-                BET ${bet2Amount.toFixed(2)}
-              </Button>
+              {bet2Placed && canCashOut ? (
+                <Button 
+                  className="w-full bg-green-600 hover:bg-green-700 font-bold transition-colors text-white"
+                  onClick={() => cashOut(1)}
+                >
+                  CASH OUT ${(bet2Amount * (gameState?.currentMultiplier || 1)).toFixed(2)}
+                </Button>
+              ) : (
+                <Button 
+                  className="w-full bg-blue-600 hover:bg-blue-700 font-bold transition-colors text-white"
+                  onClick={() => placeBet(bet2Amount, 1)}
+                  disabled={!canBet || bet2Placed}
+                >
+                  BET ${bet2Amount.toFixed(2)}
+                </Button>
+              )}
             </div>
           </div>
         </div>
       </div>
       
       {/* Recent Results */}
-      <div className="bg-slate-custom rounded-xl p-6">
-        <h3 className="text-lg font-bold mb-4">Recent Results</h3>
+      <div className="bg-slate-800 rounded-xl p-6 border border-slate-700">
+        <h3 className="text-lg font-bold mb-4 text-white">Recent Results</h3>
         <div className="grid grid-cols-5 md:grid-cols-10 gap-2">
-          {recentAviatorResults.map((result, index) => (
+          {recentResults.map((result: number, index: number) => (
             <div 
               key={index} 
-              className={`text-center py-2 rounded font-bold text-sm ${
-                parseFloat(result) >= 2 ? 'bg-success' : 'bg-danger'
+              className={`text-center py-2 rounded font-bold text-sm text-white ${
+                result >= 2 ? 'bg-green-600' : 'bg-red-600'
               }`}
             >
-              {result}
+              {result.toFixed(2)}x
             </div>
           ))}
         </div>
