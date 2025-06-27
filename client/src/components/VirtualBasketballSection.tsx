@@ -182,7 +182,9 @@ export function VirtualBasketballSection({ onBetClick }: VirtualBasketballSectio
               : 'text-slate-300 hover:text-white hover:bg-slate-600'
           }`}
         >
-          Next ({getNextMatchTime()})
+          <span>Next (</span>
+          <span className="text-white">{getNextMatchTime()}</span>
+          <span>)</span>
         </button>
         <button
           onClick={() => setActiveTab('results')}
