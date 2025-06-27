@@ -28,6 +28,7 @@ interface VirtualFootballSectionProps {
 export function VirtualFootballSection({ onBetClick }: VirtualFootballSectionProps) {
   const [matches, setMatches] = useState<VirtualMatch[]>([]);
   const [currentTime, setCurrentTime] = useState(new Date());
+  const [activeTab, setActiveTab] = useState<'live' | 'next' | 'results'>('live');
 
   // Generate virtual matches
   useEffect(() => {
@@ -58,8 +59,20 @@ export function VirtualFootballSection({ onBetClick }: VirtualFootballSectionPro
           awayTeamIndex = Math.floor(Math.random() * teams.length);
         }
 
-        const startTime = new Date(now.getTime() + (i * 3 * 60 * 1000)); // Every 3 minutes
-        const status = i === 0 ? 'live' : (i < 3 ? 'upcoming' : 'upcoming');
+        let startTime: Date, status: 'upcoming' | 'live' | 'finished';
+        if (i < 2) {
+          // Past matches (finished)
+          startTime = new Date(now.getTime() - ((2 - i) * 3 * 60 * 1000));
+          status = 'finished';
+        } else if (i === 2) {
+          // Current live match
+          startTime = new Date(now.getTime() - (1 * 60 * 1000)); // Started 1 minute ago
+          status = 'live';
+        } else {
+          // Future matches
+          startTime = new Date(now.getTime() + ((i - 2) * 3 * 60 * 1000));
+          status = 'upcoming';
+        }
 
         newMatches.push({
           id: `virtual-${i}`,
@@ -74,7 +87,7 @@ export function VirtualFootballSection({ onBetClick }: VirtualFootballSectionPro
           },
           status,
           minute: status === 'live' ? Math.floor(Math.random() * 90) + 1 : undefined,
-          score: status === 'live' ? {
+          score: (status === 'live' || status === 'finished') ? {
             home: Math.floor(Math.random() * 4),
             away: Math.floor(Math.random() * 4)
           } : undefined
@@ -118,6 +131,18 @@ export function VirtualFootballSection({ onBetClick }: VirtualFootballSectionPro
     return `${minutes}:${seconds.toString().padStart(2, '0')}`;
   };
 
+  const getNextMatchTime = () => {
+    const nextMatch = matches.find(m => m.status === 'upcoming');
+    return nextMatch ? getTimeUntilMatch(nextMatch.startTime) : "Loading...";
+  };
+
+  const filteredMatches = matches.filter(match => {
+    if (activeTab === 'live') return match.status === 'live';
+    if (activeTab === 'next') return match.status === 'upcoming';
+    if (activeTab === 'results') return match.status === 'finished';
+    return false;
+  });
+
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between">
@@ -130,8 +155,42 @@ export function VirtualFootballSection({ onBetClick }: VirtualFootballSectionPro
         </div>
       </div>
 
+      {/* Navigation Tabs */}
+      <div className="flex space-x-1 bg-slate-700 rounded-lg p-1">
+        <button
+          onClick={() => setActiveTab('live')}
+          className={`flex-1 py-2 px-3 rounded-md text-sm font-medium transition-colors ${
+            activeTab === 'live'
+              ? 'bg-red-600 text-white'
+              : 'text-slate-300 hover:text-white hover:bg-slate-600'
+          }`}
+        >
+          Live
+        </button>
+        <button
+          onClick={() => setActiveTab('next')}
+          className={`flex-1 py-2 px-3 rounded-md text-sm font-medium transition-colors ${
+            activeTab === 'next'
+              ? 'bg-blue-600 text-white'
+              : 'text-slate-300 hover:text-white hover:bg-slate-600'
+          }`}
+        >
+          Next ({getNextMatchTime()})
+        </button>
+        <button
+          onClick={() => setActiveTab('results')}
+          className={`flex-1 py-2 px-3 rounded-md text-sm font-medium transition-colors ${
+            activeTab === 'results'
+              ? 'bg-green-600 text-white'
+              : 'text-slate-300 hover:text-white hover:bg-slate-600'
+          }`}
+        >
+          Results
+        </button>
+      </div>
+
       <div className="grid gap-3">
-        {matches.map((match) => (
+        {filteredMatches.map((match) => (
           <div key={match.id} className="bg-slate-800 rounded-lg p-4 border border-slate-700">
             {/* League and Time */}
             <div className="flex items-center justify-between mb-3">
@@ -176,8 +235,8 @@ export function VirtualFootballSection({ onBetClick }: VirtualFootballSectionPro
               </div>
             </div>
 
-            {/* Betting Options */}
-            {match.status !== 'finished' && (
+            {/* Betting Options or Result Info */}
+            {match.status === 'upcoming' && (
               <div className="grid grid-cols-3 gap-2">
                 <Button
                   variant="outline"
@@ -188,7 +247,6 @@ export function VirtualFootballSection({ onBetClick }: VirtualFootballSectionPro
                     `${match.homeTeam} Win`,
                     match.odds.home
                   )}
-                  disabled={match.status === 'live'}
                 >
                   <div className="text-center">
                     <div className="text-xs">1</div>
@@ -205,7 +263,6 @@ export function VirtualFootballSection({ onBetClick }: VirtualFootballSectionPro
                     "Draw",
                     match.odds.draw
                   )}
-                  disabled={match.status === 'live'}
                 >
                   <div className="text-center">
                     <div className="text-xs">X</div>
@@ -222,7 +279,6 @@ export function VirtualFootballSection({ onBetClick }: VirtualFootballSectionPro
                     `${match.awayTeam} Win`,
                     match.odds.away
                   )}
-                  disabled={match.status === 'live'}
                 >
                   <div className="text-center">
                     <div className="text-xs">2</div>
@@ -237,6 +293,15 @@ export function VirtualFootballSection({ onBetClick }: VirtualFootballSectionPro
                 <span className="text-xs text-yellow-500">
                   Live betting disabled - match in progress
                 </span>
+              </div>
+            )}
+
+            {match.status === 'finished' && match.score && (
+              <div className="mt-2 text-center">
+                <div className="text-xs text-green-400 font-medium">
+                  Final Result: {match.score.home > match.score.away ? match.homeTeam : 
+                              match.score.away > match.score.home ? match.awayTeam : 'Draw'} Won
+                </div>
               </div>
             )}
           </div>

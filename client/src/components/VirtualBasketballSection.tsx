@@ -31,6 +31,7 @@ interface VirtualBasketballSectionProps {
 export function VirtualBasketballSection({ onBetClick }: VirtualBasketballSectionProps) {
   const [matches, setMatches] = useState<VirtualBasketballMatch[]>([]);
   const [currentTime, setCurrentTime] = useState(new Date());
+  const [activeTab, setActiveTab] = useState<'live' | 'next' | 'results'>('live');
 
   // Generate virtual basketball matches
   useEffect(() => {
@@ -60,8 +61,20 @@ export function VirtualBasketballSection({ onBetClick }: VirtualBasketballSectio
           awayTeamIndex = Math.floor(Math.random() * teams.length);
         }
 
-        const startTime = new Date(now.getTime() + (i * 4 * 60 * 1000)); // Every 4 minutes
-        const status = i === 0 ? 'live' : 'upcoming';
+        let startTime: Date, status: 'upcoming' | 'live' | 'finished';
+        if (i < 2) {
+          // Past matches (finished)
+          startTime = new Date(now.getTime() - ((2 - i) * 4 * 60 * 1000));
+          status = 'finished';
+        } else if (i === 2) {
+          // Current live match
+          startTime = new Date(now.getTime() - (2 * 60 * 1000)); // Started 2 minutes ago
+          status = 'live';
+        } else {
+          // Future matches
+          startTime = new Date(now.getTime() + ((i - 2) * 4 * 60 * 1000));
+          status = 'upcoming';
+        }
         const totalPoints = (180 + Math.random() * 40).toFixed(1); // 180-220 points typical
 
         newMatches.push({
