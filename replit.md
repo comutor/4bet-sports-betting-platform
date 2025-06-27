@@ -101,7 +101,7 @@ The application uses PostgreSQL with the following core entities:
 ## Changelog
 ```
 Changelog:
-- June 27, 2025. Updated virtual games countdown styling: Changed Next match countdown timer color from blue to white across all virtual sports sections for better visual consistency
+- June 27, 2025. Updated virtual games countdown styling: Changed all countdown timer colors from blue to white across virtual sports sections including navigation tabs and footer timers for better visual consistency
 - June 26, 2025. Enhanced virtual games with navigation tabs: Added Live/Next/Results tabs with countdown timers for Virtual Football, Basketball, and Tennis. Live matches show real-time scores, Next shows upcoming with countdown, Results display final outcomes
 - June 26, 2025. Implemented virtual games system: Virtual Football (3 min intervals), Virtual Horse Racing (2 min intervals), Virtual Basketball (4 min intervals), and Virtual Tennis (5 min intervals) with realistic teams, live scoring, and comprehensive betting options
 - June 26, 2025. Added footer with legal information: Copyright by Wobo Gaming Limited, South Sudan Gaming Board licensing, payment processing details, and 18+ age restriction warning

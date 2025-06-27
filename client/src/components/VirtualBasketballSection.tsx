@@ -354,7 +354,7 @@ export function VirtualBasketballSection({ onBetClick }: VirtualBasketballSectio
 
       <div className="text-center pt-4">
         <div className="text-xs text-slate-400">
-          Next game starts in {getTimeUntilMatch(matches[1]?.startTime || new Date().toISOString())}
+          Next game starts in <span className="text-white">{getTimeUntilMatch(matches[1]?.startTime || new Date().toISOString())}</span>
         </div>
       </div>
 

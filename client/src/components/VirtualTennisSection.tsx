@@ -356,7 +356,7 @@ export function VirtualTennisSection({ onBetClick }: VirtualTennisSectionProps) 
 
       <div className="text-center pt-4">
         <div className="text-xs text-slate-400">
-          Next match starts in {getNextMatchTime()}
+          Next match starts in <span className="text-white">{getNextMatchTime()}</span>
         </div>
       </div>
 
