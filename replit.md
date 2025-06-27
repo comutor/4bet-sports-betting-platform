@@ -101,7 +101,8 @@ The application uses PostgreSQL with the following core entities:
 ## Changelog
 ```
 Changelog:
-- June 26, 2025. Implemented virtual games system: Virtual Football (3 min intervals), Virtual Horse Racing (2 min intervals), and Virtual Basketball (4 min intervals) with realistic teams, live scoring, and comprehensive betting options
+- June 26, 2025. Enhanced virtual games with navigation tabs: Added Live/Next/Results tabs with countdown timers for Virtual Football, Basketball, and Tennis. Live matches show real-time scores, Next shows upcoming with countdown, Results display final outcomes
+- June 26, 2025. Implemented virtual games system: Virtual Football (3 min intervals), Virtual Horse Racing (2 min intervals), Virtual Basketball (4 min intervals), and Virtual Tennis (5 min intervals) with realistic teams, live scoring, and comprehensive betting options
 - June 26, 2025. Added footer with legal information: Copyright by Wobo Gaming Limited, South Sudan Gaming Board licensing, payment processing details, and 18+ age restriction warning
 - June 26, 2025. Added loading screen: Created professional startup screen with 4bet logo and thin blue spinning circle animation with pulsing dots
 - June 26, 2025. Enhanced search functionality: Added auto-close detection for search bar (click outside, Escape key) and improved user interaction patterns

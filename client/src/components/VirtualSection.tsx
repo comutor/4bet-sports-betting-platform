@@ -128,7 +128,11 @@ export function VirtualSection({ onBetClick }: VirtualSectionProps) {
         <VirtualBasketballSection onBetClick={onBetClick} />
       )}
       
-      {selectedGame !== 'virtual-football' && selectedGame !== 'virtual-horse-racing' && selectedGame !== 'virtual-basketball' && (
+      {selectedGame === 'virtual-tennis' && (
+        <VirtualTennisSection onBetClick={onBetClick} />
+      )}
+      
+      {selectedGame !== 'virtual-football' && selectedGame !== 'virtual-horse-racing' && selectedGame !== 'virtual-basketball' && selectedGame !== 'virtual-tennis' && (
         <div className="space-y-4">
           <h3 className="text-lg font-semibold text-white">Upcoming Matches</h3>
           {sampleMatches.map((match) => (
