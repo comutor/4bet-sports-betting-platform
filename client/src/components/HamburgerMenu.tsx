@@ -94,8 +94,26 @@ export function HamburgerMenu({ isOpen, onClose, onTabChange, activeTab }: Hambu
     }
   ];
 
+  const internationalCompetitions = [
+    'UEFA Champions League',
+    'UEFA Europa League', 
+    'UEFA Conference League',
+    'CONMEBOL Libertadores',
+    'CONMEBOL Sudamericana',
+    'AFC Champions League',
+    'CAF Champions League',
+    'CONCACAF Champions Cup',
+    'FIFA Club World Cup',
+    'UEFA Nations League',
+    'World Cup Qualifiers',
+    'UEFA European Championship',
+    'Copa América',
+    'Africa Cup of Nations',
+    'Asian Cup'
+  ];
+
   const countryCategories = [
-    { id: 'international', label: 'International', icon: 'fas fa-globe' },
+    { id: 'international', label: 'International', icon: 'fas fa-globe', competitions: internationalCompetitions },
     { id: 'other-countries', label: 'Other Countries', icon: 'fas fa-map' }
   ];
 
@@ -267,9 +285,23 @@ export function HamburgerMenu({ isOpen, onClose, onTabChange, activeTab }: Hambu
                     </Button>
                     
                     {expandedCountry === country.id && (
-                      <div className="mt-2 ml-6 p-3 bg-slate-800 rounded-lg border border-slate-600">
-                        <div className="text-xs text-gray-400 mb-2">Available leagues and competitions</div>
-                        <div className="text-xs text-gray-300">Coming soon...</div>
+                      <div className="mt-2 ml-6 p-3 bg-slate-800 rounded-lg border border-slate-600 animate-slide-down">
+                        <div className="text-xs text-gray-400 mb-3">Available competitions</div>
+                        <div className="grid grid-cols-1 gap-2">
+                          {country.id === 'international' && country.competitions ? (
+                            country.competitions.map((competition, index) => (
+                              <button
+                                key={index}
+                                className="text-left px-3 py-2 text-xs text-gray-300 hover:text-white hover:bg-slate-700 rounded-lg transition-colors duration-200"
+                                onClick={() => handleItemClick(`international-${competition.toLowerCase().replace(/\s+/g, '-')}`)}
+                              >
+                                {competition}
+                              </button>
+                            ))
+                          ) : (
+                            <div className="text-xs text-gray-300">Coming soon...</div>
+                          )}
+                        </div>
                       </div>
                     )}
                   </div>
