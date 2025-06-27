@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { VirtualFootballSection } from "./VirtualFootballSection";
 import { VirtualHorseRacingSection } from "./VirtualHorseRacingSection";
 import { VirtualBasketballSection } from "./VirtualBasketballSection";
+import { VirtualTennisSection } from "./VirtualTennisSection";
 
 interface VirtualSectionProps {
   onBetClick: (eventName: string, selection: string, odds: string) => void;

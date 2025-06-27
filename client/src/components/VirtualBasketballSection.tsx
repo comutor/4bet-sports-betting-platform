@@ -93,7 +93,7 @@ export function VirtualBasketballSection({ onBetClick }: VirtualBasketballSectio
           status,
           quarter: status === 'live' ? Math.floor(Math.random() * 4) + 1 : undefined,
           timeLeft: status === 'live' ? `${Math.floor(Math.random() * 12)}:${Math.floor(Math.random() * 60).toString().padStart(2, '0')}` : undefined,
-          score: status === 'live' ? {
+          score: (status === 'live' || status === 'finished') ? {
             home: Math.floor(Math.random() * 60) + 40,
             away: Math.floor(Math.random() * 60) + 40
           } : undefined
@@ -128,6 +128,18 @@ export function VirtualBasketballSection({ onBetClick }: VirtualBasketballSectio
     return `${minutes}:${seconds.toString().padStart(2, '0')}`;
   };
 
+  const getNextMatchTime = () => {
+    const nextMatch = matches.find(m => m.status === 'upcoming');
+    return nextMatch ? getTimeUntilMatch(nextMatch.startTime) : "Loading...";
+  };
+
+  const filteredMatches = matches.filter(match => {
+    if (activeTab === 'live') return match.status === 'live';
+    if (activeTab === 'next') return match.status === 'upcoming';
+    if (activeTab === 'results') return match.status === 'finished';
+    return false;
+  });
+
   const getQuarterText = (quarter: number) => {
     switch (quarter) {
       case 1: return "1st Q";
@@ -150,8 +162,42 @@ export function VirtualBasketballSection({ onBetClick }: VirtualBasketballSectio
         </div>
       </div>
 
+      {/* Navigation Tabs */}
+      <div className="flex space-x-1 bg-slate-700 rounded-lg p-1">
+        <button
+          onClick={() => setActiveTab('live')}
+          className={`flex-1 py-2 px-3 rounded-md text-sm font-medium transition-colors ${
+            activeTab === 'live'
+              ? 'bg-red-600 text-white'
+              : 'text-slate-300 hover:text-white hover:bg-slate-600'
+          }`}
+        >
+          Live
+        </button>
+        <button
+          onClick={() => setActiveTab('next')}
+          className={`flex-1 py-2 px-3 rounded-md text-sm font-medium transition-colors ${
+            activeTab === 'next'
+              ? 'bg-blue-600 text-white'
+              : 'text-slate-300 hover:text-white hover:bg-slate-600'
+          }`}
+        >
+          Next ({getNextMatchTime()})
+        </button>
+        <button
+          onClick={() => setActiveTab('results')}
+          className={`flex-1 py-2 px-3 rounded-md text-sm font-medium transition-colors ${
+            activeTab === 'results'
+              ? 'bg-green-600 text-white'
+              : 'text-slate-300 hover:text-white hover:bg-slate-600'
+          }`}
+        >
+          Results
+        </button>
+      </div>
+
       <div className="grid gap-3">
-        {matches.map((match) => (
+        {filteredMatches.map((match) => (
           <div key={match.id} className="bg-slate-800 rounded-lg p-4 border border-slate-700">
             {/* League and Time */}
             <div className="flex items-center justify-between mb-3">
@@ -196,8 +242,8 @@ export function VirtualBasketballSection({ onBetClick }: VirtualBasketballSectio
               </div>
             </div>
 
-            {/* Betting Options */}
-            {match.status !== 'finished' && (
+            {/* Betting Options or Result Info */}
+            {match.status === 'upcoming' && (
               <div className="space-y-3">
                 {/* Winner Betting */}
                 <div>
@@ -212,7 +258,6 @@ export function VirtualBasketballSection({ onBetClick }: VirtualBasketballSectio
                         `${match.homeTeam} Win`,
                         match.odds.home
                       )}
-                      disabled={match.status === 'live'}
                     >
                       <div className="text-center">
                         <div className="text-xs">{match.homeTeam}</div>
@@ -229,7 +274,6 @@ export function VirtualBasketballSection({ onBetClick }: VirtualBasketballSectio
                         `${match.awayTeam} Win`,
                         match.odds.away
                       )}
-                      disabled={match.status === 'live'}
                     >
                       <div className="text-center">
                         <div className="text-xs">{match.awayTeam}</div>
@@ -252,7 +296,6 @@ export function VirtualBasketballSection({ onBetClick }: VirtualBasketballSectio
                         `Over ${match.odds.totalPoints}`,
                         match.odds.over
                       )}
-                      disabled={match.status === 'live'}
                     >
                       <div className="text-center">
                         <div className="text-xs">Over</div>
@@ -269,7 +312,6 @@ export function VirtualBasketballSection({ onBetClick }: VirtualBasketballSectio
                         `Under ${match.odds.totalPoints}`,
                         match.odds.under
                       )}
-                      disabled={match.status === 'live'}
                     >
                       <div className="text-center">
                         <div className="text-xs">Under</div>
@@ -286,6 +328,22 @@ export function VirtualBasketballSection({ onBetClick }: VirtualBasketballSectio
                 <span className="text-xs text-yellow-500">
                   Live betting disabled - game in progress
                 </span>
+              </div>
+            )}
+
+            {match.status === 'finished' && match.score && (
+              <div className="mt-3 space-y-2">
+                <div className="text-center">
+                  <div className="text-xs text-green-400 font-medium">
+                    Final: {match.score.home > match.score.away ? match.homeTeam : match.awayTeam} Won
+                  </div>
+                </div>
+                <div className="text-center">
+                  <div className="text-xs text-slate-400">
+                    Total Points: {match.score.home + match.score.away} 
+                    {(match.score.home + match.score.away) > parseFloat(match.odds.totalPoints) ? ' (Over)' : ' (Under)'}
+                  </div>
+                </div>
               </div>
             )}
           </div>
