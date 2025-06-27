@@ -18,9 +18,13 @@ interface TopNavigationProps {
   onDepositClick?: () => void;
   sportsFilter?: 'upcoming' | 'popular' | 'live';
   onSportsFilterChange?: (filter: 'upcoming' | 'popular' | 'live') => void;
+  isSearchOpen?: boolean;
+  onSearchToggle?: () => void;
+  searchQuery?: string;
+  onSearchChange?: (query: string) => void;
 }
 
-export function TopNavigation({ activeTab, onTabChange, userBalance, userCountry, isLoggedIn = false, isMenuOpen = false, onMenuToggle, onSignupClick, onLoginClick, onDepositClick, sportsFilter = 'upcoming', onSportsFilterChange }: TopNavigationProps) {
+export function TopNavigation({ activeTab, onTabChange, userBalance, userCountry, isLoggedIn = false, isMenuOpen = false, onMenuToggle, onSignupClick, onLoginClick, onDepositClick, sportsFilter = 'upcoming', onSportsFilterChange, isSearchOpen = false, onSearchToggle, searchQuery = '', onSearchChange }: TopNavigationProps) {
   const [isServicesDropdownOpen, setIsServicesDropdownOpen] = useState(false);
   const [isDateDropdownOpen, setIsDateDropdownOpen] = useState(false);
   const [isSportDropdownOpen, setIsSportDropdownOpen] = useState(false);
@@ -116,7 +120,15 @@ export function TopNavigation({ activeTab, onTabChange, userBalance, userCountry
           
           {/* Right side - Search and User Actions */}
           <div className="flex items-center space-x-1 md:space-x-4">
-            <Button variant="ghost" className="p-1 md:p-2 text-gray-400 hover:text-white">
+            <Button 
+              variant="ghost" 
+              className="p-1 md:p-2 text-gray-400 hover:text-white"
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                onSearchToggle && onSearchToggle();
+              }}
+            >
               <i className="fas fa-search text-lg md:text-xl"></i>
             </Button>
             
@@ -171,6 +183,48 @@ export function TopNavigation({ activeTab, onTabChange, userBalance, userCountry
             )}
           </div>
         </div>
+        
+        {/* Search Bar - Appears between title bar and navigation */}
+        {isSearchOpen && (
+          <div className="bg-slate-800/95 backdrop-blur-sm border-b border-gray-600/50 px-4 py-3 animate-slide-down">
+            <div className="relative max-w-md mx-auto">
+              <input
+                type="text"
+                placeholder="Search for matches, teams, or leagues..."
+                value={searchQuery}
+                onChange={(e) => onSearchChange && onSearchChange(e.target.value)}
+                className="w-full bg-slate-700 border border-slate-600 rounded-lg px-4 py-2.5 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+                autoFocus
+              />
+              <div className="absolute right-3 top-1/2 transform -translate-y-1/2 flex items-center space-x-2">
+                {searchQuery && (
+                  <button
+                    onClick={() => onSearchChange && onSearchChange('')}
+                    className="text-gray-400 hover:text-white transition-colors duration-200"
+                  >
+                    <i className="fas fa-times text-sm"></i>
+                  </button>
+                )}
+                <button
+                  onClick={() => onSearchToggle && onSearchToggle()}
+                  className="text-gray-400 hover:text-white transition-colors duration-200"
+                >
+                  <i className="fas fa-search text-sm"></i>
+                </button>
+              </div>
+            </div>
+            {searchQuery && (
+              <div className="mt-3 max-w-md mx-auto">
+                <div className="bg-slate-700 rounded-lg border border-slate-600 max-h-60 overflow-y-auto">
+                  <div className="p-3 text-center text-gray-400 text-sm">
+                    <i className="fas fa-search mr-2"></i>
+                    Search results will appear here...
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+        )}
         
         {/* Bottom Row - Navigation Tabs */}
         <div className="bg-slate-custom/90 backdrop-blur-sm px-4 pb-3 relative border-b border-gray-700/30">

@@ -42,6 +42,8 @@ export default function Home() {
   const [showWithdrawalModal, setShowWithdrawalModal] = useState(false);
   const [placedBets, setPlacedBets] = useState<any[]>([]);
   const [sportsFilter, setSportsFilter] = useState<'upcoming' | 'popular' | 'live'>('upcoming');
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
   const {
     items: betslipItems,
     isOpen: betslipOpen,
@@ -321,6 +323,10 @@ export default function Home() {
           onDepositClick={handleOpenDepositModal}
           sportsFilter={sportsFilter}
           onSportsFilterChange={setSportsFilter}
+          isSearchOpen={isSearchOpen}
+          onSearchToggle={() => setIsSearchOpen(!isSearchOpen)}
+          searchQuery={searchQuery}
+          onSearchChange={setSearchQuery}
         />
         
         <main className="pb-20 md:pb-4">

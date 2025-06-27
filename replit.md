@@ -101,6 +101,7 @@ The application uses PostgreSQL with the following core entities:
 ## Changelog
 ```
 Changelog:
+- June 26, 2025. Added search functionality: Implemented search bar that appears between title bar and top navigation with smooth animations, auto-focus, clear/close buttons, and search results placeholder
 - June 26, 2025. Fixed country dropdown functionality: Added separate state management for individual country dropdowns within Other Countries section to prevent state conflicts
 - June 26, 2025. Optimized country navigation: Converted Other Countries section to individual dropdown buttons for each country to reduce scrolling and improve user experience
 - June 26, 2025. Fixed dropdown navigation: Prevented menu from closing when clicking country dropdown buttons, allowing proper expansion of International and Other Countries sections
