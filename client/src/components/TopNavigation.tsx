@@ -32,6 +32,7 @@ export function TopNavigation({ activeTab, onTabChange, userBalance, userCountry
   const [isLeaguesDropdownOpen, setIsLeaguesDropdownOpen] = useState(false);
   const [selectedDateFilter, setSelectedDateFilter] = useState('Today');
   const [selectedSport, setSelectedSport] = useState('Football');
+  const searchBarRef = useRef<HTMLDivElement>(null);
   const [selectedMarket, setSelectedMarket] = useState('1X2');
   const [selectedLeague, setSelectedLeague] = useState('All Leagues');
   
@@ -53,6 +54,31 @@ export function TopNavigation({ activeTab, onTabChange, userBalance, userCountry
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, [isServicesDropdownOpen]);
+
+  // Auto-close search bar when clicking outside or pressing Escape
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (isSearchOpen && searchBarRef.current && !searchBarRef.current.contains(event.target as Node)) {
+        onSearchToggle && onSearchToggle();
+      }
+    };
+
+    const handleEscapeKey = (event: KeyboardEvent) => {
+      if (event.key === 'Escape' && isSearchOpen) {
+        onSearchToggle && onSearchToggle();
+      }
+    };
+
+    if (isSearchOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+      document.addEventListener('keydown', handleEscapeKey);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener('keydown', handleEscapeKey);
+    };
+  }, [isSearchOpen, onSearchToggle]);
 
   const getCurrencyDisplay = (balance: string, country?: string) => {
     if (country === 'Uganda') {
@@ -186,7 +212,7 @@ export function TopNavigation({ activeTab, onTabChange, userBalance, userCountry
         
         {/* Search Bar - Appears between title bar and navigation */}
         {isSearchOpen && (
-          <div className="bg-slate-800/95 backdrop-blur-sm border-b border-gray-600/50 px-4 py-3 animate-slide-down">
+          <div ref={searchBarRef} className="bg-slate-800/95 backdrop-blur-sm border-b border-gray-600/50 px-4 py-3 animate-slide-down">
             <div className="relative max-w-md mx-auto">
               <input
                 type="text"
