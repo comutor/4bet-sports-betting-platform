@@ -13,10 +13,20 @@ interface AccountPageProps {
 }
 
 export function AccountPage({ isLoggedIn = false, onClose, onSignupClick, onLoginClick, onLogout, onSettingsClick, onDepositClick, onWithdrawClick, userData }: AccountPageProps) {
-  const menuItems = [
+  const loggedInMenuItems = [
+    { id: 'deposit', label: 'Deposit', icon: 'fas fa-credit-card' },
+    { id: 'withdraw', label: 'Withdraw', icon: 'fas fa-money-bill-wave' },
+    { id: 'notifications', label: 'Notifications', icon: 'fas fa-bell' },
+    { id: 'statement', label: 'Statement', icon: 'fas fa-file-alt' },
+    { id: 'manage-account', label: 'Manage My Account', icon: 'fas fa-user-cog' }
+  ];
+
+  const loggedOutMenuItems = [
     { id: 'deposit', label: 'Deposit', icon: 'fas fa-credit-card' },
     { id: 'withdraw', label: 'Withdraw', icon: 'fas fa-money-bill-wave' }
   ];
+
+  const menuItems = isLoggedIn ? loggedInMenuItems : loggedOutMenuItems;
 
   return (
     <div className="min-h-screen bg-slate-custom text-white pb-20">
@@ -91,6 +101,15 @@ export function AccountPage({ isLoggedIn = false, onClose, onSignupClick, onLogi
                   onDepositClick();
                 } else if (item.id === 'withdraw' && onWithdrawClick) {
                   onWithdrawClick();
+                } else if (item.id === 'notifications') {
+                  // Handle notifications
+                  console.log('Notifications clicked');
+                } else if (item.id === 'statement') {
+                  // Handle statement
+                  console.log('Statement clicked');
+                } else if (item.id === 'manage-account') {
+                  // Handle manage account
+                  console.log('Manage account clicked');
                 }
               }}
             >
