@@ -792,13 +792,21 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   // Spribe Aviator endpoints  
   app.post("/api/spribe/token", async (req, res) => {
-    // Simple auth check
-    if (!req.session?.user) {
-      return res.status(401).json({ message: "Authentication required" });
-    }
     try {
-      const session = req.session as any;
-      const userId = session.user.id;
+      // For demo purposes, create a mock user session
+      const userId = 1;
+      const mockUser = await storage.getUser(userId);
+      
+      if (!mockUser) {
+        // Create demo user if not exists
+        await storage.createUser({
+          firstName: "Demo",
+          lastName: "User",
+          password: "demo_pass",
+          phoneNumber: "+256701234567",
+          country: "Uganda"
+        });
+      }
       
       const tokenData = await spribeService.generateGameToken(userId);
       res.json(tokenData);
@@ -825,7 +833,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       }
     } catch (error) {
       console.error("Error getting balance:", error);
-      res.status(400).json({ error: error.message });
+      res.status(400).json({ error: error instanceof Error ? error.message : 'Unknown error' });
     }
   });
 
@@ -843,7 +851,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.json(result);
     } catch (error) {
       console.error("Error placing bet:", error);
-      res.status(400).json({ error: error.message });
+      res.status(400).json({ error: error instanceof Error ? error.message : 'Unknown error' });
     }
   });
 
@@ -861,7 +869,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.json(result);
     } catch (error) {
       console.error("Error processing win:", error);
-      res.status(400).json({ error: error.message });
+      res.status(400).json({ error: error instanceof Error ? error.message : 'Unknown error' });
     }
   });
 
