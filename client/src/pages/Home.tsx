@@ -21,7 +21,7 @@ import { SportsOverview } from "@/components/SportsOverview";
 import { QuickAccessBoxes } from "@/components/QuickAccessBoxes";
 import { WelcomeBanner } from "@/components/WelcomeBanner";
 import { MyBetsSection } from "@/components/MyBetsSection";
-import { SettingsSection } from "@/components/SettingsSection";
+
 import { DepositModal } from "@/components/DepositModal";
 import { WithdrawalModal } from "@/components/WithdrawalModal";
 import { LoadingScreen } from "@/components/LoadingScreen";
@@ -268,8 +268,7 @@ export default function Home() {
         return <LiveSection onBetClick={handleBetClick} />;
       case 'my-bets':
         return <MyBetsSection userId={isLoggedIn ? userData?.id : undefined} userCountry={userCountry} placedBets={placedBets} />;
-      case 'settings':
-        return <SettingsSection userCountry={userCountry} isLoggedIn={isLoggedIn} onBackToAccount={() => setActiveTab('account')} />;
+
       case 'casino':
         return <CasinoSection />;
       case 'virtual':

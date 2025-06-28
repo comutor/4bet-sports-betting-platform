@@ -6,13 +6,12 @@ interface AccountPageProps {
   onSignupClick?: () => void;
   onLoginClick?: () => void;
   onLogout?: () => void;
-  onSettingsClick?: () => void;
   onDepositClick?: () => void;
   onWithdrawClick?: () => void;
   userData?: any;
 }
 
-export function AccountPage({ isLoggedIn = false, onClose, onSignupClick, onLoginClick, onLogout, onSettingsClick, onDepositClick, onWithdrawClick, userData }: AccountPageProps) {
+export function AccountPage({ isLoggedIn = false, onClose, onSignupClick, onLoginClick, onLogout, onDepositClick, onWithdrawClick, userData }: AccountPageProps) {
   const loggedInMenuItems = [
     { id: 'deposit', label: 'Deposit', icon: 'fas fa-credit-card' },
     { id: 'withdraw', label: 'Withdraw', icon: 'fas fa-money-bill-wave' },
@@ -130,19 +129,6 @@ export function AccountPage({ isLoggedIn = false, onClose, onSignupClick, onLogi
             </Button>
           ))}
 
-          {/* Settings Button */}
-          <Button
-            variant="ghost"
-            className="w-full justify-between p-4 text-left text-gray-300 hover:bg-slate-light-custom transition-all duration-200 rounded-xl border border-slate-600 hover:border-slate-500"
-            onClick={onSettingsClick}
-          >
-            <div className="flex items-center">
-              <i className="fas fa-cog w-5 mr-3 text-gray-400"></i>
-              <span className="text-base font-medium">Settings</span>
-            </div>
-            <i className="fas fa-chevron-right text-gray-400 text-sm"></i>
-          </Button>
-          
           {/* Logout Button for logged-in users */}
           {isLoggedIn && onLogout && (
             <Button
