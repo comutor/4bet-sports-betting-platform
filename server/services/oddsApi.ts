@@ -91,6 +91,13 @@ export class OddsApiService {
       const response = await fetch(url);
       
       if (!response.ok) {
+        if (response.status === 401) {
+          log(`API authentication failed for ${sportKey} - invalid or expired API key`);
+        } else if (response.status === 429) {
+          log(`API rate limit exceeded for ${sportKey}`);
+        } else if (response.status === 404) {
+          log(`Sport ${sportKey} not found or not available`);
+        }
         throw new Error(`API request failed: ${response.status}`);
       }
       
@@ -100,7 +107,8 @@ export class OddsApiService {
       return events;
     } catch (error) {
       log(`Error fetching odds for ${sportKey}: ${error}`);
-      throw error;
+      // Return empty array instead of throwing to prevent cascade failures
+      return [];
     }
   }
 
