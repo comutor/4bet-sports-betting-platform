@@ -3,6 +3,7 @@
 @tailwind utilities;
 
 :root {
+  /* Dark theme (default) */
   --background: 240 10% 3.9%;
   --foreground: 0 0% 98%;
   --muted: 240 3.7% 15.9%;
@@ -24,7 +25,7 @@
   --ring: 240 4.9% 83.9%;
   --radius: 0.5rem;
   
-  /* Custom betting platform colors */
+  /* Custom betting platform colors - Dark theme */
   --primary-blue: 224 71% 36%; /* #1E40AF */
   --primary-blue-dark: 224 76% 32%; /* #1E3A8A */
   --secondary-green: 160 60% 45%; /* #059669 */
@@ -36,6 +37,48 @@
   --danger-red: 0 84% 60%; /* #EF4444 */
   --warning-blue: 224 71% 36%; /* #1E40AF */
   --live-orange: 14 100% 57%; /* #FF6B35 */
+}
+
+.dark {
+  /* Dark theme variables (same as root) */
+  --background: 240 10% 3.9%;
+  --foreground: 0 0% 98%;
+  --muted: 240 3.7% 15.9%;
+  --muted-foreground: 240 5% 64.9%;
+  --popover: 240 10% 3.9%;
+  --popover-foreground: 0 0% 98%;
+  --card: 240 10% 3.9%;
+  --card-foreground: 0 0% 98%;
+  --border: 240 3.7% 15.9%;
+  --input: 240 3.7% 15.9%;
+  --accent: 240 3.7% 15.9%;
+  --accent-foreground: 0 0% 98%;
+  
+  /* Custom dark theme colors */
+  --dark-bg: 222 84% 5%; /* #0F172A */
+  --slate-bg: 215 28% 17%; /* #1E293B */
+  --slate-light: 215 20% 25%; /* #334155 */
+}
+
+html:not(.dark) {
+  /* Light theme variables */
+  --background: 0 0% 100%;
+  --foreground: 240 10% 3.9%;
+  --muted: 240 4.8% 95.9%;
+  --muted-foreground: 240 3.8% 46.1%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 240 10% 3.9%;
+  --card: 0 0% 100%;
+  --card-foreground: 240 10% 3.9%;
+  --border: 240 5.9% 90%;
+  --input: 240 5.9% 90%;
+  --accent: 240 4.8% 95.9%;
+  --accent-foreground: 240 5.9% 10%;
+  
+  /* Custom light theme colors */
+  --dark-bg: 0 0% 98%; /* Light background */
+  --slate-bg: 240 4.8% 95.9%; /* Light card background */
+  --slate-light: 240 5.9% 90%; /* Light border */
 }
 
 /* Hamburger Menu Grid Layout */
