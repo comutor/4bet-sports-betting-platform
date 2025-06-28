@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 const bannerSlides = [
   {
     id: 1,
-    title: "Welcome to TATAbets",
+    title: "Welcome to 4bet",
     subtitle: "Your Premier Betting Destination",
     buttonText: "Start Betting Now",
     gradient: "from-blue-600/90 to-emerald-600/90",
