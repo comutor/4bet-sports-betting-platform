@@ -101,7 +101,8 @@ The application uses PostgreSQL with the following core entities:
 ## Changelog
 ```
 Changelog:
-- June 28, 2025. Increased balance padding: Enhanced visual spacing around balance display with more generous padding for better readability
+- June 28, 2025. Enhanced balance text visibility: Increased font size from text-xs/sm to text-sm/base for better readability while maintaining bold styling
+- June 28, 2025. Increased balance and deposit button padding: Enhanced both elements with larger padding (px-3 md:px-4 py-2 md:py-2.5) for better prominence and visual consistency
 - June 28, 2025. Reverted deposit button to text: Changed "+" icon back to "Deposit" text across all screen sizes
 - June 28, 2025. Reverted balance formatting to original: Removed comma formatting and returned to simple raw number display as requested
 - June 28, 2025. Created two-tone logo design: Made "4" blue with gradient and glow effects while keeping "bet" white, creating distinctive brand recognition and visual hierarchy

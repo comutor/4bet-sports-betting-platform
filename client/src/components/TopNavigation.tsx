@@ -162,7 +162,7 @@ export function TopNavigation({ activeTab, onTabChange, userBalance, userCountry
             {isLoggedIn ? (
               <>
                 <div 
-                  className="flex items-center bg-white/10 border-2 border-white/30 rounded-lg px-2 md:px-3 py-1 md:py-1.5 cursor-pointer hover:bg-blue-600/20 hover:border-blue-600/50 transition-all duration-200 max-w-[140px] md:max-w-[200px]"
+                  className="flex items-center bg-white/10 border-2 border-white/30 rounded-lg px-3 md:px-4 py-2 md:py-2.5 cursor-pointer hover:bg-blue-600/20 hover:border-blue-600/50 transition-all duration-200 max-w-[140px] md:max-w-[200px]"
                   onClick={(e) => {
                     e.preventDefault();
                     e.stopPropagation();
@@ -171,12 +171,12 @@ export function TopNavigation({ activeTab, onTabChange, userBalance, userCountry
                   title={`${getCurrencyDisplay(userBalance, userCountry)} - Click to deposit`}
                 >
                   <i className="fas fa-wallet text-white mr-1 md:mr-2 text-xs md:text-sm flex-shrink-0"></i>
-                  <span className="font-bold text-xs md:text-sm text-white truncate overflow-hidden" key={userBalance}>
+                  <span className="font-bold text-sm md:text-base text-white truncate overflow-hidden" key={userBalance}>
                     {getCurrencyDisplay(userBalance, userCountry)}
                   </span>
                 </div>
                 <Button 
-                  className="bg-blue-600 border-2 border-blue-600 text-white hover:bg-blue-700 hover:border-blue-700 transition-all duration-300 hover:scale-105 font-bold text-xs md:text-sm px-2 md:px-3 py-1 md:py-1.5 flex-shrink-0"
+                  className="bg-blue-600 border-2 border-blue-600 text-white hover:bg-blue-700 hover:border-blue-700 transition-all duration-300 hover:scale-105 font-bold text-xs md:text-sm px-3 md:px-4 py-2 md:py-2.5 flex-shrink-0"
                   onClick={(e) => {
                     e.preventDefault();
                     e.stopPropagation();

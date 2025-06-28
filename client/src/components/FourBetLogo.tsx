@@ -27,7 +27,7 @@ export function FourBetLogo({ size = 'md', className = '' }: FourBetLogoProps) {
         <span 
           style={{
             color: '#1E40AF',
-            textShadow: '0 2px 8px rgba(0, 0, 0, 0.5), 0 0 20px rgba(30, 64, 175, 0.5)',
+            textShadow: '0 3px 12px rgba(0, 0, 0, 0.7), 0 0 25px rgba(30, 64, 175, 0.7), 0 1px 0px rgba(30, 64, 175, 0.8)',
             background: 'linear-gradient(135deg, #3B82F6 0%, #1E40AF 100%)',
             WebkitBackgroundClip: 'text',
             WebkitTextFillColor: 'transparent',
@@ -39,7 +39,7 @@ export function FourBetLogo({ size = 'md', className = '' }: FourBetLogoProps) {
         <span 
           style={{
             color: '#ffffff',
-            textShadow: '0 2px 8px rgba(0, 0, 0, 0.5), 0 0 20px rgba(255, 255, 255, 0.2)',
+            textShadow: '0 3px 12px rgba(0, 0, 0, 0.7), 0 0 25px rgba(255, 255, 255, 0.3), 0 1px 0px rgba(255, 255, 255, 0.8)',
             background: 'linear-gradient(135deg, #ffffff 0%, #e2e8f0 100%)',
             WebkitBackgroundClip: 'text',
             WebkitTextFillColor: 'transparent',
