@@ -101,6 +101,7 @@ The application uses PostgreSQL with the following core entities:
 ## Changelog
 ```
 Changelog:
+- June 28, 2025. Removed automatic banner slides: Replaced rotating welcome banner with static 4bet welcome message as requested by user
 - June 28, 2025. Enhanced statement list styling: Redesigned transaction list with organized card layout, circular icon backgrounds, status pills, better typography hierarchy, and hover effects for improved visual organization
 - June 28, 2025. Fixed branding consistency: Updated welcome banner from "TATAbets" to "4bet" to complete the company rebrand
 - June 28, 2025. Implemented statement functionality: Added comprehensive transaction history display with filtering by type and date range, CSV export capability, visual indicators for transaction types, and seamless navigation from account section
