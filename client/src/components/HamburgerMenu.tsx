@@ -230,6 +230,18 @@ export function HamburgerMenu({ isOpen, onClose, onTabChange, activeTab }: Hambu
     onClose();
   };
 
+  const handleSportClick = (sportId: string) => {
+    // Navigate to sports section with the specific sport filter
+    onTabChange('sports');
+    onClose();
+    
+    // Trigger sport-specific view after a brief delay to ensure navigation completes
+    setTimeout(() => {
+      const event = new CustomEvent('sportSelected', { detail: { sport: sportId } });
+      window.dispatchEvent(event);
+    }, 100);
+  };
+
   return (
     <>
       {/* Backdrop */}
@@ -291,8 +303,8 @@ export function HamburgerMenu({ isOpen, onClose, onTabChange, activeTab }: Hambu
                 {sportsCategories.map((sport) => (
                   <div
                     key={sport.id}
-                    className={`menu-item ${activeTab === sport.id ? 'active' : ''}`}
-                    onClick={() => handleItemClick(sport.id)}
+                    className={`menu-item ${activeTab === 'sports' && sport.id === 'football' ? 'active' : ''}`}
+                    onClick={() => handleSportClick(sport.id)}
                   >
                     <i className={sport.icon}></i>
                     <span>{sport.label}</span>

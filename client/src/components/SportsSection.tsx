@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { ApiQuotaNotice } from "@/components/ApiQuotaNotice";
 import championsLeagueLogo from "@assets/IMG_4087.png";
@@ -34,6 +34,22 @@ interface SportsSectionProps {
 }
 
 export function SportsSection({ onBetClick, selectedSport = 'soccer' }: SportsSectionProps) {
+  const [currentSport, setCurrentSport] = useState(selectedSport);
+
+  // Listen for sport selection events from hamburger menu
+  useEffect(() => {
+    const handleSportSelection = (event: CustomEvent) => {
+      const sportId = event.detail.sport;
+      setCurrentSport(sportId);
+    };
+
+    window.addEventListener('sportSelected', handleSportSelection as EventListener);
+    
+    return () => {
+      window.removeEventListener('sportSelected', handleSportSelection as EventListener);
+    };
+  }, []);
+
   const footballCategories = [
     { id: 'premier-league', name: 'Premier League', icon: null, logo: premierLeagueLogo },
     { id: 'la-liga', name: 'La Liga', icon: null, logo: laLigaLogo },
@@ -52,10 +68,42 @@ export function SportsSection({ onBetClick, selectedSport = 'soccer' }: SportsSe
     { id: 'pro-a', name: 'Pro A', icon: null, logo: proALogo }
   ];
 
+  const tennisCategories = [
+    { id: 'atp', name: 'ATP Tour', icon: null, logo: null },
+    { id: 'wta', name: 'WTA Tour', icon: null, logo: null },
+    { id: 'grand-slam', name: 'Grand Slam', icon: null, logo: null },
+    { id: 'masters-1000', name: 'Masters 1000', icon: null, logo: null }
+  ];
+
+  const hockeyCategories = [
+    { id: 'nhl', name: 'NHL', icon: null, logo: null },
+    { id: 'khl', name: 'KHL', icon: null, logo: null },
+    { id: 'shl', name: 'Swedish Hockey League', icon: null, logo: null }
+  ];
+
+  const baseballCategories = [
+    { id: 'mlb', name: 'MLB', icon: null, logo: null },
+    { id: 'npb', name: 'Nippon Professional Baseball', icon: null, logo: null }
+  ];
+
+  const volleyballCategories = [
+    { id: 'fivb', name: 'FIVB World Tour', icon: null, logo: null },
+    { id: 'cev', name: 'CEV Champions League', icon: null, logo: null }
+  ];
+
   const getSportsCategories = () => {
-    switch (selectedSport) {
+    switch (currentSport) {
       case 'basketball':
         return basketballCategories;
+      case 'tennis':
+        return tennisCategories;
+      case 'hockey':
+        return hockeyCategories;
+      case 'baseball':
+        return baseballCategories;
+      case 'volleyball':
+        return volleyballCategories;
+      case 'football':
       case 'soccer':
       default:
         return footballCategories;
@@ -133,9 +181,27 @@ export function SportsSection({ onBetClick, selectedSport = 'soccer' }: SportsSe
 
   const currentMatches = getCurrentMatches();
 
+  const getSportDisplayName = () => {
+    switch (currentSport) {
+      case 'basketball': return 'Basketball';
+      case 'tennis': return 'Tennis';
+      case 'hockey': return 'Ice Hockey';
+      case 'baseball': return 'Baseball';
+      case 'volleyball': return 'Volleyball';
+      case 'football':
+      case 'soccer':
+      default: return 'Football';
+    }
+  };
+
   return (
     <div className="max-w-7xl mx-auto px-4 py-8">
-      <h2 className="text-2xl font-bold mb-6">Top Leagues</h2>
+      <div className="flex items-center gap-3 mb-6">
+        <h2 className="text-2xl font-bold">{getSportDisplayName()} - Upcoming Games</h2>
+        <div className="text-sm text-gray-400 bg-slate-700 px-3 py-1 rounded-full">
+          {sportsCategories.length} leagues available
+        </div>
+      </div>
       
       {/* Sports Categories */}
       <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3 mb-8">
