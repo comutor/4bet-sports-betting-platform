@@ -1,383 +1,136 @@
-import { useState, useEffect, useRef } from "react";
+import { useState } from "react";
+import { Plane, ExternalLink, RefreshCw } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Plane, TrendingUp, Clock } from "lucide-react";
-import { apiRequest } from "@/lib/queryClient";
-import { useToast } from "@/hooks/use-toast";
-
-interface GameState {
-  roundId: string;
-  status: 'waiting' | 'flying' | 'crashed';
-  currentMultiplier: number;
-  startTime: number;
-  endTime?: number;
-}
-
-interface AviatorBet {
-  amount: number;
-  multiplier?: number;
-  cashedOut: boolean;
-  timestamp: number;
-}
 
 export function AviatorSection() {
-  const [bet1Amount, setBet1Amount] = useState(10);
-  const [bet2Amount, setBet2Amount] = useState(25);
-  const [gameState, setGameState] = useState<GameState | null>(null);
-  const [recentResults, setRecentResults] = useState<number[]>([]);
-  const [userBets, setUserBets] = useState<AviatorBet[]>([]);
-  const [waitingTime, setWaitingTime] = useState(0);
-  const [isConnected, setIsConnected] = useState(false);
-  const [bet1Placed, setBet1Placed] = useState(false);
-  const [bet2Placed, setBet2Placed] = useState(false);
-  const [planePosition, setPlanePosition] = useState({ x: 0, y: 0, rotation: 45 });
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(false);
   
-  const ws = useRef<WebSocket | null>(null);
-  const { toast } = useToast();
-
-  // WebSocket connection
-  useEffect(() => {
-    const protocol = window.location.protocol === "https:" ? "wss:" : "ws:";
-    const wsUrl = `${protocol}//${window.location.host}/ws/aviator`;
-    
-    ws.current = new WebSocket(wsUrl);
-    
-    ws.current.onopen = () => {
-      setIsConnected(true);
-    };
-    
-    ws.current.onmessage = (event) => {
-      const message = JSON.parse(event.data);
-      
-      switch (message.type) {
-        case 'gameState':
-          setGameState(message.data.gameState);
-          setRecentResults(message.data.recentResults);
-          break;
-        case 'roundWaiting':
-          setGameState(prev => prev ? { ...prev, status: 'waiting' } : null);
-          setWaitingTime(5);
-          setBet1Placed(false);
-          setBet2Placed(false);
-          break;
-        case 'roundStarted':
-          setGameState(prev => prev ? { ...prev, status: 'flying', startTime: message.data.startTime } : null);
-          setWaitingTime(0);
-          break;
-        case 'multiplierUpdate':
-          setGameState(prev => prev ? { ...prev, currentMultiplier: message.data.multiplier } : null);
-          updatePlanePosition(message.data.multiplier);
-          break;
-        case 'roundCrashed':
-          setGameState(prev => prev ? { ...prev, status: 'crashed', endTime: message.data.endTime } : null);
-          setRecentResults(prev => [message.data.crashMultiplier, ...prev.slice(0, 19)]);
-          break;
-        case 'betPlaced':
-          toast({
-            title: "Bet Placed",
-            description: `$${message.data.amount} bet placed successfully`,
-          });
-          break;
-        case 'betCashedOut':
-          toast({
-            title: "Cash Out",
-            description: `Cashed out at ${message.data.multiplier.toFixed(2)}x for $${message.data.amount.toFixed(2)}`,
-            variant: "default",
-          });
-          break;
-      }
-    };
-    
-    ws.current.onclose = () => {
-      setIsConnected(false);
-    };
-    
-    ws.current.onerror = (error) => {
-      console.error('WebSocket error:', error);
-      setIsConnected(false);
-    };
-    
-    return () => {
-      if (ws.current) {
-        ws.current.close();
-      }
-    };
-  }, [toast]);
-
-  // Countdown timer for waiting phase
-  useEffect(() => {
-    if (waitingTime > 0) {
-      const timer = setTimeout(() => {
-        setWaitingTime(prev => prev - 1);
-      }, 1000);
-      return () => clearTimeout(timer);
-    }
-  }, [waitingTime]);
-
-  // Update plane position based on multiplier
-  const updatePlanePosition = (multiplier: number) => {
-    const progress = Math.min((multiplier - 1) / 9, 1); // Normalize to 0-1 for multiplier 1-10x
-    const x = progress * 80; // Move across 80% of width
-    const y = progress * 60; // Move up 60% of height
-    const rotation = 45 + (progress * 15); // Slight rotation change
-    
-    setPlanePosition({ x, y, rotation });
+  const handleIframeLoad = () => {
+    setIsLoading(false);
   };
-
-  const placeBet = async (amount: number, betIndex: number) => {
-    try {
-      await apiRequest(`/api/aviator/bet`, 'POST', { amount });
-      
-      if (betIndex === 0) {
-        setBet1Placed(true);
-      } else {
-        setBet2Placed(true);
-      }
-    } catch (error) {
-      toast({
-        title: "Bet Failed",
-        description: "Unable to place bet. Please try again.",
-        variant: "destructive",
-      });
+  
+  const handleIframeError = () => {
+    setIsLoading(false);
+    setError(true);
+  };
+  
+  const refreshGame = () => {
+    setIsLoading(true);
+    setError(false);
+    // Force iframe reload
+    const iframe = document.getElementById('aviator-iframe') as HTMLIFrameElement;
+    if (iframe) {
+      iframe.src = iframe.src;
     }
   };
-
-  const cashOut = async (betIndex: number) => {
-    try {
-      await apiRequest(`/api/aviator/cashout`, 'POST', { betIndex });
-      
-      if (betIndex === 0) {
-        setBet1Placed(false);
-      } else {
-        setBet2Placed(false);
-      }
-    } catch (error) {
-      toast({
-        title: "Cash Out Failed", 
-        description: "Unable to cash out. Please try again.",
-        variant: "destructive",
-      });
-    }
-  };
-
-  const canBet = gameState?.status === 'waiting' && isConnected;
-  const canCashOut = gameState?.status === 'flying' && isConnected;
 
   return (
-    <div className="max-w-4xl mx-auto px-4 py-8">
+    <div className="max-w-6xl mx-auto px-4 py-8">
       <div className="text-center mb-8">
         <div className="flex items-center justify-center mb-4">
           <Plane className="h-8 w-8 text-blue-600 mr-3" />
           <h2 className="text-3xl font-bold text-white">Aviator</h2>
-          <div className={`ml-4 px-2 py-1 rounded text-xs ${isConnected ? 'bg-green-600' : 'bg-red-600'}`}>
-            {isConnected ? 'LIVE' : 'DISCONNECTED'}
+          <div className="ml-4 px-2 py-1 rounded text-xs bg-red-600 text-white">
+            LIVE BY SPRIBE
           </div>
         </div>
         <p className="text-slate-400">Watch the plane fly and cash out before it crashes!</p>
       </div>
-      
-      {/* Game Status */}
-      {gameState && (
-        <div className="text-center mb-6">
-          {gameState.status === 'waiting' && (
-            <div className="bg-yellow-600 text-white px-4 py-2 rounded-lg inline-flex items-center">
-              <Clock className="h-4 w-4 mr-2" />
-              Next round starts in {waitingTime}s
-            </div>
-          )}
-          {gameState.status === 'flying' && (
-            <div className="bg-green-600 text-white px-4 py-2 rounded-lg inline-flex items-center">
-              <TrendingUp className="h-4 w-4 mr-2" />
-              Flying - {gameState.currentMultiplier.toFixed(2)}x
-            </div>
-          )}
-          {gameState.status === 'crashed' && (
-            <div className="bg-red-600 text-white px-4 py-2 rounded-lg inline-flex items-center">
-              Crashed at {gameState.currentMultiplier.toFixed(2)}x
-            </div>
-          )}
-        </div>
-      )}
-      
-      {/* Aviator Game Interface */}
-      <div className="bg-slate-800 rounded-xl p-8 mb-6 border border-slate-700">
-        <div className="relative h-64 bg-gradient-to-t from-blue-900/50 to-transparent rounded-lg mb-6 overflow-hidden">
-          {/* Sky background */}
-          <div className="absolute inset-0 bg-gradient-to-t from-blue-900 to-blue-500"></div>
-          
-          {/* Clouds */}
-          <div className="absolute top-4 left-10 w-16 h-8 bg-white/20 rounded-full"></div>
-          <div className="absolute top-8 right-16 w-12 h-6 bg-white/15 rounded-full"></div>
-          
-          {/* Plane with dynamic position */}
-          <div 
-            className="absolute transition-all duration-100 ease-linear"
-            style={{
-              left: `${8 + planePosition.x}%`,
-              bottom: `${8 + planePosition.y}%`,
-              transform: `rotate(${planePosition.rotation}deg)`
-            }}
-          >
-            <Plane className="h-8 w-8 text-white" />
-          </div>
-          
-          {/* Multiplier Display */}
-          <div className="absolute inset-0 flex items-center justify-center">
-            <div className={`text-6xl font-bold transition-colors duration-200 ${
-              gameState?.status === 'flying' ? 'text-green-400' : 
-              gameState?.status === 'crashed' ? 'text-red-400' : 'text-white'
-            }`}>
-              {gameState?.currentMultiplier?.toFixed(2) || '1.00'}x
+
+      {/* Game Container */}
+      <div className="bg-slate-800 rounded-xl overflow-hidden border border-slate-700 relative">
+        {/* Loading Spinner */}
+        {isLoading && (
+          <div className="absolute inset-0 bg-slate-800 flex items-center justify-center z-10">
+            <div className="text-center">
+              <RefreshCw className="h-8 w-8 text-blue-600 animate-spin mx-auto mb-4" />
+              <p className="text-white">Loading Aviator...</p>
             </div>
           </div>
-          
-          {/* Trail */}
-          {gameState?.status === 'flying' && (
-            <div 
-              className="absolute bg-white/50 rounded-full transition-all duration-100"
-              style={{
-                left: `${8 + (planePosition.x * 0.5)}%`,
-                bottom: `${12 + (planePosition.y * 0.5)}%`,
-                width: `${Math.min(planePosition.x * 2, 100)}px`,
-                height: '2px'
-              }}
-            ></div>
-          )}
-        </div>
-        
-        {/* Game Controls */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {/* Bet 1 */}
-          <div className="bg-slate-700 rounded-lg p-4 border border-slate-600">
-            <div className="flex items-center justify-between mb-3">
-              <span className="font-medium text-white">Bet 1</span>
-              <span className={`text-sm ${bet1Placed ? 'text-green-400' : 'text-slate-400'}`}>
-                {bet1Placed ? 'Active' : 'Inactive'}
-              </span>
-            </div>
-            
-            <div className="space-y-3">
-              <div className="flex items-center space-x-2">
-                <Button 
-                  variant="secondary"
-                  size="sm"
-                  onClick={() => setBet1Amount(Math.max(1, bet1Amount - 1))}
-                  className="bg-slate-600 hover:bg-slate-500 text-white"
-                  disabled={!canBet}
-                >
-                  -
-                </Button>
-                <Input 
-                  type="number" 
-                  value={bet1Amount} 
-                  onChange={(e) => setBet1Amount(parseFloat(e.target.value) || 0)}
-                  className="bg-slate-600 text-center flex-1 text-white border-slate-500" 
-                  disabled={!canBet}
-                />
-                <Button 
-                  variant="secondary"
-                  size="sm"
-                  onClick={() => setBet1Amount(bet1Amount + 1)}
-                  className="bg-slate-600 hover:bg-slate-500 text-white"
-                  disabled={!canBet}
-                >
-                  +
-                </Button>
-              </div>
-              
-              {bet1Placed && canCashOut ? (
-                <Button 
-                  className="w-full bg-green-600 hover:bg-green-700 font-bold transition-colors text-white"
-                  onClick={() => cashOut(0)}
-                >
-                  CASH OUT ${(bet1Amount * (gameState?.currentMultiplier || 1)).toFixed(2)}
-                </Button>
-              ) : (
-                <Button 
-                  className="w-full bg-blue-600 hover:bg-blue-700 font-bold transition-colors text-white"
-                  onClick={() => placeBet(bet1Amount, 0)}
-                  disabled={!canBet || bet1Placed}
-                >
-                  BET ${bet1Amount.toFixed(2)}
-                </Button>
-              )}
+        )}
+
+        {/* Error State */}
+        {error && (
+          <div className="absolute inset-0 bg-slate-800 flex items-center justify-center z-10">
+            <div className="text-center">
+              <Plane className="h-12 w-12 text-red-600 mx-auto mb-4" />
+              <p className="text-white mb-4">Failed to load Aviator game</p>
+              <Button onClick={refreshGame} className="bg-blue-600 hover:bg-blue-700">
+                <RefreshCw className="h-4 w-4 mr-2" />
+                Retry
+              </Button>
             </div>
           </div>
-          
-          {/* Bet 2 */}
-          <div className="bg-slate-700 rounded-lg p-4 border border-slate-600">
-            <div className="flex items-center justify-between mb-3">
-              <span className="font-medium text-white">Bet 2</span>
-              <span className={`text-sm ${bet2Placed ? 'text-green-400' : 'text-slate-400'}`}>
-                {bet2Placed ? 'Active' : 'Inactive'}
-              </span>
-            </div>
-            
-            <div className="space-y-3">
-              <div className="flex items-center space-x-2">
-                <Button 
-                  variant="secondary"
-                  size="sm"
-                  onClick={() => setBet2Amount(Math.max(1, bet2Amount - 1))}
-                  className="bg-slate-600 hover:bg-slate-500 text-white"
-                  disabled={!canBet}
-                >
-                  -
-                </Button>
-                <Input 
-                  type="number" 
-                  value={bet2Amount} 
-                  onChange={(e) => setBet2Amount(parseFloat(e.target.value) || 0)}
-                  className="bg-slate-600 text-center flex-1 text-white border-slate-500" 
-                  disabled={!canBet}
-                />
-                <Button 
-                  variant="secondary"
-                  size="sm"
-                  onClick={() => setBet2Amount(bet2Amount + 1)}
-                  className="bg-slate-600 hover:bg-slate-500 text-white"
-                  disabled={!canBet}
-                >
-                  +
-                </Button>
-              </div>
-              
-              {bet2Placed && canCashOut ? (
-                <Button 
-                  className="w-full bg-green-600 hover:bg-green-700 font-bold transition-colors text-white"
-                  onClick={() => cashOut(1)}
-                >
-                  CASH OUT ${(bet2Amount * (gameState?.currentMultiplier || 1)).toFixed(2)}
-                </Button>
-              ) : (
-                <Button 
-                  className="w-full bg-blue-600 hover:bg-blue-700 font-bold transition-colors text-white"
-                  onClick={() => placeBet(bet2Amount, 1)}
-                  disabled={!canBet || bet2Placed}
-                >
-                  BET ${bet2Amount.toFixed(2)}
-                </Button>
-              )}
-            </div>
+        )}
+
+        {/* Spribe Aviator Iframe */}
+        <iframe
+          id="aviator-iframe"
+          src="https://luckyjet.spribe.io/aviator"
+          width="100%"
+          height="600"
+          frameBorder="0"
+          allowFullScreen
+          allow="autoplay; encrypted-media; fullscreen"
+          onLoad={handleIframeLoad}
+          onError={handleIframeError}
+          className="w-full min-h-[600px]"
+          title="Spribe Aviator Game"
+        />
+      </div>
+
+      {/* Game Information */}
+      <div className="mt-6 bg-slate-800 rounded-xl p-6 border border-slate-700">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="text-center">
+            <div className="text-2xl font-bold text-green-400 mb-2">RTP</div>
+            <div className="text-slate-400">97%</div>
+          </div>
+          <div className="text-center">
+            <div className="text-2xl font-bold text-blue-400 mb-2">Max Win</div>
+            <div className="text-slate-400">10,000x</div>
+          </div>
+          <div className="text-center">
+            <div className="text-2xl font-bold text-yellow-400 mb-2">Provider</div>
+            <div className="text-slate-400">Spribe</div>
           </div>
         </div>
       </div>
-      
-      {/* Recent Results */}
-      <div className="bg-slate-800 rounded-xl p-6 border border-slate-700">
-        <h3 className="text-lg font-bold mb-4 text-white">Recent Results</h3>
-        <div className="grid grid-cols-5 md:grid-cols-10 gap-2">
-          {recentResults.map((result: number, index: number) => (
-            <div 
-              key={index} 
-              className={`text-center py-2 rounded font-bold text-sm text-white ${
-                result >= 2 ? 'bg-green-600' : 'bg-red-600'
-              }`}
-            >
-              {result.toFixed(2)}x
-            </div>
-          ))}
+
+      {/* Game Instructions */}
+      <div className="mt-6 bg-slate-800 rounded-xl p-6 border border-slate-700">
+        <h3 className="text-xl font-bold text-white mb-4">How to Play</h3>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div>
+            <h4 className="font-semibold text-blue-400 mb-2">1. Place Your Bet</h4>
+            <p className="text-slate-400 text-sm">Choose your bet amount before the plane takes off. You can place up to 2 bets simultaneously.</p>
+          </div>
+          <div>
+            <h4 className="font-semibold text-green-400 mb-2">2. Watch the Multiplier</h4>
+            <p className="text-slate-400 text-sm">The plane flies higher and the multiplier increases. The longer it flies, the bigger your potential win.</p>
+          </div>
+          <div>
+            <h4 className="font-semibold text-yellow-400 mb-2">3. Cash Out in Time</h4>
+            <p className="text-slate-400 text-sm">Click "Cash Out" before the plane flies away to secure your winnings at the current multiplier.</p>
+          </div>
+          <div>
+            <h4 className="font-semibold text-red-400 mb-2">4. Don't Wait Too Long</h4>
+            <p className="text-slate-400 text-sm">If you don't cash out before the plane flies away, you lose your bet. Timing is everything!</p>
+          </div>
         </div>
+      </div>
+
+      {/* External Link */}
+      <div className="mt-6 text-center">
+        <Button
+          variant="outline"
+          onClick={() => window.open('https://luckyjet.spribe.io/aviator', '_blank')}
+          className="bg-transparent border-slate-600 text-white hover:bg-slate-700"
+        >
+          <ExternalLink className="h-4 w-4 mr-2" />
+          Open in New Window
+        </Button>
       </div>
     </div>
   );
