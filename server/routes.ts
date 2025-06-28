@@ -37,7 +37,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const allEvents = Object.values(upcomingGames).flat();
       res.json(allEvents);
     } catch (error) {
-      res.status(500).json({ message: "Failed to fetch sports events" });
+      res.status(503).json({ 
+        message: "Sports data temporarily unavailable - API quota exceeded", 
+        availableFeatures: ["Virtual Games", "Aviator", "Casino Games"],
+        note: "Quota resets monthly"
+      });
     }
   });
 

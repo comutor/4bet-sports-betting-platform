@@ -92,13 +92,14 @@ export class OddsApiService {
       
       if (!response.ok) {
         if (response.status === 401) {
-          log(`API authentication failed for ${sportKey} - invalid or expired API key`);
+          log(`API quota exceeded for ${sportKey} - monthly limit reached`);
         } else if (response.status === 429) {
           log(`API rate limit exceeded for ${sportKey}`);
         } else if (response.status === 404) {
           log(`Sport ${sportKey} not found or not available`);
         }
-        throw new Error(`API request failed: ${response.status}`);
+        // Return empty array to prevent cascade failures
+        return [];
       }
       
       const events = await response.json();

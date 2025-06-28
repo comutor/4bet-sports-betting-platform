@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
+import { ApiQuotaNotice } from "@/components/ApiQuotaNotice";
 import championsLeagueLogo from "@assets/IMG_4087.png";
 import ligue1Logo from "@assets/IMG_4086.png";
 import premierLeagueLogo from "@assets/Z.jpeg";
@@ -233,15 +234,12 @@ export function SportsSection({ onBetClick, selectedSport = 'soccer' }: SportsSe
           ))}
       </div>
 
-      {/* No matches placeholder when no matches available */}
+      {/* Show API quota notice when no matches available */}
       {currentMatches.length === 0 && (
-        <div className="text-center py-12">
-          <i className={`${getSportIcon(activeCategory)} text-6xl text-gray-600 mb-4`}></i>
-          <h3 className="text-xl font-bold mb-2">
-            {sportsCategories.find(cat => cat.id === activeCategory)?.name} Coming Soon
-          </h3>
-          <p className="text-gray-400">Stay tuned for exciting betting opportunities!</p>
-        </div>
+        <ApiQuotaNotice 
+          onContinueToVirtual={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+          onContinueToAviator={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+        />
       )}
     </div>
   );
