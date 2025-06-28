@@ -284,7 +284,7 @@ export default function Home() {
           onSignupClick={handleOpenSignupPage}
           onLoginClick={handleOpenLoginModal}
           onLogout={handleLogout}
-          onSettingsClick={() => setActiveTab('settings')}
+
           onDepositClick={handleOpenDepositModal}
           onWithdrawClick={handleOpenWithdrawalModal}
           userData={userData}

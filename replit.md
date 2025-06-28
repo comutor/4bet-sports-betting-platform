@@ -101,7 +101,7 @@ The application uses PostgreSQL with the following core entities:
 ## Changelog
 ```
 Changelog:
-- June 28, 2025. Added dark/light mode theme switching: Implemented comprehensive theme toggle in settings with dark mode, light mode, and system preference options with persistent localStorage storage and CSS variable-based theming
+- June 28, 2025. Removed settings section and light mode: Eliminated settings functionality and white/light mode as requested by user, cleaned up all references and simplified account navigation structure to maintain dark-only theme
 - June 27, 2025. Integrated authentic Spribe Aviator with server-side tracking: Implemented token-based authentication system for Spribe Aviator, server-side user session management, secure bet/win tracking, and balance synchronization while keeping payments on platform
 - June 27, 2025. Updated virtual games countdown styling: Changed all countdown timer colors from blue to white across virtual sports sections including navigation tabs and footer timers for better visual consistency
 - June 26, 2025. Enhanced virtual games with navigation tabs: Added Live/Next/Results tabs with countdown timers for Virtual Football, Basketball, and Tennis. Live matches show real-time scores, Next shows upcoming with countdown, Results display final outcomes
