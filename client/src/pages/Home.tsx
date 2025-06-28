@@ -21,6 +21,7 @@ import { SportsOverview } from "@/components/SportsOverview";
 import { QuickAccessBoxes } from "@/components/QuickAccessBoxes";
 import { WelcomeBanner } from "@/components/WelcomeBanner";
 import { MyBetsSection } from "@/components/MyBetsSection";
+import { StatementSection } from "@/components/StatementSection";
 
 import { DepositModal } from "@/components/DepositModal";
 import { WithdrawalModal } from "@/components/WithdrawalModal";

@@ -589,6 +589,53 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Get user transactions for statement
+  app.get('/api/user/transactions', async (req, res) => {
+    try {
+      const { userId, filter = 'all', range = '30d' } = req.query;
+      
+      if (!userId) {
+        return res.status(400).json({ message: 'User ID required' });
+      }
+
+      const transactions = await storage.getBalanceTransactions(Number(userId), 100);
+      
+      // Filter by type if specified
+      let filteredTransactions = transactions;
+      if (filter !== 'all') {
+        filteredTransactions = transactions.filter(t => t.type === filter);
+      }
+
+      // Filter by date range
+      if (range !== 'all') {
+        const now = new Date();
+        const days = range === '7d' ? 7 : range === '30d' ? 30 : 90;
+        const cutoffDate = new Date(now.getTime() - (days * 24 * 60 * 60 * 1000));
+        filteredTransactions = filteredTransactions.filter(t => {
+          if (!t.createdAt) return false;
+          const transactionDate = new Date(t.createdAt);
+          return transactionDate >= cutoffDate;
+        });
+      }
+
+      // Format transactions for frontend
+      const formattedTransactions = filteredTransactions.map(t => ({
+        id: t.id,
+        type: t.type,
+        amount: t.amount,
+        description: t.description || `${t.type.charAt(0).toUpperCase() + t.type.slice(1)} transaction`,
+        date: t.createdAt,
+        status: 'completed', // All stored transactions are completed
+        balance: t.balanceAfter
+      }));
+
+      res.json({ transactions: formattedTransactions });
+    } catch (error) {
+      console.error('Error fetching transactions:', error);
+      res.status(500).json({ message: 'Failed to fetch transactions' });
+    }
+  });
+
   app.get("/api/odds/basketball/leagues", async (req, res) => {
     try {
       const leagues = await oddsApiService.getBasketballLeagues();
