@@ -18,12 +18,18 @@ export function AccountPage({ isLoggedIn = false, onClose, onSignupClick, onLogi
     { id: 'withdraw', label: 'Withdraw', icon: 'fas fa-money-bill-wave' },
     { id: 'notifications', label: 'Notifications', icon: 'fas fa-bell' },
     { id: 'statement', label: 'Statement', icon: 'fas fa-file-alt' },
-    { id: 'manage-account', label: 'Manage My Account', icon: 'fas fa-user-cog' }
+    { id: 'manage-account', label: 'Manage My Account', icon: 'fas fa-user-cog' },
+    { id: 'why-join', label: 'Why Join?', icon: 'fas fa-users' },
+    { id: 'help-center', label: 'Help Center', icon: 'fas fa-question-circle' },
+    { id: 'more-on-4bet', label: 'More on 4bet', icon: 'fas fa-info-circle' }
   ];
 
   const loggedOutMenuItems = [
     { id: 'deposit', label: 'Deposit', icon: 'fas fa-credit-card' },
-    { id: 'withdraw', label: 'Withdraw', icon: 'fas fa-money-bill-wave' }
+    { id: 'withdraw', label: 'Withdraw', icon: 'fas fa-money-bill-wave' },
+    { id: 'why-join', label: 'Why Join?', icon: 'fas fa-users' },
+    { id: 'help-center', label: 'Help Center', icon: 'fas fa-question-circle' },
+    { id: 'more-on-4bet', label: 'More on 4bet', icon: 'fas fa-info-circle' }
   ];
 
   const menuItems = isLoggedIn ? loggedInMenuItems : loggedOutMenuItems;
@@ -102,14 +108,17 @@ export function AccountPage({ isLoggedIn = false, onClose, onSignupClick, onLogi
                 } else if (item.id === 'withdraw' && onWithdrawClick) {
                   onWithdrawClick();
                 } else if (item.id === 'notifications') {
-                  // Handle notifications
                   console.log('Notifications clicked');
                 } else if (item.id === 'statement') {
-                  // Handle statement
                   console.log('Statement clicked');
                 } else if (item.id === 'manage-account') {
-                  // Handle manage account
                   console.log('Manage account clicked');
+                } else if (item.id === 'why-join') {
+                  console.log('Why Join clicked');
+                } else if (item.id === 'help-center') {
+                  console.log('Help Center clicked');
+                } else if (item.id === 'more-on-4bet') {
+                  console.log('More on 4bet clicked');
                 }
               }}
             >
