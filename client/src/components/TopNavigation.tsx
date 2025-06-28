@@ -83,14 +83,11 @@ export function TopNavigation({ activeTab, onTabChange, userBalance, userCountry
   const getCurrencyDisplay = (balance: string, country?: string) => {
     const formatLargeNumber = (num: string) => {
       const number = parseFloat(num);
-      if (number >= 1000000000) {
-        return (number / 1000000000).toFixed(1) + 'B';
-      } else if (number >= 1000000) {
-        return (number / 1000000).toFixed(1) + 'M';
-      } else if (number >= 1000) {
-        return (number / 1000).toFixed(1) + 'K';
-      }
-      return number.toLocaleString();
+      // Use proper number formatting with commas for readability
+      return number.toLocaleString('en-US', {
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 0
+      });
     };
 
     const formattedBalance = formatLargeNumber(balance);
@@ -132,12 +129,12 @@ export function TopNavigation({ activeTab, onTabChange, userBalance, userCountry
       <div className="max-w-7xl mx-auto">
         {/* Top Header - Hamburger, Logo, Search, Balance */}
         <div className="bg-slate-900/95 backdrop-blur-sm border-b border-gray-600/50 shadow-lg">
-          <div className="px-4 flex items-center justify-between h-16 md:h-18">
+          <div className="px-3 md:px-4 flex items-center justify-between h-16 md:h-18 gap-2">
             {/* Left side - Hamburger and Logo */}
-          <div className="flex items-center space-x-2 md:space-x-3">
+          <div className="flex items-center space-x-2 md:space-x-3 flex-shrink-0">
             <Button 
               variant="ghost" 
-              className="p-1 md:p-2 text-gray-400 hover:text-white"
+              className="p-1 md:p-2 text-gray-400 hover:text-white flex-shrink-0"
               onClick={(e) => {
                 e.preventDefault();
                 e.stopPropagation();
@@ -147,60 +144,65 @@ export function TopNavigation({ activeTab, onTabChange, userBalance, userCountry
               <i className="fas fa-bars text-lg md:text-xl"></i>
             </Button>
             <button 
-              className="flex items-center justify-center space-x-2 hover:opacity-80 transition-opacity cursor-pointer logo-container py-1"
+              className="flex items-center justify-center hover:opacity-80 transition-opacity cursor-pointer logo-container py-1 flex-shrink-0"
               onClick={(e) => {
                 e.preventDefault();
                 e.stopPropagation();
                 onTabChange('home');
               }}
             >
-              <FourBetLogo size="md" />
+              <FourBetLogo size="sm" className="md:hidden" />
+              <FourBetLogo size="md" className="hidden md:block" />
             </button>
           </div>
           
           {/* Right side - Search and User Actions */}
-          <div className="flex items-center space-x-1 md:space-x-4">
+          <div className="flex items-center gap-1 md:gap-3 flex-shrink-0">
             <Button 
               variant="ghost" 
-              className="p-1 md:p-2 text-gray-400 hover:text-white"
+              className="p-1 md:p-2 text-gray-400 hover:text-white flex-shrink-0"
               onClick={(e) => {
                 e.preventDefault();
                 e.stopPropagation();
                 onSearchToggle && onSearchToggle();
               }}
             >
-              <i className="fas fa-search text-lg md:text-xl"></i>
+              <i className="fas fa-search text-base md:text-lg"></i>
             </Button>
             
             {isLoggedIn ? (
               <>
                 <div 
-                  className="flex items-center bg-white/10 border border-white/30 rounded-lg px-2 md:px-3 py-1 md:py-2 cursor-pointer hover:bg-blue-600/20 hover:border-blue-600/50 transition-all duration-200"
+                  className="flex items-center bg-white/10 border border-white/30 rounded-lg px-2 md:px-3 py-1.5 md:py-2 cursor-pointer hover:bg-blue-600/20 hover:border-blue-600/50 transition-all duration-200 max-w-[140px] md:max-w-[200px]"
                   onClick={(e) => {
                     e.preventDefault();
                     e.stopPropagation();
                     onDepositClick && onDepositClick();
                   }}
+                  title={`${getCurrencyDisplay(userBalance, userCountry)} - Click to deposit`}
                 >
-                  <i className="fas fa-wallet text-white mr-1 md:mr-2 text-sm md:text-base"></i>
-                  <span className="font-bold text-sm md:text-base text-white">{getCurrencyDisplay(userBalance, userCountry)}</span>
+                  <i className="fas fa-wallet text-white mr-1 md:mr-2 text-xs md:text-sm flex-shrink-0"></i>
+                  <span className="font-bold text-xs md:text-sm text-white truncate overflow-hidden" key={userBalance}>
+                    {getCurrencyDisplay(userBalance, userCountry)}
+                  </span>
                 </div>
                 <Button 
-                  className="bg-transparent border-2 border-white text-white hover:bg-blue-600 hover:text-white hover:border-blue-600 transition-all duration-300 hover:scale-105 font-bold text-sm md:text-base px-2 md:px-4 py-1 md:py-2"
+                  className="bg-transparent border-2 border-white text-white hover:bg-blue-600 hover:text-white hover:border-blue-600 transition-all duration-300 hover:scale-105 font-bold text-xs md:text-sm px-2 md:px-3 py-1 md:py-1.5 flex-shrink-0"
                   onClick={(e) => {
                     e.preventDefault();
                     e.stopPropagation();
                     onDepositClick && onDepositClick();
                   }}
                 >
-                  Deposit
+                  <span className="hidden sm:inline">Deposit</span>
+                  <i className="fas fa-plus sm:hidden"></i>
                 </Button>
               </>
             ) : (
               <>
                 <Button 
                   variant="outline" 
-                  className="border-2 border-white text-white hover:bg-blue-600 hover:text-white hover:border-blue-600 transition-all duration-300 hover:scale-105 font-medium text-sm md:text-base px-2 md:px-3 py-1 md:py-2"
+                  className="border-2 border-white text-white hover:bg-blue-600 hover:text-white hover:border-blue-600 transition-all duration-300 hover:scale-105 font-medium text-xs md:text-sm px-2 md:px-3 py-1 md:py-1.5 flex-shrink-0"
                   onClick={(e) => {
                     e.preventDefault();
                     e.stopPropagation();
@@ -210,7 +212,7 @@ export function TopNavigation({ activeTab, onTabChange, userBalance, userCountry
                   Login
                 </Button>
                 <Button 
-                  className="bg-blue-600 border-2 border-blue-600 text-white hover:bg-blue-700 hover:border-blue-700 transition-all duration-300 hover:scale-105 font-bold text-sm md:text-base px-2 md:px-3 py-1 md:py-2"
+                  className="bg-blue-600 border-2 border-blue-600 text-white hover:bg-blue-700 hover:border-blue-700 transition-all duration-300 hover:scale-105 font-bold text-xs md:text-sm px-2 md:px-3 py-1 md:py-1.5 flex-shrink-0"
                   onClick={(e) => {
                     e.preventDefault();
                     e.stopPropagation();
