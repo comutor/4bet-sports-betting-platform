@@ -101,7 +101,9 @@ The application uses PostgreSQL with the following core entities:
 ## Changelog
 ```
 Changelog:
-- June 28, 2025. Improved balance display formatting: Replaced abbreviations with professional comma-separated numbers, added max-width containers for overflow control, maintained full number visibility with proper truncation and tooltips
+- June 28, 2025. Increased balance padding: Enhanced visual spacing around balance display with more generous padding for better readability
+- June 28, 2025. Reverted deposit button to text: Changed "+" icon back to "Deposit" text across all screen sizes
+- June 28, 2025. Reverted balance formatting to original: Removed comma formatting and returned to simple raw number display as requested
 - June 28, 2025. Created two-tone logo design: Made "4" blue with gradient and glow effects while keeping "bet" white, creating distinctive brand recognition and visual hierarchy
 - June 28, 2025. Enhanced logo typography: Added Orbitron Google Font, increased sizes, applied gradient text effects, enhanced shadows with blue glow, and improved letter spacing for professional branding
 - June 28, 2025. Removed automatic banner slides: Replaced rotating welcome banner with static 4bet welcome message as requested by user

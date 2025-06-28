@@ -81,23 +81,12 @@ export function TopNavigation({ activeTab, onTabChange, userBalance, userCountry
   }, [isSearchOpen, onSearchToggle]);
 
   const getCurrencyDisplay = (balance: string, country?: string) => {
-    const formatLargeNumber = (num: string) => {
-      const number = parseFloat(num);
-      // Use proper number formatting with commas for readability
-      return number.toLocaleString('en-US', {
-        minimumFractionDigits: 0,
-        maximumFractionDigits: 0
-      });
-    };
-
-    const formattedBalance = formatLargeNumber(balance);
-    
     if (country === 'Uganda') {
-      return `UGX ${formattedBalance}`;
+      return `UGX ${balance}`;
     } else if (country === 'South Sudan') {
-      return `SSP ${formattedBalance}`;
+      return `SSP ${balance}`;
     }
-    return `SSP ${formattedBalance}`; // Default to South Sudanese Pounds
+    return `SSP ${balance}`; // Default to South Sudanese Pounds
   };
 
   const allNavItems = [
@@ -173,7 +162,7 @@ export function TopNavigation({ activeTab, onTabChange, userBalance, userCountry
             {isLoggedIn ? (
               <>
                 <div 
-                  className="flex items-center bg-white/10 border border-white/30 rounded-lg px-2 md:px-3 py-1.5 md:py-2 cursor-pointer hover:bg-blue-600/20 hover:border-blue-600/50 transition-all duration-200 max-w-[140px] md:max-w-[200px]"
+                  className="flex items-center bg-white/10 border-2 border-white/30 rounded-lg px-2 md:px-3 py-1 md:py-1.5 cursor-pointer hover:bg-blue-600/20 hover:border-blue-600/50 transition-all duration-200 max-w-[140px] md:max-w-[200px]"
                   onClick={(e) => {
                     e.preventDefault();
                     e.stopPropagation();
@@ -187,15 +176,14 @@ export function TopNavigation({ activeTab, onTabChange, userBalance, userCountry
                   </span>
                 </div>
                 <Button 
-                  className="bg-transparent border-2 border-white text-white hover:bg-blue-600 hover:text-white hover:border-blue-600 transition-all duration-300 hover:scale-105 font-bold text-xs md:text-sm px-2 md:px-3 py-1 md:py-1.5 flex-shrink-0"
+                  className="bg-blue-600 border-2 border-blue-600 text-white hover:bg-blue-700 hover:border-blue-700 transition-all duration-300 hover:scale-105 font-bold text-xs md:text-sm px-2 md:px-3 py-1 md:py-1.5 flex-shrink-0"
                   onClick={(e) => {
                     e.preventDefault();
                     e.stopPropagation();
                     onDepositClick && onDepositClick();
                   }}
                 >
-                  <span className="hidden sm:inline">Deposit</span>
-                  <i className="fas fa-plus sm:hidden"></i>
+                  Deposit
                 </Button>
               </>
             ) : (
