@@ -1,10 +1,63 @@
-import { useState } from "react";
-import { Plane, ExternalLink, RefreshCw } from "lucide-react";
+import { useState, useEffect } from "react";
+import { Plane, ExternalLink, RefreshCw, LogIn } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { apiRequest } from "@/lib/queryClient";
+import { useToast } from "@/hooks/use-toast";
+
+interface SpribeTokenData {
+  userId: number;
+  sessionId: string;
+  balance: string;
+  currency: string;
+  gameUrl: string;
+}
 
 export function AviatorSection() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(false);
+  const [tokenData, setTokenData] = useState<SpribeTokenData | null>(null);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const { toast } = useToast();
+  
+  // Check authentication status
+  useEffect(() => {
+    checkAuthStatus();
+  }, []);
+
+  const checkAuthStatus = async () => {
+    try {
+      const response = await fetch('/api/auth/user');
+      if (response.ok) {
+        setIsAuthenticated(true);
+        await generateGameToken();
+      } else {
+        setIsAuthenticated(false);
+        setIsLoading(false);
+      }
+    } catch (error) {
+      setIsAuthenticated(false);
+      setIsLoading(false);
+    }
+  };
+
+  const generateGameToken = async () => {
+    try {
+      setIsLoading(true);
+      const response = await apiRequest('/api/spribe/token', 'POST', {}) as SpribeTokenData;
+      setTokenData(response);
+      setError(false);
+    } catch (error) {
+      console.error('Failed to generate game token:', error);
+      setError(true);
+      toast({
+        title: "Game Loading Failed",
+        description: "Unable to start Aviator. Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  };
   
   const handleIframeLoad = () => {
     setIsLoading(false);
@@ -16,12 +69,15 @@ export function AviatorSection() {
   };
   
   const refreshGame = () => {
-    setIsLoading(true);
-    setError(false);
-    // Force iframe reload
-    const iframe = document.getElementById('aviator-iframe') as HTMLIFrameElement;
-    if (iframe) {
-      iframe.src = iframe.src;
+    if (isAuthenticated) {
+      generateGameToken();
+    } else {
+      setIsLoading(true);
+      setError(false);
+      const iframe = document.getElementById('aviator-iframe') as HTMLIFrameElement;
+      if (iframe) {
+        iframe.src = iframe.src;
+      }
     }
   };
 
@@ -45,13 +101,33 @@ export function AviatorSection() {
           <div className="absolute inset-0 bg-slate-800 flex items-center justify-center z-10">
             <div className="text-center">
               <RefreshCw className="h-8 w-8 text-blue-600 animate-spin mx-auto mb-4" />
-              <p className="text-white">Loading Aviator...</p>
+              <p className="text-white">
+                {isAuthenticated ? 'Generating secure game session...' : 'Loading Aviator...'}
+              </p>
+            </div>
+          </div>
+        )}
+
+        {/* Authentication Required */}
+        {!isAuthenticated && !isLoading && (
+          <div className="absolute inset-0 bg-slate-800 flex items-center justify-center z-10">
+            <div className="text-center">
+              <LogIn className="h-12 w-12 text-blue-600 mx-auto mb-4" />
+              <h3 className="text-xl font-bold text-white mb-2">Login Required</h3>
+              <p className="text-slate-400 mb-4">Please login to play Aviator and track your bets</p>
+              <Button 
+                onClick={() => window.location.href = '/api/login'}
+                className="bg-blue-600 hover:bg-blue-700"
+              >
+                <LogIn className="h-4 w-4 mr-2" />
+                Login to Play
+              </Button>
             </div>
           </div>
         )}
 
         {/* Error State */}
-        {error && (
+        {error && isAuthenticated && (
           <div className="absolute inset-0 bg-slate-800 flex items-center justify-center z-10">
             <div className="text-center">
               <Plane className="h-12 w-12 text-red-600 mx-auto mb-4" />
@@ -64,20 +140,37 @@ export function AviatorSection() {
           </div>
         )}
 
-        {/* Spribe Aviator Iframe */}
-        <iframe
-          id="aviator-iframe"
-          src="https://luckyjet.spribe.io/aviator"
-          width="100%"
-          height="600"
-          frameBorder="0"
-          allowFullScreen
-          allow="autoplay; encrypted-media; fullscreen"
-          onLoad={handleIframeLoad}
-          onError={handleIframeError}
-          className="w-full min-h-[600px]"
-          title="Spribe Aviator Game"
-        />
+        {/* Demo Game for Non-Authenticated Users */}
+        {!isAuthenticated && !isLoading && (
+          <iframe
+            id="aviator-demo-iframe"
+            src="https://demo.spribe.io/aviator"
+            width="100%"
+            height="600"
+            frameBorder="0"
+            allowFullScreen
+            allow="autoplay; encrypted-media; fullscreen"
+            className="w-full min-h-[600px]"
+            title="Spribe Aviator Demo Game"
+          />
+        )}
+
+        {/* Authenticated Game with Token */}
+        {isAuthenticated && tokenData && !error && (
+          <iframe
+            id="aviator-iframe"
+            src={tokenData.gameUrl}
+            width="100%"
+            height="600"
+            frameBorder="0"
+            allowFullScreen
+            allow="autoplay; encrypted-media; fullscreen"
+            onLoad={handleIframeLoad}
+            onError={handleIframeError}
+            className="w-full min-h-[600px]"
+            title="Spribe Aviator Game"
+          />
+        )}
       </div>
 
       {/* Game Information */}

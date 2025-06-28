@@ -5,6 +5,7 @@ import session from "express-session";
 import { storage } from "./storage";
 import { oddsApiService } from "./services/oddsApi";
 import { aviatorGame } from "./services/aviatorGame";
+import { spribeService } from "./services/spribeService";
 import { insertBetslipItemSchema, insertUserSchema, insertUserBetSchema } from "@shared/schema";
 
 export async function registerRoutes(app: Express): Promise<Server> {
@@ -19,6 +20,15 @@ export async function registerRoutes(app: Express): Promise<Server> {
       maxAge: 24 * 60 * 60 * 1000 // 24 hours
     }
   }));
+
+  // Simple authentication middleware
+  const isAuthenticated = (req: any, res: any, next: any) => {
+    if (req.session?.user) {
+      next();
+    } else {
+      res.status(401).json({ message: "Authentication required" });
+    }
+  };
 
   // Sports events endpoints - now serving real data
   app.get("/api/sports-events", async (req, res) => {
@@ -780,7 +790,82 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Aviator game endpoints
+  // Spribe Aviator endpoints  
+  app.post("/api/spribe/token", async (req, res) => {
+    // Simple auth check
+    if (!req.session?.user) {
+      return res.status(401).json({ message: "Authentication required" });
+    }
+    try {
+      const session = req.session as any;
+      const userId = session.user.id;
+      
+      const tokenData = await spribeService.generateGameToken(userId);
+      res.json(tokenData);
+    } catch (error) {
+      console.error("Error generating Spribe token:", error);
+      res.status(500).json({ message: "Failed to generate game token" });
+    }
+  });
+
+  // Spribe callback endpoints for game integration
+  app.post("/api/spribe/balance", async (req, res) => {
+    try {
+      const { token, session_id } = req.body;
+      
+      if (token) {
+        const tokenData = spribeService.verifyToken(token);
+        const balance = await spribeService.getBalance(tokenData.session_id);
+        res.json(balance);
+      } else if (session_id) {
+        const balance = await spribeService.getBalance(session_id);
+        res.json(balance);
+      } else {
+        res.status(400).json({ error: "Missing token or session_id" });
+      }
+    } catch (error) {
+      console.error("Error getting balance:", error);
+      res.status(400).json({ error: error.message });
+    }
+  });
+
+  app.post("/api/spribe/bet", async (req, res) => {
+    try {
+      const { token, session_id, amount, bet_id } = req.body;
+      
+      let sessionId = session_id;
+      if (token) {
+        const tokenData = spribeService.verifyToken(token);
+        sessionId = tokenData.session_id;
+      }
+      
+      const result = await spribeService.placeBet(sessionId, amount, bet_id);
+      res.json(result);
+    } catch (error) {
+      console.error("Error placing bet:", error);
+      res.status(400).json({ error: error.message });
+    }
+  });
+
+  app.post("/api/spribe/win", async (req, res) => {
+    try {
+      const { token, session_id, amount, bet_id } = req.body;
+      
+      let sessionId = session_id;
+      if (token) {
+        const tokenData = spribeService.verifyToken(token);
+        sessionId = tokenData.session_id;
+      }
+      
+      const result = await spribeService.payoutWin(sessionId, amount, bet_id);
+      res.json(result);
+    } catch (error) {
+      console.error("Error processing win:", error);
+      res.status(400).json({ error: error.message });
+    }
+  });
+
+  // Legacy Aviator game endpoints (for fallback)
   app.get("/api/aviator/state", (req, res) => {
     const gameState = aviatorGame.getCurrentGameState();
     const recentResults = aviatorGame.getRecentResults();
