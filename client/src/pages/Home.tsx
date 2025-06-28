@@ -269,6 +269,8 @@ export default function Home() {
         return <LiveSection onBetClick={handleBetClick} />;
       case 'my-bets':
         return <MyBetsSection userId={isLoggedIn ? userData?.id : undefined} userCountry={userCountry} placedBets={placedBets} />;
+      case 'statement':
+        return <StatementSection onBack={() => setActiveTab('account')} userCountry={userCountry} userId={isLoggedIn ? userData?.id : undefined} />;
 
       case 'casino':
         return <CasinoSection />;
@@ -288,6 +290,7 @@ export default function Home() {
 
           onDepositClick={handleOpenDepositModal}
           onWithdrawClick={handleOpenWithdrawalModal}
+          onStatementClick={() => setActiveTab('statement')}
           userData={userData}
         />;
       case 'signup':

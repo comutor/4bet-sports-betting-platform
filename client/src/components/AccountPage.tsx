@@ -8,10 +8,11 @@ interface AccountPageProps {
   onLogout?: () => void;
   onDepositClick?: () => void;
   onWithdrawClick?: () => void;
+  onStatementClick?: () => void;
   userData?: any;
 }
 
-export function AccountPage({ isLoggedIn = false, onClose, onSignupClick, onLoginClick, onLogout, onDepositClick, onWithdrawClick, userData }: AccountPageProps) {
+export function AccountPage({ isLoggedIn = false, onClose, onSignupClick, onLoginClick, onLogout, onDepositClick, onWithdrawClick, onStatementClick, userData }: AccountPageProps) {
   const loggedInMenuItems = [
     { id: 'deposit', label: 'Deposit', icon: 'fas fa-credit-card' },
     { id: 'withdraw', label: 'Withdraw', icon: 'fas fa-money-bill-wave' },
@@ -108,8 +109,8 @@ export function AccountPage({ isLoggedIn = false, onClose, onSignupClick, onLogi
                   onWithdrawClick();
                 } else if (item.id === 'notifications') {
                   console.log('Notifications clicked');
-                } else if (item.id === 'statement') {
-                  console.log('Statement clicked');
+                } else if (item.id === 'statement' && onStatementClick) {
+                  onStatementClick();
                 } else if (item.id === 'manage-account') {
                   console.log('Manage account clicked');
                 } else if (item.id === 'why-join') {
