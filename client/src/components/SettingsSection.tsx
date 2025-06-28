@@ -77,41 +77,7 @@ export function SettingsSection({ userCountry, isLoggedIn, onClose, onBackToAcco
     </div>
   );
 
-  const renderManageAccountSettings = () => (
-    <div className="space-y-4">
-      <div className="flex items-center space-x-3 mb-6">
-        <button 
-          onClick={() => setActiveSection('my-account')}
-          className="text-white hover:text-gray-300"
-        >
-          ←
-        </button>
-        <h1 className="text-2xl font-bold text-white">Manage My Account</h1>
-      </div>
 
-      {/* Change Password */}
-      <div className="bg-slate-light-custom rounded-lg p-4 border border-slate-600">
-        <div className="flex items-center justify-between cursor-pointer">
-          <div className="flex items-center space-x-3">
-            <Lock className="w-5 h-5 text-gray-400" />
-            <span className="font-medium text-gray-300">Change Password</span>
-          </div>
-          <ChevronRight className="w-5 h-5 text-gray-400" />
-        </div>
-      </div>
-
-      {/* Self-Exclusion */}
-      <div className="bg-slate-light-custom rounded-lg p-4 border border-slate-600">
-        <div className="flex items-center justify-between cursor-pointer">
-          <div className="flex items-center space-x-3">
-            <UserX className="w-5 h-5 text-red-400" />
-            <span className="font-medium text-gray-300">Self-Exclusion</span>
-          </div>
-          <ChevronRight className="w-5 h-5 text-gray-400" />
-        </div>
-      </div>
-    </div>
-  );
 
   const renderGeneralSettings = () => (
     <div className="space-y-4">
