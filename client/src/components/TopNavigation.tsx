@@ -81,12 +81,26 @@ export function TopNavigation({ activeTab, onTabChange, userBalance, userCountry
   }, [isSearchOpen, onSearchToggle]);
 
   const getCurrencyDisplay = (balance: string, country?: string) => {
+    const formatLargeNumber = (num: string) => {
+      const number = parseFloat(num);
+      if (number >= 1000000000) {
+        return (number / 1000000000).toFixed(1) + 'B';
+      } else if (number >= 1000000) {
+        return (number / 1000000).toFixed(1) + 'M';
+      } else if (number >= 1000) {
+        return (number / 1000).toFixed(1) + 'K';
+      }
+      return number.toLocaleString();
+    };
+
+    const formattedBalance = formatLargeNumber(balance);
+    
     if (country === 'Uganda') {
-      return `UGX ${balance}`;
+      return `UGX ${formattedBalance}`;
     } else if (country === 'South Sudan') {
-      return `SSP ${balance}`;
+      return `SSP ${formattedBalance}`;
     }
-    return `SSP ${balance}`; // Default to South Sudanese Pounds
+    return `SSP ${formattedBalance}`; // Default to South Sudanese Pounds
   };
 
   const allNavItems = [

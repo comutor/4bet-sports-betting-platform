@@ -101,6 +101,8 @@ The application uses PostgreSQL with the following core entities:
 ## Changelog
 ```
 Changelog:
+- June 28, 2025. Created two-tone logo design: Made "4" blue with gradient and glow effects while keeping "bet" white, creating distinctive brand recognition and visual hierarchy
+- June 28, 2025. Enhanced logo typography: Added Orbitron Google Font, increased sizes, applied gradient text effects, enhanced shadows with blue glow, and improved letter spacing for professional branding
 - June 28, 2025. Removed automatic banner slides: Replaced rotating welcome banner with static 4bet welcome message as requested by user
 - June 28, 2025. Enhanced statement list styling: Redesigned transaction list with organized card layout, circular icon backgrounds, status pills, better typography hierarchy, and hover effects for improved visual organization
 - June 28, 2025. Fixed branding consistency: Updated welcome banner from "TATAbets" to "4bet" to complete the company rebrand
