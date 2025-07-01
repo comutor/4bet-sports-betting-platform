@@ -101,6 +101,7 @@ The application uses PostgreSQL with the following core entities:
 ## Changelog
 ```
 Changelog:
+- June 28, 2025. Enhanced logo boldness: Strengthened text shadows and glow effects for more prominent logo appearance with deeper visual impact
 - June 28, 2025. Enhanced balance text visibility: Increased font size from text-xs/sm to text-sm/base for better readability while maintaining bold styling
 - June 28, 2025. Increased balance and deposit button padding: Enhanced both elements with larger padding (px-3 md:px-4 py-2 md:py-2.5) for better prominence and visual consistency
 - June 28, 2025. Reverted deposit button to text: Changed "+" icon back to "Deposit" text across all screen sizes
