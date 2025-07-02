@@ -40,7 +40,7 @@ export function TopNavigation({
   const searchBarRef = useRef<HTMLDivElement>(null);
   const servicesDropdownRef = useRef<HTMLDivElement>(null);
 
-  // Sport navigation items
+  // Main navigation items for top tabs
   const allNavItems = [
     { id: 'football', label: 'Football', icon: 'fas fa-futbol', hasIndicator: false },
     { id: 'basketball', label: 'Basketball', icon: 'fas fa-basketball-ball', hasIndicator: false },
@@ -55,6 +55,11 @@ export function TopNavigation({
     { id: 'betslip', label: 'Betslip', icon: 'fas fa-receipt', hasIndicator: false },
     { id: 'account', label: 'Account', icon: 'fas fa-user', hasIndicator: false }
   ];
+
+  // Dropdown menu items (excludes betslip and account)
+  const dropdownNavItems = allNavItems.filter(item => 
+    item.id !== 'betslip' && item.id !== 'account'
+  );
 
   // Close services dropdown when clicking outside
   useEffect(() => {
@@ -267,7 +272,7 @@ export function TopNavigation({
               </Button>
             </div>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-              {allNavItems.map((item) => (
+              {dropdownNavItems.map((item) => (
                 <Button
                   key={item.id}
                   variant="ghost"
