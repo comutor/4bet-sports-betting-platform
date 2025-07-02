@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 import { TopNavigation } from "@/components/TopNavigation";
+import { FilterBar } from "@/components/FilterBar";
 import { BottomNavigation } from "@/components/BottomNavigation";
 import { BetslipSidebar } from "@/components/BetslipSidebar";
 import { HamburgerMenu } from "@/components/HamburgerMenu";
@@ -41,6 +42,8 @@ export default function Home() {
   const [placedBets, setPlacedBets] = useState<any[]>([]);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
+  const [activeFilter, setActiveFilter] = useState('all');
+  const [selectedDate, setSelectedDate] = useState<Date>(new Date());
   const [isAppLoading, setIsAppLoading] = useState(true);
   const {
     items: betslipItems,
@@ -387,7 +390,21 @@ export default function Home() {
           onSearchChange={setSearchQuery}
         />
         
-        <main className="pb-20 md:pb-4">
+        {/* Filter Bar - shown only for sports tabs */}
+        {['football', 'basketball', 'tennis', 'ice-hockey', 'american-football', 'esports'].includes(activeTab) && (
+          <FilterBar 
+            activeFilter={activeFilter}
+            onFilterChange={setActiveFilter}
+            selectedDate={selectedDate}
+            onDateChange={setSelectedDate}
+          />
+        )}
+        
+        <main className={`pb-20 md:pb-4 ${
+          ['football', 'basketball', 'tennis', 'ice-hockey', 'american-football', 'esports'].includes(activeTab) 
+            ? 'pt-4' 
+            : 'pt-4'
+        }`}>
           {renderMainContent()}
         </main>
 
