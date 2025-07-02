@@ -3,8 +3,6 @@ import { TopNavigation } from "@/components/TopNavigation";
 import { BottomNavigation } from "@/components/BottomNavigation";
 import { BetslipSidebar } from "@/components/BetslipSidebar";
 import { HamburgerMenu } from "@/components/HamburgerMenu";
-import { FeaturedEvents } from "@/components/FeaturedEvents";
-import { SportsSection } from "@/components/SportsSection";
 import { LiveSection } from "@/components/LiveSection";
 import { CasinoSection } from "@/components/CasinoSection";
 import { VirtualSection } from "@/components/VirtualSection";
@@ -17,9 +15,6 @@ import { SignupPage } from "@/components/SignupPage";
 import { LoginModal } from "@/components/LoginModal";
 import { FootballSection } from "@/components/FootballSection";
 import { SportSection } from "@/components/SportSection";
-import { SportsOverview } from "@/components/SportsOverview";
-import { QuickAccessBoxes } from "@/components/QuickAccessBoxes";
-import { WelcomeBanner } from "@/components/WelcomeBanner";
 import { MyBetsSection } from "@/components/MyBetsSection";
 import { StatementSection } from "@/components/StatementSection";
 
@@ -32,7 +27,7 @@ import { sampleFeaturedEvents } from "@/lib/betting-data";
 import { Button } from "@/components/ui/button";
 
 export default function Home() {
-  const [activeTab, setActiveTab] = useState('home');
+  const [activeTab, setActiveTab] = useState('football');
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userBalance, setUserBalance] = useState('0.00');
@@ -44,7 +39,6 @@ export default function Home() {
   const [showDepositModal, setShowDepositModal] = useState(false);
   const [showWithdrawalModal, setShowWithdrawalModal] = useState(false);
   const [placedBets, setPlacedBets] = useState<any[]>([]);
-  const [sportsFilter, setSportsFilter] = useState<'upcoming' | 'popular' | 'live'>('upcoming');
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [isAppLoading, setIsAppLoading] = useState(true);
@@ -231,34 +225,86 @@ export default function Home() {
 
   const renderMainContent = () => {
     switch (activeTab) {
-      case 'home':
-        return (
-          <>
-            {/* Auto-Rotating Welcome Banner */}
-            <WelcomeBanner />
-
-            <QuickAccessBoxes 
-              onUpcomingClick={() => {
-                setActiveTab('sports');
-                setSportsFilter('upcoming');
-              }}
-              onLiveClick={() => {
-                setActiveTab('sports');
-                setSportsFilter('live');
-              }}
-            />
-
-            <FeaturedEvents onBetClick={handleBetClick} onTabChange={handleTabChange} />
-          </>
-        );
-      case 'sports':
-        return <SportsOverview onBetClick={handleBetClick} activeFilter={sportsFilter} onTabChange={handleTabChange} />;
       case 'football':
         return <FootballSection onBetClick={handleBetClick} isInBetslip={isInBetslip} />;
       case 'basketball':
         return <SportSection sport="basketball" onBetClick={handleBetClick} />;
       case 'tennis':
         return <SportSection sport="tennis" onBetClick={handleBetClick} />;
+      case 'ice-hockey':
+        return <SportSection sport="hockey" onBetClick={handleBetClick} />;
+      case 'american-football':
+        return (
+          <div className="text-center py-12">
+            <h2 className="text-2xl font-bold mb-4">Coming Soon</h2>
+            <p className="text-gray-400">American Football betting is under development.</p>
+          </div>
+        );
+      case 'esports':
+        return (
+          <div className="text-center py-12">
+            <h2 className="text-2xl font-bold mb-4">Coming Soon</h2>
+            <p className="text-gray-400">Esports betting is under development.</p>
+          </div>
+        );
+      case 'more':
+        return (
+          <>
+            <div className="max-w-7xl mx-auto px-4 py-8">
+              <h2 className="text-2xl font-bold mb-8 text-white">More Sports</h2>
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                <Button
+                  variant="outline"
+                  className="h-20 flex flex-col items-center justify-center border-gray-600 hover:border-blue-500 hover:bg-blue-500/10"
+                  onClick={() => setActiveTab('hockey')}
+                >
+                  <i className="fas fa-hockey-puck text-2xl mb-2"></i>
+                  <span>Ice Hockey</span>
+                </Button>
+                <Button
+                  variant="outline"
+                  className="h-20 flex flex-col items-center justify-center border-gray-600 hover:border-blue-500 hover:bg-blue-500/10"
+                  onClick={() => setActiveTab('baseball')}
+                >
+                  <i className="fas fa-baseball text-2xl mb-2"></i>
+                  <span>Baseball</span>
+                </Button>
+                <Button
+                  variant="outline"
+                  className="h-20 flex flex-col items-center justify-center border-gray-600 hover:border-blue-500 hover:bg-blue-500/10"
+                  onClick={() => setActiveTab('volleyball')}
+                >
+                  <i className="fas fa-volleyball text-2xl mb-2"></i>
+                  <span>Volleyball</span>
+                </Button>
+                <Button
+                  variant="outline"
+                  className="h-20 flex flex-col items-center justify-center border-gray-600 hover:border-blue-500 hover:bg-blue-500/10"
+                  onClick={() => setActiveTab('aviator')}
+                >
+                  <i className="fas fa-plane text-2xl mb-2"></i>
+                  <span>Aviator</span>
+                </Button>
+                <Button
+                  variant="outline"
+                  className="h-20 flex flex-col items-center justify-center border-gray-600 hover:border-blue-500 hover:bg-blue-500/10"
+                  onClick={() => setActiveTab('virtual')}
+                >
+                  <i className="fas fa-robot text-2xl mb-2"></i>
+                  <span>Virtual Sports</span>
+                </Button>
+                <Button
+                  variant="outline"
+                  className="h-20 flex flex-col items-center justify-center border-gray-600 hover:border-blue-500 hover:bg-blue-500/10"
+                  onClick={() => setActiveTab('casino')}
+                >
+                  <i className="fas fa-dice text-2xl mb-2"></i>
+                  <span>Casino</span>
+                </Button>
+              </div>
+            </div>
+          </>
+        );
       case 'hockey':
         return <SportSection sport="hockey" onBetClick={handleBetClick} />;
       case 'baseball':
@@ -335,8 +381,6 @@ export default function Home() {
           onSignupClick={handleOpenSignupPage}
           onLoginClick={handleOpenLoginModal}
           onDepositClick={handleOpenDepositModal}
-          sportsFilter={sportsFilter}
-          onSportsFilterChange={setSportsFilter}
           isSearchOpen={isSearchOpen}
           onSearchToggle={() => setIsSearchOpen(!isSearchOpen)}
           searchQuery={searchQuery}
