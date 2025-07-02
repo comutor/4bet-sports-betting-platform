@@ -40,6 +40,7 @@ export class OddsApiService {
   private baseUrl = 'https://api.the-odds-api.com/v4';
   private cache = new Map<string, { data: any; timestamp: number }>();
   private cacheTimeout = 5 * 60 * 1000; // 5 minutes
+  private apiPaused = true; // PAUSED TO SAVE API CREDITS DURING REDESIGN
 
   constructor() {
     this.apiKey = process.env.ODDS_API_KEY || '';
@@ -79,6 +80,12 @@ export class OddsApiService {
   }
 
   async getOdds(sportKey: string, regions = 'us', markets = 'h2h', oddsFormat = 'decimal'): Promise<Event[]> {
+    // Return empty array when API is paused to save credits
+    if (this.apiPaused) {
+      log(`API paused - not fetching odds for ${sportKey} (saving API credits)`);
+      return [];
+    }
+
     const cacheKey = `odds_${sportKey}_${regions}_${markets}`;
     
     if (this.isCacheValid(cacheKey)) {
@@ -655,6 +662,18 @@ export class OddsApiService {
     }
 
     return availableCountries.sort((a, b) => a.priority - b.priority);
+  }
+
+  // Method to resume API calls when redesign is complete
+  public resumeApiCalls() {
+    this.apiPaused = false;
+    log('Odds API calls resumed - credits will now be used');
+  }
+
+  // Method to pause API calls to save credits
+  public pauseApiCalls() {
+    this.apiPaused = true;
+    log('Odds API calls paused - saving credits');
   }
 
   private getCountryFlag(countryName: string): string {
