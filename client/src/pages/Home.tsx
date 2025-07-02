@@ -372,7 +372,7 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-background">
-      <div className="mx-auto lg:max-w-2xl xl:max-w-4xl bg-background min-h-screen relative lg:px-4">
+      <div className="mx-auto lg:max-w-2xl xl:max-w-4xl bg-background min-h-screen relative lg:px-4 pt-32">
         <TopNavigation 
           activeTab={activeTab} 
           onTabChange={setActiveTab} 
@@ -402,7 +402,7 @@ export default function Home() {
         
         <main className={`pb-20 md:pb-4 ${
           ['football', 'basketball', 'tennis', 'ice-hockey', 'american-football', 'esports'].includes(activeTab) 
-            ? 'pt-4' 
+            ? 'pt-20' 
             : 'pt-4'
         }`}>
           {renderMainContent()}
