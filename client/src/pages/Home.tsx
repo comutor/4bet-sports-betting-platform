@@ -372,7 +372,7 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-background">
-      <div className="mx-auto lg:max-w-2xl xl:max-w-4xl bg-background min-h-screen relative lg:px-4 pt-32">
+      <div className="bg-background min-h-screen relative pt-32">
         <TopNavigation 
           activeTab={activeTab} 
           onTabChange={setActiveTab} 
@@ -400,7 +400,7 @@ export default function Home() {
           />
         )}
         
-        <main className={`pb-20 md:pb-4 mx-auto lg:max-w-2xl xl:max-w-4xl px-4 lg:px-8 ${
+        <main className={`pb-20 md:pb-4 mx-auto max-w-md md:max-w-2xl lg:max-w-4xl px-4 ${
           ['football', 'basketball', 'tennis', 'ice-hockey', 'american-football', 'esports'].includes(activeTab) 
             ? 'pt-20' 
             : 'pt-4'
