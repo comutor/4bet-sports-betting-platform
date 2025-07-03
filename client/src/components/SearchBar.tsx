@@ -40,7 +40,7 @@ export function SearchBar({ searchQuery = '', onSearchChange }: SearchBarProps) 
           <div className="flex items-center justify-end">
             <button
               onClick={() => setIsSearchOpen(true)}
-              className="text-primary hover:text-primary/80 transition-colors duration-200 font-medium text-sm"
+              className="bg-primary hover:bg-primary/90 text-white font-medium text-sm px-3 py-1.5 rounded-md transition-colors duration-200"
             >
               Search
             </button>
