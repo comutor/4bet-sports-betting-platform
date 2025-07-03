@@ -40,7 +40,7 @@ export function TopNavigation({
   const searchBarRef = useRef<HTMLDivElement>(null);
   const servicesDropdownRef = useRef<HTMLDivElement>(null);
 
-  // Main navigation items for top tabs
+  // Main navigation items for top tabs (excludes betslip and account)
   const allNavItems = [
     { id: 'football', label: 'Football', icon: 'fas fa-futbol', hasIndicator: false },
     { id: 'basketball', label: 'Basketball', icon: 'fas fa-basketball-ball', hasIndicator: false },
@@ -51,15 +51,11 @@ export function TopNavigation({
     { id: 'more', label: 'More', icon: 'fas fa-plus', hasIndicator: false },
     { id: 'casino', label: 'Casino', icon: 'fas fa-dice', hasIndicator: false },
     { id: 'aviator', label: 'Aviator', icon: 'fas fa-paper-plane', hasIndicator: false },
-    { id: 'virtual', label: 'Virtual', icon: 'fas fa-vr-cardboard', hasIndicator: true },
-    { id: 'betslip', label: 'Betslip', icon: 'fas fa-receipt', hasIndicator: false },
-    { id: 'account', label: 'Account', icon: 'fas fa-user', hasIndicator: false }
+    { id: 'virtual', label: 'Virtual', icon: 'fas fa-vr-cardboard', hasIndicator: true }
   ];
 
-  // Dropdown menu items (excludes betslip and account)
-  const dropdownNavItems = allNavItems.filter(item => 
-    item.id !== 'betslip' && item.id !== 'account'
-  );
+  // Dropdown menu items (same as all nav items since betslip and account are already excluded)
+  const dropdownNavItems = allNavItems;
 
   // Close services dropdown when clicking outside
   useEffect(() => {
