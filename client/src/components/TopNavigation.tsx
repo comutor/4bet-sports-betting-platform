@@ -91,14 +91,14 @@ export function TopNavigation({
                     onClick={onLoginClick}
                     variant="ghost"
                     size="sm"
-                    className="text-gray-300 hover:text-white hover:bg-slate-light-custom text-xs md:text-sm px-3 py-2 rounded-lg font-medium"
+                    className="text-gray-300 hover:text-white hover:bg-slate-light-custom text-xs md:text-sm px-3 py-2 rounded-lg font-bold uppercase"
                   >
                     Login
                   </Button>
                   <Button
                     onClick={onSignupClick}
                     size="sm"
-                    className="bg-primary hover:bg-primary/90 text-white font-bold text-xs md:text-sm px-3 py-2 rounded-lg"
+                    className="bg-primary hover:bg-primary/90 text-white font-bold text-xs md:text-sm px-3 py-2 rounded-lg uppercase"
                   >
                     Sign Up
                   </Button>
@@ -126,7 +126,7 @@ export function TopNavigation({
                   onClick={() => onTabChange(sport.id)}
                 >
                   <i className={`${sport.icon} text-sm flex-shrink-0`}></i>
-                  <span className="text-xs font-bold uppercase">{sport.label}</span>
+                  <span className="text-xs font-bold">{sport.label}</span>
                 </Button>
               ))}
             </div>
