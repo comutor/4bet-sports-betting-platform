@@ -220,8 +220,8 @@
 /* Sticky Navigation for Filter Bar */
 .sticky-filter-bar {
   position: sticky;
-  top: 140px;
-  z-index: 30;
+  top: 0;
+  z-index: 35;
   background-color: hsl(var(--slate-bg));
   width: 100%;
 }
