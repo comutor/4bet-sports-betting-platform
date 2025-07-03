@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { TopNavigation } from "@/components/TopNavigation";
 import { FilterBar } from "@/components/FilterBar";
+import { SearchBar } from "@/components/SearchBar";
 import { BottomNavigation } from "@/components/BottomNavigation";
 import { BetslipSidebar } from "@/components/BetslipSidebar";
 import { HamburgerMenu } from "@/components/HamburgerMenu";
@@ -327,8 +328,10 @@ export default function Home() {
           onSignupClick={handleOpenSignupPage}
           onLoginClick={handleOpenLoginModal}
           onDepositClick={handleOpenDepositModal}
-          isSearchOpen={isSearchOpen}
-          onSearchToggle={() => setIsSearchOpen(!isSearchOpen)}
+        />
+        
+        {/* Search Bar */}
+        <SearchBar 
           searchQuery={searchQuery}
           onSearchChange={setSearchQuery}
         />

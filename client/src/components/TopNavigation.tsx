@@ -14,10 +14,6 @@ interface TopNavigationProps {
   onSignupClick?: () => void;
   onLoginClick?: () => void;
   onDepositClick?: () => void;
-  isSearchOpen?: boolean;
-  onSearchToggle?: () => void;
-  searchQuery?: string;
-  onSearchChange?: (query: string) => void;
 }
 
 export function TopNavigation({ 
@@ -30,14 +26,9 @@ export function TopNavigation({
   onMenuToggle, 
   onSignupClick, 
   onLoginClick, 
-  onDepositClick, 
-  isSearchOpen = false, 
-  onSearchToggle, 
-  searchQuery = '', 
-  onSearchChange 
+  onDepositClick 
 }: TopNavigationProps) {
   const [isServicesDropdownOpen, setIsServicesDropdownOpen] = useState(false);
-  const searchBarRef = useRef<HTMLDivElement>(null);
   const servicesDropdownRef = useRef<HTMLDivElement>(null);
 
   // Main navigation items for top tabs (excludes betslip, account, and more)
@@ -75,30 +66,6 @@ export function TopNavigation({
     };
   }, [isServicesDropdownOpen]);
 
-  // Handle search auto-close detection
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (searchBarRef.current && !searchBarRef.current.contains(event.target as Node)) {
-        onSearchToggle && onSearchToggle();
-      }
-    };
-
-    const handleEscapeKey = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') {
-        onSearchToggle && onSearchToggle();
-      }
-    };
-
-    if (isSearchOpen) {
-      document.addEventListener('mousedown', handleClickOutside);
-      document.addEventListener('keydown', handleEscapeKey);
-    }
-
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-      document.removeEventListener('keydown', handleEscapeKey);
-    };
-  }, [isSearchOpen, onSearchToggle]);
 
   return (
     <div className="relative">
@@ -170,38 +137,7 @@ export function TopNavigation({
           </div>
         </div>
 
-        {/* Search Bar */}
-        {isSearchOpen && (
-          <div ref={searchBarRef} className="bg-slate-custom/95 px-4 py-3 border-b border-gray-700/30">
-            <div className="max-w-md mx-auto">
-              <div className="relative">
-                <input
-                  type="text"
-                  placeholder="Search sports, teams, leagues..."
-                  value={searchQuery}
-                  onChange={(e) => onSearchChange && onSearchChange(e.target.value)}
-                  className="w-full bg-slate-700 border border-gray-600 rounded-lg pl-10 pr-10 py-2.5 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
-                  autoFocus
-                />
-                <i className="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 text-sm"></i>
-                <button
-                  onClick={() => onSearchChange && onSearchChange('')}
-                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-white transition-colors duration-200"
-                >
-                  <i className="fas fa-times text-sm"></i>
-                </button>
-              </div>
-              {searchQuery && (
-                <div className="mt-3 bg-slate-700 rounded-lg border border-slate-600 max-h-60 overflow-y-auto">
-                  <div className="p-3 text-center text-gray-400 text-sm">
-                    <i className="fas fa-search mr-2"></i>
-                    Search results will appear here...
-                  </div>
-                </div>
-              )}
-            </div>
-          </div>
-        )}
+
         
         {/* Bottom Row - Navigation Tabs */}
         <div className="bg-slate-custom px-4 pb-3 relative border-b border-gray-700/30">
