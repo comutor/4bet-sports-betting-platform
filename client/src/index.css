@@ -220,7 +220,7 @@
 /* Sticky Navigation for Filter Bar */
 .sticky-filter-bar {
   position: fixed;
-  top: 140px;
+  top: 136px;
   left: 0;
   right: 0;
   z-index: 35;
