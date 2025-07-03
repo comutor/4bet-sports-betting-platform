@@ -39,7 +39,7 @@ export function SearchBar({ isSearchOpen, searchQuery = '', onSearchChange, onSe
   if (!isSearchOpen) return null;
 
   return (
-    <div className="stable-fixed-nav top-[70px] z-35 bg-slate-custom border-b border-gray-700/30">
+    <div className="stable-fixed-nav top-[146px] z-35 bg-slate-custom border-b border-gray-700/30">
       <div ref={searchBarRef} className="px-4 py-3">
         <div className="flex items-center gap-3">
           <div className="relative flex-1">

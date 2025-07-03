@@ -352,9 +352,7 @@ export default function Home() {
         
         <main className={`pb-20 md:pb-4 px-4 ${
           ['football', 'basketball', 'tennis', 'ice-hockey', 'american-football', 'esports'].includes(activeTab) 
-            ? 'pt-[255px]' 
-            : isSearchOpen 
-            ? 'pt-[120px]' 
+            ? 'pt-[220px]' 
             : 'pt-4'
         }`}>
           {renderMainContent()}
