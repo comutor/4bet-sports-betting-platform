@@ -64,56 +64,29 @@ export function AllSportsSection({ onBetClick }: AllSportsSectionProps) {
         </h2>
       </div>
 
-      {/* Enhanced Tab Navigation - positioned closer to header */}
-      <div className="relative mb-6 -mx-4 sm:-mx-6 lg:-mx-8 xl:-mx-12">
-        <div className="flex items-center gap-1 bg-slate-900/80 backdrop-blur-sm p-1.5 mx-4 sm:mx-6 lg:mx-8 xl:mx-12 rounded-xl border border-slate-600/50 shadow-lg">
-          {tabs.map((tab, index) => (
+      {/* Sports Tab Navigation - matching filter bar style */}
+      <div className="mb-6">
+        <div className="flex items-center gap-2 overflow-x-auto scrollbar-hide">
+          {tabs.map((tab) => (
             <Button
               key={tab.id}
               variant="ghost"
               size="sm"
-              className={`relative flex-1 flex items-center justify-center gap-2 py-4 px-3 rounded-lg font-medium transition-all duration-300 transform ${
+              className={`px-4 py-2 rounded-lg font-bold text-xs transition-all duration-200 whitespace-nowrap flex items-center gap-2 ${
                 activeTab === tab.id
-                  ? 'bg-gradient-to-r from-blue-600 to-blue-700 text-white shadow-lg scale-105 border border-blue-500/50'
-                  : 'text-gray-300 hover:bg-slate-700/70 hover:text-white hover:scale-102 active:scale-95'
+                  ? 'bg-primary text-white shadow-sm'
+                  : 'text-gray-300 hover:bg-slate-700 hover:text-white'
               }`}
               onClick={() => setActiveTab(tab.id)}
             >
-              {/* Background gradient for active tab */}
-              {activeTab === tab.id && (
-                <div className="absolute inset-0 bg-gradient-to-r from-blue-600/20 to-blue-700/20 rounded-lg animate-pulse"></div>
-              )}
-              
-              {/* Icon with enhanced styling */}
-              <i className={`${tab.icon} text-base relative z-10 ${
-                activeTab === tab.id ? 'text-white drop-shadow-sm' : ''
-              }`}></i>
-              
-              {/* Label with enhanced typography */}
-              <span className={`font-bold text-sm uppercase tracking-wide relative z-10 ${
-                activeTab === tab.id ? 'text-white drop-shadow-sm' : ''
-              }`}>
-                {tab.label}
-              </span>
-              
-              {/* Live indicator with enhanced animation */}
+              <i className={`${tab.icon} text-sm`}></i>
+              <span>{tab.label.toUpperCase()}</span>
               {tab.id === 'live' && (
-                <div className="relative z-10 flex items-center">
-                  <div className="w-2.5 h-2.5 bg-red-500 rounded-full animate-pulse shadow-lg"></div>
-                  <div className="absolute w-2.5 h-2.5 bg-red-400 rounded-full animate-ping"></div>
-                </div>
-              )}
-              
-              {/* Active tab border indicator */}
-              {activeTab === tab.id && (
-                <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-8 h-0.5 bg-white rounded-full"></div>
+                <div className="w-2 h-2 bg-red-500 rounded-full animate-pulse ml-1"></div>
               )}
             </Button>
           ))}
         </div>
-        
-        {/* Decorative underline */}
-        <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-slate-600 to-transparent"></div>
       </div>
 
       {/* Content */}
