@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Button } from '@/components/ui/button';
 
 interface CalendarModalProps {
@@ -10,6 +10,24 @@ interface CalendarModalProps {
 
 export function CalendarModal({ isOpen, onClose, selectedDate, onDateSelect }: CalendarModalProps) {
   const [currentMonth, setCurrentMonth] = useState(new Date(selectedDate));
+  const modalRef = useRef<HTMLDivElement>(null);
+
+  // Handle click outside to close modal
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (modalRef.current && !modalRef.current.contains(event.target as Node)) {
+        onClose();
+      }
+    };
+
+    if (isOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [isOpen, onClose]);
 
   if (!isOpen) return null;
 
@@ -98,7 +116,7 @@ export function CalendarModal({ isOpen, onClose, selectedDate, onDateSelect }: C
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-start justify-end pt-48 pr-4 z-50">
-      <div className="bg-slate-800 border border-gray-700 rounded-xl shadow-lg w-80">
+      <div ref={modalRef} className="bg-slate-800 border border-gray-700 rounded-xl shadow-lg w-80">
         {/* Header */}
         <div className="flex items-center justify-between p-3 border-b border-gray-700">
           <button
