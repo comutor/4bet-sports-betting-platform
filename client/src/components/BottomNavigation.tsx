@@ -83,13 +83,13 @@ export function BottomNavigation({
                       {item.count || 0}
                     </span>
                   </div>
-                  <span className="text-xs leading-tight">{item.label}</span>
+                  <span className="text-xs leading-tight font-bold">{item.label}</span>
                 </div>
               ) : (
                 // Regular design for other buttons
                 <>
                   <i className={`${item.icon} text-lg mb-1`}></i>
-                  <span className="text-xs leading-tight">{item.label}</span>
+                  <span className="text-xs leading-tight font-bold">{item.label}</span>
                   {item.count && item.count > 0 && (
                     <span className="absolute top-1 right-1 bg-live text-white text-xs w-5 h-5 rounded-full flex items-center justify-center">
                       {item.count}
