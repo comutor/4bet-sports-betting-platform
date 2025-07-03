@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
+import { CalendarModal } from './CalendarModal';
 
 interface FilterBarProps {
   activeFilter: string;
@@ -14,7 +15,7 @@ export function FilterBar({
   selectedDate, 
   onDateChange 
 }: FilterBarProps) {
-  const [isCalendarOpen, setIsCalendarOpen] = useState(false);
+  const [isCalendarModalOpen, setIsCalendarModalOpen] = useState(false);
 
   const filterOptions = [
     { id: 'all', label: 'ALL' },
@@ -40,18 +41,7 @@ export function FilterBar({
     }
   };
 
-  const generateDateOptions = () => {
-    const dates = [];
-    const today = new Date();
-    
-    for (let i = 0; i < 14; i++) {
-      const date = new Date(today);
-      date.setDate(today.getDate() + i);
-      dates.push(date);
-    }
-    
-    return dates;
-  };
+
 
   return (
     <div className="fixed top-[140px] left-0 right-0 z-30 bg-slate-custom/90 backdrop-blur-sm border-b border-gray-700/30">
@@ -82,53 +72,22 @@ export function FilterBar({
               variant="ghost"
               size="sm"
               className="flex items-center gap-2 px-4 py-2 rounded-lg font-bold text-xs text-gray-300 hover:bg-slate-700 hover:text-white transition-all duration-200"
-              onClick={() => setIsCalendarOpen(!isCalendarOpen)}
+              onClick={() => setIsCalendarModalOpen(true)}
             >
               <i className="fas fa-calendar text-sm"></i>
               <span>{selectedDate ? formatDate(selectedDate) : 'TODAY'}</span>
-              <i className={`fas fa-chevron-down text-xs transition-transform duration-200 ${isCalendarOpen ? 'rotate-180' : ''}`}></i>
             </Button>
 
-            {/* Calendar Dropdown */}
-            {isCalendarOpen && (
-              <div className="absolute right-0 top-full mt-2 bg-slate-800 border border-gray-700 rounded-xl shadow-lg z-50 min-w-[200px]">
-                <div className="p-3">
-                  <div className="flex items-center justify-between mb-3">
-                    <h3 className="text-sm font-bold text-gray-300">Select Date</h3>
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      className="text-gray-400 hover:text-white p-1"
-                      onClick={() => setIsCalendarOpen(false)}
-                    >
-                      <i className="fas fa-times text-xs"></i>
-                    </Button>
-                  </div>
-                  <div className="space-y-1">
-                    {generateDateOptions().map((date, index) => (
-                      <Button
-                        key={index}
-                        variant="ghost"
-                        className={`w-full justify-between p-2 h-10 rounded-lg transition-all duration-200 ${
-                          selectedDate?.toDateString() === date.toDateString()
-                            ? 'bg-primary text-white'
-                            : 'hover:bg-slate-700 text-gray-300'
-                        }`}
-                        onClick={() => {
-                          onDateChange?.(date);
-                          setIsCalendarOpen(false);
-                        }}
-                      >
-                        <span className="text-xs font-medium">{formatDate(date)}</span>
-                        <span className="text-xs text-gray-400">
-                          {date.toLocaleDateString('en-GB', { weekday: 'short' })}
-                        </span>
-                      </Button>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            )}
+            {/* Calendar Modal */}
+            <CalendarModal
+              isOpen={isCalendarModalOpen}
+              onClose={() => setIsCalendarModalOpen(false)}
+              selectedDate={selectedDate || new Date()}
+              onDateSelect={(date) => {
+                onDateChange?.(date);
+                setIsCalendarModalOpen(false);
+              }}
+            />
           </div>
         </div>
       </div>
