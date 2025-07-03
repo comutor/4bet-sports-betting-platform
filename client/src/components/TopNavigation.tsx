@@ -1,6 +1,7 @@
 import { FourBetLogo } from './FourBetLogo';
 import { Button } from '@/components/ui/button';
 import { LiveIndicator } from './LiveIndicator';
+import { useState, useEffect } from 'react';
 
 interface TopNavigationProps {
   activeTab: string;
@@ -27,6 +28,27 @@ export function TopNavigation({
   onLoginClick, 
   onDepositClick 
 }: TopNavigationProps) {
+  const [isVisible, setIsVisible] = useState(true);
+  const [lastScrollY, setLastScrollY] = useState(0);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+      
+      // Show nav when scrolling up or at the top
+      if (currentScrollY < lastScrollY || currentScrollY <= 100) {
+        setIsVisible(true);
+      } else if (currentScrollY > lastScrollY && currentScrollY > 100) {
+        // Hide nav when scrolling down
+        setIsVisible(false);
+      }
+      
+      setLastScrollY(currentScrollY);
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [lastScrollY]);
 
   // Most popular sports for top navigation
   const popularSports = [
@@ -39,7 +61,9 @@ export function TopNavigation({
 
   return (
     <div className="relative">
-      <nav className="bg-slate-custom shadow-lg">
+      <nav className={`fixed top-0 left-0 right-0 z-40 bg-slate-custom shadow-lg transition-transform duration-300 ${
+        isVisible ? 'translate-y-0' : '-translate-y-full'
+      }`}>
         {/* Top Row */}
         <div className="bg-slate-custom px-4 py-3">
           <div className="flex items-center justify-between">
