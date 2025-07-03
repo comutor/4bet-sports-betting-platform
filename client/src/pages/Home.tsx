@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { TopNavigation } from "@/components/TopNavigation";
 import { FilterBar } from "@/components/FilterBar";
-import { SearchBar } from "@/components/SearchBar";
+
 import { BottomNavigation } from "@/components/BottomNavigation";
 import { BetslipSidebar } from "@/components/BetslipSidebar";
 import { HamburgerMenu } from "@/components/HamburgerMenu";
@@ -41,8 +41,7 @@ export default function Home() {
   const [showDepositModal, setShowDepositModal] = useState(false);
   const [showWithdrawalModal, setShowWithdrawalModal] = useState(false);
   const [placedBets, setPlacedBets] = useState<any[]>([]);
-  const [isSearchOpen, setIsSearchOpen] = useState(false);
-  const [searchQuery, setSearchQuery] = useState('');
+
   const [activeFilter, setActiveFilter] = useState('all');
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
   const [isAppLoading, setIsAppLoading] = useState(true);
@@ -328,17 +327,9 @@ export default function Home() {
           onSignupClick={handleOpenSignupPage}
           onLoginClick={handleOpenLoginModal}
           onDepositClick={handleOpenDepositModal}
-          isSearchOpen={isSearchOpen}
-          onSearchToggle={() => setIsSearchOpen(!isSearchOpen)}
         />
         
-        {/* Search Bar */}
-        <SearchBar 
-          isSearchOpen={isSearchOpen}
-          searchQuery={searchQuery}
-          onSearchChange={setSearchQuery}
-          onSearchClose={() => setIsSearchOpen(false)}
-        />
+
         
         {/* Filter Bar - shown only for sports tabs */}
         {['football', 'basketball', 'tennis', 'ice-hockey', 'american-football', 'esports'].includes(activeTab) && (

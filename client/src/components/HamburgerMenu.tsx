@@ -12,6 +12,7 @@ interface HamburgerMenuProps {
 export function HamburgerMenu({ isOpen, onClose, onTabChange, activeTab }: HamburgerMenuProps) {
   const [expandedCountry, setExpandedCountry] = useState<string | null>(null);
   const [expandedSubCountry, setExpandedSubCountry] = useState<string | null>(null);
+  const [searchQuery, setSearchQuery] = useState('');
 
   // Prevent body scroll when menu is open
   useEffect(() => {
@@ -274,6 +275,38 @@ export function HamburgerMenu({ isOpen, onClose, onTabChange, activeTab }: Hambu
           
           {/* Content */}
           <div className="flex-1 hamburger-content p-3 md:p-4 space-y-3 md:space-y-4">
+            {/* Search Box */}
+            <div className="mb-6">
+              <div className="relative">
+                <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                  <i className="fas fa-search text-gray-400 text-sm"></i>
+                </div>
+                <input
+                  type="text"
+                  placeholder="Search matches, teams, leagues..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="w-full pl-12 pr-4 py-4 bg-slate-800 border border-slate-600 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all duration-200 text-sm"
+                />
+                {searchQuery && (
+                  <button
+                    onClick={() => setSearchQuery('')}
+                    className="absolute inset-y-0 right-0 pr-4 flex items-center text-gray-400 hover:text-white transition-colors duration-200"
+                  >
+                    <i className="fas fa-times text-sm"></i>
+                  </button>
+                )}
+              </div>
+              {searchQuery && (
+                <div className="mt-3 p-4 bg-slate-800 border border-slate-600 rounded-xl">
+                  <div className="text-xs text-gray-400 mb-2">Search Results</div>
+                  <div className="text-sm text-gray-300">
+                    No results found for "{searchQuery}"
+                  </div>
+                </div>
+              )}
+            </div>
+
             {/* Main Sections */}
             <div>
               <h3 className="section-title">
