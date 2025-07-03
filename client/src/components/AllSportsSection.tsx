@@ -55,17 +55,17 @@ export function AllSportsSection({ onBetClick }: AllSportsSectionProps) {
   };
 
   return (
-    <div className="py-8">
-      {/* Header */}
-      <div className="flex items-center gap-3 mb-8">
+    <div className="py-4">
+      {/* Header - positioned closer to top */}
+      <div className="flex items-center gap-3 mb-4">
         <h2 className="text-2xl font-bold text-white flex items-center">
           <i className="fas fa-futbol mr-3 text-primary"></i>
           All Sports
         </h2>
       </div>
 
-      {/* Enhanced Tab Navigation */}
-      <div className="relative mb-8">
+      {/* Enhanced Tab Navigation - positioned closer to header */}
+      <div className="relative mb-6">
         <div className="flex items-center gap-1 bg-slate-900/80 backdrop-blur-sm p-1.5 rounded-xl border border-slate-600/50 shadow-lg">
           {tabs.map((tab, index) => (
             <Button
