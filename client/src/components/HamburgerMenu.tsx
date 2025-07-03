@@ -39,9 +39,11 @@ export function HamburgerMenu({ isOpen, onClose, onTabChange, activeTab }: Hambu
     { id: 'football', label: 'Football', icon: 'fas fa-futbol' },
     { id: 'basketball', label: 'Basketball', icon: 'fas fa-basketball' },
     { id: 'tennis', label: 'Tennis', icon: 'fas fa-table-tennis' },
-    { id: 'hockey', label: 'Ice Hockey', icon: 'fas fa-hockey-puck' },
+    { id: 'ice-hockey', label: 'Ice Hockey', icon: 'fas fa-hockey-puck' },
+    { id: 'american-football', label: 'American Football', icon: 'fas fa-football-ball' },
     { id: 'baseball', label: 'Baseball', icon: 'fas fa-baseball' },
-    { id: 'volleyball', label: 'Volleyball', icon: 'fas fa-volleyball' }
+    { id: 'volleyball', label: 'Volleyball', icon: 'fas fa-volleyball' },
+    { id: 'esports', label: 'Esports', icon: 'fas fa-gamepad' }
   ];
 
   const topCountries = [
