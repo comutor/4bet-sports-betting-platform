@@ -127,9 +127,6 @@ export function TopNavigation({
                 >
                   <i className={`${sport.icon} text-sm flex-shrink-0`}></i>
                   <span className="text-xs font-bold uppercase">{sport.label}</span>
-                  {sport.id === 'aviator' && (
-                    <LiveIndicator size="sm" className="ml-1" />
-                  )}
                 </Button>
               ))}
             </div>
