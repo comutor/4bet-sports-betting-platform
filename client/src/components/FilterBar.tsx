@@ -45,7 +45,7 @@ export function FilterBar({
 
   return (
     <div className="fixed top-[140px] left-0 right-0 z-30 bg-slate-custom/90 backdrop-blur-sm border-b border-gray-700/30">
-      <div className="mx-auto max-w-md md:max-w-2xl lg:max-w-4xl px-4 py-3">
+      <div className="mx-auto max-w-xs md:max-w-lg lg:max-w-2xl px-4 py-3">
         <div className="flex items-center justify-between">
           {/* Filter Buttons */}
           <div className="flex items-center gap-2 overflow-x-auto scrollbar-hide">

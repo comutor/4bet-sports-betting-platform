@@ -343,7 +343,7 @@ export default function Home() {
           />
         )}
         
-        <main className={`pb-20 md:pb-4 mx-auto max-w-md md:max-w-2xl lg:max-w-4xl px-4 ${
+        <main className={`pb-20 md:pb-4 mx-auto max-w-xs md:max-w-lg lg:max-w-2xl px-4 ${
           ['football', 'basketball', 'tennis', 'ice-hockey', 'american-football', 'esports'].includes(activeTab) 
             ? 'pt-20' 
             : 'pt-4'
