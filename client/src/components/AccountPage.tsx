@@ -37,7 +37,7 @@ export function AccountPage({ isLoggedIn = false, onClose, onSignupClick, onLogi
   return (
     <div className="min-h-screen bg-slate-custom text-white pb-20">
       {/* Header */}
-      <div className="bg-slate-800 p-6 border-b border-gray-700 flex items-center justify-between">
+      <div className="bg-slate-800 p-4 border-b border-gray-700 flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-bold text-white">Account</h1>
           {isLoggedIn && userData?.phoneNumber && (
@@ -57,11 +57,11 @@ export function AccountPage({ isLoggedIn = false, onClose, onSignupClick, onLogi
       </div>
       
       {/* Content */}
-      <div className="p-6 space-y-6">
+      <div className="p-4 space-y-6">
         {/* Action Buttons */}
         <div className="space-y-3">
           {!isLoggedIn ? (
-            <div className="grid grid-cols-2 gap-3">
+            <div className="flex gap-3">
               <Button 
                 className="bg-blue-600 border-2 border-blue-600 text-white hover:bg-blue-700 hover:border-blue-700 transition-all duration-300 hover:scale-105 font-bold py-4 text-sm"
                 onClick={onSignupClick}
@@ -77,7 +77,7 @@ export function AccountPage({ isLoggedIn = false, onClose, onSignupClick, onLogi
               </Button>
             </div>
           ) : (
-            <div className="grid grid-cols-2 gap-3">
+            <div className="flex gap-3">
               <Button 
                 className="bg-transparent border-2 border-white text-white hover:bg-blue-600 hover:text-white hover:border-blue-600 transition-all duration-300 hover:scale-105 font-bold py-4"
                 onClick={onDepositClick}
