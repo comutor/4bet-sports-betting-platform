@@ -50,6 +50,15 @@ export function TopNavigation({
     return () => window.removeEventListener('scroll', handleScroll);
   }, [lastScrollY]);
 
+  // Apply class to body based on navigation visibility
+  useEffect(() => {
+    if (isVisible) {
+      document.body.classList.remove('nav-hidden');
+    } else {
+      document.body.classList.add('nav-hidden');
+    }
+  }, [isVisible]);
+
   // Most popular sports for top navigation
   const popularSports = [
     { id: 'football', label: 'Football', icon: 'fas fa-futbol' },
