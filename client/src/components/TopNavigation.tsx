@@ -151,10 +151,10 @@ export function TopNavigation({
                   key={sport.id}
                   variant="ghost"
                   size="sm"
-                  className={`flex items-center gap-1.5 px-4 lg:px-6 py-1.5 rounded-full font-bold transition-all duration-200 whitespace-nowrap shrink-0 mr-2 lg:mr-3 ${
+                  className={`flex items-center gap-1.5 px-4 lg:px-6 py-3 font-bold transition-all duration-200 whitespace-nowrap shrink-0 mr-2 lg:mr-3 border-b-2 ${
                     activeTab === sport.id 
-                      ? 'bg-primary text-white shadow-sm' 
-                      : 'text-gray-300 hover:bg-slate-700 hover:text-white'
+                      ? 'text-blue-400 border-blue-400' 
+                      : 'text-gray-300 hover:text-white border-transparent'
                   }`}
                   onClick={() => onTabChange(sport.id)}
                 >
