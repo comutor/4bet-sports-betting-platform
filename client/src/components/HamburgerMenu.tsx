@@ -7,9 +7,28 @@ interface HamburgerMenuProps {
   onClose: () => void;
   onTabChange: (tab: string) => void;
   activeTab: string;
+  isLoggedIn?: boolean;
+  userBalance?: string;
+  userCountry?: string;
+  onSignupClick?: () => void;
+  onLoginClick?: () => void;
+  onDepositClick?: () => void;
+  onSearchToggle?: () => void;
 }
 
-export function HamburgerMenu({ isOpen, onClose, onTabChange, activeTab }: HamburgerMenuProps) {
+export function HamburgerMenu({ 
+  isOpen, 
+  onClose, 
+  onTabChange, 
+  activeTab, 
+  isLoggedIn = false, 
+  userBalance = "0", 
+  userCountry = "South Sudan", 
+  onSignupClick, 
+  onLoginClick, 
+  onDepositClick,
+  onSearchToggle 
+}: HamburgerMenuProps) {
   const [expandedCountry, setExpandedCountry] = useState<string | null>(null);
   const [expandedSubCountry, setExpandedSubCountry] = useState<string | null>(null);
 
@@ -272,6 +291,87 @@ export function HamburgerMenu({ isOpen, onClose, onTabChange, activeTab }: Hambu
           
           {/* Content */}
           <div className="flex-1 hamburger-content p-3 md:p-4 space-y-3 md:space-y-4">
+            {/* User Account Section */}
+            <div>
+              <h3 className="section-title">
+                Account
+              </h3>
+              <div className="space-y-3">
+                {/* Search Button */}
+                <Button
+                  variant="ghost"
+                  className="w-full justify-start p-3 text-left transition-all duration-200 rounded-xl border border-slate-600 hover:border-slate-500 shadow-sm text-gray-300 hover:bg-slate-700 hover:text-white"
+                  onClick={() => {
+                    onSearchToggle && onSearchToggle();
+                    onClose();
+                  }}
+                >
+                  <i className="fas fa-search w-5 mr-3 text-gray-400"></i>
+                  <span className="text-sm font-medium">Search</span>
+                </Button>
+
+                {isLoggedIn ? (
+                  <>
+                    {/* User Balance */}
+                    <div className="bg-slate-800/50 rounded-xl border border-gray-700/50 p-4">
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-3">
+                          <i className="fas fa-coins text-yellow-500 text-lg"></i>
+                          <div>
+                            <div className="text-xs text-gray-400">Balance</div>
+                            <div className="text-sm font-bold text-white">
+                              {userBalance} {userCountry === 'Uganda' ? 'UGX' : 'SSP'}
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Deposit Button */}
+                    <Button
+                      variant="default"
+                      className="w-full bg-primary hover:bg-primary/90 text-white font-bold text-sm py-3 rounded-xl"
+                      onClick={() => {
+                        onDepositClick && onDepositClick();
+                        onClose();
+                      }}
+                    >
+                      <i className="fas fa-plus mr-2"></i>
+                      Deposit
+                    </Button>
+                  </>
+                ) : (
+                  <>
+                    {/* Login Button */}
+                    <Button
+                      variant="ghost"
+                      className="w-full justify-start p-3 text-left transition-all duration-200 rounded-xl border border-slate-600 hover:border-slate-500 shadow-sm text-gray-300 hover:bg-slate-700 hover:text-white"
+                      onClick={() => {
+                        onLoginClick && onLoginClick();
+                        onClose();
+                      }}
+                    >
+                      <i className="fas fa-sign-in-alt w-5 mr-3 text-gray-400"></i>
+                      <span className="text-sm font-medium">Login</span>
+                    </Button>
+
+                    {/* Sign Up Button */}
+                    <Button
+                      variant="default"
+                      className="w-full bg-primary hover:bg-primary/90 text-white font-bold text-sm py-3 rounded-xl"
+                      onClick={() => {
+                        onSignupClick && onSignupClick();
+                        onClose();
+                      }}
+                    >
+                      <i className="fas fa-user-plus mr-2"></i>
+                      Sign Up
+                    </Button>
+                  </>
+                )}
+              </div>
+            </div>
+
             {/* Main Sections */}
             <div>
               <h3 className="section-title">

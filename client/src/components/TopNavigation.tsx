@@ -14,8 +14,6 @@ interface TopNavigationProps {
   onSignupClick?: () => void;
   onLoginClick?: () => void;
   onDepositClick?: () => void;
-  isSearchOpen?: boolean;
-  onSearchToggle?: () => void;
 }
 
 export function TopNavigation({ 
@@ -28,9 +26,7 @@ export function TopNavigation({
   onMenuToggle, 
   onSignupClick, 
   onLoginClick, 
-  onDepositClick,
-  isSearchOpen = false,
-  onSearchToggle 
+  onDepositClick 
 }: TopNavigationProps) {
   const [isServicesDropdownOpen, setIsServicesDropdownOpen] = useState(false);
   const servicesDropdownRef = useRef<HTMLDivElement>(null);
@@ -100,15 +96,8 @@ export function TopNavigation({
               )}
             </div>
 
-            {/* Right: Search and User Balance or Auth Buttons */}
+            {/* Right: User Balance or Auth Buttons (Simplified) */}
             <div className="flex items-center gap-2">
-              {/* Search Icon */}
-              <button
-                onClick={onSearchToggle}
-                className="text-gray-300 hover:text-white transition-colors duration-200 p-2"
-              >
-                <i className="fas fa-search text-lg"></i>
-              </button>
               {isLoggedIn ? (
                 <>
                   <div className="flex items-center gap-2 bg-slate-800/50 rounded-lg px-3 md:px-4 py-2 md:py-2.5 border border-gray-700/50">
