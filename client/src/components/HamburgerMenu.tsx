@@ -234,15 +234,22 @@ export function HamburgerMenu({ isOpen, onClose, onTabChange, activeTab }: Hambu
   };
 
   const handleSportClick = (sportId: string) => {
-    // Navigate to sports section with the specific sport filter
-    onTabChange('sports');
+    // Map hamburger menu sport IDs to top navigation sport IDs
+    const sportMapping: { [key: string]: string } = {
+      'football': 'football',
+      'basketball': 'basketball', 
+      'tennis': 'tennis',
+      'ice-hockey': 'ice-hockey',
+      'american-football': 'american-football',
+      'baseball': 'baseball',
+      'volleyball': 'volleyball',
+      'esports': 'esports'
+    };
+
+    // Navigate directly to the specific sport tab
+    const targetSport = sportMapping[sportId] || sportId;
+    onTabChange(targetSport);
     onClose();
-    
-    // Trigger sport-specific view after a brief delay to ensure navigation completes
-    setTimeout(() => {
-      const event = new CustomEvent('sportSelected', { detail: { sport: sportId } });
-      window.dispatchEvent(event);
-    }, 100);
   };
 
   return (
