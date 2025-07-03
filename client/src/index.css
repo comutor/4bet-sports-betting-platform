@@ -217,18 +217,13 @@
   }
 }
 
-/* Fixed Navigation Stability */
-.stable-fixed-nav {
-  position: fixed !important;
-  left: 0 !important;
-  right: 0 !important;
-  width: 100vw !important;
-  transform: none !important;
-  will-change: auto !important;
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
-  -webkit-transform: translateZ(0);
-  transform: translateZ(0);
+/* Sticky Navigation for Filter Bar */
+.sticky-filter-bar {
+  position: sticky;
+  top: 140px;
+  z-index: 30;
+  background-color: hsl(var(--slate-bg));
+  width: 100%;
 }
 
 .dark {

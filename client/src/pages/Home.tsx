@@ -318,35 +318,34 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-background">
-      <div className="main-container w-full bg-background min-h-screen relative px-4 sm:px-6 lg:px-8 xl:px-12 pt-32">
-        <TopNavigation 
-          activeTab={activeTab} 
-          onTabChange={setActiveTab} 
-          userBalance={userBalance}
-          userCountry={userCountry}
-          isLoggedIn={isLoggedIn}
-          isMenuOpen={isMenuOpen}
-          onMenuToggle={() => setIsMenuOpen(!isMenuOpen)}
-          onSignupClick={handleOpenSignupPage}
-          onLoginClick={handleOpenLoginModal}
-          onDepositClick={handleOpenDepositModal}
+      <TopNavigation 
+        activeTab={activeTab} 
+        onTabChange={setActiveTab} 
+        userBalance={userBalance}
+        userCountry={userCountry}
+        isLoggedIn={isLoggedIn}
+        isMenuOpen={isMenuOpen}
+        onMenuToggle={() => setIsMenuOpen(!isMenuOpen)}
+        onSignupClick={handleOpenSignupPage}
+        onLoginClick={handleOpenLoginModal}
+        onDepositClick={handleOpenDepositModal}
+      />
+      
+      {/* Filter Bar - shown only for sports tabs */}
+      {['football', 'basketball', 'tennis', 'ice-hockey', 'american-football', 'esports'].includes(activeTab) && (
+        <FilterBar 
+          activeFilter={activeFilter}
+          onFilterChange={setActiveFilter}
+          selectedDate={selectedDate}
+          onDateChange={setSelectedDate}
         />
-        
+      )}
 
-        
-        {/* Filter Bar - shown only for sports tabs */}
-        {['football', 'basketball', 'tennis', 'ice-hockey', 'american-football', 'esports'].includes(activeTab) && (
-          <FilterBar 
-            activeFilter={activeFilter}
-            onFilterChange={setActiveFilter}
-            selectedDate={selectedDate}
-            onDateChange={setSelectedDate}
-          />
-        )}
+      <div className="main-container w-full bg-background min-h-screen relative px-4 sm:px-6 lg:px-8 xl:px-12 pt-32">
         
         <main className={`pb-20 md:pb-4 px-4 ${
           ['football', 'basketball', 'tennis', 'ice-hockey', 'american-football', 'esports'].includes(activeTab) 
-            ? 'pt-[220px]' 
+            ? 'pt-4' 
             : 'pt-4'
         }`}>
           {renderMainContent()}
