@@ -15,6 +15,8 @@ interface TopNavigationProps {
   onDepositClick?: () => void;
   isSearchOpen?: boolean;
   onSearchToggle?: () => void;
+  activeFilter?: string;
+  onFilterChange?: (filter: string) => void;
 }
 
 export function TopNavigation({ 
@@ -29,7 +31,9 @@ export function TopNavigation({
   onLoginClick, 
   onDepositClick,
   isSearchOpen = false,
-  onSearchToggle 
+  onSearchToggle,
+  activeFilter = 'all',
+  onFilterChange 
 }: TopNavigationProps) {
 
   // Most popular sports for top navigation
@@ -118,28 +122,59 @@ export function TopNavigation({
           </div>
         </div>
 
-        {/* Popular Sports Navigation Row */}
+        {/* Popular Sports Navigation Row with Filter Bar */}
         <div className="bg-slate-custom px-4 pb-3 border-b border-gray-700/30">
-          <div className="flex items-center overflow-x-auto scrollbar-hide">
-            {popularSports.map((sport) => (
+          <div className="flex items-center justify-between">
+            {/* Sports Navigation */}
+            <div className="flex items-center overflow-x-auto scrollbar-hide flex-1">
+              {popularSports.map((sport) => (
+                <Button
+                  key={sport.id}
+                  variant="ghost"
+                  size="sm"
+                  className={`flex items-center gap-1.5 px-4 lg:px-6 py-1.5 rounded-full font-bold transition-all duration-200 whitespace-nowrap shrink-0 mr-2 lg:mr-3 ${
+                    activeTab === sport.id 
+                      ? 'bg-primary text-white shadow-sm' 
+                      : 'text-gray-300 hover:bg-slate-700 hover:text-white'
+                  }`}
+                  onClick={() => onTabChange(sport.id)}
+                >
+                  <i className={`${sport.icon} text-sm flex-shrink-0`}></i>
+                  <span className="text-xs font-bold uppercase">{sport.label}</span>
+                  {sport.id === 'aviator' && (
+                    <LiveIndicator size="sm" className="ml-1" />
+                  )}
+                </Button>
+              ))}
+            </div>
+            
+            {/* Filter Buttons - Integrated */}
+            <div className="flex items-center gap-2 ml-4">
               <Button
-                key={sport.id}
                 variant="ghost"
                 size="sm"
-                className={`flex items-center gap-1.5 px-4 lg:px-6 py-1.5 rounded-full font-bold transition-all duration-200 whitespace-nowrap shrink-0 mr-2 lg:mr-3 ${
-                  activeTab === sport.id 
-                    ? 'bg-primary text-white shadow-sm' 
+                className={`px-3 py-1.5 rounded-lg font-bold text-xs transition-all duration-200 whitespace-nowrap ${
+                  activeFilter === 'all'
+                    ? 'bg-primary text-white shadow-sm'
                     : 'text-gray-300 hover:bg-slate-700 hover:text-white'
                 }`}
-                onClick={() => onTabChange(sport.id)}
+                onClick={() => onFilterChange && onFilterChange('all')}
               >
-                <i className={`${sport.icon} text-sm flex-shrink-0`}></i>
-                <span className="text-xs font-bold uppercase">{sport.label}</span>
-                {sport.id === 'aviator' && (
-                  <LiveIndicator size="sm" className="ml-1" />
-                )}
+                ALL
               </Button>
-            ))}
+              <Button
+                variant="ghost"
+                size="sm"
+                className={`px-3 py-1.5 rounded-lg font-bold text-xs transition-all duration-200 whitespace-nowrap ${
+                  activeFilter === 'top-leagues'
+                    ? 'bg-primary text-white shadow-sm'
+                    : 'text-gray-300 hover:bg-slate-700 hover:text-white'
+                }`}
+                onClick={() => onFilterChange && onFilterChange('top-leagues')}
+              >
+                TOP LEAGUES
+              </Button>
+            </div>
           </div>
         </div>
       </nav>
