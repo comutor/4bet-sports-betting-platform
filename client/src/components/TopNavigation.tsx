@@ -14,6 +14,8 @@ interface TopNavigationProps {
   onSignupClick?: () => void;
   onLoginClick?: () => void;
   onDepositClick?: () => void;
+  isSearchOpen?: boolean;
+  onSearchToggle?: () => void;
 }
 
 export function TopNavigation({ 
@@ -26,7 +28,9 @@ export function TopNavigation({
   onMenuToggle, 
   onSignupClick, 
   onLoginClick, 
-  onDepositClick 
+  onDepositClick,
+  isSearchOpen = false,
+  onSearchToggle 
 }: TopNavigationProps) {
   const [isServicesDropdownOpen, setIsServicesDropdownOpen] = useState(false);
   const servicesDropdownRef = useRef<HTMLDivElement>(null);
@@ -96,8 +100,61 @@ export function TopNavigation({
               )}
             </div>
 
-            {/* Right: User Balance or Auth Buttons (Simplified) */}
+            {/* Center: Services Dropdown */}
+            <div className="hidden lg:flex items-center">
+              <div className="relative" ref={servicesDropdownRef}>
+                <button
+                  onClick={() => setIsServicesDropdownOpen(!isServicesDropdownOpen)}
+                  className="flex items-center gap-2 px-3 py-2 text-gray-300 hover:text-white transition-colors duration-200 rounded-lg"
+                >
+                  <span className="text-sm font-medium">All Services</span>
+                  <i className={`fas fa-chevron-${isServicesDropdownOpen ? 'up' : 'down'} text-xs transition-transform duration-200`}></i>
+                </button>
+                
+                {isServicesDropdownOpen && (
+                  <div className="absolute top-full left-1/2 transform -translate-x-1/2 mt-2 w-80 bg-slate-800 border border-gray-700 rounded-lg shadow-xl z-50 animate-slide-down">
+                    <div className="p-4">
+                      <div className="grid grid-cols-2 gap-3">
+                        <div className="space-y-2">
+                          <h4 className="text-xs font-medium text-gray-400 uppercase tracking-wide">Sports</h4>
+                          <button className="w-full text-left px-3 py-2 text-sm text-gray-300 hover:text-white hover:bg-slate-700 rounded-lg transition-colors duration-200">
+                            Football
+                          </button>
+                          <button className="w-full text-left px-3 py-2 text-sm text-gray-300 hover:text-white hover:bg-slate-700 rounded-lg transition-colors duration-200">
+                            Basketball
+                          </button>
+                          <button className="w-full text-left px-3 py-2 text-sm text-gray-300 hover:text-white hover:bg-slate-700 rounded-lg transition-colors duration-200">
+                            Tennis
+                          </button>
+                        </div>
+                        <div className="space-y-2">
+                          <h4 className="text-xs font-medium text-gray-400 uppercase tracking-wide">Games</h4>
+                          <button className="w-full text-left px-3 py-2 text-sm text-gray-300 hover:text-white hover:bg-slate-700 rounded-lg transition-colors duration-200">
+                            Casino
+                          </button>
+                          <button className="w-full text-left px-3 py-2 text-sm text-gray-300 hover:text-white hover:bg-slate-700 rounded-lg transition-colors duration-200">
+                            Virtual Sports
+                          </button>
+                          <button className="w-full text-left px-3 py-2 text-sm text-gray-300 hover:text-white hover:bg-slate-700 rounded-lg transition-colors duration-200">
+                            Aviator
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+
+            {/* Right: Search and User Balance or Auth Buttons */}
             <div className="flex items-center gap-2">
+              {/* Search Icon */}
+              <button
+                onClick={onSearchToggle}
+                className="text-gray-300 hover:text-white transition-colors duration-200 p-2"
+              >
+                <i className="fas fa-search text-lg"></i>
+              </button>
               {isLoggedIn ? (
                 <>
                   <div className="flex items-center gap-2 bg-slate-800/50 rounded-lg px-3 md:px-4 py-2 md:py-2.5 border border-gray-700/50">

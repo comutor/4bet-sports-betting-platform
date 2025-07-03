@@ -328,6 +328,8 @@ export default function Home() {
           onSignupClick={handleOpenSignupPage}
           onLoginClick={handleOpenLoginModal}
           onDepositClick={handleOpenDepositModal}
+          isSearchOpen={isSearchOpen}
+          onSearchToggle={() => setIsSearchOpen(!isSearchOpen)}
         />
         
         {/* Search Bar */}
@@ -389,13 +391,6 @@ export default function Home() {
           onClose={() => setIsMenuOpen(false)}
           onTabChange={setActiveTab}
           activeTab={activeTab}
-          isLoggedIn={isLoggedIn}
-          userBalance={userBalance}
-          userCountry={userCountry}
-          onSignupClick={handleOpenSignupPage}
-          onLoginClick={handleOpenLoginModal}
-          onDepositClick={handleOpenDepositModal}
-          onSearchToggle={() => setIsSearchOpen(!isSearchOpen)}
         />
 
         <LoginPrompt 
