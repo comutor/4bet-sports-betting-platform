@@ -328,12 +328,16 @@ export default function Home() {
           onSignupClick={handleOpenSignupPage}
           onLoginClick={handleOpenLoginModal}
           onDepositClick={handleOpenDepositModal}
+          isSearchOpen={isSearchOpen}
+          onSearchToggle={() => setIsSearchOpen(!isSearchOpen)}
         />
         
         {/* Search Bar */}
         <SearchBar 
+          isSearchOpen={isSearchOpen}
           searchQuery={searchQuery}
           onSearchChange={setSearchQuery}
+          onSearchClose={() => setIsSearchOpen(false)}
         />
         
         {/* Filter Bar - shown only for sports tabs */}
