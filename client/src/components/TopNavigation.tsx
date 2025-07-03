@@ -102,9 +102,9 @@ export function TopNavigation({
 
   return (
     <div className="relative">
-      <nav className="fixed top-0 left-0 right-0 z-40 bg-slate-custom/95 backdrop-blur-sm shadow-lg">
+      <nav className="fixed top-0 left-0 right-0 z-40 bg-slate-custom shadow-lg">
         {/* Top Row */}
-        <div className="bg-slate-custom/90 backdrop-blur-sm px-4 py-3">
+        <div className="bg-slate-custom px-4 py-3">
           <div className="flex items-center justify-between">
             {/* Left: Logo and Menu Toggle */}
             <div className="flex items-center gap-3">
@@ -204,7 +204,7 @@ export function TopNavigation({
         )}
         
         {/* Bottom Row - Navigation Tabs */}
-        <div className="bg-slate-custom/90 backdrop-blur-sm px-4 pb-3 relative border-b border-gray-700/30">
+        <div className="bg-slate-custom px-4 pb-3 relative border-b border-gray-700/30">
           <div className="flex items-center">
             {/* Scrollable Navigation Pills */}
             <div className="flex items-center overflow-x-auto scrollbar-hide flex-1 pr-12">
