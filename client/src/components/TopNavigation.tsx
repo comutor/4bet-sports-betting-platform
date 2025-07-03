@@ -1,5 +1,6 @@
 import { FourBetLogo } from './FourBetLogo';
 import { Button } from '@/components/ui/button';
+import { LiveIndicator } from './LiveIndicator';
 
 interface TopNavigationProps {
   activeTab: string;
@@ -30,6 +31,15 @@ export function TopNavigation({
   isSearchOpen = false,
   onSearchToggle 
 }: TopNavigationProps) {
+
+  // Most popular sports for top navigation
+  const popularSports = [
+    { id: 'football', label: 'Football', icon: 'fas fa-futbol' },
+    { id: 'basketball', label: 'Basketball', icon: 'fas fa-basketball' },
+    { id: 'tennis', label: 'Tennis', icon: 'fas fa-table-tennis' },
+    { id: 'aviator', label: 'Aviator', icon: 'fas fa-plane' },
+    { id: 'ice-hockey', label: 'Ice Hockey', icon: 'fas fa-hockey-puck' }
+  ];
 
   return (
     <div className="relative">
@@ -105,6 +115,31 @@ export function TopNavigation({
                 </>
               )}
             </div>
+          </div>
+        </div>
+
+        {/* Popular Sports Navigation Row */}
+        <div className="bg-slate-custom px-4 pb-3 border-b border-gray-700/30">
+          <div className="flex items-center overflow-x-auto scrollbar-hide">
+            {popularSports.map((sport) => (
+              <Button
+                key={sport.id}
+                variant="ghost"
+                size="sm"
+                className={`flex items-center gap-1.5 px-4 lg:px-6 py-1.5 rounded-full font-bold transition-all duration-200 whitespace-nowrap shrink-0 mr-2 lg:mr-3 ${
+                  activeTab === sport.id 
+                    ? 'bg-primary text-white shadow-sm' 
+                    : 'text-gray-300 hover:bg-slate-700 hover:text-white'
+                }`}
+                onClick={() => onTabChange(sport.id)}
+              >
+                <i className={`${sport.icon} text-sm flex-shrink-0`}></i>
+                <span className="text-xs font-bold uppercase">{sport.label}</span>
+                {sport.id === 'aviator' && (
+                  <LiveIndicator size="sm" className="ml-1" />
+                )}
+              </Button>
+            ))}
           </div>
         </div>
       </nav>
