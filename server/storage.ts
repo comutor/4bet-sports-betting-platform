@@ -87,8 +87,9 @@ export class MemStorage implements IStorage {
   }
 
   private initializeData() {
-    // Initialize sample sports events
+    // Initialize comprehensive football events
     const events: SportsEvent[] = [
+      // Live Football Matches
       {
         id: this.currentEventId++,
         homeTeam: "Manchester United",
@@ -103,6 +104,32 @@ export class MemStorage implements IStorage {
       },
       {
         id: this.currentEventId++,
+        homeTeam: "Real Madrid",
+        awayTeam: "Barcelona",
+        homeScore: 1,
+        awayScore: 1,
+        sport: "football",
+        league: "La Liga",
+        status: "live",
+        startTime: new Date(),
+        currentTime: "78:12"
+      },
+      {
+        id: this.currentEventId++,
+        homeTeam: "Bayern Munich",
+        awayTeam: "Borussia Dortmund",
+        homeScore: 0,
+        awayScore: 2,
+        sport: "football",
+        league: "Bundesliga",
+        status: "live",
+        startTime: new Date(),
+        currentTime: "67:45"
+      },
+      
+      // Upcoming Football Matches
+      {
+        id: this.currentEventId++,
         homeTeam: "Chelsea",
         awayTeam: "Arsenal",
         homeScore: 0,
@@ -110,9 +137,109 @@ export class MemStorage implements IStorage {
         sport: "football",
         league: "Premier League",
         status: "upcoming",
-        startTime: new Date(Date.now() + 3600000),
+        startTime: new Date(Date.now() + 3600000), // 1 hour from now
         currentTime: null
       },
+      {
+        id: this.currentEventId++,
+        homeTeam: "AC Milan",
+        awayTeam: "Juventus",
+        homeScore: 0,
+        awayScore: 0,
+        sport: "football",
+        league: "Serie A",
+        status: "upcoming",
+        startTime: new Date(Date.now() + 7200000), // 2 hours from now
+        currentTime: null
+      },
+      {
+        id: this.currentEventId++,
+        homeTeam: "PSG",
+        awayTeam: "Marseille",
+        homeScore: 0,
+        awayScore: 0,
+        sport: "football",
+        league: "Ligue 1",
+        status: "upcoming",
+        startTime: new Date(Date.now() + 10800000), // 3 hours from now
+        currentTime: null
+      },
+      {
+        id: this.currentEventId++,
+        homeTeam: "Atletico Madrid",
+        awayTeam: "Valencia",
+        homeScore: 0,
+        awayScore: 0,
+        sport: "football",
+        league: "La Liga",
+        status: "upcoming",
+        startTime: new Date(Date.now() + 14400000), // 4 hours from now
+        currentTime: null
+      },
+      {
+        id: this.currentEventId++,
+        homeTeam: "Leicester City",
+        awayTeam: "Tottenham",
+        homeScore: 0,
+        awayScore: 0,
+        sport: "football",
+        league: "Premier League",
+        status: "upcoming",
+        startTime: new Date(Date.now() + 18000000), // 5 hours from now
+        currentTime: null
+      },
+      {
+        id: this.currentEventId++,
+        homeTeam: "Inter Milan",
+        awayTeam: "Napoli",
+        homeScore: 0,
+        awayScore: 0,
+        sport: "football",
+        league: "Serie A",
+        status: "upcoming",
+        startTime: new Date(Date.now() + 21600000), // 6 hours from now
+        currentTime: null
+      },
+      {
+        id: this.currentEventId++,
+        homeTeam: "RB Leipzig",
+        awayTeam: "Bayer Leverkusen",
+        homeScore: 0,
+        awayScore: 0,
+        sport: "football",
+        league: "Bundesliga",
+        status: "upcoming",
+        startTime: new Date(Date.now() + 25200000), // 7 hours from now
+        currentTime: null
+      },
+      
+      // Champions League Matches
+      {
+        id: this.currentEventId++,
+        homeTeam: "Manchester City",
+        awayTeam: "Bayern Munich",
+        homeScore: 0,
+        awayScore: 0,
+        sport: "football",
+        league: "Champions League",
+        status: "upcoming",
+        startTime: new Date(Date.now() + 86400000), // Tomorrow
+        currentTime: null
+      },
+      {
+        id: this.currentEventId++,
+        homeTeam: "Liverpool",
+        awayTeam: "Real Madrid",
+        homeScore: 0,
+        awayScore: 0,
+        sport: "football",
+        league: "Champions League",
+        status: "upcoming",
+        startTime: new Date(Date.now() + 90000000), // Tomorrow + 1 hour
+        currentTime: null
+      },
+      
+      // Basketball for variety
       {
         id: this.currentEventId++,
         homeTeam: "Lakers",
@@ -129,8 +256,9 @@ export class MemStorage implements IStorage {
 
     events.forEach(event => this.sportsEvents.set(event.id, event));
 
-    // Initialize betting markets
+    // Initialize comprehensive betting markets for all football events
     const markets: BettingMarket[] = [
+      // Event 1: Manchester United vs Liverpool (Live)
       {
         id: this.currentMarketId++,
         eventId: 1,
@@ -142,6 +270,26 @@ export class MemStorage implements IStorage {
       },
       {
         id: this.currentMarketId++,
+        eventId: 1,
+        marketType: "over_under",
+        marketName: "Total Goals O/U 2.5",
+        homeOdds: "1.75", // Over 2.5
+        drawOdds: null,
+        awayOdds: "2.05" // Under 2.5
+      },
+      {
+        id: this.currentMarketId++,
+        eventId: 1,
+        marketType: "both_teams_score",
+        marketName: "Both Teams to Score",
+        homeOdds: "1.85", // Yes
+        drawOdds: null,
+        awayOdds: "1.95" // No
+      },
+
+      // Event 2: Real Madrid vs Barcelona (Live)
+      {
+        id: this.currentMarketId++,
         eventId: 2,
         marketType: "1x2",
         marketName: "Match Result",
@@ -151,7 +299,254 @@ export class MemStorage implements IStorage {
       },
       {
         id: this.currentMarketId++,
+        eventId: 2,
+        marketType: "over_under",
+        marketName: "Total Goals O/U 2.5",
+        homeOdds: "1.90",
+        drawOdds: null,
+        awayOdds: "1.90"
+      },
+      {
+        id: this.currentMarketId++,
+        eventId: 2,
+        marketType: "both_teams_score",
+        marketName: "Both Teams to Score",
+        homeOdds: "1.65",
+        drawOdds: null,
+        awayOdds: "2.25"
+      },
+
+      // Event 3: Bayern Munich vs Borussia Dortmund (Live)
+      {
+        id: this.currentMarketId++,
         eventId: 3,
+        marketType: "1x2",
+        marketName: "Match Result",
+        homeOdds: "1.95",
+        drawOdds: "3.60",
+        awayOdds: "4.20"
+      },
+      {
+        id: this.currentMarketId++,
+        eventId: 3,
+        marketType: "over_under",
+        marketName: "Total Goals O/U 2.5",
+        homeOdds: "1.80",
+        drawOdds: null,
+        awayOdds: "2.00"
+      },
+
+      // Event 4: Chelsea vs Arsenal (Upcoming)
+      {
+        id: this.currentMarketId++,
+        eventId: 4,
+        marketType: "1x2",
+        marketName: "Match Result",
+        homeOdds: "2.45",
+        drawOdds: "3.30",
+        awayOdds: "3.10"
+      },
+      {
+        id: this.currentMarketId++,
+        eventId: 4,
+        marketType: "over_under",
+        marketName: "Total Goals O/U 2.5",
+        homeOdds: "1.85",
+        drawOdds: null,
+        awayOdds: "1.95"
+      },
+      {
+        id: this.currentMarketId++,
+        eventId: 4,
+        marketType: "both_teams_score",
+        marketName: "Both Teams to Score",
+        homeOdds: "1.75",
+        drawOdds: null,
+        awayOdds: "2.05"
+      },
+
+      // Event 5: AC Milan vs Juventus (Upcoming)
+      {
+        id: this.currentMarketId++,
+        eventId: 5,
+        marketType: "1x2",
+        marketName: "Match Result",
+        homeOdds: "2.65",
+        drawOdds: "3.25",
+        awayOdds: "2.90"
+      },
+      {
+        id: this.currentMarketId++,
+        eventId: 5,
+        marketType: "over_under",
+        marketName: "Total Goals O/U 2.5",
+        homeOdds: "1.95",
+        drawOdds: null,
+        awayOdds: "1.85"
+      },
+
+      // Event 6: PSG vs Marseille (Upcoming)
+      {
+        id: this.currentMarketId++,
+        eventId: 6,
+        marketType: "1x2",
+        marketName: "Match Result",
+        homeOdds: "1.65",
+        drawOdds: "3.80",
+        awayOdds: "5.50"
+      },
+      {
+        id: this.currentMarketId++,
+        eventId: 6,
+        marketType: "over_under",
+        marketName: "Total Goals O/U 2.5",
+        homeOdds: "1.70",
+        drawOdds: null,
+        awayOdds: "2.15"
+      },
+      {
+        id: this.currentMarketId++,
+        eventId: 6,
+        marketType: "both_teams_score",
+        marketName: "Both Teams to Score",
+        homeOdds: "1.80",
+        drawOdds: null,
+        awayOdds: "2.00"
+      },
+
+      // Event 7: Atletico Madrid vs Valencia (Upcoming)
+      {
+        id: this.currentMarketId++,
+        eventId: 7,
+        marketType: "1x2",
+        marketName: "Match Result",
+        homeOdds: "1.85",
+        drawOdds: "3.50",
+        awayOdds: "4.80"
+      },
+      {
+        id: this.currentMarketId++,
+        eventId: 7,
+        marketType: "over_under",
+        marketName: "Total Goals O/U 2.5",
+        homeOdds: "2.10",
+        drawOdds: null,
+        awayOdds: "1.75"
+      },
+
+      // Event 8: Leicester City vs Tottenham (Upcoming)
+      {
+        id: this.currentMarketId++,
+        eventId: 8,
+        marketType: "1x2",
+        marketName: "Match Result",
+        homeOdds: "3.40",
+        drawOdds: "3.20",
+        awayOdds: "2.35"
+      },
+      {
+        id: this.currentMarketId++,
+        eventId: 8,
+        marketType: "both_teams_score",
+        marketName: "Both Teams to Score",
+        homeOdds: "1.70",
+        drawOdds: null,
+        awayOdds: "2.15"
+      },
+
+      // Event 9: Inter Milan vs Napoli (Upcoming)
+      {
+        id: this.currentMarketId++,
+        eventId: 9,
+        marketType: "1x2",
+        marketName: "Match Result",
+        homeOdds: "2.20",
+        drawOdds: "3.40",
+        awayOdds: "3.50"
+      },
+      {
+        id: this.currentMarketId++,
+        eventId: 9,
+        marketType: "over_under",
+        marketName: "Total Goals O/U 2.5",
+        homeOdds: "1.85",
+        drawOdds: null,
+        awayOdds: "1.95"
+      },
+
+      // Event 10: RB Leipzig vs Bayer Leverkusen (Upcoming)
+      {
+        id: this.currentMarketId++,
+        eventId: 10,
+        marketType: "1x2",
+        marketName: "Match Result",
+        homeOdds: "2.55",
+        drawOdds: "3.30",
+        awayOdds: "3.00"
+      },
+      {
+        id: this.currentMarketId++,
+        eventId: 10,
+        marketType: "both_teams_score",
+        marketName: "Both Teams to Score",
+        homeOdds: "1.60",
+        drawOdds: null,
+        awayOdds: "2.35"
+      },
+
+      // Event 11: Manchester City vs Bayern Munich (Champions League)
+      {
+        id: this.currentMarketId++,
+        eventId: 11,
+        marketType: "1x2",
+        marketName: "Match Result",
+        homeOdds: "2.05",
+        drawOdds: "3.45",
+        awayOdds: "3.90"
+      },
+      {
+        id: this.currentMarketId++,
+        eventId: 11,
+        marketType: "over_under",
+        marketName: "Total Goals O/U 2.5",
+        homeOdds: "1.75",
+        drawOdds: null,
+        awayOdds: "2.05"
+      },
+      {
+        id: this.currentMarketId++,
+        eventId: 11,
+        marketType: "both_teams_score",
+        marketName: "Both Teams to Score",
+        homeOdds: "1.70",
+        drawOdds: null,
+        awayOdds: "2.15"
+      },
+
+      // Event 12: Liverpool vs Real Madrid (Champions League)
+      {
+        id: this.currentMarketId++,
+        eventId: 12,
+        marketType: "1x2",
+        marketName: "Match Result",
+        homeOdds: "2.85",
+        drawOdds: "3.25",
+        awayOdds: "2.75"
+      },
+      {
+        id: this.currentMarketId++,
+        eventId: 12,
+        marketType: "over_under",
+        marketName: "Total Goals O/U 2.5",
+        homeOdds: "1.80",
+        drawOdds: null,
+        awayOdds: "2.00"
+      },
+
+      // Basketball event for variety
+      {
+        id: this.currentMarketId++,
+        eventId: 13,
         marketType: "moneyline",
         marketName: "Winner",
         homeOdds: "1.85",

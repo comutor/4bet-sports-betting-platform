@@ -49,10 +49,18 @@ export function FootballSection({ onBetClick, isInBetslip }: FootballSectionProp
     awayTeam: ''
   });
 
+  // Try real API first, fall back to mock data for development
   const { data: footballData, isLoading, error } = useQuery<CountryFootballData[]>({
     queryKey: ['/api/football/countries'],
     staleTime: 5 * 60 * 1000, // 5 minutes
     refetchInterval: 2 * 60 * 1000, // 2 minutes
+  });
+
+  // Mock data fallback when real API has no data
+  const { data: mockFootballData } = useQuery<FootballGame[]>({
+    queryKey: ['/api/mock/football/events'],
+    enabled: !footballData || footballData.length === 0,
+    staleTime: 5 * 60 * 1000,
   });
 
 
@@ -138,6 +146,32 @@ export function FootballSection({ onBetClick, isInBetslip }: FootballSectionProp
         <Button onClick={() => window.location.reload()} variant="outline">
           Retry
         </Button>
+      </div>
+    );
+  }
+
+  // Show mock data if real API data is not available
+  if ((!footballData || footballData.length === 0) && mockFootballData && mockFootballData.length > 0) {
+    return (
+      <div className="space-y-6">
+        <div className="flex items-center justify-between">
+          <h2 className="text-2xl font-bold text-white">Football Matches (Mock Data)</h2>
+          <div className="text-sm text-gray-400">
+            {mockFootballData.length} matches available
+          </div>
+        </div>
+        
+        <div className="space-y-4">
+          {mockFootballData.map((game) => (
+            <MockGameCard
+              key={game.id}
+              game={game}
+              onBetClick={onBetClick}
+              isInBetslip={isInBetslip}
+              setMoreMarketsModal={setMoreMarketsModal}
+            />
+          ))}
+        </div>
       </div>
     );
   }
@@ -384,6 +418,145 @@ function CountrySection({ countryData, onBetClick, formatMatchTime, getOdds, isI
           )}
         </div>
       )}
+    </div>
+  );
+}
+
+// MockGameCard component for displaying individual mock football matches
+interface MockGameCardProps {
+  game: FootballGame;
+  onBetClick: (eventName: string, selection: string, odds: string) => void;
+  isInBetslip?: (eventName: string, selection: string) => boolean;
+  setMoreMarketsModal: (modal: {
+    isOpen: boolean;
+    eventName: string;
+    homeTeam: string;
+    awayTeam: string;
+  }) => void;
+}
+
+function MockGameCard({ game, onBetClick, isInBetslip, setMoreMarketsModal }: MockGameCardProps) {
+  const formatMatchTime = (date: string) => {
+    const matchDate = new Date(date);
+    const now = new Date();
+    
+    if (matchDate <= now) {
+      return "LIVE";
+    } else {
+      return matchDate.toLocaleTimeString('en-US', { 
+        hour: '2-digit', 
+        minute: '2-digit',
+        hour12: false 
+      });
+    }
+  };
+
+  const getOdds = (game: FootballGame) => {
+    // Generate realistic odds based on team names and match status
+    const homeStrength = game.home_team.includes('United') || game.home_team.includes('City') || game.home_team.includes('Real') ? 0.8 : 1.0;
+    const awayStrength = game.away_team.includes('United') || game.away_team.includes('City') || game.away_team.includes('Real') ? 0.8 : 1.0;
+    
+    const baseHome = 2.10 * homeStrength;
+    const baseAway = 2.85 * awayStrength;
+    const draw = 3.20;
+
+    return {
+      home: baseHome.toFixed(2),
+      draw: draw.toFixed(2),
+      away: baseAway.toFixed(2)
+    };
+  };
+
+  const odds = getOdds(game);
+  const matchTime = formatMatchTime(game.commence_time);
+  const eventName = `${game.home_team} vs ${game.away_team}`;
+
+  return (
+    <div className="bg-slate-800 rounded-lg p-4 border border-gray-700">
+      <div className="flex items-center justify-between mb-3">
+        <div className="flex items-center space-x-2">
+          <span className="text-xs bg-blue-600 text-white px-2 py-1 rounded">
+            {game.league_name || game.league || 'Football'}
+          </span>
+          {matchTime === "LIVE" && (
+            <span className="text-xs bg-red-600 text-white px-2 py-1 rounded animate-pulse">
+              LIVE
+            </span>
+          )}
+        </div>
+        <span className="text-sm text-gray-400">
+          {matchTime === "LIVE" ? "LIVE" : matchTime}
+        </span>
+      </div>
+
+      <div className="flex items-center justify-between">
+        <div className="flex-1">
+          <div className="flex items-center justify-between mb-2">
+            <span className="text-white font-medium">{game.home_team}</span>
+            {matchTime === "LIVE" && game.homeScore !== undefined && (
+              <span className="text-xl font-bold text-white">{game.homeScore}</span>
+            )}
+          </div>
+          <div className="flex items-center justify-between">
+            <span className="text-white font-medium">{game.away_team}</span>
+            {matchTime === "LIVE" && game.awayScore !== undefined && (
+              <span className="text-xl font-bold text-white">{game.awayScore}</span>
+            )}
+          </div>
+        </div>
+
+        <div className="flex space-x-2 ml-4">
+          <Button
+            size="sm"
+            variant="outline"
+            className={`min-w-[60px] h-12 flex flex-col border-gray-600 hover:border-blue-500 hover:bg-blue-500/10 ${
+              isInBetslip?.(eventName, game.home_team) ? 'bg-blue-600 border-blue-600 text-white' : ''
+            }`}
+            onClick={() => onBetClick(eventName, game.home_team, odds.home)}
+          >
+            <span className="text-xs text-gray-400">1</span>
+            <span className="font-bold text-white">{odds.home}</span>
+          </Button>
+
+          <Button
+            size="sm"
+            variant="outline"
+            className={`min-w-[60px] h-12 flex flex-col border-gray-600 hover:border-blue-500 hover:bg-blue-500/10 ${
+              isInBetslip?.(eventName, "Draw") ? 'bg-blue-600 border-blue-600 text-white' : ''
+            }`}
+            onClick={() => onBetClick(eventName, "Draw", odds.draw)}
+          >
+            <span className="text-xs text-gray-400">X</span>
+            <span className="font-bold text-white">{odds.draw}</span>
+          </Button>
+
+          <Button
+            size="sm"
+            variant="outline"
+            className={`min-w-[60px] h-12 flex flex-col border-gray-600 hover:border-blue-500 hover:bg-blue-500/10 ${
+              isInBetslip?.(eventName, game.away_team) ? 'bg-blue-600 border-blue-600 text-white' : ''
+            }`}
+            onClick={() => onBetClick(eventName, game.away_team, odds.away)}
+          >
+            <span className="text-xs text-gray-400">2</span>
+            <span className="font-bold text-white">{odds.away}</span>
+          </Button>
+
+          <Button
+            size="sm"
+            variant="outline"
+            className="min-w-[60px] h-12 border-gray-600 hover:border-blue-500 hover:bg-blue-500/10"
+            onClick={() => setMoreMarketsModal({
+              isOpen: true,
+              eventName,
+              homeTeam: game.home_team,
+              awayTeam: game.away_team
+            })}
+          >
+            <span className="text-xs text-gray-400">+{Math.floor(Math.random() * 50) + 20}</span>
+          </Button>
+        </div>
+      </div>
     </div>
   );
 }

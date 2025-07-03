@@ -348,6 +348,52 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Mock football data endpoints for development
+  app.get("/api/mock/football/events", async (req, res) => {
+    try {
+      const footballEvents = await storage.getEventsByCategory("football");
+      res.json(footballEvents);
+    } catch (error) {
+      console.error("Error fetching mock football events:", error);
+      res.status(500).json({ error: "Failed to fetch football events" });
+    }
+  });
+
+  app.get("/api/mock/football/live", async (req, res) => {
+    try {
+      const liveEvents = await storage.getLiveEvents();
+      const liveFootball = liveEvents.filter(event => event.sport === "football");
+      res.json(liveFootball);
+    } catch (error) {
+      console.error("Error fetching live football:", error);
+      res.status(500).json({ error: "Failed to fetch live football" });
+    }
+  });
+
+  app.get("/api/mock/football/upcoming", async (req, res) => {
+    try {
+      const allEvents = await storage.getSportsEvents();
+      const upcomingFootball = allEvents.filter(event => 
+        event.sport === "football" && event.status === "upcoming"
+      );
+      res.json(upcomingFootball);
+    } catch (error) {
+      console.error("Error fetching upcoming football:", error);
+      res.status(500).json({ error: "Failed to fetch upcoming football" });
+    }
+  });
+
+  app.get("/api/mock/football/markets/:eventId", async (req, res) => {
+    try {
+      const eventId = parseInt(req.params.eventId);
+      const markets = await storage.getBettingMarkets(eventId);
+      res.json(markets);
+    } catch (error) {
+      console.error("Error fetching betting markets:", error);
+      res.status(500).json({ error: "Failed to fetch betting markets" });
+    }
+  });
+
   // Authentication endpoints
   app.post("/api/auth/signup", async (req, res) => {
     try {
