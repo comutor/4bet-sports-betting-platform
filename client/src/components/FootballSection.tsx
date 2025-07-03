@@ -124,7 +124,7 @@ export function FootballSection({ onBetClick, isInBetslip }: FootballSectionProp
 
   if (isLoading) {
     return (
-      <div className="flex items-center justify-center py-12">
+      <div className="flex items-center py-12">
         <Loader2 className="h-8 w-8 animate-spin text-primary" />
         <span className="ml-2 text-gray-400">Loading football matches...</span>
       </div>
@@ -133,7 +133,7 @@ export function FootballSection({ onBetClick, isInBetslip }: FootballSectionProp
 
   if (error) {
     return (
-      <div className="text-center py-12">
+      <div className="py-12">
         <p className="text-red-400 mb-4">Failed to load football matches</p>
         <Button onClick={() => window.location.reload()} variant="outline">
           Retry
@@ -144,7 +144,7 @@ export function FootballSection({ onBetClick, isInBetslip }: FootballSectionProp
 
   if (!footballData || footballData.length === 0) {
     return (
-      <div className="text-center py-12">
+      <div className="py-12">
         <p className="text-gray-400">No football matches available at the moment</p>
       </div>
     );
@@ -206,7 +206,7 @@ export function FootballSection({ onBetClick, isInBetslip }: FootballSectionProp
 
       {/* Load More Button/Indicator */}
       {displayedCountries < footballData.length && (
-        <div className="flex justify-center py-6">
+        <div className="py-6">
           {isLoadingMore ? (
             <div className="flex items-center text-gray-400">
               <Loader2 className="h-5 w-5 animate-spin mr-2" />
@@ -225,7 +225,7 @@ export function FootballSection({ onBetClick, isInBetslip }: FootballSectionProp
       )}
 
       {displayedCountries >= footballData.length && (
-        <div className="text-center py-4">
+        <div className="py-4">
           <p className="text-gray-500">All countries loaded</p>
         </div>
       )}
@@ -376,7 +376,7 @@ function CountrySection({ countryData, onBetClick, formatMatchTime, getOdds, isI
           ))}
           
           {countryData.games.length > 8 && (
-            <div className="text-center">
+            <div>
               <button className="text-sm text-primary hover:text-primary-light">
                 View all {countryData.games.length} matches
               </button>

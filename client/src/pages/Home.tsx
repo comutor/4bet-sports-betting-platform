@@ -296,14 +296,14 @@ export default function Home() {
         return <CountriesSection selectedCategory={activeTab} onBetClick={handleBetClick} />;
       case 'esports':
         return (
-          <div className="text-center py-12">
+          <div className="py-12">
             <h2 className="text-2xl font-bold mb-4">Coming Soon</h2>
             <p className="text-gray-400">This section is under development.</p>
           </div>
         );
       default:
         return (
-          <div className="text-center py-12">
+          <div className="py-12">
             <h2 className="text-2xl font-bold mb-4">Coming Soon</h2>
             <p className="text-gray-400">This section is under development.</p>
           </div>
@@ -318,7 +318,7 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-background">
-      <div className="main-container mx-auto w-full max-w-sm sm:max-w-md md:max-w-lg bg-background min-h-screen relative px-4 sm:px-6 lg:px-8 xl:px-12 pt-32">
+      <div className="main-container w-full bg-background min-h-screen relative px-4 sm:px-6 lg:px-8 xl:px-12 pt-32">
         <TopNavigation 
           activeTab={activeTab} 
           onTabChange={setActiveTab} 

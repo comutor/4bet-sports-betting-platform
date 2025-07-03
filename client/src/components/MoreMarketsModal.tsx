@@ -140,13 +140,13 @@ export function MoreMarketsModal({
                 <Button
                   key={index}
                   variant="outline"
-                  className="h-16 flex flex-col items-center justify-center border-gray-600 hover:border-blue-500 hover:bg-blue-500/10"
+                  className="h-16 flex flex-col items-center border-gray-600 hover:border-blue-500 hover:bg-blue-500/10"
                   onClick={() => {
                     onBetClick(eventName, option.label, option.odds);
                     onClose();
                   }}
                 >
-                  <div className="text-center">
+                  <div>
                     <div className="text-xs text-gray-400 mb-1">{option.label}</div>
                     <div className="font-bold text-white">{option.odds}</div>
                   </div>
@@ -167,7 +167,7 @@ export function MoreMarketsModal({
                       onClose();
                     }}
                   >
-                    <div className="text-center">
+                    <div>
                       <div className="text-xs text-gray-400">{homeTeam} + Over 2.5</div>
                       <div className="font-bold text-white">4.25</div>
                     </div>
@@ -180,7 +180,7 @@ export function MoreMarketsModal({
                       onClose();
                     }}
                   >
-                    <div className="text-center">
+                    <div>
                       <div className="text-xs text-gray-400">Draw + Under 2.5</div>
                       <div className="font-bold text-white">5.80</div>
                     </div>

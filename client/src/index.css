@@ -38,25 +38,7 @@
   --live-orange: 14 100% 57%; /* #FF6B35 */
 }
 
-/* Large screen width constraint */
-@media (min-width: 1024px) {
-  .main-container {
-    max-width: 36rem !important;
-    margin: 0 auto !important;
-  }
-}
 
-@media (min-width: 1280px) {
-  .main-container {
-    max-width: 40rem !important;
-  }
-}
-
-@media (min-width: 1536px) {
-  .main-container {
-    max-width: 42rem !important;
-  }
-}
 
 /* Hamburger Menu Grid Layout */
 .menu-grid {

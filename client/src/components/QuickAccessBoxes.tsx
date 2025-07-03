@@ -13,7 +13,7 @@ export function QuickAccessBoxes({ onUpcomingClick, onLiveClick }: QuickAccessBo
         className="bg-gradient-to-br from-blue-600 to-blue-800 rounded-lg p-4 cursor-pointer transform transition-transform hover:scale-105"
         onClick={onUpcomingClick}
       >
-        <div className="text-center text-white">
+        <div className="text-white">
           <div className="mb-2">
             <i className="fas fa-calendar text-2xl"></i>
           </div>
@@ -36,7 +36,7 @@ export function QuickAccessBoxes({ onUpcomingClick, onLiveClick }: QuickAccessBo
         className="bg-gradient-to-br from-red-600 to-red-800 rounded-lg p-4 cursor-pointer transform transition-transform hover:scale-105"
         onClick={onLiveClick}
       >
-        <div className="text-center text-white">
+        <div className="text-white">
           <div className="mb-2 relative">
             <i className="fas fa-broadcast-tower text-2xl"></i>
             <span className="absolute -top-1 -right-1 w-2.5 h-2.5 bg-live rounded-full animate-pulse"></span>
