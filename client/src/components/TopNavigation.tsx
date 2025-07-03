@@ -126,7 +126,7 @@ export function TopNavigation({
                   onClick={() => onTabChange(sport.id)}
                 >
                   <i className={`${sport.icon} text-sm flex-shrink-0`}></i>
-                  <span className="text-xs font-bold">{sport.label}</span>
+                  <span className="text-xs font-bold uppercase">{sport.label}</span>
                 </Button>
               ))}
             </div>
