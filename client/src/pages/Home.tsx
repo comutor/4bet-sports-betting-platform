@@ -330,8 +330,6 @@ export default function Home() {
           onDepositClick={handleOpenDepositModal}
           isSearchOpen={isSearchOpen}
           onSearchToggle={() => setIsSearchOpen(!isSearchOpen)}
-          activeFilter={activeFilter}
-          onFilterChange={setActiveFilter}
         />
         
         {/* Search Bar */}
@@ -342,7 +340,15 @@ export default function Home() {
           onSearchClose={() => setIsSearchOpen(false)}
         />
         
-        {/* Filter Bar - now integrated into TopNavigation */}
+        {/* Filter Bar - shown only for sports tabs */}
+        {['football', 'basketball', 'tennis', 'ice-hockey', 'american-football', 'esports'].includes(activeTab) && (
+          <FilterBar 
+            activeFilter={activeFilter}
+            onFilterChange={setActiveFilter}
+            selectedDate={selectedDate}
+            onDateChange={setSelectedDate}
+          />
+        )}
         
         <main className={`pb-20 md:pb-4 px-4 ${
           ['football', 'basketball', 'tennis', 'ice-hockey', 'american-football', 'esports'].includes(activeTab) 

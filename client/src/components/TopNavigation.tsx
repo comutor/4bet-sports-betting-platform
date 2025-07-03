@@ -15,8 +15,6 @@ interface TopNavigationProps {
   onDepositClick?: () => void;
   isSearchOpen?: boolean;
   onSearchToggle?: () => void;
-  activeFilter?: string;
-  onFilterChange?: (filter: string) => void;
 }
 
 export function TopNavigation({ 
@@ -31,9 +29,7 @@ export function TopNavigation({
   onLoginClick, 
   onDepositClick,
   isSearchOpen = false,
-  onSearchToggle,
-  activeFilter = 'all',
-  onFilterChange 
+  onSearchToggle 
 }: TopNavigationProps) {
 
   // Most popular sports for top navigation
@@ -148,33 +144,7 @@ export function TopNavigation({
               ))}
             </div>
             
-            {/* Filter Buttons - Integrated */}
-            <div className="flex items-center gap-2 ml-4">
-              <Button
-                variant="ghost"
-                size="sm"
-                className={`px-3 py-1.5 rounded-lg font-bold text-xs transition-all duration-200 whitespace-nowrap ${
-                  activeFilter === 'all'
-                    ? 'bg-primary text-white shadow-sm'
-                    : 'text-gray-300 hover:bg-slate-700 hover:text-white'
-                }`}
-                onClick={() => onFilterChange && onFilterChange('all')}
-              >
-                ALL
-              </Button>
-              <Button
-                variant="ghost"
-                size="sm"
-                className={`px-3 py-1.5 rounded-lg font-bold text-xs transition-all duration-200 whitespace-nowrap ${
-                  activeFilter === 'top-leagues'
-                    ? 'bg-primary text-white shadow-sm'
-                    : 'text-gray-300 hover:bg-slate-700 hover:text-white'
-                }`}
-                onClick={() => onFilterChange && onFilterChange('top-leagues')}
-              >
-                TOP LEAGUES
-              </Button>
-            </div>
+
           </div>
         </div>
       </nav>
