@@ -133,7 +133,7 @@ export function MoreMarkets() {
               onClick={() => setSelectedMarket(tab.id)}
               className={`flex-shrink-0 px-4 py-3 text-sm font-medium whitespace-nowrap ${
                 selectedMarket === tab.id
-                  ? 'text-green-400 border-b-2 border-green-400'
+                  ? 'text-blue-400 border-b-2 border-blue-400'
                   : 'text-gray-300 hover:text-white'
               }`}
             >
