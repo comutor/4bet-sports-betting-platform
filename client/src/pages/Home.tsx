@@ -19,6 +19,7 @@ import { FootballSection } from "@/components/FootballSection";
 import { SportSection } from "@/components/SportSection";
 import { MyBetsSection } from "@/components/MyBetsSection";
 import { StatementSection } from "@/components/StatementSection";
+import { AllSportsSection } from "@/components/AllSportsSection";
 
 import { DepositModal } from "@/components/DepositModal";
 import { WithdrawalModal } from "@/components/WithdrawalModal";
@@ -228,6 +229,8 @@ export default function Home() {
 
   const renderMainContent = () => {
     switch (activeTab) {
+      case 'sports':
+        return <AllSportsSection onBetClick={handleBetClick} />;
       case 'football':
         return <FootballSection onBetClick={handleBetClick} isInBetslip={isInBetslip} />;
       case 'basketball':
