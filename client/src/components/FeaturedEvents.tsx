@@ -176,7 +176,7 @@ export function FeaturedEvents({ onBetClick, onTabChange }: FeaturedEventsProps)
   };
 
   return (
-    <div className="max-w-7xl mx-auto px-4 py-8">
+    <div className="py-8">
       <h2 className="text-2xl font-bold mb-8 flex items-center text-white">
         <i className="fas fa-fire text-live mr-3"></i>
         Featured Matches
