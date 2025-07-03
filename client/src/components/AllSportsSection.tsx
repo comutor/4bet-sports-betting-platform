@@ -65,8 +65,8 @@ export function AllSportsSection({ onBetClick }: AllSportsSectionProps) {
       </div>
 
       {/* Enhanced Tab Navigation - positioned closer to header */}
-      <div className="relative mb-6">
-        <div className="flex items-center gap-1 bg-slate-900/80 backdrop-blur-sm p-1.5 rounded-xl border border-slate-600/50 shadow-lg">
+      <div className="relative mb-6 -mx-4 sm:-mx-6 lg:-mx-8 xl:-mx-12">
+        <div className="flex items-center gap-1 bg-slate-900/80 backdrop-blur-sm p-1.5 mx-4 sm:mx-6 lg:mx-8 xl:mx-12 rounded-xl border border-slate-600/50 shadow-lg">
           {tabs.map((tab, index) => (
             <Button
               key={tab.id}
