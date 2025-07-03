@@ -39,7 +39,7 @@ export function TopNavigation({
 
   return (
     <div className="relative">
-      <nav className="stable-fixed-nav top-0 z-40 bg-slate-custom shadow-lg">
+      <nav className="bg-slate-custom shadow-lg">
         {/* Top Row */}
         <div className="bg-slate-custom px-4 py-3">
           <div className="flex items-center justify-between">

@@ -341,7 +341,7 @@ export default function Home() {
         />
       )}
 
-      <div className="main-container w-full bg-background min-h-screen relative px-4 sm:px-6 lg:px-8 xl:px-12 pt-32">
+      <div className="main-container w-full bg-background min-h-screen relative px-4 sm:px-6 lg:px-8 xl:px-12">
         
         <main className={`pb-20 md:pb-4 px-4 ${
           ['football', 'basketball', 'tennis', 'ice-hockey', 'american-football', 'esports'].includes(activeTab) 
