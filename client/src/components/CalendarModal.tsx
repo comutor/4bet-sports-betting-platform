@@ -60,7 +60,7 @@ export function CalendarModal({ isOpen, onClose, selectedDate, onDateSelect }: C
 
     // Add empty cells for days before the first day of the month
     for (let i = 0; i < firstDay; i++) {
-      days.push(<div key={`empty-${i}`} className="w-10 h-10"></div>);
+      days.push(<div key={`empty-${i}`} className="w-8 h-8"></div>);
     }
 
     // Add days of the month
@@ -77,7 +77,7 @@ export function CalendarModal({ isOpen, onClose, selectedDate, onDateSelect }: C
             onDateSelect(date);
             onClose();
           }}
-          className={`relative w-10 h-10 rounded-full flex items-center justify-center text-sm font-medium transition-all duration-200 ${
+          className={`relative w-8 h-8 rounded-full flex items-center justify-center text-xs font-medium transition-all duration-200 ${
             selected
               ? 'bg-primary text-white'
               : today
@@ -87,7 +87,7 @@ export function CalendarModal({ isOpen, onClose, selectedDate, onDateSelect }: C
         >
           {day}
           {hasEventsIndicator && (
-            <div className="absolute bottom-1 left-1/2 transform -translate-x-1/2 w-1 h-1 bg-blue-400 rounded-full"></div>
+            <div className="absolute bottom-0.5 left-1/2 transform -translate-x-1/2 w-1 h-1 bg-blue-400 rounded-full"></div>
           )}
         </button>
       );
@@ -97,42 +97,42 @@ export function CalendarModal({ isOpen, onClose, selectedDate, onDateSelect }: C
   };
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <div className="bg-slate-800 border border-gray-700 rounded-xl shadow-lg max-w-md w-full mx-4">
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-start justify-end pt-48 pr-4 z-50">
+      <div className="bg-slate-800 border border-gray-700 rounded-xl shadow-lg w-80">
         {/* Header */}
-        <div className="flex items-center justify-between p-4 border-b border-gray-700">
+        <div className="flex items-center justify-between p-3 border-b border-gray-700">
           <button
             onClick={() => navigateMonth('prev')}
-            className="text-gray-400 hover:text-white transition-colors p-2"
+            className="text-gray-400 hover:text-white transition-colors p-1"
           >
-            <i className="fas fa-chevron-left"></i>
+            <i className="fas fa-chevron-left text-sm"></i>
           </button>
           
-          <h2 className="text-lg font-bold text-white">
+          <h2 className="text-base font-bold text-white">
             {monthNames[currentMonth.getMonth()]} {currentMonth.getFullYear()}
           </h2>
           
           <button
             onClick={() => navigateMonth('next')}
-            className="text-gray-400 hover:text-white transition-colors p-2"
+            className="text-gray-400 hover:text-white transition-colors p-1"
           >
-            <i className="fas fa-chevron-right"></i>
+            <i className="fas fa-chevron-right text-sm"></i>
           </button>
           
           <button
             onClick={onClose}
-            className="text-gray-400 hover:text-white transition-colors p-2 ml-2"
+            className="text-gray-400 hover:text-white transition-colors p-1 ml-2"
           >
-            <i className="fas fa-times"></i>
+            <i className="fas fa-times text-sm"></i>
           </button>
         </div>
 
         {/* Calendar */}
-        <div className="p-4">
+        <div className="p-3">
           {/* Day headers */}
-          <div className="grid grid-cols-7 gap-1 mb-2">
+          <div className="grid grid-cols-7 gap-1 mb-1">
             {dayNames.map((day) => (
-              <div key={day} className="text-center text-xs font-medium text-gray-400 py-2">
+              <div key={day} className="text-center text-xs font-medium text-gray-400 py-1">
                 {day}
               </div>
             ))}
@@ -145,7 +145,7 @@ export function CalendarModal({ isOpen, onClose, selectedDate, onDateSelect }: C
         </div>
 
         {/* Footer with event indicator legend */}
-        <div className="px-4 pb-4">
+        <div className="px-3 pb-3">
           <div className="flex items-center justify-center gap-2 text-xs text-gray-400">
             <div className="w-1 h-1 bg-blue-400 rounded-full"></div>
             <span>Event days for your favourites</span>
