@@ -40,7 +40,7 @@ export class OddsApiService {
   private baseUrl = 'https://api.the-odds-api.com/v4';
   private cache = new Map<string, { data: any; timestamp: number }>();
   private cacheTimeout = 5 * 60 * 1000; // 5 minutes
-  private apiPaused = true; // PAUSED TO SAVE API CREDITS DURING REDESIGN
+  private apiPaused = false; // API ENABLED FOR LIVE DATA
 
   constructor() {
     this.apiKey = process.env.ODDS_API_KEY || '';

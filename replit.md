@@ -101,7 +101,7 @@ The application uses PostgreSQL with the following core entities:
 ## Changelog
 ```
 Changelog:
-- July 3, 2025. Created comprehensive mock football data: Added 12 realistic football matches with proper odds, betting markets, live/upcoming status, major leagues (Premier League, La Liga, Serie A, Bundesliga, Champions League), API endpoints for development testing
+- July 3, 2025. Enabled live Odds API: Unpaused the sports betting API to fetch real-time odds and match data from The Odds API instead of mock data, removed mock data fallbacks for authentic live betting experience
 - July 3, 2025. Removed all centering features: Eliminated text-center, justify-center, mx-auto classes throughout app, removed CSS centering constraints for large screens, converted layouts to natural left-aligned flow
 - June 28, 2025. Enhanced logo boldness: Strengthened text shadows and glow effects for more prominent logo appearance with deeper visual impact
 - June 28, 2025. Enhanced balance text visibility: Increased font size from text-xs/sm to text-sm/base for better readability while maintaining bold styling
