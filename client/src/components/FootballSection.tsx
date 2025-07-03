@@ -1,8 +1,8 @@
 import { useState, useEffect, useCallback, useMemo, useRef } from "react";
 import { useQuery } from "@tanstack/react-query";
+import { useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Loader2 } from "lucide-react";
-import { MoreMarketsModal } from "@/components/MoreMarketsModal";
 
 interface FootballGame {
   id: string;
@@ -35,19 +35,10 @@ interface FootballSectionProps {
 }
 
 export function FootballSection({ onBetClick, isInBetslip }: FootballSectionProps) {
+  const [, setLocation] = useLocation();
   const [displayedCountries, setDisplayedCountries] = useState<number>(6);
   const [isLoadingMore, setIsLoadingMore] = useState(false);
-  const [moreMarketsModal, setMoreMarketsModal] = useState<{
-    isOpen: boolean;
-    eventName: string;
-    homeTeam: string;
-    awayTeam: string;
-  }>({
-    isOpen: false,
-    eventName: '',
-    homeTeam: '',
-    awayTeam: ''
-  });
+
 
   // Try real API first, fall back to mock data for development
   const { data: footballData, isLoading, error } = useQuery<CountryFootballData[]>({
@@ -183,7 +174,7 @@ export function FootballSection({ onBetClick, isInBetslip }: FootballSectionProp
               formatMatchTime={formatMatchTime}
               getOdds={getOdds}
               isInBetslip={isInBetslip}
-              setMoreMarketsModal={setMoreMarketsModal}
+              setLocation={setLocation}
             />
           ))}
         </div>
@@ -203,7 +194,7 @@ export function FootballSection({ onBetClick, isInBetslip }: FootballSectionProp
               formatMatchTime={formatMatchTime}
               getOdds={getOdds}
               isInBetslip={isInBetslip}
-              setMoreMarketsModal={setMoreMarketsModal}
+              setLocation={setLocation}
             />
           ))}
         </div>
@@ -235,15 +226,7 @@ export function FootballSection({ onBetClick, isInBetslip }: FootballSectionProp
         </div>
       )}
 
-      {/* More Markets Modal */}
-      <MoreMarketsModal
-        isOpen={moreMarketsModal.isOpen}
-        onClose={() => setMoreMarketsModal({ ...moreMarketsModal, isOpen: false })}
-        eventName={moreMarketsModal.eventName}
-        homeTeam={moreMarketsModal.homeTeam}
-        awayTeam={moreMarketsModal.awayTeam}
-        onBetClick={onBetClick}
-      />
+
     </div>
   );
 }
@@ -254,16 +237,16 @@ interface CountrySectionProps {
   formatMatchTime: (time: string) => string;
   getOdds: (game: FootballGame) => { home: string; draw: string; away: string };
   isInBetslip?: (eventName: string, selection: string) => boolean;
-  setMoreMarketsModal: (modal: { isOpen: boolean; eventName: string; homeTeam: string; awayTeam: string }) => void;
+  setLocation: (path: string) => void;
 }
 
 // Individual match component with its own selection state
-function MatchCard({ game, onBetClick, formatMatchTime, getOdds, setMoreMarketsModal }: { 
+function MatchCard({ game, onBetClick, formatMatchTime, getOdds, setLocation }: { 
   game: FootballGame; 
   onBetClick: (eventName: string, selection: string, odds: string) => void;
   formatMatchTime: (time: string) => string;
   getOdds: (game: FootballGame) => { home: string; draw: string; away: string };
-  setMoreMarketsModal: (modal: { isOpen: boolean; eventName: string; homeTeam: string; awayTeam: string }) => void;
+  setLocation: (path: string) => void;
 }) {
   const [selected, setSelected] = useState<string | null>(() => {
     const saved = localStorage.getItem(`match_${game.id}`);
@@ -332,12 +315,7 @@ function MatchCard({ game, onBetClick, formatMatchTime, getOdds, setMoreMarketsM
             variant="ghost"
             className="text-blue-400 hover:text-blue-300 hover:bg-blue-500/10 px-3 lg:px-4 xl:px-5 lg:min-w-[80px] xl:min-w-[90px] ml-2"
             onClick={() => {
-              setMoreMarketsModal({
-                isOpen: true,
-                eventName,
-                homeTeam: game.home_team,
-                awayTeam: game.away_team
-              });
+              setLocation(`/more-markets/${game.id}`);
             }}
           >
             <span className="text-xs font-medium">+25</span>
@@ -348,7 +326,7 @@ function MatchCard({ game, onBetClick, formatMatchTime, getOdds, setMoreMarketsM
   );
 }
 
-function CountrySection({ countryData, onBetClick, formatMatchTime, getOdds, isInBetslip, setMoreMarketsModal }: CountrySectionProps) {
+function CountrySection({ countryData, onBetClick, formatMatchTime, getOdds, isInBetslip, setLocation }: CountrySectionProps) {
   const [expanded, setExpanded] = useState(true);
 
   return (
@@ -376,7 +354,7 @@ function CountrySection({ countryData, onBetClick, formatMatchTime, getOdds, isI
               onBetClick={onBetClick}
               formatMatchTime={formatMatchTime}
               getOdds={getOdds}
-              setMoreMarketsModal={setMoreMarketsModal}
+              setLocation={setLocation}
             />
           ))}
           

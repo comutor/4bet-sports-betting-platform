@@ -101,6 +101,7 @@ The application uses PostgreSQL with the following core entities:
 ## Changelog
 ```
 Changelog:
+- July 3, 2025. Implemented dedicated More Markets page: Created new `/more-markets/:eventId` route with comprehensive market navigation matching betting platform standards, replaced modal with full-page experience featuring match details, time/date display, team names, league information, and market tabs (All, Popular, Goals, Halves, Combos, Specials, Corners, Booking)
 - July 3, 2025. Enhanced full-width layout: Removed additional centering constraints including justify-center and max-width limitations, ensured complete left-aligned flow for optimal full-width utilization
 - July 3, 2025. Enabled live Odds API: Unpaused the sports betting API to fetch real-time odds and match data from The Odds API instead of mock data, removed mock data fallbacks for authentic live betting experience
 - July 3, 2025. Removed all centering features: Eliminated text-center, justify-center, mx-auto classes throughout app, removed CSS centering constraints for large screens, converted layouts to natural left-aligned flow
