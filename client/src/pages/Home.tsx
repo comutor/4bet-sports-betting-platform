@@ -250,64 +250,7 @@ export default function Home() {
             <p className="text-gray-400">Esports betting is under development.</p>
           </div>
         );
-      case 'more':
-        return (
-          <>
-            <div className="max-w-7xl mx-auto px-4 py-8">
-              <h2 className="text-2xl font-bold mb-8 text-white">More Sports</h2>
-              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                <Button
-                  variant="outline"
-                  className="h-20 flex flex-col items-center justify-center border-gray-600 hover:border-blue-500 hover:bg-blue-500/10"
-                  onClick={() => setActiveTab('hockey')}
-                >
-                  <i className="fas fa-hockey-puck text-2xl mb-2"></i>
-                  <span>Ice Hockey</span>
-                </Button>
-                <Button
-                  variant="outline"
-                  className="h-20 flex flex-col items-center justify-center border-gray-600 hover:border-blue-500 hover:bg-blue-500/10"
-                  onClick={() => setActiveTab('baseball')}
-                >
-                  <i className="fas fa-baseball text-2xl mb-2"></i>
-                  <span>Baseball</span>
-                </Button>
-                <Button
-                  variant="outline"
-                  className="h-20 flex flex-col items-center justify-center border-gray-600 hover:border-blue-500 hover:bg-blue-500/10"
-                  onClick={() => setActiveTab('volleyball')}
-                >
-                  <i className="fas fa-volleyball text-2xl mb-2"></i>
-                  <span>Volleyball</span>
-                </Button>
-                <Button
-                  variant="outline"
-                  className="h-20 flex flex-col items-center justify-center border-gray-600 hover:border-blue-500 hover:bg-blue-500/10"
-                  onClick={() => setActiveTab('aviator')}
-                >
-                  <i className="fas fa-plane text-2xl mb-2"></i>
-                  <span>Aviator</span>
-                </Button>
-                <Button
-                  variant="outline"
-                  className="h-20 flex flex-col items-center justify-center border-gray-600 hover:border-blue-500 hover:bg-blue-500/10"
-                  onClick={() => setActiveTab('virtual')}
-                >
-                  <i className="fas fa-robot text-2xl mb-2"></i>
-                  <span>Virtual Sports</span>
-                </Button>
-                <Button
-                  variant="outline"
-                  className="h-20 flex flex-col items-center justify-center border-gray-600 hover:border-blue-500 hover:bg-blue-500/10"
-                  onClick={() => setActiveTab('casino')}
-                >
-                  <i className="fas fa-dice text-2xl mb-2"></i>
-                  <span>Casino</span>
-                </Button>
-              </div>
-            </div>
-          </>
-        );
+
       case 'hockey':
         return <SportSection sport="hockey" onBetClick={handleBetClick} />;
       case 'baseball':

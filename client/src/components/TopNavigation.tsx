@@ -40,7 +40,7 @@ export function TopNavigation({
   const searchBarRef = useRef<HTMLDivElement>(null);
   const servicesDropdownRef = useRef<HTMLDivElement>(null);
 
-  // Main navigation items for top tabs (excludes betslip and account)
+  // Main navigation items for top tabs (excludes betslip, account, and more)
   const allNavItems = [
     { id: 'football', label: 'Football', icon: 'fas fa-futbol', hasIndicator: false },
     { id: 'basketball', label: 'Basketball', icon: 'fas fa-basketball-ball', hasIndicator: false },
@@ -48,13 +48,14 @@ export function TopNavigation({
     { id: 'ice-hockey', label: 'Ice Hockey', icon: 'fas fa-hockey-puck', hasIndicator: false },
     { id: 'american-football', label: 'American Football', icon: 'fas fa-football-ball', hasIndicator: false },
     { id: 'esports', label: 'Esports', icon: 'fas fa-gamepad', hasIndicator: false },
-    { id: 'more', label: 'More', icon: 'fas fa-plus', hasIndicator: false },
     { id: 'casino', label: 'Casino', icon: 'fas fa-dice', hasIndicator: false },
     { id: 'aviator', label: 'Aviator', icon: 'fas fa-paper-plane', hasIndicator: false },
-    { id: 'virtual', label: 'Virtual', icon: 'fas fa-vr-cardboard', hasIndicator: true }
+    { id: 'virtual', label: 'Virtual', icon: 'fas fa-vr-cardboard', hasIndicator: true },
+    { id: 'baseball', label: 'Baseball', icon: 'fas fa-baseball', hasIndicator: false },
+    { id: 'volleyball', label: 'Volleyball', icon: 'fas fa-volleyball', hasIndicator: false }
   ];
 
-  // Dropdown menu items (same as all nav items since betslip and account are already excluded)
+  // Dropdown menu items (same as all nav items)
   const dropdownNavItems = allNavItems;
 
   // Close services dropdown when clicking outside
