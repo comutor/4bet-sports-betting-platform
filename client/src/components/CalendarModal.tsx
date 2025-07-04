@@ -61,6 +61,13 @@ export function CalendarModal({ isOpen, onClose, selectedDate, onDateSelect }: C
     return date.toDateString() === selectedDate.toDateString();
   };
 
+  const isPastDate = (date: Date) => {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    date.setHours(0, 0, 0, 0);
+    return date < today;
+  };
+
   const navigateMonth = (direction: 'prev' | 'next') => {
     const newMonth = new Date(currentMonth);
     if (direction === 'prev') {
@@ -87,16 +94,22 @@ export function CalendarModal({ isOpen, onClose, selectedDate, onDateSelect }: C
       const today = isToday(date);
       const selected = isSelected(date);
       const hasEventsIndicator = hasEvents(date);
+      const isPast = isPastDate(new Date(date));
 
       days.push(
         <button
           key={day}
           onClick={() => {
-            onDateSelect(date);
-            onClose();
+            if (!isPast) {
+              onDateSelect(date);
+              onClose();
+            }
           }}
+          disabled={isPast}
           className={`relative w-8 h-8 rounded-full flex items-center justify-center text-xs font-medium transition-all duration-200 ${
-            selected
+            isPast
+              ? 'text-gray-600 line-through cursor-not-allowed opacity-50'
+              : selected
               ? 'bg-primary text-white'
               : today
               ? 'bg-blue-600 text-white'
@@ -104,7 +117,7 @@ export function CalendarModal({ isOpen, onClose, selectedDate, onDateSelect }: C
           }`}
         >
           {day}
-          {hasEventsIndicator && (
+          {hasEventsIndicator && !isPast && (
             <div className="absolute bottom-0.5 left-1/2 transform -translate-x-1/2 w-1 h-1 bg-blue-400 rounded-full"></div>
           )}
         </button>

@@ -22,6 +22,7 @@ import { SportSection } from "@/components/SportSection";
 import { MyBetsSection } from "@/components/MyBetsSection";
 import { StatementSection } from "@/components/StatementSection";
 import { AllSportsSection } from "@/components/AllSportsSection";
+import { AllSection } from "@/components/AllSection";
 
 import { DepositModal } from "@/components/DepositModal";
 import { WithdrawalModal } from "@/components/WithdrawalModal";
@@ -230,6 +231,12 @@ export default function Home() {
   };
 
   const renderMainContent = () => {
+    // Check if all filter is active for any sport tab
+    if (['football', 'basketball', 'tennis', 'ice-hockey', 'american-football', 'baseball'].includes(activeTab) && 
+        activeFilter === 'all') {
+      return <AllSection selectedDate={selectedDate} onBetClick={handleBetClick} />;
+    }
+
     // Check if competitions filter is active for any sport tab
     if (['football', 'basketball', 'tennis', 'ice-hockey', 'american-football', 'esports'].includes(activeTab) && 
         activeFilter === 'competitions') {

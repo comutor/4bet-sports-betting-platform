@@ -115,6 +115,41 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Get events by date for ALL filter
+  app.get('/api/events/by-date/:date', async (req, res) => {
+    try {
+      const { date } = req.params;
+      const targetDate = new Date(date);
+      const allEvents: any[] = [];
+
+      // Fetch events from multiple sports
+      const sportsToFetch = [
+        'soccer_epl', 'soccer_spain_la_liga', 'soccer_germany_bundesliga',
+        'soccer_italy_serie_a', 'soccer_france_ligue_one', 'basketball_nba',
+        'tennis_atp', 'tennis_wta', 'americanfootball_nfl'
+      ];
+
+      for (const sport of sportsToFetch) {
+        try {
+          const events = await oddsApiService.getOdds(sport);
+          // Filter events by date
+          const filteredEvents = events.filter((event: any) => {
+            const eventDate = new Date(event.commence_time);
+            return eventDate.toDateString() === targetDate.toDateString();
+          });
+          allEvents.push(...filteredEvents);
+        } catch (error) {
+          console.log(`Failed to fetch ${sport} events:`, error);
+        }
+      }
+
+      res.json(allEvents);
+    } catch (error) {
+      console.error('Error fetching events by date:', error);
+      res.status(500).json({ message: 'Failed to fetch events' });
+    }
+  });
+
   app.get("/api/odds/soccer/leagues", async (req, res) => {
     try {
       const leagues = await oddsApiService.getSoccerLeagues();
