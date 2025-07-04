@@ -235,6 +235,12 @@
   margin-top: 0;
 }
 
+/* Make background solid */
+.sports-tabs,
+.filter-bar {
+  background-color: #121e2c; /* or your dark navbar color */
+}
+
 .dark {
   --background: 240 10% 3.9%;
   --foreground: 0 0% 98%;
