@@ -98,6 +98,13 @@ export default function Home() {
     }
   }, [activeFilter]);
 
+  // Reset selected league when sport tab changes
+  useEffect(() => {
+    if (selectedLeague) {
+      setSelectedLeague(null);
+    }
+  }, [activeTab]);
+
   const handleBetClick = useCallback((eventName: string, selection: string, odds: string) => {
     // Temporarily disabled for betslip development
     // if (!isLoggedIn) {
