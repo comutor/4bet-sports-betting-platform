@@ -14,6 +14,7 @@ import { AccountPage } from "@/components/AccountPage";
 import { LoginPrompt } from "@/components/LoginPrompt";
 import { CountriesSection } from "@/components/CountriesSection";
 import { CompetitionsSection } from "@/components/CompetitionsSection";
+import { TopLeaguesSection } from "@/components/TopLeaguesSection";
 import { SignupPage } from "@/components/SignupPage";
 import { LoginModal } from "@/components/LoginModal";
 import { FootballSection } from "@/components/FootballSection";
@@ -233,6 +234,12 @@ export default function Home() {
     if (['football', 'basketball', 'tennis', 'ice-hockey', 'american-football', 'esports'].includes(activeTab) && 
         activeFilter === 'competitions') {
       return <CompetitionsSection onBetClick={handleBetClick} sport={activeTab} />;
+    }
+
+    // Check if top-leagues filter is active for any sport tab
+    if (['football', 'basketball', 'tennis', 'ice-hockey', 'american-football', 'baseball'].includes(activeTab) && 
+        activeFilter === 'top-leagues') {
+      return <TopLeaguesSection onBetClick={handleBetClick} sport={activeTab} />;
     }
 
     switch (activeTab) {
