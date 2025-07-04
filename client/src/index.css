@@ -235,24 +235,7 @@
   margin-top: 0;
 }
 
-/* Remove unwanted margins and paddings */
-.sports-tabs, .filter-bar {
-  margin: 0;
-  padding: 0;
-}
 
-/* Ensure both are stacked tightly */
-.sports-tabs {
-  position: relative;
-  z-index: 10;
-}
-
-.filter-bar {
-  margin-top: 0; /* force remove space */
-  position: relative;
-  top: 0;
-  z-index: 9;
-}
 
 .dark {
   --background: 240 10% 3.9%;
