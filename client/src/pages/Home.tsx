@@ -304,14 +304,14 @@ export default function Home() {
         return <SportSection sport="hockey" onBetClick={handleBetClick} />;
       case 'american-football':
         return (
-          <div className="text-center py-12">
+          <div className="text-center py-4">
             <h2 className="text-2xl font-bold mb-4">Coming Soon</h2>
             <p className="text-gray-400">American Football betting is under development.</p>
           </div>
         );
       case 'esports':
         return (
-          <div className="text-center py-12">
+          <div className="text-center py-4">
             <h2 className="text-2xl font-bold mb-4">Coming Soon</h2>
             <p className="text-gray-400">Esports betting is under development.</p>
           </div>
@@ -359,14 +359,14 @@ export default function Home() {
         return <CountriesSection selectedCategory={activeTab} onBetClick={handleBetClick} />;
       case 'esports':
         return (
-          <div className="py-12">
+          <div className="py-4">
             <h2 className="text-2xl font-bold mb-4">Coming Soon</h2>
             <p className="text-gray-400">This section is under development.</p>
           </div>
         );
       default:
         return (
-          <div className="py-12">
+          <div className="py-4">
             <h2 className="text-2xl font-bold mb-4">Coming Soon</h2>
             <p className="text-gray-400">This section is under development.</p>
           </div>
@@ -404,7 +404,7 @@ export default function Home() {
         />
       )}
 
-      <div className="main-container w-full bg-background min-h-screen relative pt-48">
+      <div className="main-container w-full bg-background min-h-screen relative pt-24">
         
         <main className={`pb-20 md:pb-4 ${
           ['football', 'basketball', 'tennis', 'ice-hockey', 'american-football', 'esports'].includes(activeTab) 

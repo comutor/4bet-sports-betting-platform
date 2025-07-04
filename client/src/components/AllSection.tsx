@@ -33,7 +33,7 @@ export function AllSection({ selectedDate, onBetClick }: AllSectionProps) {
 
   if (isLoading) {
     return (
-      <div className="py-8">
+      <div className="py-4">
         <div className="flex items-center justify-center">
           <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
         </div>
@@ -55,7 +55,7 @@ export function AllSection({ selectedDate, onBetClick }: AllSectionProps) {
 
       {/* Events by Sport */}
       {events.length === 0 ? (
-        <div className="px-4 py-8 text-center">
+        <div className="px-4 py-4 text-center">
           <p className="text-gray-400">No events found for {formatDate(selectedDate)}</p>
         </div>
       ) : (

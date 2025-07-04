@@ -142,7 +142,7 @@ export function SportSection({ sport, onBetClick }: SportSectionProps) {
 
   if (isLoading) {
     return (
-      <div className="flex items-center justify-center py-12">
+      <div className="flex items-center justify-center py-4">
         <Loader2 className="h-8 w-8 animate-spin text-primary" />
         <span className="ml-2 text-gray-400">Loading {config.title.toLowerCase()} matches...</span>
       </div>
@@ -151,7 +151,7 @@ export function SportSection({ sport, onBetClick }: SportSectionProps) {
 
   if (error) {
     return (
-      <div className="text-center py-12">
+      <div className="text-center py-4">
         <p className="text-red-400 mb-4">Failed to load {config.title.toLowerCase()} matches</p>
         <Button onClick={() => window.location.reload()} variant="outline">
           Retry
@@ -162,7 +162,7 @@ export function SportSection({ sport, onBetClick }: SportSectionProps) {
 
   if (!sportData || sportData.length === 0) {
     return (
-      <div className="text-center py-12">
+      <div className="text-center py-4">
         <p className="text-gray-400">No {config.title.toLowerCase()} matches available at the moment</p>
       </div>
     );

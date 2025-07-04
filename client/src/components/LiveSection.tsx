@@ -67,7 +67,7 @@ export function LiveSection({ onBetClick }: LiveSectionProps) {
   };
 
   return (
-    <div className="py-8">
+    <div className="py-4">
       <div className="flex items-center justify-between mb-6">
         <h2 className="text-2xl font-bold flex items-center">
           <span className="w-3 h-3 bg-live rounded-full animate-pulse mr-3"></span>
