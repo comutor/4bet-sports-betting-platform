@@ -115,7 +115,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Get events by date for ALL filter
+  // Get matches by date for ALL filter
   app.get('/api/events/by-date/:date', async (req, res) => {
     try {
       const { date } = req.params;
