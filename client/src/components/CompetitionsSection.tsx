@@ -326,6 +326,30 @@ const sportData = {
         ]
       }
     ]
+  },
+  'american-football': {
+    countries: [
+      {
+        id: 'usa',
+        name: 'United States',
+        flag: '🇺🇸',
+        leagues: [
+          { id: 'nfl', name: 'NFL' },
+          { id: 'college-football', name: 'NCAA College Football' },
+          { id: 'xfl', name: 'XFL' }
+        ]
+      }
+    ],
+    continents: [
+      {
+        id: 'international',
+        name: 'International',
+        icon: '🏆',
+        leagues: [
+          { id: 'ifaf-world-championship', name: 'IFAF World Championship' }
+        ]
+      }
+    ]
   }
 };
 
@@ -366,7 +390,8 @@ export function CompetitionsSection({ onBetClick, sport = 'football' }: Competit
       football: 'Football',
       basketball: 'Basketball',
       tennis: 'Tennis',
-      'ice-hockey': 'Ice Hockey'
+      'ice-hockey': 'Ice Hockey',
+      'american-football': 'American Football'
     };
     return names[sport] || 'Football';
   };

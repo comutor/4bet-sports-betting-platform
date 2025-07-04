@@ -223,6 +223,24 @@ const topLeaguesData = {
       description: 'Swedish Hockey League'
     }
   ],
+  'american-football': [
+    {
+      id: 'nfl',
+      name: 'NFL',
+      country: 'United States',
+      flag: '🇺🇸',
+      tier: 'Top Tier',
+      description: 'National Football League'
+    },
+    {
+      id: 'college-football',
+      name: 'College Football',
+      country: 'United States',
+      flag: '🇺🇸',
+      tier: 'Top Tier',
+      description: 'NCAA Division I Football'
+    }
+  ],
   baseball: [
     {
       id: 'mlb',
@@ -264,6 +282,7 @@ export function TopLeaguesSection({ onBetClick, sport = 'football' }: TopLeagues
       basketball: 'Basketball',
       tennis: 'Tennis',
       'ice-hockey': 'Ice Hockey',
+      'american-football': 'American Football',
       baseball: 'Baseball'
     };
     return names[sport] || 'Football';
