@@ -91,6 +91,13 @@ export default function Home() {
     checkAuth();
   }, []);
 
+  // Reset selected league when filter changes
+  useEffect(() => {
+    if (selectedLeague) {
+      setSelectedLeague(null);
+    }
+  }, [activeFilter]);
+
   const handleBetClick = useCallback((eventName: string, selection: string, odds: string) => {
     // Temporarily disabled for betslip development
     // if (!isLoggedIn) {
