@@ -55,13 +55,22 @@ export function FilterBar({
                 variant="ghost"
                 size="sm"
                 className={`px-4 py-2 rounded-lg font-bold text-xs transition-all duration-200 whitespace-nowrap ${
-                  activeFilter === filter.id
+                  filter.id === 'live'
+                    ? activeFilter === filter.id
+                      ? 'bg-red-600 text-white shadow-sm'
+                      : 'text-red-500 hover:bg-red-600 hover:text-white'
+                    : activeFilter === filter.id
                     ? 'bg-primary text-white shadow-sm'
                     : 'text-gray-300 hover:bg-slate-700 hover:text-white'
                 }`}
                 onClick={() => onFilterChange(filter.id)}
               >
-                {filter.label}
+                <div className="flex items-center gap-2">
+                  {filter.id === 'live' && (
+                    <div className="w-2 h-2 bg-red-500 rounded-full animate-pulse"></div>
+                  )}
+                  {filter.label}
+                </div>
               </Button>
             ))}
           </div>
