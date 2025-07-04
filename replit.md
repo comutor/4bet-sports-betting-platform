@@ -101,7 +101,7 @@ The application uses PostgreSQL with the following core entities:
 ## Changelog
 ```
 Changelog:
-- July 4, 2025. Implemented Competitions filter: Created comprehensive competitions section accessible via FilterBar "COMPETITIONS" option, featuring expandable country and continental league lists with 20+ countries and 6 continental competitions (UEFA, CONMEBOL, CONCACAF, CAF, AFC, FIFA tournaments), integrated with existing sports navigation
+- July 4, 2025. Implemented sport-specific Competitions filter: Created dynamic competitions section accessible via FilterBar "COMPETITIONS" option that changes based on selected sport. Football shows 15 countries with domestic leagues plus 6 continental competitions (UEFA, CONMEBOL, CONCACAF, CAF, AFC, FIFA). Basketball displays NBA/WNBA/EuroLeague, Tennis shows Grand Slams and ATP/WTA tours, Ice Hockey features NHL/KHL/IIHF tournaments
 - July 3, 2025. Paused Odds API: Disabled live API calls to conserve API credits, system will use cached data to maintain functionality while preventing additional charges
 - July 3, 2025. Improved match card design: Updated football section to use line separators instead of individual boxes for each match, creating a cleaner and more professional appearance that reduces visual clutter
 - July 3, 2025. Enhanced navigation styling: Applied consistent blue underline design to both main sports navigation and More Markets tabs, replacing rounded backgrounds with professional underline highlighting for improved visual consistency
