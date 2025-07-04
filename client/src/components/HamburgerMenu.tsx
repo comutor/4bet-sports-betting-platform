@@ -221,9 +221,11 @@ export function HamburgerMenu({ isOpen, onClose, onTabChange, activeTab }: Hambu
     }
   ];
 
-  const countryCategories = [
-    { id: 'international', label: 'International', icon: 'fas fa-globe', competitions: internationalCompetitions },
-    { id: 'other-countries', label: 'Other Countries', icon: 'fas fa-map', countries: otherCountries }
+  const supportItems = [
+    { id: 'notifications', label: 'Notifications', icon: 'fas fa-bell' },
+    { id: 'help-center', label: 'Help Center', icon: 'fas fa-question-circle' },
+    { id: 'why-join', label: 'Why Join?', icon: 'fas fa-users' },
+    { id: 'more-on-4bet', label: 'More on 4bet', icon: 'fas fa-info-circle' }
   ];
 
 
@@ -358,156 +360,26 @@ export function HamburgerMenu({ isOpen, onClose, onTabChange, activeTab }: Hambu
             {/* Separator Line */}
             <div className="border-t border-gray-600 mx-2"></div>
 
-            {/* Top Countries */}
+            {/* Support & Information */}
             <div>
               <h3 className="section-title">
-                Top Countries
+                Support & Information
               </h3>
-              <div className="px-3 space-y-2">
-                {topCountries.map((country) => (
-                  <div key={country.id}>
-                    <Button
-                      variant="ghost"
-                      className={`w-full justify-between p-3 text-left transition-all duration-200 rounded-xl border border-slate-600 hover:border-slate-500 shadow-sm ${
-                        expandedCountry === country.id 
-                          ? 'bg-blue-600 text-white border-blue-600' 
-                          : 'text-gray-300 hover:bg-slate-700'
-                      }`}
-                      onClick={() => {
-                        if (expandedCountry === country.id) {
-                          setExpandedCountry(null);
-                        } else {
-                          setExpandedCountry(country.id);
-                          // Don't call handleItemClick to prevent menu from closing
-                        }
-                      }}
-                    >
-                      <div className="flex items-center">
-                        <span className="text-lg mr-3">{country.flag}</span>
-                        <span className="text-sm font-medium">{country.label}</span>
-                      </div>
-                      <i className={`fas fa-chevron-${expandedCountry === country.id ? 'up' : 'down'} text-gray-400 text-xs transition-transform duration-200`}></i>
-                    </Button>
-                    
-                    {expandedCountry === country.id && (
-                      <div className="mt-2 ml-6 p-3 bg-slate-800 rounded-lg border border-slate-600 animate-slide-down">
-                        <div className="text-xs text-gray-400 mb-3">Available leagues and competitions</div>
-                        <div className="grid grid-cols-1 gap-2">
-                          {country.leagues.map((league, index) => (
-                            <button
-                              key={index}
-                              className="text-left px-3 py-2 text-xs text-gray-300 hover:text-white hover:bg-slate-700 rounded-lg transition-colors duration-200"
-                              onClick={() => handleItemClick(`${country.id}-${league.toLowerCase().replace(/\s+/g, '-')}`)}
-                            >
-                              {league}
-                            </button>
-                          ))}
-                        </div>
-                      </div>
-                    )}
+              <div className="menu-grid">
+                {supportItems.map((item) => (
+                  <div
+                    key={item.id}
+                    className="menu-item"
+                    onClick={() => handleItemClick(item.id)}
+                  >
+                    <i className={item.icon}></i>
+                    <span>{item.label}</span>
                   </div>
                 ))}
               </div>
             </div>
 
-            {/* Separator Line */}
-            <div className="border-t border-gray-600 mx-2"></div>
 
-            {/* Other Country Categories */}
-            <div>
-              <h3 className="section-title">
-                Other Regions
-              </h3>
-              <div className="px-3 space-y-2">
-                {countryCategories.map((country) => (
-                  <div key={country.id}>
-                    <Button
-                      variant="ghost"
-                      className={`w-full justify-between p-3 text-left transition-all duration-200 rounded-xl border border-slate-600 hover:border-slate-500 shadow-sm ${
-                        expandedCountry === country.id 
-                          ? 'bg-blue-600 text-white border-blue-600' 
-                          : 'text-gray-300 hover:bg-slate-700'
-                      }`}
-                      onClick={() => {
-                        if (expandedCountry === country.id) {
-                          setExpandedCountry(null);
-                        } else {
-                          setExpandedCountry(country.id);
-                          // Don't call handleItemClick to prevent menu from closing
-                        }
-                      }}
-                    >
-                      <div className="flex items-center">
-                        <i className={`${country.icon} w-5 mr-3 text-gray-400`}></i>
-                        <span className="text-sm font-medium">{country.label}</span>
-                      </div>
-                      <i className={`fas fa-chevron-${expandedCountry === country.id ? 'up' : 'down'} text-gray-400 text-xs transition-transform duration-200`}></i>
-                    </Button>
-                    
-                    {expandedCountry === country.id && (
-                      <div className="mt-2 ml-6 p-3 bg-slate-800 rounded-lg border border-slate-600 animate-slide-down">
-                        <div className="text-xs text-gray-400 mb-3">Available competitions</div>
-                        <div className="grid grid-cols-1 gap-2">
-                          {country.id === 'international' && country.competitions ? (
-                            country.competitions.map((competition, index) => (
-                              <button
-                                key={index}
-                                className="text-left px-3 py-2 text-xs text-gray-300 hover:text-white hover:bg-slate-700 rounded-lg transition-colors duration-200"
-                                onClick={() => handleItemClick(`international-${competition.toLowerCase().replace(/\s+/g, '-')}`)}
-                              >
-                                {competition}
-                              </button>
-                            ))
-                          ) : country.id === 'other-countries' && country.countries ? (
-                            country.countries.map((countryItem, index) => (
-                              <div key={index} className="mb-2">
-                                <Button
-                                  variant="ghost"
-                                  className={`w-full justify-between p-2 text-left transition-all duration-200 rounded-lg border border-slate-700 hover:border-slate-500 ${
-                                    expandedSubCountry === countryItem.id 
-                                      ? 'bg-slate-700 text-white border-slate-500' 
-                                      : 'text-gray-300 hover:bg-slate-800'
-                                  }`}
-                                  onClick={() => {
-                                    if (expandedSubCountry === countryItem.id) {
-                                      setExpandedSubCountry(null);
-                                    } else {
-                                      setExpandedSubCountry(countryItem.id);
-                                    }
-                                  }}
-                                >
-                                  <div className="flex items-center">
-                                    <span className="text-sm mr-2">{countryItem.flag}</span>
-                                    <span className="text-xs font-medium">{countryItem.label}</span>
-                                  </div>
-                                  <i className={`fas fa-chevron-${expandedSubCountry === countryItem.id ? 'up' : 'down'} text-gray-400 text-xs transition-transform duration-200`}></i>
-                                </Button>
-                                
-                                {expandedSubCountry === countryItem.id && (
-                                  <div className="mt-1 ml-4 space-y-1 animate-slide-down">
-                                    {countryItem.leagues.map((league, leagueIndex) => (
-                                      <button
-                                        key={leagueIndex}
-                                        className="block w-full text-left px-3 py-1 text-xs text-gray-300 hover:text-white hover:bg-slate-700 rounded transition-colors duration-200"
-                                        onClick={() => handleItemClick(`${countryItem.id}-${league.toLowerCase().replace(/\s+/g, '-')}`)}
-                                      >
-                                        {league}
-                                      </button>
-                                    ))}
-                                  </div>
-                                )}
-                              </div>
-                            ))
-                          ) : (
-                            <div className="text-xs text-gray-300">Coming soon...</div>
-                          )}
-                        </div>
-                      </div>
-                    )}
-                  </div>
-                ))}
-              </div>
-            </div>
 
           </div>
         </div>
