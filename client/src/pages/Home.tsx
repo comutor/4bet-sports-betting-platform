@@ -232,7 +232,7 @@ export default function Home() {
     // Check if competitions filter is active for any sport tab
     if (['football', 'basketball', 'tennis', 'ice-hockey', 'american-football', 'esports'].includes(activeTab) && 
         activeFilter === 'competitions') {
-      return <CompetitionsSection onBetClick={handleBetClick} />;
+      return <CompetitionsSection onBetClick={handleBetClick} sport={activeTab} />;
     }
 
     switch (activeTab) {
