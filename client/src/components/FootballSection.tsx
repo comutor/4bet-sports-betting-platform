@@ -271,7 +271,7 @@ function MatchCard({ game, onBetClick, formatMatchTime, getOdds, setLocation }: 
   const odds = getOdds(game);
 
   return (
-    <div className="bg-slate-700 p-4 rounded-lg border border-slate-600">
+    <div className="py-4 border-b border-slate-600/50 last:border-b-0">
       <div className="flex items-center justify-between">
         <div className="flex-1">
           <div className="text-xs text-gray-400 mb-1">
@@ -346,7 +346,7 @@ function CountrySection({ countryData, onBetClick, formatMatchTime, getOdds, isI
 
       {/* Games List */}
       {expanded && (
-        <div className="p-4 space-y-3">
+        <div className="px-4">
           {countryData.games.slice(0, 8).map((game) => (
             <MatchCard
               key={game.id}
@@ -359,7 +359,7 @@ function CountrySection({ countryData, onBetClick, formatMatchTime, getOdds, isI
           ))}
           
           {countryData.games.length > 8 && (
-            <div>
+            <div className="py-4 border-t border-slate-600/50">
               <button className="text-sm text-primary hover:text-primary-light">
                 View all {countryData.games.length} matches
               </button>

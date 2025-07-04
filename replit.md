@@ -101,6 +101,7 @@ The application uses PostgreSQL with the following core entities:
 ## Changelog
 ```
 Changelog:
+- July 3, 2025. Improved match card design: Updated football section to use line separators instead of individual boxes for each match, creating a cleaner and more professional appearance that reduces visual clutter
 - July 3, 2025. Enhanced navigation styling: Applied consistent blue underline design to both main sports navigation and More Markets tabs, replacing rounded backgrounds with professional underline highlighting for improved visual consistency
 - July 3, 2025. Implemented dedicated More Markets page: Created new `/more-markets/:eventId` route with comprehensive market navigation matching betting platform standards, replaced modal with full-page experience featuring match details, time/date display, team names, league information, and market tabs (All, Popular, Goals, Halves, Combos, Specials, Corners, Booking) with blue highlighting for selected tabs
 - July 3, 2025. Enhanced full-width layout: Removed additional centering constraints including justify-center and max-width limitations, ensured complete left-aligned flow for optimal full-width utilization
