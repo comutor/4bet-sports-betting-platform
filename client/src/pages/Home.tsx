@@ -13,6 +13,7 @@ import { ScratchCardsSection } from "@/components/ScratchCardsSection";
 import { AccountPage } from "@/components/AccountPage";
 import { LoginPrompt } from "@/components/LoginPrompt";
 import { CountriesSection } from "@/components/CountriesSection";
+import { CompetitionsSection } from "@/components/CompetitionsSection";
 import { SignupPage } from "@/components/SignupPage";
 import { LoginModal } from "@/components/LoginModal";
 import { FootballSection } from "@/components/FootballSection";
@@ -239,6 +240,8 @@ export default function Home() {
         return <SportSection sport="tennis" onBetClick={handleBetClick} />;
       case 'ice-hockey':
         return <SportSection sport="hockey" onBetClick={handleBetClick} />;
+      case 'competitions':
+        return <CompetitionsSection onBetClick={handleBetClick} />;
       case 'american-football':
         return (
           <div className="text-center py-12">

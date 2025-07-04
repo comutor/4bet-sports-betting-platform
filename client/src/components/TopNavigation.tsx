@@ -64,6 +64,7 @@ export function TopNavigation({
     { id: 'football', label: 'Football', icon: 'fas fa-futbol' },
     { id: 'basketball', label: 'Basketball', icon: 'fas fa-basketball' },
     { id: 'tennis', label: 'Tennis', icon: 'fas fa-table-tennis' },
+    { id: 'competitions', label: 'Competitions', icon: 'fas fa-trophy' },
     { id: 'aviator', label: 'Aviator', icon: 'fas fa-plane' },
     { id: 'ice-hockey', label: 'Ice Hockey', icon: 'fas fa-hockey-puck' }
   ];

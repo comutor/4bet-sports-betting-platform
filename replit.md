@@ -101,6 +101,7 @@ The application uses PostgreSQL with the following core entities:
 ## Changelog
 ```
 Changelog:
+- July 4, 2025. Implemented Competitions section: Created comprehensive competitions page with expandable country and continental league lists, featuring 20+ countries with their domestic leagues and 6 continental competitions (UEFA, CONMEBOL, CONCACAF, CAF, AFC, FIFA tournaments)
 - July 3, 2025. Paused Odds API: Disabled live API calls to conserve API credits, system will use cached data to maintain functionality while preventing additional charges
 - July 3, 2025. Improved match card design: Updated football section to use line separators instead of individual boxes for each match, creating a cleaner and more professional appearance that reduces visual clutter
 - July 3, 2025. Enhanced navigation styling: Applied consistent blue underline design to both main sports navigation and More Markets tabs, replacing rounded backgrounds with professional underline highlighting for improved visual consistency
