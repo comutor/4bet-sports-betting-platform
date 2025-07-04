@@ -21,7 +21,7 @@ export function FilterBar({
     { id: 'all', label: 'ALL' },
     { id: 'top-leagues', label: 'TOP LEAGUES' },
     { id: 'competitions', label: 'COMPETITIONS' },
-    { id: 'favourites', label: 'FAVOURITES' }
+    { id: 'live', label: 'LIVE' }
   ];
 
   const formatDate = (date: Date) => {

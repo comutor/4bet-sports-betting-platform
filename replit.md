@@ -101,6 +101,9 @@ The application uses PostgreSQL with the following core entities:
 ## Changelog
 ```
 Changelog:
+- July 4, 2025. Replaced FAVOURITES with LIVE filter: Updated FilterBar to show LIVE instead of FAVOURITES, integrated with LiveSection to display live/in-play events across all sports for immediate betting access
+- July 4, 2025. Implemented Top Leagues filter: Created sport-specific top leagues section showing only premier competitions from each country (Premier League, La Liga, Bundesliga, Serie A, NBA, Grand Slams, etc.) with professional card layout and country flags
+- July 4, 2025. Fixed American Football separation: Resolved confusion between Football (soccer) and American Football by creating distinct league data - American Football now shows NFL/College Football while Football shows Premier League/La Liga/etc.
 - July 4, 2025. Implemented sport-specific Competitions filter: Created dynamic competitions section accessible via FilterBar "COMPETITIONS" option that changes based on selected sport. Football shows 15 countries with domestic leagues plus 6 continental competitions (UEFA, CONMEBOL, CONCACAF, CAF, AFC, FIFA). Basketball displays NBA/WNBA/EuroLeague, Tennis shows Grand Slams and ATP/WTA tours, Ice Hockey features NHL/KHL/IIHF tournaments
 - July 3, 2025. Paused Odds API: Disabled live API calls to conserve API credits, system will use cached data to maintain functionality while preventing additional charges
 - July 3, 2025. Improved match card design: Updated football section to use line separators instead of individual boxes for each match, creating a cleaner and more professional appearance that reduces visual clutter

@@ -242,6 +242,12 @@ export default function Home() {
       return <TopLeaguesSection onBetClick={handleBetClick} sport={activeTab} />;
     }
 
+    // Check if live filter is active for any sport tab
+    if (['football', 'basketball', 'tennis', 'ice-hockey', 'american-football', 'baseball'].includes(activeTab) && 
+        activeFilter === 'live') {
+      return <LiveSection onBetClick={handleBetClick} />;
+    }
+
     switch (activeTab) {
       case 'sports':
         return <AllSportsSection onBetClick={handleBetClick} />;
