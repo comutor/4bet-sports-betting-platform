@@ -235,10 +235,12 @@
   margin-top: 0;
 }
 
-/* Make background solid */
-.sports-tabs,
+.sports-tabs {
+  border-bottom: 1px solid #2a2f3a;
+}
+
 .filter-bar {
-  background-color: #121e2c; /* or your dark navbar color */
+  border-top: none; /* ensure no conflicting styles */
 }
 
 .dark {
