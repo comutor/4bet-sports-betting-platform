@@ -23,6 +23,7 @@ import { MyBetsSection } from "@/components/MyBetsSection";
 import { StatementSection } from "@/components/StatementSection";
 import { AllSportsSection } from "@/components/AllSportsSection";
 import { AllSection } from "@/components/AllSection";
+import { LeagueMatchesSection } from "@/components/LeagueMatchesSection";
 
 import { DepositModal } from "@/components/DepositModal";
 import { WithdrawalModal } from "@/components/WithdrawalModal";
@@ -49,6 +50,7 @@ export default function Home() {
   const [activeFilter, setActiveFilter] = useState('all');
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
   const [isAppLoading, setIsAppLoading] = useState(true);
+  const [selectedLeague, setSelectedLeague] = useState<{ id: string; name: string } | null>(null);
   const {
     items: betslipItems,
     isOpen: betslipOpen,
@@ -230,7 +232,27 @@ export default function Home() {
     setUserBalance(newBalance.toLocaleString());
   };
 
+  const handleLeagueClick = (leagueId: string, leagueName: string) => {
+    setSelectedLeague({ id: leagueId, name: leagueName });
+  };
+
+  const handleBackFromLeague = () => {
+    setSelectedLeague(null);
+  };
+
   const renderMainContent = () => {
+    // Check if viewing specific league matches
+    if (selectedLeague) {
+      return (
+        <LeagueMatchesSection 
+          leagueId={selectedLeague.id}
+          leagueName={selectedLeague.name}
+          onBetClick={handleBetClick}
+          onBack={handleBackFromLeague}
+        />
+      );
+    }
+
     // Check if all filter is active for any sport tab
     if (['football', 'basketball', 'tennis', 'ice-hockey', 'american-football', 'baseball'].includes(activeTab) && 
         activeFilter === 'all') {
@@ -246,7 +268,7 @@ export default function Home() {
     // Check if top-leagues filter is active for any sport tab
     if (['football', 'basketball', 'tennis', 'ice-hockey', 'american-football', 'baseball'].includes(activeTab) && 
         activeFilter === 'top-leagues') {
-      return <TopLeaguesSection onBetClick={handleBetClick} sport={activeTab} />;
+      return <TopLeaguesSection onBetClick={handleBetClick} onLeagueClick={handleLeagueClick} sport={activeTab} />;
     }
 
     // Check if live filter is active for any sport tab

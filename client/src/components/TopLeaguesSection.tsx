@@ -2,6 +2,7 @@ import { Trophy, MapPin } from 'lucide-react';
 
 interface TopLeaguesSectionProps {
   onBetClick: (eventName: string, selection: string, odds: string) => void;
+  onLeagueClick: (leagueId: string, leagueName: string) => void;
   sport?: string;
 }
 
@@ -273,7 +274,7 @@ const getSportTopLeagues = (sport: string) => {
   return topLeaguesData[sport as keyof typeof topLeaguesData] || topLeaguesData.football;
 };
 
-export function TopLeaguesSection({ onBetClick, sport = 'football' }: TopLeaguesSectionProps) {
+export function TopLeaguesSection({ onBetClick, onLeagueClick, sport = 'football' }: TopLeaguesSectionProps) {
   const topLeagues = getSportTopLeagues(sport);
 
   const getSportName = (sport: string) => {
@@ -307,7 +308,7 @@ export function TopLeaguesSection({ onBetClick, sport = 'football' }: TopLeagues
             <div 
               key={league.id}
               className="bg-slate-800/50 rounded-lg p-4 hover:bg-slate-700/50 cursor-pointer transition-all duration-200 border border-gray-700/20 hover:border-blue-500/30"
-              onClick={() => onBetClick(league.name, 'League', '1.85')}
+              onClick={() => onLeagueClick(league.id, league.name)}
             >
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-4">
