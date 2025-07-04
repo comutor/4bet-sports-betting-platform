@@ -393,22 +393,22 @@ export default function Home() {
         onLoginClick={handleOpenLoginModal}
         onDepositClick={handleOpenDepositModal}
       />
-      
-      {/* Filter Bar - shown only for sports tabs */}
-      {['football', 'basketball', 'tennis', 'ice-hockey', 'american-football', 'esports'].includes(activeTab) && (
-        <FilterBar 
-          activeFilter={activeFilter}
-          onFilterChange={setActiveFilter}
-          selectedDate={selectedDate}
-          onDateChange={setSelectedDate}
-        />
-      )}
 
       <div className="main-container w-full bg-background min-h-screen relative pt-24">
         
+        {/* Filter Bar - shown only for sports tabs */}
+        {['football', 'basketball', 'tennis', 'ice-hockey', 'american-football', 'esports'].includes(activeTab) && (
+          <FilterBar 
+            activeFilter={activeFilter}
+            onFilterChange={setActiveFilter}
+            selectedDate={selectedDate}
+            onDateChange={setSelectedDate}
+          />
+        )}
+        
         <main className={`pb-20 md:pb-4 ${
           ['football', 'basketball', 'tennis', 'ice-hockey', 'american-football', 'esports'].includes(activeTab) 
-            ? 'pt-4' 
+            ? 'pt-0' 
             : 'pt-4'
         }`}>
           {renderMainContent()}
