@@ -328,7 +328,7 @@ export function TopLeaguesSection({ onBetClick, sport = 'football' }: TopLeagues
                   </div>
                 </div>
                 <div className="flex items-center gap-2">
-                  <span className="text-gray-400 text-sm hidden md:block">View Markets</span>
+                  <span className="text-gray-400 text-sm hidden md:block">View Matches</span>
                   <i className="fas fa-chevron-right text-gray-400 text-sm"></i>
                 </div>
               </div>
