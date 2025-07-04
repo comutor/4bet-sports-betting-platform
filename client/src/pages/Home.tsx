@@ -229,6 +229,12 @@ export default function Home() {
   };
 
   const renderMainContent = () => {
+    // Check if competitions filter is active for any sport tab
+    if (['football', 'basketball', 'tennis', 'ice-hockey', 'american-football', 'esports'].includes(activeTab) && 
+        activeFilter === 'competitions') {
+      return <CompetitionsSection onBetClick={handleBetClick} />;
+    }
+
     switch (activeTab) {
       case 'sports':
         return <AllSportsSection onBetClick={handleBetClick} />;
@@ -240,8 +246,6 @@ export default function Home() {
         return <SportSection sport="tennis" onBetClick={handleBetClick} />;
       case 'ice-hockey':
         return <SportSection sport="hockey" onBetClick={handleBetClick} />;
-      case 'competitions':
-        return <CompetitionsSection onBetClick={handleBetClick} />;
       case 'american-football':
         return (
           <div className="text-center py-12">
