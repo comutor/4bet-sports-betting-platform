@@ -35,12 +35,12 @@ export function TopNavigation({
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
       
-      // Show nav when scrolling up or at the top
-      if (currentScrollY < lastScrollY || currentScrollY <= 100) {
-        setIsVisible(true);
-      } else if (currentScrollY > lastScrollY && currentScrollY > 100) {
-        // Hide nav when scrolling down
+      // Hide nav when scrolling up (user wants more content space)
+      if (currentScrollY < lastScrollY && currentScrollY > 100) {
         setIsVisible(false);
+      } else if (currentScrollY > lastScrollY || currentScrollY <= 100) {
+        // Show nav when scrolling down (user might want to access navigation)
+        setIsVisible(true);
       }
       
       setLastScrollY(currentScrollY);
