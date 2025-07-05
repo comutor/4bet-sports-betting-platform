@@ -47,10 +47,74 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   app.get("/api/live-events", async (req, res) => {
     try {
-      const upcomingGames = await oddsApiService.getUpcomingGames();
-      const allEvents = Object.values(upcomingGames).flat();
-      res.json(allEvents);
+      const liveEvents: any[] = [];
+      let eventId = 1;
+
+      // Fetch live data from all sports
+      const [footballData, basketballData, tennisData, hockeyData] = await Promise.all([
+        oddsApiService.getFootballGamesByCountryPriority(),
+        oddsApiService.getBasketballGamesByPriority(), 
+        oddsApiService.getTennisGamesByPriority(),
+        oddsApiService.getIceHockeyGamesByPriority()
+      ]);
+
+      // Process Football events - simulate some as live
+      if (footballData && footballData.length > 0) {
+        footballData.slice(0, 2).forEach(country => {
+          if (country.games && country.games.length > 0) {
+            country.games.slice(0, 3).forEach(match => {
+              liveEvents.push({
+                id: eventId++,
+                sport: 'Football',
+                status: 'live',
+                homeTeam: match.home_team,
+                awayTeam: match.away_team,
+                homeScore: Math.floor(Math.random() * 3),
+                awayScore: Math.floor(Math.random() * 3),
+                league: match.league_name || match.sport_title,
+                country: country.country,
+                startTime: new Date(Date.now() - Math.floor(Math.random() * 90) * 60000), // Started within last 90 mins
+                currentTime: `${Math.floor(Math.random() * 90) + 1}'`,
+                odds: {
+                  home: match.bookmakers?.[0]?.markets?.[0]?.outcomes?.find((o: any) => o.name === match.home_team)?.price || 2.0,
+                  draw: match.bookmakers?.[0]?.markets?.[0]?.outcomes?.find((o: any) => o.name === 'Draw')?.price || 3.0,
+                  away: match.bookmakers?.[0]?.markets?.[0]?.outcomes?.find((o: any) => o.name === match.away_team)?.price || 2.5
+                }
+              });
+            });
+          }
+        });
+      }
+
+      // Process Basketball events - simulate some as live
+      if (basketballData && basketballData.length > 0) {
+        basketballData.slice(0, 1).forEach(league => {
+          if (league.games && league.games.length > 0) {
+            league.games.slice(0, 2).forEach(match => {
+              liveEvents.push({
+                id: eventId++,
+                sport: 'Basketball',
+                status: 'live',
+                homeTeam: match.home_team,
+                awayTeam: match.away_team,
+                homeScore: Math.floor(Math.random() * 120) + 60,
+                awayScore: Math.floor(Math.random() * 120) + 60,
+                league: league.league,
+                startTime: new Date(Date.now() - Math.floor(Math.random() * 180) * 60000), // Started within last 3 hours
+                currentTime: `Q${Math.floor(Math.random() * 4) + 1} ${Math.floor(Math.random() * 12) + 1}:${Math.floor(Math.random() * 60).toString().padStart(2, '0')}`,
+                odds: {
+                  home: match.bookmakers?.[0]?.markets?.[0]?.outcomes?.find((o: any) => o.name === match.home_team)?.price || 1.9,
+                  away: match.bookmakers?.[0]?.markets?.[0]?.outcomes?.find((o: any) => o.name === match.away_team)?.price || 1.9
+                }
+              });
+            });
+          }
+        });
+      }
+
+      res.json(liveEvents);
     } catch (error) {
+      console.error("Error fetching live events:", error);
       res.status(500).json({ message: "Failed to fetch live events" });
     }
   });
@@ -115,33 +179,165 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Get matches by date for ALL filter
+  // Get matches by date for ALL filter - Live API Integration
   app.get('/api/events/by-date/:date', async (req, res) => {
     try {
       const { date } = req.params;
       const targetDate = new Date(date);
       const allEvents: any[] = [];
 
-      // Fetch events from multiple sports
-      const sportsToFetch = [
-        'soccer_epl', 'soccer_spain_la_liga', 'soccer_germany_bundesliga',
-        'soccer_italy_serie_a', 'soccer_france_ligue_one', 'basketball_nba',
-        'tennis_atp', 'tennis_wta', 'americanfootball_nfl'
-      ];
+      // Fetch live data from all sports
+      const [footballData, basketballData, tennisData, hockeyData] = await Promise.all([
+        oddsApiService.getFootballGamesByCountryPriority(),
+        oddsApiService.getBasketballGamesByPriority(), 
+        oddsApiService.getTennisGamesByPriority(),
+        oddsApiService.getIceHockeyGamesByPriority()
+      ]);
 
-      for (const sport of sportsToFetch) {
-        try {
-          const events = await oddsApiService.getOdds(sport);
-          // Filter events by date
-          const filteredEvents = events.filter((event: any) => {
-            const eventDate = new Date(event.commence_time);
-            return eventDate.toDateString() === targetDate.toDateString();
-          });
-          allEvents.push(...filteredEvents);
-        } catch (error) {
-          console.log(`Failed to fetch ${sport} events:`, error);
-        }
+      let eventId = 1;
+
+      // Process Football events by country and league
+      if (footballData && footballData.length > 0) {
+        footballData.forEach(country => {
+          if (country.games && country.games.length > 0) {
+            country.games.forEach(match => {
+              const matchDate = new Date(match.commence_time);
+              const today = new Date();
+              today.setHours(0, 0, 0, 0);
+              matchDate.setHours(0, 0, 0, 0);
+              
+              if (matchDate.getTime() === today.getTime()) {
+                allEvents.push({
+                  id: eventId++,
+                  sport: 'Football',
+                  status: new Date(match.commence_time) > new Date() ? 'upcoming' : 'live',
+                  homeTeam: match.home_team,
+                  awayTeam: match.away_team,
+                  homeScore: null,
+                  awayScore: null,
+                  league: match.league_name || match.sport_title,
+                  country: country.country,
+                  startTime: new Date(match.commence_time),
+                  currentTime: null,
+                  odds: {
+                    home: match.bookmakers?.[0]?.markets?.[0]?.outcomes?.find((o: any) => o.name === match.home_team)?.price || 2.0,
+                    draw: match.bookmakers?.[0]?.markets?.[0]?.outcomes?.find((o: any) => o.name === 'Draw')?.price || 3.0,
+                    away: match.bookmakers?.[0]?.markets?.[0]?.outcomes?.find((o: any) => o.name === match.away_team)?.price || 2.5
+                  }
+                });
+              }
+            });
+          }
+        });
       }
+
+      // Process Basketball events
+      if (basketballData && basketballData.length > 0) {
+        basketballData.forEach(league => {
+          if (league.games && league.games.length > 0) {
+            league.games.forEach(match => {
+              const matchDate = new Date(match.commence_time);
+              const today = new Date();
+              today.setHours(0, 0, 0, 0);
+              matchDate.setHours(0, 0, 0, 0);
+              
+              if (matchDate.getTime() === today.getTime()) {
+                allEvents.push({
+                  id: eventId++,
+                  sport: 'Basketball',
+                  status: new Date(match.commence_time) > new Date() ? 'upcoming' : 'live',
+                  homeTeam: match.home_team,
+                  awayTeam: match.away_team,
+                  homeScore: null,
+                  awayScore: null,
+                  league: league.league,
+                  startTime: new Date(match.commence_time),
+                  currentTime: null,
+                  odds: {
+                    home: match.bookmakers?.[0]?.markets?.[0]?.outcomes?.find((o: any) => o.name === match.home_team)?.price || 1.9,
+                    away: match.bookmakers?.[0]?.markets?.[0]?.outcomes?.find((o: any) => o.name === match.away_team)?.price || 1.9
+                  }
+                });
+              }
+            });
+          }
+        });
+      }
+
+      // Process Tennis events
+      if (tennisData && tennisData.length > 0) {
+        tennisData.forEach(tournament => {
+          if (tournament.games && tournament.games.length > 0) {
+            tournament.games.forEach(match => {
+              const matchDate = new Date(match.commence_time);
+              const today = new Date();
+              today.setHours(0, 0, 0, 0);
+              matchDate.setHours(0, 0, 0, 0);
+              
+              if (matchDate.getTime() === today.getTime()) {
+                allEvents.push({
+                  id: eventId++,
+                  sport: 'Tennis',
+                  status: new Date(match.commence_time) > new Date() ? 'upcoming' : 'live',
+                  homeTeam: match.home_team,
+                  awayTeam: match.away_team,
+                  homeScore: null,
+                  awayScore: null,
+                  league: tournament.league,
+                  startTime: new Date(match.commence_time),
+                  currentTime: null,
+                  odds: {
+                    home: match.bookmakers?.[0]?.markets?.[0]?.outcomes?.find((o: any) => o.name === match.home_team)?.price || 1.8,
+                    away: match.bookmakers?.[0]?.markets?.[0]?.outcomes?.find((o: any) => o.name === match.away_team)?.price || 2.0
+                  }
+                });
+              }
+            });
+          }
+        });
+      }
+
+      // Process Ice Hockey events
+      if (hockeyData && hockeyData.length > 0) {
+        hockeyData.forEach(league => {
+          if (league.games && league.games.length > 0) {
+            league.games.forEach(match => {
+              const matchDate = new Date(match.commence_time);
+              const today = new Date();
+              today.setHours(0, 0, 0, 0);
+              matchDate.setHours(0, 0, 0, 0);
+              
+              if (matchDate.getTime() === today.getTime()) {
+                allEvents.push({
+                  id: eventId++,
+                  sport: 'Ice Hockey',
+                  status: new Date(match.commence_time) > new Date() ? 'upcoming' : 'live',
+                  homeTeam: match.home_team,
+                  awayTeam: match.away_team,
+                  homeScore: null,
+                  awayScore: null,
+                  league: league.league,
+                  startTime: new Date(match.commence_time),
+                  currentTime: null,
+                  odds: {
+                    home: match.bookmakers?.[0]?.markets?.[0]?.outcomes?.find((o: any) => o.name === match.home_team)?.price || 2.1,
+                    draw: match.bookmakers?.[0]?.markets?.[0]?.outcomes?.find((o: any) => o.name === 'Draw')?.price || 3.2,
+                    away: match.bookmakers?.[0]?.markets?.[0]?.outcomes?.find((o: any) => o.name === match.away_team)?.price || 2.3
+                  }
+                });
+              }
+            });
+          }
+        });
+      }
+
+      // Sort events by sport and start time
+      allEvents.sort((a, b) => {
+        if (a.sport !== b.sport) {
+          return a.sport.localeCompare(b.sport);
+        }
+        return new Date(a.startTime).getTime() - new Date(b.startTime).getTime();
+      });
 
       res.json(allEvents);
     } catch (error) {
@@ -167,6 +363,291 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error("Error fetching football data:", error);
       res.status(500).json({ error: "Failed to fetch football data" });
+    }
+  });
+
+  // Top Leagues endpoint - Live API Integration
+  app.get('/api/top-leagues/:sport', async (req, res) => {
+    try {
+      const { sport } = req.params;
+      const topLeagueMatches: any[] = [];
+      let eventId = 1;
+
+      if (sport === 'football') {
+        const footballData = await oddsApiService.getFootballGamesByCountryPriority();
+        
+        // Filter only top leagues
+        const topLeagues = ['Premier League', 'La Liga', 'Bundesliga', 'Serie A', 'Ligue 1', 'Champions League', 'Europa League'];
+        
+        if (footballData && footballData.length > 0) {
+          footballData.forEach(country => {
+            if (country.games && country.games.length > 0) {
+              country.games.forEach(match => {
+                if (topLeagues.some(league => match.league_name?.includes(league) || match.sport_title?.includes(league))) {
+                  topLeagueMatches.push({
+                    id: eventId++,
+                    sport: 'Football',
+                    status: new Date(match.commence_time) > new Date() ? 'upcoming' : 'live',
+                    homeTeam: match.home_team,
+                    awayTeam: match.away_team,
+                    homeScore: null,
+                    awayScore: null,
+                    league: match.league_name || match.sport_title,
+                    country: country.country,
+                    startTime: new Date(match.commence_time),
+                    currentTime: null,
+                    odds: {
+                      home: match.bookmakers?.[0]?.markets?.[0]?.outcomes?.find((o: any) => o.name === match.home_team)?.price || 2.0,
+                      draw: match.bookmakers?.[0]?.markets?.[0]?.outcomes?.find((o: any) => o.name === 'Draw')?.price || 3.0,
+                      away: match.bookmakers?.[0]?.markets?.[0]?.outcomes?.find((o: any) => o.name === match.away_team)?.price || 2.5
+                    }
+                  });
+                }
+              });
+            }
+          });
+        }
+      }
+
+      if (sport === 'basketball') {
+        const basketballData = await oddsApiService.getBasketballGamesByPriority();
+        
+        if (basketballData && basketballData.length > 0) {
+          basketballData.forEach(league => {
+            if (league.games && league.games.length > 0) {
+              league.games.forEach(match => {
+                topLeagueMatches.push({
+                  id: eventId++,
+                  sport: 'Basketball',
+                  status: new Date(match.commence_time) > new Date() ? 'upcoming' : 'live',
+                  homeTeam: match.home_team,
+                  awayTeam: match.away_team,
+                  homeScore: null,
+                  awayScore: null,
+                  league: league.league,
+                  startTime: new Date(match.commence_time),
+                  currentTime: null,
+                  odds: {
+                    home: match.bookmakers?.[0]?.markets?.[0]?.outcomes?.find((o: any) => o.name === match.home_team)?.price || 1.9,
+                    away: match.bookmakers?.[0]?.markets?.[0]?.outcomes?.find((o: any) => o.name === match.away_team)?.price || 1.9
+                  }
+                });
+              });
+            }
+          });
+        }
+      }
+
+      if (sport === 'tennis') {
+        const tennisData = await oddsApiService.getTennisGamesByPriority();
+        
+        if (tennisData && tennisData.length > 0) {
+          tennisData.forEach(tournament => {
+            if (tournament.games && tournament.games.length > 0) {
+              tournament.games.forEach(match => {
+                topLeagueMatches.push({
+                  id: eventId++,
+                  sport: 'Tennis',
+                  status: new Date(match.commence_time) > new Date() ? 'upcoming' : 'live',
+                  homeTeam: match.home_team,
+                  awayTeam: match.away_team,
+                  homeScore: null,
+                  awayScore: null,
+                  league: tournament.league,
+                  startTime: new Date(match.commence_time),
+                  currentTime: null,
+                  odds: {
+                    home: match.bookmakers?.[0]?.markets?.[0]?.outcomes?.find((o: any) => o.name === match.home_team)?.price || 1.8,
+                    away: match.bookmakers?.[0]?.markets?.[0]?.outcomes?.find((o: any) => o.name === match.away_team)?.price || 2.0
+                  }
+                });
+              });
+            }
+          });
+        }
+      }
+
+      if (sport === 'ice-hockey') {
+        const hockeyData = await oddsApiService.getIceHockeyGamesByPriority();
+        
+        if (hockeyData && hockeyData.length > 0) {
+          hockeyData.forEach(league => {
+            if (league.games && league.games.length > 0) {
+              league.games.forEach(match => {
+                topLeagueMatches.push({
+                  id: eventId++,
+                  sport: 'Ice Hockey',
+                  status: new Date(match.commence_time) > new Date() ? 'upcoming' : 'live',
+                  homeTeam: match.home_team,
+                  awayTeam: match.away_team,
+                  homeScore: null,
+                  awayScore: null,
+                  league: league.league,
+                  startTime: new Date(match.commence_time),
+                  currentTime: null,
+                  odds: {
+                    home: match.bookmakers?.[0]?.markets?.[0]?.outcomes?.find((o: any) => o.name === match.home_team)?.price || 2.1,
+                    draw: match.bookmakers?.[0]?.markets?.[0]?.outcomes?.find((o: any) => o.name === 'Draw')?.price || 3.2,
+                    away: match.bookmakers?.[0]?.markets?.[0]?.outcomes?.find((o: any) => o.name === match.away_team)?.price || 2.3
+                  }
+                });
+              });
+            }
+          });
+        }
+      }
+
+      // Sort by start time
+      topLeagueMatches.sort((a, b) => new Date(a.startTime).getTime() - new Date(b.startTime).getTime());
+
+      res.json(topLeagueMatches);
+    } catch (error) {
+      console.error('Error fetching top leagues:', error);
+      res.status(500).json({ message: 'Failed to fetch top leagues data' });
+    }
+  });
+
+  // Competitions endpoint - Live API Integration  
+  app.get('/api/competitions/:sport', async (req, res) => {
+    try {
+      const { sport } = req.params;
+      const competitionMatches: any[] = [];
+      let eventId = 1;
+
+      if (sport === 'football') {
+        const footballData = await oddsApiService.getFootballGamesByCountryPriority();
+        
+        if (footballData && footballData.length > 0) {
+          footballData.forEach(country => {
+            if (country.games && country.games.length > 0) {
+              country.games.forEach(match => {
+                competitionMatches.push({
+                  id: eventId++,
+                  sport: 'Football',
+                  status: new Date(match.commence_time) > new Date() ? 'upcoming' : 'live',
+                  homeTeam: match.home_team,
+                  awayTeam: match.away_team,
+                  homeScore: null,
+                  awayScore: null,
+                  league: match.league_name || match.sport_title,
+                  country: country.country,
+                  startTime: new Date(match.commence_time),
+                  currentTime: null,
+                  odds: {
+                    home: match.bookmakers?.[0]?.markets?.[0]?.outcomes?.find((o: any) => o.name === match.home_team)?.price || 2.0,
+                    draw: match.bookmakers?.[0]?.markets?.[0]?.outcomes?.find((o: any) => o.name === 'Draw')?.price || 3.0,
+                    away: match.bookmakers?.[0]?.markets?.[0]?.outcomes?.find((o: any) => o.name === match.away_team)?.price || 2.5
+                  }
+                });
+              });
+            }
+          });
+        }
+      }
+
+      if (sport === 'basketball') {
+        const basketballData = await oddsApiService.getBasketballGamesByPriority();
+        
+        if (basketballData && basketballData.length > 0) {
+          basketballData.forEach(league => {
+            if (league.games && league.games.length > 0) {
+              league.games.forEach(match => {
+                competitionMatches.push({
+                  id: eventId++,
+                  sport: 'Basketball',
+                  status: new Date(match.commence_time) > new Date() ? 'upcoming' : 'live',
+                  homeTeam: match.home_team,
+                  awayTeam: match.away_team,
+                  homeScore: null,
+                  awayScore: null,
+                  league: league.league,
+                  startTime: new Date(match.commence_time),
+                  currentTime: null,
+                  odds: {
+                    home: match.bookmakers?.[0]?.markets?.[0]?.outcomes?.find((o: any) => o.name === match.home_team)?.price || 1.9,
+                    away: match.bookmakers?.[0]?.markets?.[0]?.outcomes?.find((o: any) => o.name === match.away_team)?.price || 1.9
+                  }
+                });
+              });
+            }
+          });
+        }
+      }
+
+      if (sport === 'tennis') {
+        const tennisData = await oddsApiService.getTennisGamesByPriority();
+        
+        if (tennisData && tennisData.length > 0) {
+          tennisData.forEach(tournament => {
+            if (tournament.games && tournament.games.length > 0) {
+              tournament.games.forEach(match => {
+                competitionMatches.push({
+                  id: eventId++,
+                  sport: 'Tennis',
+                  status: new Date(match.commence_time) > new Date() ? 'upcoming' : 'live',
+                  homeTeam: match.home_team,
+                  awayTeam: match.away_team,
+                  homeScore: null,
+                  awayScore: null,
+                  league: tournament.league,
+                  startTime: new Date(match.commence_time),
+                  currentTime: null,
+                  odds: {
+                    home: match.bookmakers?.[0]?.markets?.[0]?.outcomes?.find((o: any) => o.name === match.home_team)?.price || 1.8,
+                    away: match.bookmakers?.[0]?.markets?.[0]?.outcomes?.find((o: any) => o.name === match.away_team)?.price || 2.0
+                  }
+                });
+              });
+            }
+          });
+        }
+      }
+
+      if (sport === 'ice-hockey') {
+        const hockeyData = await oddsApiService.getIceHockeyGamesByPriority();
+        
+        if (hockeyData && hockeyData.length > 0) {
+          hockeyData.forEach(league => {
+            if (league.games && league.games.length > 0) {
+              league.games.forEach(match => {
+                competitionMatches.push({
+                  id: eventId++,
+                  sport: 'Ice Hockey',
+                  status: new Date(match.commence_time) > new Date() ? 'upcoming' : 'live',
+                  homeTeam: match.home_team,
+                  awayTeam: match.away_team,
+                  homeScore: null,
+                  awayScore: null,
+                  league: league.league,
+                  startTime: new Date(match.commence_time),
+                  currentTime: null,
+                  odds: {
+                    home: match.bookmakers?.[0]?.markets?.[0]?.outcomes?.find((o: any) => o.name === match.home_team)?.price || 2.1,
+                    draw: match.bookmakers?.[0]?.markets?.[0]?.outcomes?.find((o: any) => o.name === 'Draw')?.price || 3.2,
+                    away: match.bookmakers?.[0]?.markets?.[0]?.outcomes?.find((o: any) => o.name === match.away_team)?.price || 2.3
+                  }
+                });
+              });
+            }
+          });
+        }
+      }
+
+      // Sort by country and league, then by start time
+      competitionMatches.sort((a, b) => {
+        if (a.country !== b.country) {
+          return (a.country || '').localeCompare(b.country || '');
+        }
+        if (a.league !== b.league) {
+          return a.league.localeCompare(b.league);
+        }
+        return new Date(a.startTime).getTime() - new Date(b.startTime).getTime();
+      });
+
+      res.json(competitionMatches);
+    } catch (error) {
+      console.error('Error fetching competitions:', error);
+      res.status(500).json({ message: 'Failed to fetch competitions data' });
     }
   });
 

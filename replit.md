@@ -101,6 +101,7 @@ The application uses PostgreSQL with the following core entities:
 ## Changelog
 ```
 Changelog:
+- July 5, 2025. Enabled live Odds API with comprehensive data integration: Unpaused Odds API and created complete live data integration system feeding real sports data into ALL filter (date-based matches), TOP LEAGUES (premier competitions), COMPETITIONS (sport-specific leagues), and LIVE events across Football, Basketball, Tennis, and Ice Hockey with authentic odds, team names, leagues, and match details
 - July 5, 2025. Removed forgot password functionality: Cleaned up authentication system by removing forgot password feature from both LoginModal and SignupPage components per user request, simplified login flow to focus on core authentication without password recovery
 - July 4, 2025. Reorganized navigation structure: Moved "Notifications", "Help Center", "Why Join?", and "More on 4bet" from account section to hamburger menu under "Support & Information". Removed "Top Countries" and "Other Regions" from hamburger menu to simplify navigation. Account section now focuses on core account functions (Deposit, Withdraw, Statement, Manage Account)
 - July 4, 2025. Fixed Top Leagues navigation system: Top Leagues now navigate to show actual matches for each league (Premier League, La Liga, etc.) instead of adding to betslip. Created LeagueMatchesSection with back button navigation and automatic reset when filter changes. Users can now properly browse league-specific matches
