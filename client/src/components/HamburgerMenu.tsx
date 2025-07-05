@@ -347,7 +347,7 @@ export function HamburgerMenu({ isOpen, onClose, onTabChange, activeTab }: Hambu
                 {sportsCategories.map((sport) => (
                   <div
                     key={sport.id}
-                    className={`menu-item ${activeTab === 'sports' && sport.id === 'football' ? 'active' : ''}`}
+                    className={`menu-item ${activeTab === sport.id ? 'active' : ''}`}
                     onClick={() => handleSportClick(sport.id)}
                   >
                     <i className={sport.icon}></i>
