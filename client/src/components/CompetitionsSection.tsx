@@ -388,8 +388,36 @@ export function CompetitionsSection({ onBetClick, onLeagueClick, sport = 'footba
     );
   }
 
+  // Country flag mapping
+  const getCountryFlag = (country: string): string => {
+    const flagMap: { [key: string]: string } = {
+      'England': '🏴󠁧󠁢󠁥󠁮󠁧󠁿',
+      'Spain': '🇪🇸',
+      'Germany': '🇩🇪', 
+      'Italy': '🇮🇹',
+      'France': '🇫🇷',
+      'Netherlands': '🇳🇱',
+      'Portugal': '🇵🇹',
+      'Belgium': '🇧🇪',
+      'Switzerland': '🇨🇭',
+      'Austria': '🇦🇹',
+      'Brazil': '🇧🇷',
+      'Argentina': '🇦🇷',
+      'USA': '🇺🇸',
+      'Mexico': '🇲🇽',
+      'Japan': '🇯🇵',
+      'Australia': '🇦🇺',
+      'Russia': '🇷🇺',
+      'Ukraine': '🇺🇦',
+      'Poland': '🇵🇱',
+      'Turkey': '🇹🇷',
+      'International': '🌍'
+    };
+    return flagMap[country] || '🏳️';
+  };
+
   // Group matches by country and league
-  const groupedMatches = matches.reduce((acc, match) => {
+  const groupedMatches = (matches as any[]).reduce((acc, match) => {
     const countryKey = match.country || 'International';
     const leagueKey = match.league;
     
@@ -425,23 +453,23 @@ export function CompetitionsSection({ onBetClick, onLeagueClick, sport = 'footba
             {Object.entries(groupedMatches).map(([country, leagues]) => (
               <div key={country} className="space-y-4">
                 <div className="flex items-center gap-2 mb-4">
-                  <span className="text-2xl">🏴󠁧󠁢󠁥󠁮󠁧󠁿</span>
+                  <span className="text-2xl">{getCountryFlag(country)}</span>
                   <h2 className="text-xl font-bold text-white">{country}</h2>
                   <span className="text-xs bg-gray-600 text-white px-2 py-1 rounded-full">
-                    {Object.keys(leagues).length} leagues
+                    {Object.keys(leagues as { [key: string]: any[] }).length} leagues
                   </span>
                 </div>
                 <div className="space-y-6">
-                  {Object.entries(leagues).map(([league, leagueMatches]) => (
+                  {Object.entries(leagues as { [key: string]: any[] }).map(([league, leagueMatches]) => (
                     <div key={league} className="space-y-3">
                       <div className="flex items-center gap-2 mb-3">
                         <span className="text-lg font-semibold text-white">{league}</span>
                         <span className="text-xs bg-blue-600 text-white px-2 py-1 rounded-full">
-                          {leagueMatches.length} matches
+                          {(leagueMatches as any[]).length} matches
                         </span>
                       </div>
                       <div className="space-y-3">
-                        {leagueMatches.map((match: any) => (
+                        {(leagueMatches as any[]).map((match: any) => (
                           <MatchCard
                             key={match.id}
                             eventId={match.id.toString()}

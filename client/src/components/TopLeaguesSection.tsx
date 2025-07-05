@@ -11,6 +11,28 @@ interface TopLeaguesSectionProps {
 
 
 export function TopLeaguesSection({ onBetClick, onLeagueClick, sport = 'football' }: TopLeaguesSectionProps) {
+  // Define top-tier leagues for each sport
+  const topLeagues = {
+    football: [
+      { id: 'premier-league', name: 'Premier League', country: 'England', flag: '🏴󠁧󠁢󠁥󠁮󠁧󠁿', apiKey: 'soccer_epl' },
+      { id: 'la-liga', name: 'La Liga', country: 'Spain', flag: '🇪🇸', apiKey: 'soccer_spain_la_liga' },
+      { id: 'bundesliga', name: 'Bundesliga', country: 'Germany', flag: '🇩🇪', apiKey: 'soccer_germany_bundesliga' },
+      { id: 'serie-a', name: 'Serie A', country: 'Italy', flag: '🇮🇹', apiKey: 'soccer_italy_serie_a' },
+      { id: 'ligue-1', name: 'Ligue 1', country: 'France', flag: '🇫🇷', apiKey: 'soccer_france_ligue_one' }
+    ],
+    basketball: [
+      { id: 'nba', name: 'NBA', country: 'USA', flag: '🇺🇸', apiKey: 'basketball_nba' },
+      { id: 'euroleague', name: 'EuroLeague', country: 'Europe', flag: '🇪🇺', apiKey: 'basketball_euroleague' }
+    ],
+    tennis: [
+      { id: 'atp-masters', name: 'ATP Masters', country: 'World', flag: '🌍', apiKey: 'tennis_atp' },
+      { id: 'wta-tour', name: 'WTA Tour', country: 'World', flag: '🌍', apiKey: 'tennis_wta' }
+    ],
+    'ice-hockey': [
+      { id: 'nhl', name: 'NHL', country: 'North America', flag: '🇺🇸', apiKey: 'icehockey_nhl' }
+    ]
+  };
+
   // Fetch live top leagues data
   const { data: matches = [], isLoading } = useQuery<any[]>({
     queryKey: ['/api/top-leagues', sport],
@@ -20,7 +42,7 @@ export function TopLeaguesSection({ onBetClick, onLeagueClick, sport = 'football
   const getSportName = (sport: string) => {
     const names: { [key: string]: string } = {
       football: 'Football',
-      basketball: 'Basketball',
+      basketball: 'Basketball', 
       tennis: 'Tennis',
       'ice-hockey': 'Ice Hockey',
       'american-football': 'American Football',
@@ -39,15 +61,28 @@ export function TopLeaguesSection({ onBetClick, onLeagueClick, sport = 'football
     );
   }
 
-  // Group matches by league
-  const groupedMatches = matches.reduce((acc, match) => {
-    const key = match.league;
-    if (!acc[key]) {
-      acc[key] = [];
-    }
-    acc[key].push(match);
-    return acc;
-  }, {} as { [key: string]: any[] });
+  // Get current sport's top leagues and filter matches accordingly
+  const currentSportLeagues = topLeagues[sport as keyof typeof topLeagues] || [];
+  const leagueApiKeys = currentSportLeagues.map(league => league.apiKey);
+  
+  // Group matches by league (only showing top leagues)
+  const groupedMatches = matches
+    .filter(match => {
+      // Only show matches from top-tier leagues
+      const matchLeague = match.league.toLowerCase();
+      return currentSportLeagues.some(league => 
+        matchLeague.includes(league.name.toLowerCase()) ||
+        matchLeague.includes(league.country.toLowerCase())
+      );
+    })
+    .reduce((acc, match) => {
+      const key = match.league;
+      if (!acc[key]) {
+        acc[key] = [];
+      }
+      acc[key].push(match);
+      return acc;
+    }, {} as { [key: string]: any[] });
 
   return (
     <div className="w-full bg-background">
@@ -75,11 +110,11 @@ export function TopLeaguesSection({ onBetClick, onLeagueClick, sport = 'football
                   <Trophy className="w-5 h-5 text-yellow-400" />
                   <h3 className="text-lg font-bold text-white">{league}</h3>
                   <span className="text-xs bg-blue-600 text-white px-2 py-1 rounded-full">
-                    {leagueMatches.length} matches
+                    {(leagueMatches as any[]).length} matches
                   </span>
                 </div>
                 <div className="space-y-3">
-                  {leagueMatches.map((match: any) => (
+                  {(leagueMatches as any[]).map((match: any) => (
                     <MatchCard
                       key={match.id}
                       eventId={match.id.toString()}
