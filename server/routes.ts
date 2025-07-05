@@ -179,11 +179,15 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Get matches by date for ALL filter - Live API Integration
-  app.get('/api/events/by-date/:date', async (req, res) => {
+  // Get matches by date for ALL filter - Live API Integration (with query parameters)
+  app.get('/api/events/by-date', async (req, res) => {
     try {
-      const { date } = req.params;
-      const targetDate = new Date(date);
+      const dateParam = req.query.date as string;
+      const targetDate = dateParam ? new Date(dateParam) : new Date();
+      
+      // Set target date to start of day for comparison
+      targetDate.setHours(0, 0, 0, 0);
+      
       const allEvents: any[] = [];
 
       // Fetch live data from all sports
@@ -202,11 +206,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
           if (country.games && country.games.length > 0) {
             country.games.forEach(match => {
               const matchDate = new Date(match.commence_time);
-              const today = new Date();
-              today.setHours(0, 0, 0, 0);
               matchDate.setHours(0, 0, 0, 0);
               
-              if (matchDate.getTime() === today.getTime()) {
+              // Check if match is on the target date
+              if (matchDate.getTime() === targetDate.getTime()) {
                 allEvents.push({
                   id: eventId++,
                   sport: 'Football',
@@ -237,11 +240,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
           if (league.games && league.games.length > 0) {
             league.games.forEach(match => {
               const matchDate = new Date(match.commence_time);
-              const today = new Date();
-              today.setHours(0, 0, 0, 0);
               matchDate.setHours(0, 0, 0, 0);
               
-              if (matchDate.getTime() === today.getTime()) {
+              // Check if match is on the target date
+              if (matchDate.getTime() === targetDate.getTime()) {
                 allEvents.push({
                   id: eventId++,
                   sport: 'Basketball',
@@ -270,11 +272,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
           if (tournament.games && tournament.games.length > 0) {
             tournament.games.forEach(match => {
               const matchDate = new Date(match.commence_time);
-              const today = new Date();
-              today.setHours(0, 0, 0, 0);
               matchDate.setHours(0, 0, 0, 0);
               
-              if (matchDate.getTime() === today.getTime()) {
+              // Check if match is on the target date
+              if (matchDate.getTime() === targetDate.getTime()) {
                 allEvents.push({
                   id: eventId++,
                   sport: 'Tennis',
@@ -303,11 +304,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
           if (league.games && league.games.length > 0) {
             league.games.forEach(match => {
               const matchDate = new Date(match.commence_time);
-              const today = new Date();
-              today.setHours(0, 0, 0, 0);
               matchDate.setHours(0, 0, 0, 0);
               
-              if (matchDate.getTime() === today.getTime()) {
+              // Check if match is on the target date
+              if (matchDate.getTime() === targetDate.getTime()) {
                 allEvents.push({
                   id: eventId++,
                   sport: 'Ice Hockey',
@@ -331,8 +331,34 @@ export async function registerRoutes(app: Express): Promise<Server> {
         });
       }
 
-      // Sort events by sport and start time
+      // Define league popularity order (most popular to least)
+      const leaguePopularityOrder = [
+        // Football
+        'Premier League', 'La Liga', 'Bundesliga', 'Serie A', 'Ligue 1', 'Champions League', 'Europa League',
+        'Brasileirão', 'Primera División', 'Eredivisie', 'Primeira Liga', 'Liga MX',
+        // Basketball 
+        'NBA', 'EuroLeague', 'WNBA', 'NBL',
+        // Tennis
+        'Wimbledon', 'US Open', 'French Open', 'Australian Open', 'ATP', 'WTA',
+        // Ice Hockey
+        'NHL', 'KHL', 'SHL'
+      ];
+
+      // Sort events by league popularity, then by sport, then by start time
       allEvents.sort((a, b) => {
+        const aPopularity = leaguePopularityOrder.indexOf(a.league);
+        const bPopularity = leaguePopularityOrder.indexOf(b.league);
+        
+        // If both leagues are in popularity list, sort by popularity
+        if (aPopularity !== -1 && bPopularity !== -1) {
+          return aPopularity - bPopularity;
+        }
+        
+        // If only one is in popularity list, prioritize it
+        if (aPopularity !== -1) return -1;
+        if (bPopularity !== -1) return 1;
+        
+        // If neither is in popularity list, sort by sport then time
         if (a.sport !== b.sport) {
           return a.sport.localeCompare(b.sport);
         }

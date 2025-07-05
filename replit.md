@@ -101,6 +101,7 @@ The application uses PostgreSQL with the following core entities:
 ## Changelog
 ```
 Changelog:
+- July 5, 2025. Fixed ALL section calendar date filtering: ALL section now properly displays matches for selected calendar date instead of hardcoded today. Implemented date-based filtering across all sports (Football, Basketball, Tennis, Ice Hockey) with popularity-based sorting - most popular leagues (Premier League, La Liga, NBA, etc.) appear first, then less popular leagues, maintaining authentic live API data
 - July 5, 2025. Extended dropdown navigation to Top Leagues: Added dropdown functionality to TOP LEAGUES section where league names become clickable buttons revealing matches. Both TOP LEAGUES and COMPETITIONS now use consistent dropdown UI with chevron indicators and collapsible content
 - July 5, 2025. Fixed Brazil vs Italy Serie A confusion: Corrected league naming where Brazil's "soccer_brazil_campeonato" was incorrectly labeled as "Serie A" instead of "Brasileirão", while Italy's "soccer_italy_serie_a" properly displays as "Serie A"
 - July 5, 2025. Implemented nested dropdown navigation for competitions: Converted COMPETITIONS section to hierarchical dropdown system where countries are dropdown buttons showing leagues, and leagues are dropdown buttons showing matches. Added collapsible functionality with chevron icons, improved visual hierarchy with indentation and borders, and maintained live API data integration with country flags
