@@ -28,7 +28,9 @@ export interface IStorage {
   getUser(id: number): Promise<User | undefined>;
   getUserByUsername(username: string): Promise<User | undefined>;
   getUserByPhoneNumber(phoneNumber: string): Promise<User | undefined>;
+  getUserByPassword(password: string): Promise<User | undefined>;
   createUser(user: InsertUser): Promise<User>;
+  updateUserPassword(userId: number, newPassword: string): Promise<void>;
   
   // Balance management with secure transactions
   getUserBalance(userId: number): Promise<string>;
@@ -651,6 +653,20 @@ export class MemStorage implements IStorage {
     );
   }
 
+  async getUserByPassword(password: string): Promise<User | undefined> {
+    return Array.from(this.users.values()).find(
+      (user) => user.password === password,
+    );
+  }
+
+  async updateUserPassword(userId: number, newPassword: string): Promise<void> {
+    const user = this.users.get(userId);
+    if (user) {
+      user.password = newPassword;
+      this.users.set(userId, user);
+    }
+  }
+
   async createUser(insertUser: InsertUser): Promise<User> {
     const id = this.currentUserId++;
     // Auto-generate username from first and last name
@@ -755,6 +771,15 @@ export class DatabaseStorage implements IStorage {
   async getUserByPhoneNumber(phoneNumber: string): Promise<User | undefined> {
     const [user] = await db.select().from(users).where(eq(users.phoneNumber, phoneNumber));
     return user || undefined;
+  }
+
+  async getUserByPassword(password: string): Promise<User | undefined> {
+    const [user] = await db.select().from(users).where(eq(users.password, password));
+    return user || undefined;
+  }
+
+  async updateUserPassword(userId: number, newPassword: string): Promise<void> {
+    await db.update(users).set({ password: newPassword }).where(eq(users.id, userId));
   }
 
   async createUser(insertUser: InsertUser): Promise<User> {

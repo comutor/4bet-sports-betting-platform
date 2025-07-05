@@ -443,10 +443,16 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
       const userData = result.data;
 
-      // Check if user already exists
-      const existingUser = await storage.getUserByPhoneNumber(userData.phoneNumber || '');
-      if (existingUser) {
-        return res.status(409).json({ message: "User with this phone number already exists" });
+      // Check if phone number already exists
+      const existingPhoneUser = await storage.getUserByPhoneNumber(userData.phoneNumber || '');
+      if (existingPhoneUser) {
+        return res.status(409).json({ message: "This phone number is already registered. Please use a different phone number or try logging in." });
+      }
+
+      // Check if password already exists
+      const existingPasswordUser = await storage.getUserByPassword(userData.password);
+      if (existingPasswordUser) {
+        return res.status(409).json({ message: "This password is already in use. Please choose a different password for security reasons." });
       }
 
       // Create new user
@@ -503,6 +509,64 @@ export async function registerRoutes(app: Express): Promise<Server> {
       });
     } catch (error) {
       console.error("Login error:", error);
+      res.status(500).json({ message: "Internal server error" });
+    }
+  });
+
+  // Forgot password endpoint
+  app.post("/api/auth/forgot-password", async (req, res) => {
+    try {
+      const { phoneNumber } = req.body;
+
+      if (!phoneNumber) {
+        return res.status(400).json({ message: "Phone number is required" });
+      }
+
+      const user = await storage.getUserByPhoneNumber(phoneNumber);
+      if (!user) {
+        return res.status(404).json({ message: "No account found with this phone number" });
+      }
+
+      // For simplicity, we'll return the current password (in production, you'd send SMS/email)
+      // In a real app, you'd generate a reset token and send it via SMS
+      res.json({ 
+        message: "Password retrieved successfully",
+        password: user.password,
+        note: "For security, please change your password after logging in"
+      });
+    } catch (error) {
+      console.error("Forgot password error:", error);
+      res.status(500).json({ message: "Internal server error" });
+    }
+  });
+
+  // Reset password endpoint
+  app.post("/api/auth/reset-password", async (req, res) => {
+    try {
+      const { phoneNumber, newPassword } = req.body;
+
+      if (!phoneNumber || !newPassword) {
+        return res.status(400).json({ message: "Phone number and new password are required" });
+      }
+
+      const user = await storage.getUserByPhoneNumber(phoneNumber);
+      if (!user) {
+        return res.status(404).json({ message: "No account found with this phone number" });
+      }
+
+      // Check if new password is already in use by another user
+      const existingPasswordUser = await storage.getUserByPassword(newPassword);
+      if (existingPasswordUser && existingPasswordUser.id !== user.id) {
+        return res.status(409).json({ message: "This password is already in use. Please choose a different password." });
+      }
+
+      await storage.updateUserPassword(user.id, newPassword);
+
+      res.json({ 
+        message: "Password updated successfully"
+      });
+    } catch (error) {
+      console.error("Reset password error:", error);
       res.status(500).json({ message: "Internal server error" });
     }
   });
