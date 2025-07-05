@@ -23,6 +23,7 @@ interface Continent {
 
 interface CompetitionsSectionProps {
   onBetClick: (eventName: string, selection: string, odds: string) => void;
+  onLeagueClick: (leagueId: string, leagueName: string) => void;
   sport?: string;
 }
 
@@ -357,7 +358,7 @@ const getSportData = (sport: string) => {
   return sportData[sport as keyof typeof sportData] || sportData.football;
 };
 
-export function CompetitionsSection({ onBetClick, sport = 'football' }: CompetitionsSectionProps) {
+export function CompetitionsSection({ onBetClick, onLeagueClick, sport = 'football' }: CompetitionsSectionProps) {
   const [expandedCountries, setExpandedCountries] = useState<Set<string>>(new Set());
   const [expandedContinents, setExpandedContinents] = useState<Set<string>>(new Set());
 
@@ -444,10 +445,10 @@ export function CompetitionsSection({ onBetClick, sport = 'football' }: Competit
                         <div 
                           key={league.id}
                           className="flex items-center justify-between p-3 bg-slate-700/30 rounded-lg hover:bg-slate-700/50 cursor-pointer transition-colors"
-                          onClick={() => onBetClick(league.name, 'League', '1.85')}
+                          onClick={() => onLeagueClick(league.id, league.name)}
                         >
                           <span className="text-white font-medium">{league.name}</span>
-                          <span className="text-gray-400 text-sm">View Markets</span>
+                          <span className="text-gray-400 text-sm">View Matches</span>
                         </div>
                       ))}
                     </div>
@@ -492,10 +493,10 @@ export function CompetitionsSection({ onBetClick, sport = 'football' }: Competit
                       <div 
                         key={league.id}
                         className="flex items-center justify-between p-3 bg-slate-700/30 rounded-lg hover:bg-slate-700/50 cursor-pointer transition-colors"
-                        onClick={() => onBetClick(league.name, 'League', '1.85')}
+                        onClick={() => onLeagueClick(league.id, league.name)}
                       >
                         <span className="text-white font-medium">{league.name}</span>
-                        <span className="text-gray-400 text-sm">View Markets</span>
+                        <span className="text-gray-400 text-sm">View Matches</span>
                       </div>
                     ))}
                   </div>
