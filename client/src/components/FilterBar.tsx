@@ -44,7 +44,7 @@ export function FilterBar({
 
 
   return (
-    <div className="sticky-filter-bar border-b border-gray-700/30">
+    <div className="bg-background border-b border-gray-700/30">
       <div className="px-4 py-3">
         <div className="flex items-center justify-between">
           {/* Filter Buttons */}
