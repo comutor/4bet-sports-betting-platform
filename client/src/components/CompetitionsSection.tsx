@@ -361,6 +361,9 @@ const getSportData = (sport: string) => {
 };
 
 export function CompetitionsSection({ onBetClick, onLeagueClick, sport = 'football' }: CompetitionsSectionProps) {
+  const [expandedCountries, setExpandedCountries] = useState<Set<string>>(new Set());
+  const [expandedLeagues, setExpandedLeagues] = useState<Set<string>>(new Set());
+
   // Fetch live competitions data
   const { data: matches = [], isLoading } = useQuery<any[]>({
     queryKey: ['/api/competitions', sport],
@@ -376,6 +379,35 @@ export function CompetitionsSection({ onBetClick, onLeagueClick, sport = 'footba
       'american-football': 'American Football'
     };
     return names[sport] || 'Football';
+  };
+
+  // Toggle functions for dropdowns
+  const toggleCountry = (country: string) => {
+    const newExpanded = new Set(expandedCountries);
+    if (newExpanded.has(country)) {
+      newExpanded.delete(country);
+      // Also close all leagues in this country
+      const leaguesToClose = Object.keys(groupedMatches[country] || {}).map(league => `${country}-${league}`);
+      leaguesToClose.forEach(league => {
+        const newExpandedLeagues = new Set(expandedLeagues);
+        newExpandedLeagues.delete(league);
+        setExpandedLeagues(newExpandedLeagues);
+      });
+    } else {
+      newExpanded.add(country);
+    }
+    setExpandedCountries(newExpanded);
+  };
+
+  const toggleLeague = (country: string, league: string) => {
+    const leagueKey = `${country}-${league}`;
+    const newExpanded = new Set(expandedLeagues);
+    if (newExpanded.has(leagueKey)) {
+      newExpanded.delete(leagueKey);
+    } else {
+      newExpanded.add(leagueKey);
+    }
+    setExpandedLeagues(newExpanded);
   };
 
   if (isLoading) {
@@ -449,44 +481,80 @@ export function CompetitionsSection({ onBetClick, onLeagueClick, sport = 'footba
             <p className="text-gray-400">No competition matches available at the moment</p>
           </div>
         ) : (
-          <div className="space-y-8">
+          <div className="space-y-4">
             {Object.entries(groupedMatches).map(([country, leagues]) => (
-              <div key={country} className="space-y-4">
-                <div className="flex items-center gap-2 mb-4">
-                  <span className="text-2xl">{getCountryFlag(country)}</span>
-                  <h2 className="text-xl font-bold text-white">{country}</h2>
-                  <span className="text-xs bg-gray-600 text-white px-2 py-1 rounded-full">
-                    {Object.keys(leagues as { [key: string]: any[] }).length} leagues
-                  </span>
-                </div>
-                <div className="space-y-6">
-                  {Object.entries(leagues as { [key: string]: any[] }).map(([league, leagueMatches]) => (
-                    <div key={league} className="space-y-3">
-                      <div className="flex items-center gap-2 mb-3">
-                        <span className="text-lg font-semibold text-white">{league}</span>
-                        <span className="text-xs bg-blue-600 text-white px-2 py-1 rounded-full">
-                          {(leagueMatches as any[]).length} matches
-                        </span>
+              <div key={country} className="border-b border-gray-700/30 pb-4">
+                {/* Country Dropdown Header */}
+                <Button
+                  variant="ghost"
+                  onClick={() => toggleCountry(country)}
+                  className="w-full flex items-center justify-between p-3 hover:bg-gray-800/50 rounded-lg text-left"
+                >
+                  <div className="flex items-center gap-3">
+                    <span className="text-xl">{getCountryFlag(country)}</span>
+                    <span className="text-lg font-semibold text-white">{country}</span>
+                    <span className="text-xs bg-gray-600 text-white px-2 py-1 rounded-full">
+                      {Object.keys(leagues as { [key: string]: any[] }).length} leagues
+                    </span>
+                  </div>
+                  {expandedCountries.has(country) ? (
+                    <ChevronDown className="w-5 h-5 text-gray-400" />
+                  ) : (
+                    <ChevronRight className="w-5 h-5 text-gray-400" />
+                  )}
+                </Button>
+
+                {/* Country Dropdown Content */}
+                {expandedCountries.has(country) && (
+                  <div className="ml-4 mt-3 space-y-3">
+                    {Object.entries(leagues as { [key: string]: any[] }).map(([league, leagueMatches]) => (
+                      <div key={league} className="border-l-2 border-gray-700 pl-4">
+                        {/* League Dropdown Header */}
+                        <Button
+                          variant="ghost"
+                          onClick={() => toggleLeague(country, league)}
+                          className="w-full flex items-center justify-between p-2 hover:bg-gray-800/30 rounded text-left"
+                        >
+                          <div className="flex items-center gap-2">
+                            <span className="text-base font-medium text-white">{league}</span>
+                            <span className="text-xs bg-blue-600 text-white px-2 py-1 rounded-full">
+                              {(leagueMatches as any[]).length} matches
+                            </span>
+                          </div>
+                          {expandedLeagues.has(`${country}-${league}`) ? (
+                            <ChevronDown className="w-4 h-4 text-gray-400" />
+                          ) : (
+                            <ChevronRight className="w-4 h-4 text-gray-400" />
+                          )}
+                        </Button>
+
+                        {/* League Dropdown Content - Matches */}
+                        {expandedLeagues.has(`${country}-${league}`) && (
+                          <div className="mt-3 space-y-3">
+                            {(leagueMatches as any[]).map((match: any, index: number) => (
+                              <div key={match.id}>
+                                <MatchCard
+                                  eventId={match.id.toString()}
+                                  homeTeam={match.homeTeam}
+                                  awayTeam={match.awayTeam}
+                                  league={match.league}
+                                  time={new Date(match.startTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                                  homeOdds={match.odds?.home?.toString() || '1.0'}
+                                  drawOdds={match.odds?.draw?.toString()}
+                                  awayOdds={match.odds?.away?.toString() || '1.0'}
+                                  onBetClick={onBetClick}
+                                />
+                                {index < (leagueMatches as any[]).length - 1 && (
+                                  <div className="my-3 border-b border-gray-700/20"></div>
+                                )}
+                              </div>
+                            ))}
+                          </div>
+                        )}
                       </div>
-                      <div className="space-y-3">
-                        {(leagueMatches as any[]).map((match: any) => (
-                          <MatchCard
-                            key={match.id}
-                            eventId={match.id.toString()}
-                            homeTeam={match.homeTeam}
-                            awayTeam={match.awayTeam}
-                            league={match.league}
-                            time={new Date(match.startTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-                            homeOdds={match.odds?.home?.toString() || '1.0'}
-                            drawOdds={match.odds?.draw?.toString()}
-                            awayOdds={match.odds?.away?.toString() || '1.0'}
-                            onBetClick={onBetClick}
-                          />
-                        ))}
-                      </div>
-                    </div>
-                  ))}
-                </div>
+                    ))}
+                  </div>
+                )}
               </div>
             ))}
           </div>
