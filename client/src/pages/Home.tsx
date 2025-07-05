@@ -394,7 +394,7 @@ export default function Home() {
         onDepositClick={handleOpenDepositModal}
       />
 
-      <div className="main-container w-full bg-background min-h-screen relative pt-20">
+      <div className="main-container w-full bg-background min-h-screen relative pt-24">
         
         {/* Filter Bar - shown only for sports tabs */}
         {['football', 'basketball', 'tennis', 'ice-hockey', 'american-football', 'esports'].includes(activeTab) && (
