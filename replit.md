@@ -101,6 +101,7 @@ The application uses PostgreSQL with the following core entities:
 ## Changelog
 ```
 Changelog:
+- July 5, 2025. Removed forgot password functionality: Cleaned up authentication system by removing forgot password feature from both LoginModal and SignupPage components per user request, simplified login flow to focus on core authentication without password recovery
 - July 4, 2025. Reorganized navigation structure: Moved "Notifications", "Help Center", "Why Join?", and "More on 4bet" from account section to hamburger menu under "Support & Information". Removed "Top Countries" and "Other Regions" from hamburger menu to simplify navigation. Account section now focuses on core account functions (Deposit, Withdraw, Statement, Manage Account)
 - July 4, 2025. Fixed Top Leagues navigation system: Top Leagues now navigate to show actual matches for each league (Premier League, La Liga, etc.) instead of adding to betslip. Created LeagueMatchesSection with back button navigation and automatic reset when filter changes. Users can now properly browse league-specific matches
 - July 4, 2025. Implemented ALL filter with date-based match display: Created AllSection component showing all matches for selected date, organized by sport. Added calendar with disabled past dates (only current/future selectable). Integrated universal MatchCard component for consistent betting interface across all sports

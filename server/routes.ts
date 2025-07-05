@@ -513,32 +513,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Forgot password endpoint
-  app.post("/api/auth/forgot-password", async (req, res) => {
-    try {
-      const { phoneNumber } = req.body;
 
-      if (!phoneNumber) {
-        return res.status(400).json({ message: "Phone number is required" });
-      }
-
-      const user = await storage.getUserByPhoneNumber(phoneNumber);
-      if (!user) {
-        return res.status(404).json({ message: "No account found with this phone number" });
-      }
-
-      // For simplicity, we'll return the current password (in production, you'd send SMS/email)
-      // In a real app, you'd generate a reset token and send it via SMS
-      res.json({ 
-        message: "Password retrieved successfully",
-        password: user.password,
-        note: "For security, please change your password after logging in"
-      });
-    } catch (error) {
-      console.error("Forgot password error:", error);
-      res.status(500).json({ message: "Internal server error" });
-    }
-  });
 
   // Reset password endpoint
   app.post("/api/auth/reset-password", async (req, res) => {

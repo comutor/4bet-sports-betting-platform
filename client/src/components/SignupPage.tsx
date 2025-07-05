@@ -160,37 +160,7 @@ export function SignupPage({ onClose, onSuccess }: SignupPageProps) {
     }
   };
 
-  const handleForgotPassword = async () => {
-    const fullPhoneNumber = `${getPhonePrefix()}${formData.phoneNumber}`;
-    
-    if (!formData.phoneNumber) {
-      setErrors({ phoneNumber: 'Please enter your phone number first' });
-      return;
-    }
 
-    try {
-      const response = await fetch('/api/auth/forgot-password', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ phoneNumber: fullPhoneNumber }),
-      });
-
-      const result = await response.json();
-      
-      if (response.ok) {
-        setErrors({ 
-          general: `Your password is: ${result.password}. ${result.note}` 
-        });
-      } else {
-        setErrors({ general: result.message || 'Failed to retrieve password' });
-      }
-    } catch (error) {
-      console.error('Forgot password error:', error);
-      setErrors({ general: 'Network error. Please try again.' });
-    }
-  };
 
   return (
     <div className="fixed inset-0 z-[9999] flex">
@@ -365,18 +335,7 @@ export function SignupPage({ onClose, onSuccess }: SignupPageProps) {
           </div>
         )}
 
-        {/* Forgot Password Button - Only show during login */}
-        {isLogin && (
-          <div className="text-center">
-            <button
-              type="button"
-              className="text-blue-400 hover:text-blue-300 text-sm underline"
-              onClick={handleForgotPassword}
-            >
-              Forgot your password?
-            </button>
-          </div>
-        )}
+
 
         {/* Submit Button */}
         <Button
