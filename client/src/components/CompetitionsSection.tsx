@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { ChevronDown, ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { useQuery } from '@tanstack/react-query';
+import { MatchCard } from './MatchCard';
 
 interface League {
   id: string;
@@ -359,32 +361,11 @@ const getSportData = (sport: string) => {
 };
 
 export function CompetitionsSection({ onBetClick, onLeagueClick, sport = 'football' }: CompetitionsSectionProps) {
-  const [expandedCountries, setExpandedCountries] = useState<Set<string>>(new Set());
-  const [expandedContinents, setExpandedContinents] = useState<Set<string>>(new Set());
-
-  const currentSportData = getSportData(sport);
-  const countries = currentSportData.countries;
-  const continents = currentSportData.continents;
-
-  const toggleCountryExpansion = (countryId: string) => {
-    const newExpanded = new Set(expandedCountries);
-    if (newExpanded.has(countryId)) {
-      newExpanded.delete(countryId);
-    } else {
-      newExpanded.add(countryId);
-    }
-    setExpandedCountries(newExpanded);
-  };
-
-  const toggleContinentExpansion = (continentId: string) => {
-    const newExpanded = new Set(expandedContinents);
-    if (newExpanded.has(continentId)) {
-      newExpanded.delete(continentId);
-    } else {
-      newExpanded.add(continentId);
-    }
-    setExpandedContinents(newExpanded);
-  };
+  // Fetch live competitions data
+  const { data: matches = [], isLoading } = useQuery<any[]>({
+    queryKey: ['/api/competitions', sport],
+    queryFn: () => fetch(`/api/competitions/${sport}`).then(res => res.json()),
+  });
 
   const getSportName = (sport: string) => {
     const names: { [key: string]: string } = {
@@ -397,6 +378,31 @@ export function CompetitionsSection({ onBetClick, onLeagueClick, sport = 'footba
     return names[sport] || 'Football';
   };
 
+  if (isLoading) {
+    return (
+      <div className="py-4">
+        <div className="flex items-center justify-center">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+        </div>
+      </div>
+    );
+  }
+
+  // Group matches by country and league
+  const groupedMatches = matches.reduce((acc, match) => {
+    const countryKey = match.country || 'International';
+    const leagueKey = match.league;
+    
+    if (!acc[countryKey]) {
+      acc[countryKey] = {};
+    }
+    if (!acc[countryKey][leagueKey]) {
+      acc[countryKey][leagueKey] = [];
+    }
+    acc[countryKey][leagueKey].push(match);
+    return acc;
+  }, {} as { [country: string]: { [league: string]: any[] } });
+
   return (
     <div className="w-full bg-background">
       {/* Header */}
@@ -405,106 +411,58 @@ export function CompetitionsSection({ onBetClick, onLeagueClick, sport = 'footba
           {getSportName(sport)} Competitions
         </h1>
         <p className="text-gray-400 mt-1">
-          Browse leagues and tournaments by country and continent
+          Live matches organized by country and league
         </p>
       </div>
 
-      <div className="px-4 py-4 space-y-6">
-        {/* Continental Competitions */}
-        {continents && continents.length > 0 && (
-          <div>
-            <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-2">
-              <span className="text-2xl">🌍</span>
-              Continental Competitions
-            </h2>
-            <div className="space-y-3">
-              {continents.map((continent) => (
-                <div key={continent.id} className="bg-slate-800/50 rounded-lg">
-                  <Button
-                    variant="ghost"
-                    className="w-full p-4 flex items-center justify-between text-left hover:bg-slate-700/50"
-                    onClick={() => toggleContinentExpansion(continent.id)}
-                  >
-                    <div className="flex items-center gap-3">
-                      <span className="text-2xl">{continent.icon}</span>
-                      <span className="font-semibold text-white text-lg">{continent.name}</span>
-                      <span className="text-gray-400 text-sm">
-                        ({continent.leagues.length} competitions)
-                      </span>
-                    </div>
-                    {expandedContinents.has(continent.id) ? (
-                      <ChevronDown className="w-5 h-5 text-gray-400" />
-                    ) : (
-                      <ChevronRight className="w-5 h-5 text-gray-400" />
-                    )}
-                  </Button>
-                  
-                  {expandedContinents.has(continent.id) && (
-                    <div className="px-4 pb-4 space-y-2">
-                      {continent.leagues.map((league) => (
-                        <div 
-                          key={league.id}
-                          className="flex items-center justify-between p-3 bg-slate-700/30 rounded-lg hover:bg-slate-700/50 cursor-pointer transition-colors"
-                          onClick={() => onLeagueClick(league.id, league.name)}
-                        >
-                          <span className="text-white font-medium">{league.name}</span>
-                          <span className="text-gray-400 text-sm">View Matches</span>
-                        </div>
-                      ))}
-                    </div>
-                  )}
-                </div>
-              ))}
-            </div>
+      <div className="px-4 py-4">
+        {Object.keys(groupedMatches).length === 0 ? (
+          <div className="text-center py-8">
+            <p className="text-gray-400">No competition matches available at the moment</p>
           </div>
-        )}
-
-        {/* Countries */}
-        <div>
-          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-2">
-            <span className="text-2xl">🏴󠁧󠁢󠁥󠁮󠁧󠁿</span>
-            Countries
-          </h2>
-          <div className="space-y-3">
-            {countries.map((country) => (
-              <div key={country.id} className="bg-slate-800/50 rounded-lg">
-                <Button
-                  variant="ghost"
-                  className="w-full p-4 flex items-center justify-between text-left hover:bg-slate-700/50"
-                  onClick={() => toggleCountryExpansion(country.id)}
-                >
-                  <div className="flex items-center gap-3">
-                    <span className="text-2xl">{country.flag}</span>
-                    <span className="font-semibold text-white text-lg">{country.name}</span>
-                    <span className="text-gray-400 text-sm">
-                      ({country.leagues.length} leagues)
-                    </span>
-                  </div>
-                  {expandedCountries.has(country.id) ? (
-                    <ChevronDown className="w-5 h-5 text-gray-400" />
-                  ) : (
-                    <ChevronRight className="w-5 h-5 text-gray-400" />
-                  )}
-                </Button>
-                
-                {expandedCountries.has(country.id) && (
-                  <div className="px-4 pb-4 space-y-2">
-                    {country.leagues.map((league) => (
-                      <div 
-                        key={league.id}
-                        className="flex items-center justify-between p-3 bg-slate-700/30 rounded-lg hover:bg-slate-700/50 cursor-pointer transition-colors"
-                        onClick={() => onLeagueClick(league.id, league.name)}
-                      >
-                        <span className="text-white font-medium">{league.name}</span>
-                        <span className="text-gray-400 text-sm">View Matches</span>
+        ) : (
+          <div className="space-y-8">
+            {Object.entries(groupedMatches).map(([country, leagues]) => (
+              <div key={country} className="space-y-4">
+                <div className="flex items-center gap-2 mb-4">
+                  <span className="text-2xl">🏴󠁧󠁢󠁥󠁮󠁧󠁿</span>
+                  <h2 className="text-xl font-bold text-white">{country}</h2>
+                  <span className="text-xs bg-gray-600 text-white px-2 py-1 rounded-full">
+                    {Object.keys(leagues).length} leagues
+                  </span>
+                </div>
+                <div className="space-y-6">
+                  {Object.entries(leagues).map(([league, leagueMatches]) => (
+                    <div key={league} className="space-y-3">
+                      <div className="flex items-center gap-2 mb-3">
+                        <span className="text-lg font-semibold text-white">{league}</span>
+                        <span className="text-xs bg-blue-600 text-white px-2 py-1 rounded-full">
+                          {leagueMatches.length} matches
+                        </span>
                       </div>
-                    ))}
-                  </div>
-                )}
+                      <div className="space-y-3">
+                        {leagueMatches.map((match: any) => (
+                          <MatchCard
+                            key={match.id}
+                            eventId={match.id.toString()}
+                            homeTeam={match.homeTeam}
+                            awayTeam={match.awayTeam}
+                            league={match.league}
+                            time={new Date(match.startTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                            homeOdds={match.odds?.home?.toString() || '1.0'}
+                            drawOdds={match.odds?.draw?.toString()}
+                            awayOdds={match.odds?.away?.toString() || '1.0'}
+                            onBetClick={onBetClick}
+                          />
+                        ))}
+                      </div>
+                    </div>
+                  ))}
+                </div>
               </div>
             ))}
           </div>
-        </div>
+        )}
       </div>
     </div>
   );

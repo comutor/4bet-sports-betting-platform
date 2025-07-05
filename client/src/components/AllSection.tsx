@@ -14,6 +14,7 @@ export function AllSection({ selectedDate, onBetClick }: AllSectionProps) {
   // Fetch all events for the selected date
   const { data: events = [], isLoading } = useQuery<any[]>({
     queryKey: ['/api/events/by-date', dateString],
+    queryFn: () => fetch(`/api/events/by-date?date=${dateString}`).then(res => res.json()),
     enabled: !!selectedDate,
   });
 
@@ -63,7 +64,7 @@ export function AllSection({ selectedDate, onBetClick }: AllSectionProps) {
           {/* Group events by sport */}
           {Object.entries(
             events.reduce((groups: any, event: any) => {
-              const sportTitle = event.sport_title || 'Other';
+              const sportTitle = event.sport || 'Other';
               if (!groups[sportTitle]) {
                 groups[sportTitle] = [];
               }
@@ -86,19 +87,19 @@ export function AllSection({ selectedDate, onBetClick }: AllSectionProps) {
                 {(sportEvents as any[]).map((event, index) => (
                   <div key={event.id || index}>
                     <MatchCard
-                      homeTeam={event.home_team}
-                      awayTeam={event.away_team}
-                      league={event.sport_title}
-                      time={new Date(event.commence_time).toLocaleTimeString('en-US', {
+                      homeTeam={event.homeTeam}
+                      awayTeam={event.awayTeam}
+                      league={event.league}
+                      time={new Date(event.startTime).toLocaleTimeString('en-US', {
                         hour: '2-digit',
                         minute: '2-digit',
                         hour12: false
                       })}
-                      homeOdds={event.bookmakers?.[0]?.markets?.[0]?.outcomes?.find((o: any) => o.name === event.home_team)?.price?.toString() || '0.00'}
-                      drawOdds={event.bookmakers?.[0]?.markets?.[0]?.outcomes?.find((o: any) => o.name === 'Draw')?.price?.toString()}
-                      awayOdds={event.bookmakers?.[0]?.markets?.[0]?.outcomes?.find((o: any) => o.name === event.away_team)?.price?.toString() || '0.00'}
+                      homeOdds={event.odds?.home?.toString() || '0.00'}
+                      drawOdds={event.odds?.draw?.toString()}
+                      awayOdds={event.odds?.away?.toString() || '0.00'}
                       onBetClick={onBetClick}
-                      eventId={event.id}
+                      eventId={event.id.toString()}
                     />
                     {index < (sportEvents as any[]).length - 1 && (
                       <div className="mx-4 border-b border-gray-700/30"></div>
