@@ -506,7 +506,7 @@ export class OddsApiService {
       'soccer_germany_bundesliga': 'Bundesliga',
       'soccer_italy_serie_a': 'Serie A',
       'soccer_france_ligue_one': 'Ligue 1',
-      'soccer_brazil_campeonato': 'Serie A',
+      'soccer_brazil_campeonato': 'Brasileirão',
       'soccer_argentina_primera_division': 'Primera División',
       'soccer_australia_aleague': 'A-League',
       'soccer_austria_bundesliga': 'Bundesliga',

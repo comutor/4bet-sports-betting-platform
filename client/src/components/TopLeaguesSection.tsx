@@ -1,5 +1,7 @@
-import { Trophy, MapPin } from 'lucide-react';
+import { useState } from 'react';
+import { Trophy, ChevronDown, ChevronRight } from 'lucide-react';
 import { useQuery } from '@tanstack/react-query';
+import { Button } from '@/components/ui/button';
 import { MatchCard } from './MatchCard';
 
 interface TopLeaguesSectionProps {
@@ -11,6 +13,8 @@ interface TopLeaguesSectionProps {
 
 
 export function TopLeaguesSection({ onBetClick, onLeagueClick, sport = 'football' }: TopLeaguesSectionProps) {
+  const [expandedLeagues, setExpandedLeagues] = useState<Set<string>>(new Set());
+
   // Define top-tier leagues for each sport
   const topLeagues = {
     football: [
@@ -49,6 +53,17 @@ export function TopLeaguesSection({ onBetClick, onLeagueClick, sport = 'football
       baseball: 'Baseball'
     };
     return names[sport] || 'Football';
+  };
+
+  // Toggle function for league dropdowns
+  const toggleLeague = (league: string) => {
+    const newExpanded = new Set(expandedLeagues);
+    if (newExpanded.has(league)) {
+      newExpanded.delete(league);
+    } else {
+      newExpanded.add(league);
+    }
+    setExpandedLeagues(newExpanded);
   };
 
   if (isLoading) {
@@ -103,32 +118,52 @@ export function TopLeaguesSection({ onBetClick, onLeagueClick, sport = 'football
             <p className="text-gray-400">No top league matches available at the moment</p>
           </div>
         ) : (
-          <div className="space-y-6">
+          <div className="space-y-4">
             {Object.entries(groupedMatches).map(([league, leagueMatches]) => (
-              <div key={league} className="space-y-3">
-                <div className="flex items-center gap-2 mb-3">
-                  <Trophy className="w-5 h-5 text-yellow-400" />
-                  <h3 className="text-lg font-bold text-white">{league}</h3>
-                  <span className="text-xs bg-blue-600 text-white px-2 py-1 rounded-full">
-                    {(leagueMatches as any[]).length} matches
-                  </span>
-                </div>
-                <div className="space-y-3">
-                  {(leagueMatches as any[]).map((match: any) => (
-                    <MatchCard
-                      key={match.id}
-                      eventId={match.id.toString()}
-                      homeTeam={match.homeTeam}
-                      awayTeam={match.awayTeam}
-                      league={match.league}
-                      time={new Date(match.startTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-                      homeOdds={match.odds?.home?.toString() || '1.0'}
-                      drawOdds={match.odds?.draw?.toString()}
-                      awayOdds={match.odds?.away?.toString() || '1.0'}
-                      onBetClick={onBetClick}
-                    />
-                  ))}
-                </div>
+              <div key={league} className="border-b border-gray-700/30 pb-4">
+                {/* League Dropdown Header */}
+                <Button
+                  variant="ghost"
+                  onClick={() => toggleLeague(league)}
+                  className="w-full flex items-center justify-between p-3 hover:bg-gray-800/50 rounded-lg text-left"
+                >
+                  <div className="flex items-center gap-3">
+                    <Trophy className="w-5 h-5 text-yellow-400" />
+                    <span className="text-lg font-bold text-white">{league}</span>
+                    <span className="text-xs bg-blue-600 text-white px-2 py-1 rounded-full">
+                      {(leagueMatches as any[]).length} matches
+                    </span>
+                  </div>
+                  {expandedLeagues.has(league) ? (
+                    <ChevronDown className="w-5 h-5 text-gray-400" />
+                  ) : (
+                    <ChevronRight className="w-5 h-5 text-gray-400" />
+                  )}
+                </Button>
+
+                {/* League Dropdown Content - Matches */}
+                {expandedLeagues.has(league) && (
+                  <div className="mt-3 space-y-3">
+                    {(leagueMatches as any[]).map((match: any, index: number) => (
+                      <div key={match.id}>
+                        <MatchCard
+                          eventId={match.id.toString()}
+                          homeTeam={match.homeTeam}
+                          awayTeam={match.awayTeam}
+                          league={match.league}
+                          time={new Date(match.startTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                          homeOdds={match.odds?.home?.toString() || '1.0'}
+                          drawOdds={match.odds?.draw?.toString()}
+                          awayOdds={match.odds?.away?.toString() || '1.0'}
+                          onBetClick={onBetClick}
+                        />
+                        {index < (leagueMatches as any[]).length - 1 && (
+                          <div className="my-3 border-b border-gray-700/20"></div>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                )}
               </div>
             ))}
           </div>
