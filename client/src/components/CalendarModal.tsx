@@ -9,8 +9,28 @@ interface CalendarModalProps {
 }
 
 export function CalendarModal({ isOpen, onClose, selectedDate, onDateSelect }: CalendarModalProps) {
-  const [currentMonth, setCurrentMonth] = useState(new Date(selectedDate));
+  const [currentMonth, setCurrentMonth] = useState(() => {
+    const now = new Date();
+    return new Date(now.getFullYear(), now.getMonth(), 1);
+  });
   const modalRef = useRef<HTMLDivElement>(null);
+
+  // Auto-update months when current month ends
+  useEffect(() => {
+    const checkMonthChange = () => {
+      const now = new Date();
+      const currentMonthStart = new Date(now.getFullYear(), now.getMonth(), 1);
+      
+      if (currentMonth.getTime() !== currentMonthStart.getTime()) {
+        setCurrentMonth(currentMonthStart);
+      }
+    };
+
+    // Check every day at midnight
+    const interval = setInterval(checkMonthChange, 24 * 60 * 60 * 1000);
+    
+    return () => clearInterval(interval);
+  }, [currentMonth]);
 
   // Handle click outside to close modal
   useEffect(() => {
@@ -68,6 +88,16 @@ export function CalendarModal({ isOpen, onClose, selectedDate, onDateSelect }: C
     return date < today;
   };
 
+  // Generate the three months to display
+  const getThreeMonths = () => {
+    const months = [];
+    for (let i = 0; i < 3; i++) {
+      const month = new Date(currentMonth.getFullYear(), currentMonth.getMonth() + i, 1);
+      months.push(month);
+    }
+    return months;
+  };
+
   const navigateMonth = (direction: 'prev' | 'next') => {
     const newMonth = new Date(currentMonth);
     if (direction === 'prev') {
@@ -78,9 +108,9 @@ export function CalendarModal({ isOpen, onClose, selectedDate, onDateSelect }: C
     setCurrentMonth(newMonth);
   };
 
-  const renderCalendarDays = () => {
-    const daysInMonth = getDaysInMonth(currentMonth);
-    const firstDay = getFirstDayOfMonth(currentMonth);
+  const renderCalendarDays = (month: Date) => {
+    const daysInMonth = getDaysInMonth(month);
+    const firstDay = getFirstDayOfMonth(month);
     const days = [];
 
     // Add empty cells for days before the first day of the month
@@ -90,7 +120,7 @@ export function CalendarModal({ isOpen, onClose, selectedDate, onDateSelect }: C
 
     // Add days of the month
     for (let day = 1; day <= daysInMonth; day++) {
-      const date = new Date(currentMonth.getFullYear(), currentMonth.getMonth(), day);
+      const date = new Date(month.getFullYear(), month.getMonth(), day);
       const today = isToday(date);
       const selected = isSelected(date);
       const hasEventsIndicator = hasEvents(date);
@@ -127,11 +157,42 @@ export function CalendarModal({ isOpen, onClose, selectedDate, onDateSelect }: C
     return days;
   };
 
+  const renderMonth = (month: Date, index: number) => {
+    return (
+      <div key={`month-${index}`} className="border-b border-gray-700 last:border-b-0">
+        {/* Month header */}
+        <div className="text-center py-2 bg-slate-700/30">
+          <h3 className="text-sm font-bold text-white">
+            {monthNames[month.getMonth()]} {month.getFullYear()}
+          </h3>
+        </div>
+
+        <div className="p-3">
+          {/* Day headers */}
+          <div className="grid grid-cols-7 gap-1 mb-1">
+            {dayNames.map((day) => (
+              <div key={day} className="text-center text-xs font-medium text-gray-400 py-1">
+                {day}
+              </div>
+            ))}
+          </div>
+
+          {/* Calendar grid */}
+          <div className="grid grid-cols-7 gap-1">
+            {renderCalendarDays(month)}
+          </div>
+        </div>
+      </div>
+    );
+  };
+
+  const threeMonths = getThreeMonths();
+
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-start justify-end pt-48 pr-4 z-50">
-      <div ref={modalRef} className="bg-slate-800 border border-gray-700 rounded-xl shadow-lg w-80">
+      <div ref={modalRef} className="bg-slate-800 border border-gray-700 rounded-xl shadow-lg w-80 max-h-[80vh] overflow-y-auto">
         {/* Header */}
-        <div className="flex items-center justify-between p-3 border-b border-gray-700">
+        <div className="flex items-center justify-between p-3 border-b border-gray-700 sticky top-0 bg-slate-800 z-10">
           <button
             onClick={() => navigateMonth('prev')}
             className="text-gray-400 hover:text-white transition-colors p-1"
@@ -140,7 +201,7 @@ export function CalendarModal({ isOpen, onClose, selectedDate, onDateSelect }: C
           </button>
           
           <h2 className="text-base font-bold text-white">
-            {monthNames[currentMonth.getMonth()]} {currentMonth.getFullYear()}
+            3 Month Calendar
           </h2>
           
           <button
@@ -158,25 +219,13 @@ export function CalendarModal({ isOpen, onClose, selectedDate, onDateSelect }: C
           </button>
         </div>
 
-        {/* Calendar */}
-        <div className="p-3">
-          {/* Day headers */}
-          <div className="grid grid-cols-7 gap-1 mb-1">
-            {dayNames.map((day) => (
-              <div key={day} className="text-center text-xs font-medium text-gray-400 py-1">
-                {day}
-              </div>
-            ))}
-          </div>
-
-          {/* Calendar grid */}
-          <div className="grid grid-cols-7 gap-1">
-            {renderCalendarDays()}
-          </div>
+        {/* Three Months */}
+        <div className="divide-y divide-gray-700">
+          {threeMonths.map((month, index) => renderMonth(month, index))}
         </div>
 
         {/* Footer with event indicator legend */}
-        <div className="px-3 pb-3">
+        <div className="px-3 py-3 border-t border-gray-700 bg-slate-800 sticky bottom-0">
           <div className="flex items-center justify-center gap-2 text-xs text-gray-400">
             <div className="w-1 h-1 bg-blue-400 rounded-full"></div>
             <span>Event days for your favourites</span>
