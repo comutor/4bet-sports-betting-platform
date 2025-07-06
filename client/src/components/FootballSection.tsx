@@ -76,22 +76,34 @@ export function FootballSection({ onBetClick, isInBetslip }: FootballSectionProp
   };
 
   const formatMatchTime = (commence_time: string) => {
-    const date = new Date(commence_time);
-    const now = new Date();
-    const diffInHours = (date.getTime() - now.getTime()) / (1000 * 60 * 60);
+    const matchDate = new Date(commence_time);
+    const today = new Date();
+    const tomorrow = new Date(today);
+    tomorrow.setDate(today.getDate() + 1);
     
-    if (diffInHours < 24) {
-      return date.toLocaleTimeString('en-US', {
-        hour: '2-digit',
-        minute: '2-digit',
-        hour12: false
+    const isToday = matchDate.toDateString() === today.toDateString();
+    const isTomorrow = matchDate.toDateString() === tomorrow.toDateString();
+    
+    let dateStr = '';
+    if (isToday) {
+      dateStr = 'Today';
+    } else if (isTomorrow) {
+      dateStr = 'Tomorrow';
+    } else {
+      dateStr = matchDate.toLocaleDateString('en-GB', { 
+        weekday: 'short', 
+        day: '2-digit',
+        month: '2-digit'
       });
     }
     
-    return date.toLocaleDateString('en-US', {
-      month: 'short',
-      day: 'numeric'
+    const timeStr = matchDate.toLocaleTimeString('en-US', {
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: false
     });
+    
+    return `${dateStr} ${timeStr}`;
   };
 
   const getOdds = (game: FootballGame) => {
@@ -315,7 +327,14 @@ function MatchCard({ game, onBetClick, formatMatchTime, getOdds, setLocation }: 
             variant="ghost"
             className="text-blue-400 hover:text-blue-300 hover:bg-blue-500/10 px-3 lg:px-4 xl:px-5 lg:min-w-[80px] xl:min-w-[90px] ml-2"
             onClick={() => {
-              setLocation(`/more-markets/${game.id}`);
+              const queryParams = new URLSearchParams({
+                homeTeam: encodeURIComponent(game.home_team),
+                awayTeam: encodeURIComponent(game.away_team),
+                league: encodeURIComponent(game.league_name),
+                commenceTime: game.commence_time,
+                sport: 'Football'
+              });
+              setLocation(`/more-markets/${game.id}?${queryParams.toString()}`);
             }}
           >
             <span className="text-xs font-medium">+25</span>

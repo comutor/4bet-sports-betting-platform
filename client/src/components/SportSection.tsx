@@ -100,22 +100,34 @@ export function SportSection({ sport, onBetClick }: SportSectionProps) {
   };
 
   const formatMatchTime = (commence_time: string) => {
-    const date = new Date(commence_time);
-    const now = new Date();
-    const diffInHours = (date.getTime() - now.getTime()) / (1000 * 60 * 60);
+    const matchDate = new Date(commence_time);
+    const today = new Date();
+    const tomorrow = new Date(today);
+    tomorrow.setDate(today.getDate() + 1);
     
-    if (diffInHours < 24) {
-      return date.toLocaleTimeString('en-US', {
-        hour: '2-digit',
-        minute: '2-digit',
-        hour12: false
+    const isToday = matchDate.toDateString() === today.toDateString();
+    const isTomorrow = matchDate.toDateString() === tomorrow.toDateString();
+    
+    let dateStr = '';
+    if (isToday) {
+      dateStr = 'Today';
+    } else if (isTomorrow) {
+      dateStr = 'Tomorrow';
+    } else {
+      dateStr = matchDate.toLocaleDateString('en-GB', { 
+        weekday: 'short', 
+        day: '2-digit',
+        month: '2-digit'
       });
     }
     
-    return date.toLocaleDateString('en-US', {
-      month: 'short',
-      day: 'numeric'
+    const timeStr = matchDate.toLocaleTimeString('en-US', {
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: false
     });
+    
+    return `${dateStr} ${timeStr}`;
   };
 
   const getOdds = (game: SportGame) => {
@@ -332,32 +344,52 @@ function LeagueSection({ leagueData, onBetClick, formatMatchTime, getOdds, sport
                     </div>
                   </div>
                   
-                  <div className="flex gap-2 ml-4 flex-1 lg:gap-3">
-                    <Button
-                      size="sm"
-                      variant="outline"
-                      className="border-gray-600 text-gray-300 hover:bg-primary hover:text-white flex-1"
-                      onClick={() => onBetClick(`${game.home_team} vs ${game.away_team}`, game.home_team, odds.home)}
-                    >
-                      {odds.home}
-                    </Button>
-                    {odds.draw && (
+                  <div className="flex gap-2 ml-4 items-center">
+                    <div className="flex gap-2 flex-1 lg:gap-3">
                       <Button
                         size="sm"
                         variant="outline"
                         className="border-gray-600 text-gray-300 hover:bg-primary hover:text-white flex-1"
-                        onClick={() => onBetClick(`${game.home_team} vs ${game.away_team}`, "Draw", odds.draw!)}
+                        onClick={() => onBetClick(`${game.home_team} vs ${game.away_team}`, game.home_team, odds.home)}
                       >
-                        {odds.draw}
+                        {odds.home}
                       </Button>
-                    )}
+                      {odds.draw && (
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          className="border-gray-600 text-gray-300 hover:bg-primary hover:text-white flex-1"
+                          onClick={() => onBetClick(`${game.home_team} vs ${game.away_team}`, "Draw", odds.draw!)}
+                        >
+                          {odds.draw}
+                        </Button>
+                      )}
+                      <Button
+                        size="sm"
+                        variant="outline"
+                        className="border-gray-600 text-gray-300 hover:bg-primary hover:text-white flex-1"
+                        onClick={() => onBetClick(`${game.home_team} vs ${game.away_team}`, game.away_team, odds.away)}
+                      >
+                        {odds.away}
+                      </Button>
+                    </div>
+                    
                     <Button
                       size="sm"
-                      variant="outline"
-                      className="border-gray-600 text-gray-300 hover:bg-primary hover:text-white flex-1"
-                      onClick={() => onBetClick(`${game.home_team} vs ${game.away_team}`, game.away_team, odds.away)}
+                      variant="ghost"
+                      className="text-blue-400 hover:text-blue-300 hover:bg-blue-500/10 px-3 min-w-[50px] ml-2"
+                      onClick={() => {
+                        const queryParams = new URLSearchParams({
+                          homeTeam: encodeURIComponent(game.home_team),
+                          awayTeam: encodeURIComponent(game.away_team),
+                          league: encodeURIComponent(game.league_name),
+                          commenceTime: game.commence_time,
+                          sport: config.title
+                        });
+                        window.location.href = `/more-markets/${game.id}?${queryParams.toString()}`;
+                      }}
                     >
-                      {odds.away}
+                      <span className="text-xs font-medium">+25</span>
                     </Button>
                   </div>
                 </div>
