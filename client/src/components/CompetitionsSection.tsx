@@ -539,6 +539,7 @@ export function CompetitionsSection({ onBetClick, onLeagueClick, sport = 'footba
                                   awayTeam={match.awayTeam}
                                   league={match.league}
                                   time={new Date(match.startTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                                  commenceTime={match.startTime}
                                   homeOdds={match.odds?.home?.toString() || '1.0'}
                                   drawOdds={match.odds?.draw?.toString()}
                                   awayOdds={match.odds?.away?.toString() || '1.0'}

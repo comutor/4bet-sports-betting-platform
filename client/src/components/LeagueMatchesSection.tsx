@@ -140,6 +140,7 @@ export function LeagueMatchesSection({
                           minute: '2-digit',
                           hour12: false
                         })}
+                        commenceTime={match.commence_time}
                         homeOdds={match.bookmakers?.[0]?.markets?.[0]?.outcomes?.find((o: any) => o.name === match.home_team)?.price?.toString() || '0.00'}
                         drawOdds={match.bookmakers?.[0]?.markets?.[0]?.outcomes?.find((o: any) => o.name === 'Draw')?.price?.toString()}
                         awayOdds={match.bookmakers?.[0]?.markets?.[0]?.outcomes?.find((o: any) => o.name === match.away_team)?.price?.toString() || '0.00'}
