@@ -90,6 +90,11 @@ export function MatchCard({
     setLocation(`/more-markets/${eventId}`);
   };
 
+  const formatOdds = (odds: string): string => {
+    const numericOdds = parseFloat(odds);
+    return isNaN(numericOdds) ? odds : numericOdds.toFixed(2);
+  };
+
   return (
     <div className="bg-slate-800/50 border border-gray-700/30 rounded-lg p-4">
       {/* Match Header */}
@@ -123,7 +128,7 @@ export function MatchCard({
           >
             <div className="text-center">
               <div className="truncate">1</div>
-              <div className="font-bold text-white">{homeOdds}</div>
+              <div className="font-bold text-white">{formatOdds(homeOdds)}</div>
             </div>
           </button>
 
@@ -139,7 +144,7 @@ export function MatchCard({
             >
               <div className="text-center">
                 <div className="truncate">X</div>
-                <div className="font-bold text-white">{drawOdds}</div>
+                <div className="font-bold text-white">{formatOdds(drawOdds)}</div>
               </div>
             </button>
           )}
@@ -155,7 +160,7 @@ export function MatchCard({
           >
             <div className="text-center">
               <div className="truncate">2</div>
-              <div className="font-bold text-white">{awayOdds}</div>
+              <div className="font-bold text-white">{formatOdds(awayOdds)}</div>
             </div>
           </button>
         </div>

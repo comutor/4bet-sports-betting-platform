@@ -113,9 +113,9 @@ export function AllSection({ selectedDate, sport, onBetClick }: AllSectionProps)
                         hour12: false
                       })}
                       commenceTime={event.startTime}
-                      homeOdds={event.odds?.home?.toString() || '0.00'}
-                      drawOdds={event.odds?.draw?.toString()}
-                      awayOdds={event.odds?.away?.toString() || '0.00'}
+                      homeOdds={event.odds?.home ? parseFloat(event.odds.home.toString()).toFixed(2) : '0.00'}
+                      drawOdds={event.odds?.draw ? parseFloat(event.odds.draw.toString()).toFixed(2) : undefined}
+                      awayOdds={event.odds?.away ? parseFloat(event.odds.away.toString()).toFixed(2) : '0.00'}
                       onBetClick={onBetClick}
                       eventId={event.id.toString()}
                     />

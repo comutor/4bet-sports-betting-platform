@@ -540,9 +540,9 @@ export function CompetitionsSection({ onBetClick, onLeagueClick, sport = 'footba
                                   league={match.league}
                                   time={new Date(match.startTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                                   commenceTime={match.startTime}
-                                  homeOdds={match.odds?.home?.toString() || '1.0'}
-                                  drawOdds={match.odds?.draw?.toString()}
-                                  awayOdds={match.odds?.away?.toString() || '1.0'}
+                                  homeOdds={match.odds?.home ? parseFloat(match.odds.home.toString()).toFixed(2) : '1.00'}
+                                  drawOdds={match.odds?.draw ? parseFloat(match.odds.draw.toString()).toFixed(2) : undefined}
+                                  awayOdds={match.odds?.away ? parseFloat(match.odds.away.toString()).toFixed(2) : '1.00'}
                                   onBetClick={onBetClick}
                                 />
                                 {index < (leagueMatches as any[]).length - 1 && (
