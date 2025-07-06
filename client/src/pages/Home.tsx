@@ -270,7 +270,7 @@ export default function Home() {
     // Check if all filter is active for any sport tab
     if (['football', 'basketball', 'tennis', 'ice-hockey', 'american-football', 'baseball'].includes(activeTab) && 
         activeFilter === 'all') {
-      return <AllSection selectedDate={selectedDate} onBetClick={handleBetClick} />;
+      return <AllSection selectedDate={selectedDate} sport={activeTab} onBetClick={handleBetClick} />;
     }
 
     // Check if competitions filter is active for any sport tab

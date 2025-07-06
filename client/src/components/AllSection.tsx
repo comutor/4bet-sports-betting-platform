@@ -4,19 +4,36 @@ import { MatchCard } from './MatchCard';
 
 interface AllSectionProps {
   selectedDate: Date;
+  sport?: string;
   onBetClick: (eventName: string, selection: string, odds: string) => void;
 }
 
-export function AllSection({ selectedDate, onBetClick }: AllSectionProps) {
+export function AllSection({ selectedDate, sport, onBetClick }: AllSectionProps) {
   // Format date for API call
   const dateString = format(selectedDate, 'yyyy-MM-dd');
   
   // Fetch all events for the selected date
-  const { data: events = [], isLoading } = useQuery<any[]>({
+  const { data: allEvents = [], isLoading } = useQuery<any[]>({
     queryKey: ['/api/events/by-date', dateString],
     queryFn: () => fetch(`/api/events/by-date?date=${dateString}`).then(res => res.json()),
     enabled: !!selectedDate,
   });
+
+  // Filter events by sport if sport is specified
+  const events = sport ? allEvents.filter(event => {
+    const eventSport = event.sport?.toLowerCase();
+    const selectedSport = sport.toLowerCase();
+    
+    // Handle sport name mappings
+    if (selectedSport === 'football' && eventSport === 'football') return true;
+    if (selectedSport === 'basketball' && eventSport === 'basketball') return true;
+    if (selectedSport === 'tennis' && eventSport === 'tennis') return true;
+    if ((selectedSport === 'ice-hockey' || selectedSport === 'hockey') && eventSport === 'ice hockey') return true;
+    if (selectedSport === 'american-football' && eventSport === 'american football') return true;
+    if (selectedSport === 'baseball' && eventSport === 'baseball') return true;
+    
+    return false;
+  }) : allEvents;
 
   const formatDate = (date: Date) => {
     const today = new Date();
@@ -47,7 +64,7 @@ export function AllSection({ selectedDate, onBetClick }: AllSectionProps) {
       {/* Date Header */}
       <div className="px-4 mb-6">
         <h2 className="text-lg font-bold text-white mb-1">
-          All Matches
+          All {sport ? sport.charAt(0).toUpperCase() + sport.slice(1).replace('-', ' ') : ''} Matches
         </h2>
         <p className="text-sm text-gray-400">
           {formatDate(selectedDate)}

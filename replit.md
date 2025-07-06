@@ -101,6 +101,7 @@ The application uses PostgreSQL with the following core entities:
 ## Changelog
 ```
 Changelog:
+- July 5, 2025. Fixed ALL section sport-specific filtering: ALL section now properly filters by selected sport tab - when Football is selected shows only football matches, Basketball shows only basketball matches, etc. Added sport prop to AllSection component with proper sport name mapping and dynamic header titles
 - July 5, 2025. Fixed ALL section calendar date filtering: ALL section now properly displays matches for selected calendar date instead of hardcoded today. Implemented date-based filtering across all sports (Football, Basketball, Tennis, Ice Hockey) with popularity-based sorting - most popular leagues (Premier League, La Liga, NBA, etc.) appear first, then less popular leagues, maintaining authentic live API data
 - July 5, 2025. Extended dropdown navigation to Top Leagues: Added dropdown functionality to TOP LEAGUES section where league names become clickable buttons revealing matches. Both TOP LEAGUES and COMPETITIONS now use consistent dropdown UI with chevron indicators and collapsible content
 - July 5, 2025. Fixed Brazil vs Italy Serie A confusion: Corrected league naming where Brazil's "soccer_brazil_campeonato" was incorrectly labeled as "Serie A" instead of "Brasileirão", while Italy's "soccer_italy_serie_a" properly displays as "Serie A"
