@@ -322,6 +322,27 @@ export function VirtualBasketballSection({ onBetClick }: VirtualBasketballSectio
                     </Button>
                   </div>
                 </div>
+                
+                {/* More Markets Button */}
+                <div className="flex justify-center mt-3">
+                  <Button
+                    size="sm"
+                    variant="ghost"
+                    className="text-blue-400 hover:text-blue-300 hover:bg-blue-500/10 px-4 text-xs font-medium"
+                    onClick={() => {
+                      const queryParams = new URLSearchParams({
+                        homeTeam: encodeURIComponent(match.homeTeam),
+                        awayTeam: encodeURIComponent(match.awayTeam),
+                        league: encodeURIComponent(match.league),
+                        commenceTime: match.startTime,
+                        sport: 'Basketball'
+                      });
+                      window.location.href = `/more-markets/virtual-${match.id}?${queryParams.toString()}`;
+                    }}
+                  >
+                    +25
+                  </Button>
+                </div>
               </div>
             )}
 

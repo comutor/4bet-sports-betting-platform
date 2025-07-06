@@ -239,54 +239,79 @@ export function VirtualFootballSection({ onBetClick }: VirtualFootballSectionPro
 
             {/* Betting Options or Result Info */}
             {match.status === 'upcoming' && (
-              <div className="grid grid-cols-3 gap-2">
-                <Button
-                  variant="outline"
-                  size="sm"
-                  className="bg-slate-700 border-slate-600 hover:bg-blue-600 hover:border-blue-600 text-white"
-                  onClick={() => onBetClick(
-                    `${match.homeTeam} vs ${match.awayTeam}`,
-                    `${match.homeTeam} Win`,
-                    match.odds.home
-                  )}
-                >
-                  <div className="text-center">
-                    <div className="text-xs">1</div>
-                    <div className="font-bold">{match.odds.home}</div>
-                  </div>
-                </Button>
+              <div className="space-y-3">
+                <div className="grid grid-cols-3 gap-2">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="bg-slate-700 border-slate-600 hover:bg-blue-600 hover:border-blue-600 text-white"
+                    onClick={() => onBetClick(
+                      `${match.homeTeam} vs ${match.awayTeam}`,
+                      `${match.homeTeam} Win`,
+                      match.odds.home
+                    )}
+                  >
+                    <div className="text-center">
+                      <div className="text-xs">1</div>
+                      <div className="font-bold">{match.odds.home}</div>
+                    </div>
+                  </Button>
+                  
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="bg-slate-700 border-slate-600 hover:bg-blue-600 hover:border-blue-600 text-white"
+                    onClick={() => onBetClick(
+                      `${match.homeTeam} vs ${match.awayTeam}`,
+                      "Draw",
+                      match.odds.draw
+                    )}
+                  >
+                    <div className="text-center">
+                      <div className="text-xs">X</div>
+                      <div className="font-bold">{match.odds.draw}</div>
+                    </div>
+                  </Button>
+                  
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="bg-slate-700 border-slate-600 hover:bg-blue-600 hover:border-blue-600 text-white"
+                    onClick={() => onBetClick(
+                      `${match.homeTeam} vs ${match.awayTeam}`,
+                      `${match.awayTeam} Win`,
+                      match.odds.away
+                    )}
+                  >
+                    <div className="text-center">
+                      <div className="text-xs">2</div>
+                      <div className="font-bold">{match.odds.away}</div>
+                    </div>
+                  </Button>
+                </div>
                 
-                <Button
-                  variant="outline"
-                  size="sm"
-                  className="bg-slate-700 border-slate-600 hover:bg-blue-600 hover:border-blue-600 text-white"
-                  onClick={() => onBetClick(
-                    `${match.homeTeam} vs ${match.awayTeam}`,
-                    "Draw",
-                    match.odds.draw
-                  )}
-                >
-                  <div className="text-center">
-                    <div className="text-xs">X</div>
-                    <div className="font-bold">{match.odds.draw}</div>
-                  </div>
-                </Button>
-                
-                <Button
-                  variant="outline"
-                  size="sm"
-                  className="bg-slate-700 border-slate-600 hover:bg-blue-600 hover:border-blue-600 text-white"
-                  onClick={() => onBetClick(
-                    `${match.homeTeam} vs ${match.awayTeam}`,
-                    `${match.awayTeam} Win`,
-                    match.odds.away
-                  )}
-                >
-                  <div className="text-center">
-                    <div className="text-xs">2</div>
-                    <div className="font-bold">{match.odds.away}</div>
-                  </div>
-                </Button>
+                {/* More Markets Button */}
+                <div className="flex justify-center">
+                  <Button
+                    size="sm"
+                    variant="ghost"
+                    className="text-blue-400 hover:text-blue-300 hover:bg-blue-500/10 px-4 text-xs font-medium"
+                    onClick={() => {
+                      // Navigate to more markets - for virtual games, we can show a placeholder or similar markets
+                      const queryParams = new URLSearchParams({
+                        homeTeam: encodeURIComponent(match.homeTeam),
+                        awayTeam: encodeURIComponent(match.awayTeam),
+                        league: encodeURIComponent(match.league),
+                        commenceTime: match.startTime,
+                        sport: 'Football'
+                      });
+                      // For now, we'll use a placeholder URL since virtual games don't need full more markets
+                      window.location.href = `/more-markets/virtual-${match.id}?${queryParams.toString()}`;
+                    }}
+                  >
+                    +25
+                  </Button>
+                </div>
               </div>
             )}
 

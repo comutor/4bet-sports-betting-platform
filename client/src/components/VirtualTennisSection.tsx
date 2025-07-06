@@ -300,38 +300,61 @@ export function VirtualTennisSection({ onBetClick }: VirtualTennisSectionProps) 
 
             {/* Betting Options or Result Info */}
             {match.status === 'upcoming' && (
-              <div className="grid grid-cols-2 gap-2">
-                <Button
-                  variant="outline"
-                  size="sm"
-                  className="bg-slate-700 border-slate-600 hover:bg-blue-600 hover:border-blue-600 text-white"
-                  onClick={() => onBetClick(
-                    `${match.player1} vs ${match.player2}`,
-                    `${match.player1} to Win`,
-                    match.odds.player1
-                  )}
-                >
-                  <div className="text-center">
-                    <div className="text-xs">{match.player1}</div>
-                    <div className="font-bold">{match.odds.player1}</div>
-                  </div>
-                </Button>
+              <div className="space-y-3">
+                <div className="grid grid-cols-2 gap-2">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="bg-slate-700 border-slate-600 hover:bg-blue-600 hover:border-blue-600 text-white"
+                    onClick={() => onBetClick(
+                      `${match.player1} vs ${match.player2}`,
+                      `${match.player1} to Win`,
+                      match.odds.player1
+                    )}
+                  >
+                    <div className="text-center">
+                      <div className="text-xs">{match.player1}</div>
+                      <div className="font-bold">{match.odds.player1}</div>
+                    </div>
+                  </Button>
+                  
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="bg-slate-700 border-slate-600 hover:bg-blue-600 hover:border-blue-600 text-white"
+                    onClick={() => onBetClick(
+                      `${match.player1} vs ${match.player2}`,
+                      `${match.player2} to Win`,
+                      match.odds.player2
+                    )}
+                  >
+                    <div className="text-center">
+                      <div className="text-xs">{match.player2}</div>
+                      <div className="font-bold">{match.odds.player2}</div>
+                    </div>
+                  </Button>
+                </div>
                 
-                <Button
-                  variant="outline"
-                  size="sm"
-                  className="bg-slate-700 border-slate-600 hover:bg-blue-600 hover:border-blue-600 text-white"
-                  onClick={() => onBetClick(
-                    `${match.player1} vs ${match.player2}`,
-                    `${match.player2} to Win`,
-                    match.odds.player2
-                  )}
-                >
-                  <div className="text-center">
-                    <div className="text-xs">{match.player2}</div>
-                    <div className="font-bold">{match.odds.player2}</div>
-                  </div>
-                </Button>
+                {/* More Markets Button */}
+                <div className="flex justify-center">
+                  <Button
+                    size="sm"
+                    variant="ghost"
+                    className="text-blue-400 hover:text-blue-300 hover:bg-blue-500/10 px-4 text-xs font-medium"
+                    onClick={() => {
+                      const queryParams = new URLSearchParams({
+                        homeTeam: encodeURIComponent(match.player1),
+                        awayTeam: encodeURIComponent(match.player2),
+                        league: encodeURIComponent(match.tournament),
+                        commenceTime: match.startTime,
+                        sport: 'Tennis'
+                      });
+                      window.location.href = `/more-markets/virtual-${match.id}?${queryParams.toString()}`;
+                    }}
+                  >
+                    +25
+                  </Button>
+                </div>
               </div>
             )}
 
