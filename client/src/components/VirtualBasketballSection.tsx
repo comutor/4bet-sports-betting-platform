@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useLocation } from "wouter";
 import { Zap, Clock, Target } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
@@ -29,6 +30,7 @@ interface VirtualBasketballSectionProps {
 }
 
 export function VirtualBasketballSection({ onBetClick }: VirtualBasketballSectionProps) {
+  const [, setLocation] = useLocation();
   const [matches, setMatches] = useState<VirtualBasketballMatch[]>([]);
   const [currentTime, setCurrentTime] = useState(new Date());
   const [activeTab, setActiveTab] = useState<'live' | 'next' | 'results'>('live');
@@ -337,7 +339,7 @@ export function VirtualBasketballSection({ onBetClick }: VirtualBasketballSectio
                         commenceTime: match.startTime,
                         sport: 'Basketball'
                       });
-                      window.location.href = `/more-markets/virtual-${match.id}?${queryParams.toString()}`;
+                      setLocation(`/more-markets/virtual-${match.id}?${queryParams.toString()}`);
                     }}
                   >
                     +25

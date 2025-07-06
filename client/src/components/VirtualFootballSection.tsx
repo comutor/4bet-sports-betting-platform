@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useLocation } from "wouter";
 import { Play, Clock, Trophy, Users } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
@@ -26,6 +27,7 @@ interface VirtualFootballSectionProps {
 }
 
 export function VirtualFootballSection({ onBetClick }: VirtualFootballSectionProps) {
+  const [, setLocation] = useLocation();
   const [matches, setMatches] = useState<VirtualMatch[]>([]);
   const [currentTime, setCurrentTime] = useState(new Date());
   const [activeTab, setActiveTab] = useState<'live' | 'next' | 'results'>('live');
@@ -297,7 +299,6 @@ export function VirtualFootballSection({ onBetClick }: VirtualFootballSectionPro
                     variant="ghost"
                     className="text-blue-400 hover:text-blue-300 hover:bg-blue-500/10 px-4 text-xs font-medium"
                     onClick={() => {
-                      // Navigate to more markets - for virtual games, we can show a placeholder or similar markets
                       const queryParams = new URLSearchParams({
                         homeTeam: encodeURIComponent(match.homeTeam),
                         awayTeam: encodeURIComponent(match.awayTeam),
@@ -305,8 +306,7 @@ export function VirtualFootballSection({ onBetClick }: VirtualFootballSectionPro
                         commenceTime: match.startTime,
                         sport: 'Football'
                       });
-                      // For now, we'll use a placeholder URL since virtual games don't need full more markets
-                      window.location.href = `/more-markets/virtual-${match.id}?${queryParams.toString()}`;
+                      setLocation(`/more-markets/virtual-${match.id}?${queryParams.toString()}`);
                     }}
                   >
                     +25

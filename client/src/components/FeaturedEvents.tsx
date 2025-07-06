@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { useQuery } from "@tanstack/react-query";
+import { useLocation } from "wouter";
 import { Loader2 } from "lucide-react";
 
 interface FeaturedEventsProps {
@@ -8,6 +9,7 @@ interface FeaturedEventsProps {
 }
 
 export function FeaturedEvents({ onBetClick, onTabChange }: FeaturedEventsProps) {
+  const [, setLocation] = useLocation();
   const { data: footballData, isLoading: footballLoading } = useQuery({
     queryKey: ['/api/football/matches'],
   });
@@ -27,7 +29,7 @@ export function FeaturedEvents({ onBetClick, onTabChange }: FeaturedEventsProps)
   // Extract basketball games from league data
   const basketballGames = Array.isArray(basketballData) ? basketballData.flatMap((league: any) => league.games || []) : [];
 
-  const renderMatchCard = (match: any, sport: string, index: number) => {
+  const renderMatchCard = (match: any, sportType: string, index: number) => {
     const getSportIcon = (sportType: string) => {
       switch (sportType) {
         case 'football': return 'fas fa-futbol';
@@ -37,7 +39,7 @@ export function FeaturedEvents({ onBetClick, onTabChange }: FeaturedEventsProps)
       }
     };
 
-    const matchKey = match.id || match.event_id || `${sport}-${index}-${Date.now()}`;
+    const matchKey = match.id || match.event_id || `${sportType}-${index}-${Date.now()}`;
     
     return (
       <div key={matchKey} className="bg-slate-800 rounded-lg border border-gray-700 p-4">
@@ -112,9 +114,9 @@ export function FeaturedEvents({ onBetClick, onTabChange }: FeaturedEventsProps)
                 awayTeam: encodeURIComponent(match.awayTeam || match.away_team),
                 league: encodeURIComponent(match.league || match.league_name || match.tournament || 'League'),
                 commenceTime: match.commence_time || new Date().toISOString(),
-                sport: sportType
+                sport: sportType.charAt(0).toUpperCase() + sportType.slice(1)
               });
-              window.location.href = `/more-markets/${matchKey}?${queryParams.toString()}`;
+              setLocation(`/more-markets/${matchKey}?${queryParams.toString()}`);
             }}
           >
             +25
