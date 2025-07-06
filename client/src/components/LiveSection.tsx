@@ -1,4 +1,6 @@
 import { Button } from "@/components/ui/button";
+import { useQuery } from "@tanstack/react-query";
+import { Loader2 } from "lucide-react";
 
 interface LiveEvent {
   id: number;
@@ -16,11 +18,43 @@ interface LiveEvent {
 }
 
 interface LiveSectionProps {
+  sport?: string;
   onBetClick: (eventName: string, selection: string, odds: string) => void;
 }
 
-export function LiveSection({ onBetClick }: LiveSectionProps) {
-  const liveEvents: LiveEvent[] = [
+export function LiveSection({ sport, onBetClick }: LiveSectionProps) {
+  // Fetch live events from API
+  const { data: allLiveEvents = [], isLoading } = useQuery<any[]>({
+    queryKey: ['/api/live-events'],
+    queryFn: () => fetch('/api/live-events').then(res => res.json()),
+  });
+
+  // Filter live events by sport if sport is specified
+  const filteredEvents = sport ? allLiveEvents.filter(event => {
+    const eventSport = event.sport?.toLowerCase();
+    const selectedSport = sport.toLowerCase();
+    
+    // Handle sport name mappings
+    if (selectedSport === 'football' && eventSport === 'football') return true;
+    if (selectedSport === 'basketball' && eventSport === 'basketball') return true;
+    if (selectedSport === 'tennis' && eventSport === 'tennis') return true;
+    if ((selectedSport === 'ice-hockey' || selectedSport === 'hockey') && eventSport === 'ice hockey') return true;
+    if (selectedSport === 'american-football' && eventSport === 'american football') return true;
+    if (selectedSport === 'baseball' && eventSport === 'baseball') return true;
+    
+    return false;
+  }) : allLiveEvents;
+
+  if (isLoading) {
+    return (
+      <div className="flex justify-center items-center py-8">
+        <Loader2 className="h-6 w-6 animate-spin text-blue-500" />
+        <span className="ml-2 text-gray-400">Loading live events...</span>
+      </div>
+    );
+  }
+
+  const mockEvents: LiveEvent[] = [
     {
       id: 1,
       homeTeam: "Manchester City",
@@ -66,21 +100,31 @@ export function LiveSection({ onBetClick }: LiveSectionProps) {
     }
   };
 
+  // Use filtered events if available, otherwise fall back to mock events for the selected sport
+  const displayEvents = filteredEvents.length > 0 ? filteredEvents : 
+    mockEvents.filter(event => !sport || event.sport.toLowerCase() === sport.toLowerCase());
+
   return (
     <div className="py-4">
       <div className="flex items-center justify-between mb-6">
         <h2 className="text-2xl font-bold flex items-center">
           <span className="w-3 h-3 bg-live rounded-full animate-pulse mr-3"></span>
-          Live Betting
+          Live {sport ? sport.charAt(0).toUpperCase() + sport.slice(1).replace('-', ' ') : ''} Betting
         </h2>
         <div className="text-sm text-gray-400">
           <i className="fas fa-broadcast-tower mr-1"></i>
-          {liveEvents.length} Live Events
+          {displayEvents.length} Live Events
         </div>
       </div>
       
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {liveEvents.map((event) => (
+      {displayEvents.length === 0 ? (
+        <div className="text-center py-8 text-gray-400">
+          <p>No live {sport ? sport.replace('-', ' ') : ''} events at the moment</p>
+          <p className="text-sm mt-2">Check back later for live matches</p>
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          {displayEvents.map((event) => (
           <div key={event.id} className="bg-slate-custom rounded-xl p-6 border-2 border-live">
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center space-x-2">
@@ -139,7 +183,8 @@ export function LiveSection({ onBetClick }: LiveSectionProps) {
             </div>
           </div>
         ))}
-      </div>
+        </div>
+      )}
     </div>
   );
 }

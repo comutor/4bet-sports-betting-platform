@@ -288,7 +288,7 @@ export default function Home() {
     // Check if live filter is active for any sport tab
     if (['football', 'basketball', 'tennis', 'ice-hockey', 'american-football', 'baseball'].includes(activeTab) && 
         activeFilter === 'live') {
-      return <LiveSection onBetClick={handleBetClick} />;
+      return <LiveSection sport={activeTab} onBetClick={handleBetClick} />;
     }
 
     switch (activeTab) {
@@ -324,7 +324,7 @@ export default function Home() {
       case 'volleyball':
         return <SportSection sport="volleyball" onBetClick={handleBetClick} />;
       case 'live':
-        return <LiveSection onBetClick={handleBetClick} />;
+        return <LiveSection sport={activeTab} onBetClick={handleBetClick} />;
       case 'my-bets':
         return <MyBetsSection userId={isLoggedIn ? userData?.id : undefined} userCountry={userCountry} placedBets={placedBets} />;
       case 'statement':
