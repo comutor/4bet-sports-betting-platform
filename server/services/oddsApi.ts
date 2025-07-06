@@ -1,4 +1,7 @@
 import { log } from "../vite";
+import { db } from "../db";
+import { apiCache, type ApiCache, type InsertApiCache } from "@shared/schema";
+import { eq, lt } from "drizzle-orm";
 
 export interface Sport {
   key: string;
@@ -39,7 +42,7 @@ export class OddsApiService {
   private apiKey: string;
   private baseUrl = 'https://api.the-odds-api.com/v4';
   private cache = new Map<string, { data: any; timestamp: number }>();
-  private cacheTimeout = 5 * 60 * 1000; // 5 minutes
+  private cacheTimeout = 30 * 60 * 1000; // 30 minutes - extended to save API credits
   private apiPaused = false; // API ENABLED FOR LIVE DATA
 
   constructor() {
@@ -47,21 +50,113 @@ export class OddsApiService {
     if (!this.apiKey) {
       throw new Error('ODDS_API_KEY environment variable is required');
     }
+    
+    // Run cache cleanup every hour
+    setInterval(() => {
+      this.cleanupExpiredCache();
+    }, 60 * 60 * 1000);
   }
 
-  private isCacheValid(key: string): boolean {
-    const cached = this.cache.get(key);
-    if (!cached) return false;
-    return Date.now() - cached.timestamp < this.cacheTimeout;
+  private async isCacheValid(key: string): Promise<boolean> {
+    // Check in-memory cache first
+    const memCached = this.cache.get(key);
+    if (memCached && Date.now() - memCached.timestamp < this.cacheTimeout) {
+      return true;
+    }
+
+    // Check database cache
+    try {
+      const [dbCached] = await db
+        .select()
+        .from(apiCache)
+        .where(eq(apiCache.cacheKey, key))
+        .limit(1);
+      
+      if (dbCached && new Date(dbCached.expiresAt) > new Date()) {
+        // Load from DB to memory cache for faster access
+        this.cache.set(key, {
+          data: dbCached.data,
+          timestamp: Date.now()
+        });
+        return true;
+      }
+    } catch (error) {
+      console.error('Database cache check failed:', error);
+    }
+    
+    return false;
   }
 
-  private getCached(key: string): any {
-    const cached = this.cache.get(key);
-    return cached ? cached.data : null;
+  private async getCached(key: string): Promise<any> {
+    // Check in-memory cache first
+    const memCached = this.cache.get(key);
+    if (memCached && Date.now() - memCached.timestamp < this.cacheTimeout) {
+      return memCached.data;
+    }
+
+    // Check database cache
+    try {
+      const [dbCached] = await db
+        .select()
+        .from(apiCache)
+        .where(eq(apiCache.cacheKey, key))
+        .limit(1);
+      
+      if (dbCached && new Date(dbCached.expiresAt) > new Date()) {
+        // Load from DB to memory cache
+        this.cache.set(key, {
+          data: dbCached.data,
+          timestamp: Date.now()
+        });
+        return dbCached.data;
+      }
+    } catch (error) {
+      console.error('Database cache retrieval failed:', error);
+    }
+    
+    return null;
   }
 
-  private setCache(key: string, data: any): void {
-    this.cache.set(key, { data, timestamp: Date.now() });
+  private async setCache(key: string, data: any): void {
+    // Set in-memory cache
+    this.cache.set(key, {
+      data,
+      timestamp: Date.now()
+    });
+
+    // Set database cache with longer expiration
+    try {
+      const expiresAt = new Date(Date.now() + this.cacheTimeout);
+      
+      await db
+        .insert(apiCache)
+        .values({
+          cacheKey: key,
+          data: data,
+          expiresAt: expiresAt
+        })
+        .onConflictDoUpdate({
+          target: apiCache.cacheKey,
+          set: {
+            data: data,
+            expiresAt: expiresAt,
+            createdAt: new Date()
+          }
+        });
+    } catch (error) {
+      console.error('Database cache storage failed:', error);
+    }
+  }
+
+  // Clean up expired cache entries
+  private async cleanupExpiredCache(): void {
+    try {
+      await db
+        .delete(apiCache)
+        .where(lt(apiCache.expiresAt, new Date()));
+    } catch (error) {
+      console.error('Cache cleanup failed:', error);
+    }
   }
 
   async getSports(): Promise<Sport[]> {
@@ -88,9 +183,9 @@ export class OddsApiService {
 
     const cacheKey = `odds_${sportKey}_${regions}_${markets}`;
     
-    if (this.isCacheValid(cacheKey)) {
+    if (await this.isCacheValid(cacheKey)) {
       log(`Using cached data for ${sportKey}`);
-      return this.getCached(cacheKey);
+      return await this.getCached(cacheKey);
     }
 
     try {
@@ -110,7 +205,7 @@ export class OddsApiService {
       }
       
       const events = await response.json();
-      this.setCache(cacheKey, events);
+      await this.setCache(cacheKey, events);
       log(`Fetched ${events.length} events for ${sportKey}`);
       return events;
     } catch (error) {
@@ -146,9 +241,9 @@ export class OddsApiService {
   async getUpcomingGames() {
     const cacheKey = 'upcoming_games_limited';
     
-    if (this.isCacheValid(cacheKey)) {
+    if (await this.isCacheValid(cacheKey)) {
       log('Using cached upcoming games data');
-      return this.getCached(cacheKey);
+      return await this.getCached(cacheKey);
     }
 
     // Limit to just Premier League to avoid rate limits
@@ -182,7 +277,7 @@ export class OddsApiService {
       }];
     }
 
-    this.setCache(cacheKey, results);
+    await this.setCache(cacheKey, results);
     return results;
   }
 

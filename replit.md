@@ -101,6 +101,7 @@ The application uses PostgreSQL with the following core entities:
 ## Changelog
 ```
 Changelog:
+- July 6, 2025. Implemented PostgreSQL-backed API caching system: Extended cache timeout from 5 minutes to 30 minutes, added database-backed persistent caching with api_cache table, implemented two-tier caching (memory + database) to dramatically reduce API calls and preserve 20,000 credit allowance. Automatic cache cleanup runs hourly to maintain database performance
 - July 5, 2025. Fixed ALL section sport-specific filtering: ALL section now properly filters by selected sport tab - when Football is selected shows only football matches, Basketball shows only basketball matches, etc. Added sport prop to AllSection component with proper sport name mapping and dynamic header titles
 - July 5, 2025. Fixed ALL section calendar date filtering: ALL section now properly displays matches for selected calendar date instead of hardcoded today. Implemented date-based filtering across all sports (Football, Basketball, Tennis, Ice Hockey) with popularity-based sorting - most popular leagues (Premier League, La Liga, NBA, etc.) appear first, then less popular leagues, maintaining authentic live API data
 - July 5, 2025. Extended dropdown navigation to Top Leagues: Added dropdown functionality to TOP LEAGUES section where league names become clickable buttons revealing matches. Both TOP LEAGUES and COMPETITIONS now use consistent dropdown UI with chevron indicators and collapsible content

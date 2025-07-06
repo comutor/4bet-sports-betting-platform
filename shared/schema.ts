@@ -1,4 +1,4 @@
-import { pgTable, text, serial, integer, boolean, decimal, timestamp } from "drizzle-orm/pg-core";
+import { pgTable, text, varchar, jsonb, serial, integer, boolean, decimal, timestamp } from "drizzle-orm/pg-core";
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
 
@@ -84,6 +84,15 @@ export const balanceTransactions = pgTable("balance_transactions", {
   createdAt: timestamp("created_at").defaultNow()
 });
 
+// API Cache table for odds data
+export const apiCache = pgTable("api_cache", {
+  id: serial("id").primaryKey(),
+  cacheKey: varchar("cache_key").unique().notNull(),
+  data: jsonb("data").notNull(),
+  expiresAt: timestamp("expires_at").notNull(),
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
 export const insertUserSchema = createInsertSchema(users).pick({
   firstName: true,
   lastName: true,
@@ -99,6 +108,7 @@ export const insertBetslipItemSchema = createInsertSchema(betslipItems);
 export const insertCasinoGameSchema = createInsertSchema(casinoGames);
 export const insertUserBetSchema = createInsertSchema(userBets);
 export const insertBalanceTransactionSchema = createInsertSchema(balanceTransactions);
+export const insertApiCacheSchema = createInsertSchema(apiCache);
 
 export type User = typeof users.$inferSelect;
 export type InsertUser = z.infer<typeof insertUserSchema>;
@@ -114,3 +124,5 @@ export type UserBet = typeof userBets.$inferSelect;
 export type InsertUserBet = z.infer<typeof insertUserBetSchema>;
 export type BalanceTransaction = typeof balanceTransactions.$inferSelect;
 export type InsertBalanceTransaction = z.infer<typeof insertBalanceTransactionSchema>;
+export type ApiCache = typeof apiCache.$inferSelect;
+export type InsertApiCache = z.infer<typeof insertApiCacheSchema>;
