@@ -267,6 +267,7 @@ export function MoreMarkets() {
           homeTeam={matchDetails.homeTeam}
           awayTeam={matchDetails.awayTeam}
           sport={matchDetails.sport}
+          league={matchDetails.league}
         />
       </div>
     </div>
@@ -287,13 +288,46 @@ interface FootballBettingMarketsProps {
   homeTeam: string;
   awayTeam: string;
   sport: string;
+  league: string;
 }
 
-function FootballBettingMarkets({ selectedMarket, homeTeam, awayTeam, sport }: FootballBettingMarketsProps) {
+function FootballBettingMarkets({ selectedMarket, homeTeam, awayTeam, sport, league }: FootballBettingMarketsProps) {
   const [expandedMarkets, setExpandedMarkets] = useState<Set<string>>(new Set());
 
+  // Detect if this is a knockout competition that should include "To Qualify" market
+  const isKnockoutCompetition = () => {
+    const knockoutCompetitions = [
+      'FIFA Club World Cup',
+      'FIFA World Cup',
+      'UEFA Champions League',
+      'UEFA Europa League',
+      'UEFA Conference League',
+      'CONMEBOL Libertadores',
+      'CONMEBOL Sudamericana',
+      'AFC Champions League',
+      'CAF Champions League',
+      'CONCACAF Champions League',
+      'UEFA European Championship',
+      'Copa America',
+      'Africa Cup of Nations',
+      'Gold Cup',
+      'Asian Cup',
+      'Nations League'
+    ];
+    
+    const leagueLower = league.toLowerCase();
+    return knockoutCompetitions.some(comp => 
+      leagueLower.includes(comp.toLowerCase()) || 
+      leagueLower.includes('cup') || 
+      leagueLower.includes('champions') ||
+      leagueLower.includes('europa') ||
+      leagueLower.includes('conference') ||
+      leagueLower.includes('libertadores')
+    );
+  };
+
   // Comprehensive football betting markets based on the screenshots
-  const footballMarkets: BettingMarket[] = [
+  const baseMarkets: BettingMarket[] = [
     // Main Markets
     { id: '1x2-full-time', name: '1X2 | Full Time', category: 'all', odds: { [homeTeam]: '2.15', 'Draw': '3.40', [awayTeam]: '3.20' } },
     { id: 'double-chance-full-time', name: 'Double Chance | Full Time', category: 'all', odds: { [`${homeTeam} or Draw`]: '1.55', [`${homeTeam} or ${awayTeam}`]: '1.35', [`Draw or ${awayTeam}`]: '1.65' } },
@@ -414,15 +448,25 @@ function FootballBettingMarkets({ selectedMarket, homeTeam, awayTeam, sport }: F
     { id: 'more-goals-away', name: `More Goals | ${awayTeam}`, category: 'goals', isTeamSpecific: true, odds: { 'Yes': '2.85', 'No': '1.45' } }
   ];
 
+  // Add "To Qualify" market for knockout competitions
+  const footballMarkets: BettingMarket[] = isKnockoutCompetition() 
+    ? [
+        // Add "To Qualify" market at the beginning for knockout competitions
+        { id: 'to-qualify', name: 'To Qualify', category: 'all', odds: { [homeTeam]: '1.85', [awayTeam]: '1.95' } },
+        ...baseMarkets
+      ]
+    : baseMarkets;
+
   // Filter markets based on selected category
   const getFilteredMarkets = () => {
     if (selectedMarket === 'all') return footballMarkets;
     if (selectedMarket === 'popular') {
-      return footballMarkets.filter(market => 
-        ['1x2-full-time', 'both-teams-score-full-time', 'over-under-full-time', 'double-chance-full-time', 'correct-score-full-time', 'half-time-full-time'].includes(market.id)
-      );
+      const popularMarketIds = isKnockoutCompetition() 
+        ? ['1x2-full-time', 'to-qualify', 'both-teams-score-full-time', 'over-under-full-time', 'double-chance-full-time', 'correct-score-full-time', 'half-time-full-time']
+        : ['1x2-full-time', 'both-teams-score-full-time', 'over-under-full-time', 'double-chance-full-time', 'correct-score-full-time', 'half-time-full-time'];
+      return footballMarkets.filter((market: BettingMarket) => popularMarketIds.includes(market.id));
     }
-    return footballMarkets.filter(market => market.category === selectedMarket);
+    return footballMarkets.filter((market: BettingMarket) => market.category === selectedMarket);
   };
 
   const toggleMarket = (marketId: string) => {
@@ -456,7 +500,7 @@ function FootballBettingMarkets({ selectedMarket, homeTeam, awayTeam, sport }: F
 
   return (
     <div className="space-y-1">
-      {filteredMarkets.map((market) => {
+      {filteredMarkets.map((market: BettingMarket) => {
         const isExpanded = expandedMarkets.has(market.id);
         const odds = market.odds || {};
         const hasOdds = Object.keys(odds).length > 0;
@@ -489,7 +533,7 @@ function FootballBettingMarkets({ selectedMarket, homeTeam, awayTeam, sport }: F
             {isExpanded && hasOdds && (
               <div className="px-4 pb-4">
                 <div className="grid grid-cols-2 gap-2">
-                  {Object.entries(odds).map(([outcome, odd]) => (
+                  {Object.entries(odds).map(([outcome, odd]: [string, string]) => (
                     <button
                       key={outcome}
                       className="bg-slate-700 hover:bg-slate-600 text-white px-3 py-2 rounded text-sm transition-colors border border-slate-600 hover:border-slate-500"
