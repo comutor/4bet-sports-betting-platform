@@ -133,7 +133,9 @@ export function LiveSection({ sport, onBetClick }: LiveSectionProps) {
               </div>
               <div className="text-right">
                 <div className="text-sm text-gray-400">{event.league}</div>
-                <div className="font-medium">{event.time}</div>
+                <div className="font-medium">
+                  {event.time || event.currentTime || 'LIVE'}
+                </div>
               </div>
             </div>
             
@@ -148,7 +150,7 @@ export function LiveSection({ sport, onBetClick }: LiveSectionProps) {
                     <div className="text-xs text-gray-400">Home</div>
                   </div>
                 </div>
-                <div className="text-3xl font-bold text-success">{event.homeScore}</div>
+                <div className="text-3xl font-bold text-success">{event.homeScore ?? 0}</div>
               </div>
               
               <div className="flex items-center justify-between">
@@ -161,24 +163,64 @@ export function LiveSection({ sport, onBetClick }: LiveSectionProps) {
                     <div className="text-xs text-gray-400">Away</div>
                   </div>
                 </div>
-                <div className="text-3xl font-bold">{event.awayScore}</div>
+                <div className="text-3xl font-bold">{event.awayScore ?? 0}</div>
               </div>
             </div>
             
             <div className="mt-6 space-y-3">
-              <div className="text-sm font-medium text-gray-400 mb-2">{event.liveMarket.name}</div>
-              <div className={`grid gap-2 ${event.liveMarket.options.length === 3 ? 'grid-cols-3' : 'grid-cols-2'}`}>
-                {event.liveMarket.options.map((option, index) => (
-                  <Button
-                    key={index}
-                    variant="secondary"
-                    className="bg-slate-light-custom hover:bg-primary text-center py-2 transition-colors"
-                    onClick={() => onBetClick(`${event.homeTeam} vs ${event.awayTeam}`, option.label, option.odds)}
-                  >
-                    <div className="text-xs text-gray-400">{option.label}</div>
-                    <div className="font-bold">{option.odds}</div>
-                  </Button>
-                ))}
+              <div className="text-sm font-medium text-gray-400 mb-2">
+                {event.liveMarket?.name || "Match Winner"}
+              </div>
+              <div className={`grid gap-2 ${
+                event.liveMarket?.options?.length === 3 ? 'grid-cols-3' : 
+                event.homeOdds && event.drawOdds && event.awayOdds ? 'grid-cols-3' : 'grid-cols-2'
+              }`}>
+                {event.liveMarket?.options ? 
+                  event.liveMarket.options.map((option: any, index: number) => (
+                    <Button
+                      key={index}
+                      variant="secondary"
+                      className="bg-slate-light-custom hover:bg-primary text-center py-2 transition-colors"
+                      onClick={() => onBetClick(`${event.homeTeam} vs ${event.awayTeam}`, option.label, option.odds)}
+                    >
+                      <div className="text-xs text-gray-400">{option.label}</div>
+                      <div className="font-bold">{option.odds}</div>
+                    </Button>
+                  )) :
+                  // Fallback to standard market structure from API
+                  <>
+                    {event.homeOdds && (
+                      <Button
+                        variant="secondary"
+                        className="bg-slate-light-custom hover:bg-primary text-center py-2 transition-colors"
+                        onClick={() => onBetClick(`${event.homeTeam} vs ${event.awayTeam}`, event.homeTeam || 'Home', event.homeOdds)}
+                      >
+                        <div className="text-xs text-gray-400">{event.homeTeam || 'Home'}</div>
+                        <div className="font-bold">{event.homeOdds}</div>
+                      </Button>
+                    )}
+                    {event.drawOdds && (
+                      <Button
+                        variant="secondary"
+                        className="bg-slate-light-custom hover:bg-primary text-center py-2 transition-colors"
+                        onClick={() => onBetClick(`${event.homeTeam} vs ${event.awayTeam}`, 'Draw', event.drawOdds)}
+                      >
+                        <div className="text-xs text-gray-400">Draw</div>
+                        <div className="font-bold">{event.drawOdds}</div>
+                      </Button>
+                    )}
+                    {event.awayOdds && (
+                      <Button
+                        variant="secondary"
+                        className="bg-slate-light-custom hover:bg-primary text-center py-2 transition-colors"
+                        onClick={() => onBetClick(`${event.homeTeam} vs ${event.awayTeam}`, event.awayTeam || 'Away', event.awayOdds)}
+                      >
+                        <div className="text-xs text-gray-400">{event.awayTeam || 'Away'}</div>
+                        <div className="font-bold">{event.awayOdds}</div>
+                      </Button>
+                    )}
+                  </>
+                }
               </div>
             </div>
           </div>
