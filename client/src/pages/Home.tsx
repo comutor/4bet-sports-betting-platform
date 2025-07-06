@@ -199,7 +199,7 @@ export default function Home() {
         setUserBalance('0.00');
         setUserCountry('');
         setUserData(null);
-        setActiveTab('home');
+        setActiveTab('football');
       }
     } catch (error) {
       console.error('Logout failed:', error);
@@ -208,7 +208,7 @@ export default function Home() {
       setUserData(null);
       setUserBalance('0.00');
       setUserCountry('');
-      setActiveTab('home');
+      setActiveTab('football');
     }
   };
 
@@ -364,13 +364,10 @@ export default function Home() {
             <p className="text-gray-400">This section is under development.</p>
           </div>
         );
+      case 'home':
+        return <FootballSection onBetClick={handleBetClick} isInBetslip={isInBetslip} />;
       default:
-        return (
-          <div className="py-4">
-            <h2 className="text-2xl font-bold mb-4">Coming Soon</h2>
-            <p className="text-gray-400">This section is under development.</p>
-          </div>
-        );
+        return <FootballSection onBetClick={handleBetClick} isInBetslip={isInBetslip} />;
     }
   };
 
