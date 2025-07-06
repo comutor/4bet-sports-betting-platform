@@ -14,6 +14,7 @@ interface MatchCardProps {
   awayOdds: string;
   onBetClick: (eventName: string, selection: string, odds: string) => void;
   eventId: string;
+  sport?: string;
 }
 
 export function MatchCard({
@@ -27,7 +28,8 @@ export function MatchCard({
   drawOdds,
   awayOdds,
   onBetClick,
-  eventId
+  eventId,
+  sport
 }: MatchCardProps) {
   const [, setLocation] = useLocation();
   const [selected, setSelected] = useState<string | null>(() => {
@@ -87,7 +89,33 @@ export function MatchCard({
   };
 
   const handleMoreMarkets = () => {
-    setLocation(`/more-markets/${eventId}`);
+    // Detect sport from league name or use provided sport
+    const detectSport = (): string => {
+      if (sport) return sport;
+      
+      const leagueLower = league.toLowerCase();
+      if (leagueLower.includes('nba') || leagueLower.includes('basketball') || leagueLower.includes('euroleague') || leagueLower.includes('wnba')) {
+        return 'Basketball';
+      } else if (leagueLower.includes('tennis') || leagueLower.includes('atp') || leagueLower.includes('wta')) {
+        return 'Tennis';
+      } else if (leagueLower.includes('hockey') || leagueLower.includes('nhl') || leagueLower.includes('khl')) {
+        return 'Ice Hockey';
+      } else if (leagueLower.includes('baseball') || leagueLower.includes('mlb')) {
+        return 'Baseball';
+      } else {
+        return 'Football'; // Default
+      }
+    };
+    
+    const queryParams = new URLSearchParams({
+      homeTeam: encodeURIComponent(homeTeam),
+      awayTeam: encodeURIComponent(awayTeam),
+      league: encodeURIComponent(league),
+      commenceTime: commenceTime || new Date().toISOString(),
+      sport: detectSport()
+    });
+    
+    setLocation(`/more-markets/${eventId}?${queryParams.toString()}`);
   };
 
   const formatOdds = (odds: string): string => {

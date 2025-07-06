@@ -40,20 +40,70 @@ export function MoreMarkets() {
 
   useEffect(() => {
     if (eventId) {
-      // Fetch match details from API or use passed data
-      // For now, using sample data matching the image
-      const sampleMatch: MatchDetails = {
-        id: eventId,
-        homeTeam: 'Fluminense FC RJ',
-        awayTeam: 'Al Hilal SFC',
-        league: 'FIFA Club World Cup',
-        sport: 'Football',
-        commenceTime: '2025-07-04T22:00:00Z',
-        date: 'Fri 04/07',
-        time: '10:00 pm'
-      };
+      // Get URL search parameters
+      const urlParams = new URLSearchParams(window.location.search);
+      const homeTeam = urlParams.get('homeTeam') ? decodeURIComponent(urlParams.get('homeTeam')!) : '';
+      const awayTeam = urlParams.get('awayTeam') ? decodeURIComponent(urlParams.get('awayTeam')!) : '';
+      const league = urlParams.get('league') ? decodeURIComponent(urlParams.get('league')!) : '';
+      const commenceTime = urlParams.get('commenceTime') || '';
+      const sport = urlParams.get('sport') || 'Football';
+
+      if (homeTeam && awayTeam) {
+        // Format date and time from commenceTime
+        const matchDate = new Date(commenceTime);
+        const today = new Date();
+        const tomorrow = new Date(today);
+        tomorrow.setDate(today.getDate() + 1);
+        
+        const isToday = matchDate.toDateString() === today.toDateString();
+        const isTomorrow = matchDate.toDateString() === tomorrow.toDateString();
+        
+        let dateStr = '';
+        if (isToday) {
+          dateStr = 'Today';
+        } else if (isTomorrow) {
+          dateStr = 'Tomorrow';
+        } else {
+          dateStr = matchDate.toLocaleDateString('en-GB', { 
+            weekday: 'short', 
+            day: '2-digit',
+            month: '2-digit'
+          });
+        }
+        
+        const timeStr = matchDate.toLocaleTimeString('en-US', {
+          hour: '2-digit',
+          minute: '2-digit',
+          hour12: true
+        });
+        
+        const matchData: MatchDetails = {
+          id: eventId,
+          homeTeam,
+          awayTeam,
+          league,
+          sport,
+          commenceTime,
+          date: dateStr,
+          time: timeStr
+        };
+        
+        setMatchDetails(matchData);
+      } else {
+        // Fallback if no URL parameters (shouldn't happen normally)
+        const sampleMatch: MatchDetails = {
+          id: eventId,
+          homeTeam: 'Match',
+          awayTeam: 'Details',
+          league: 'Not Available',
+          sport: 'Football',
+          commenceTime: new Date().toISOString(),
+          date: 'Today',
+          time: '00:00'
+        };
+        setMatchDetails(sampleMatch);
+      }
       
-      setMatchDetails(sampleMatch);
       setLoading(false);
     }
   }, [eventId]);

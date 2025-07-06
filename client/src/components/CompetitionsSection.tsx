@@ -544,6 +544,7 @@ export function CompetitionsSection({ onBetClick, onLeagueClick, sport = 'footba
                                   drawOdds={match.odds?.draw ? parseFloat(match.odds.draw.toString()).toFixed(2) : undefined}
                                   awayOdds={match.odds?.away ? parseFloat(match.odds.away.toString()).toFixed(2) : '1.00'}
                                   onBetClick={onBetClick}
+                                  sport={getSportName(sport)}
                                 />
                                 {index < (leagueMatches as any[]).length - 1 && (
                                   <div className="my-3 border-b border-gray-700/20"></div>

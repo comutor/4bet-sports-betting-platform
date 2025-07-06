@@ -118,6 +118,7 @@ export function AllSection({ selectedDate, sport, onBetClick }: AllSectionProps)
                       awayOdds={event.odds?.away ? parseFloat(event.odds.away.toString()).toFixed(2) : '0.00'}
                       onBetClick={onBetClick}
                       eventId={event.id.toString()}
+                      sport={event.sport || sport}
                     />
                     {index < (sportEvents as any[]).length - 1 && (
                       <div className="mx-4 border-b border-gray-700/30"></div>

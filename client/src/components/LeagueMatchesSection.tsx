@@ -146,6 +146,7 @@ export function LeagueMatchesSection({
                         awayOdds={match.bookmakers?.[0]?.markets?.[0]?.outcomes?.find((o: any) => o.name === match.away_team)?.price?.toFixed(2) || '0.00'}
                         onBetClick={onBetClick}
                         eventId={match.id}
+                        sport="Football"
                       />
                       {index < (dayMatches as any[]).length - 1 && (
                         <div className="mx-2 border-b border-gray-700/30"></div>

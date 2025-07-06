@@ -101,6 +101,7 @@ The application uses PostgreSQL with the following core entities:
 ## Changelog
 ```
 Changelog:
+- July 6, 2025. Fixed "+25" button to display actual match data: Updated MatchCard component to pass match details through URL parameters to MoreMarkets page. The "+25" button now correctly displays selected team names, league, date, and time instead of hardcoded Fluminense vs Al Hilal data. Added sport detection and dynamic date/time formatting to ensure accurate match information
 - July 6, 2025. Implemented consistent two decimal odds formatting: Added formatOdds helper function to MatchCard component and updated all match sections (AllSection, TopLeaguesSection, CompetitionsSection, LeagueMatchesSection) to display odds with consistent two decimal places (e.g., 2.00 instead of 2). Virtual games already used proper formatting
 - July 6, 2025. Enhanced match cards with dates and more markets: Added intelligent date formatting (Today/Tomorrow/Date format) to all match cards, integrated "+25" more markets button that navigates to detailed betting markets page, updated MatchCard component with commenceTime parameter and enhanced layout with proper date display across all sections (AllSection, TopLeaguesSection, CompetitionsSection, LeagueMatchesSection)
 - July 6, 2025. Fixed logout redirect issue: Resolved "under development" message after logout by updating navigation flow to redirect users to football section instead of undefined 'home' route, ensuring smooth user experience
