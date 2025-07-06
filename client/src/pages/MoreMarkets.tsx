@@ -18,16 +18,77 @@ interface MatchDetails {
   time: string;
 }
 
-const marketTabs = [
-  { id: 'all', label: 'ALL', count: null },
-  { id: 'popular', label: 'POPULAR', count: 12 },
-  { id: 'goals', label: 'GOALS', count: 33 },
-  { id: 'halves', label: 'HALVES', count: 38 },
-  { id: 'combos', label: 'COMBOS', count: 9 },
-  { id: 'specials', label: 'SPECIALS', count: null },
-  { id: 'corners', label: 'CORNERS', count: null },
-  { id: 'booking', label: 'BOOKING', count: null },
-];
+const getMarketTabsBySport = (sport: string) => {
+  const baseTabs = [
+    { id: 'all', label: 'ALL', count: null },
+    { id: 'popular', label: 'POPULAR', count: 12 },
+  ];
+
+  switch (sport.toLowerCase()) {
+    case 'football':
+      return [
+        ...baseTabs,
+        { id: 'goals', label: 'GOALS', count: 33 },
+        { id: 'halves', label: 'HALVES', count: 38 },
+        { id: 'corners', label: 'CORNERS', count: 22 },
+        { id: 'booking', label: 'BOOKING', count: 15 },
+        { id: 'combos', label: 'COMBOS', count: 9 },
+        { id: 'specials', label: 'SPECIALS', count: null },
+      ];
+    
+    case 'basketball':
+      return [
+        ...baseTabs,
+        { id: 'points', label: 'POINTS', count: 28 },
+        { id: 'quarters', label: 'QUARTERS', count: 32 },
+        { id: 'player-props', label: 'PLAYER PROPS', count: 45 },
+        { id: 'team-props', label: 'TEAM PROPS', count: 24 },
+        { id: 'combos', label: 'COMBOS', count: 12 },
+        { id: 'specials', label: 'SPECIALS', count: null },
+      ];
+    
+    case 'tennis':
+      return [
+        ...baseTabs,
+        { id: 'sets', label: 'SETS', count: 18 },
+        { id: 'games', label: 'GAMES', count: 25 },
+        { id: 'aces', label: 'ACES', count: 12 },
+        { id: 'player-props', label: 'PLAYER PROPS', count: 30 },
+        { id: 'combos', label: 'COMBOS', count: 8 },
+        { id: 'specials', label: 'SPECIALS', count: null },
+      ];
+    
+    case 'ice hockey':
+      return [
+        ...baseTabs,
+        { id: 'goals', label: 'GOALS', count: 20 },
+        { id: 'periods', label: 'PERIODS', count: 25 },
+        { id: 'shots', label: 'SHOTS', count: 15 },
+        { id: 'penalties', label: 'PENALTIES', count: 10 },
+        { id: 'combos', label: 'COMBOS', count: 7 },
+        { id: 'specials', label: 'SPECIALS', count: null },
+      ];
+    
+    case 'baseball':
+      return [
+        ...baseTabs,
+        { id: 'runs', label: 'RUNS', count: 22 },
+        { id: 'innings', label: 'INNINGS', count: 35 },
+        { id: 'hits', label: 'HITS', count: 18 },
+        { id: 'player-props', label: 'PLAYER PROPS', count: 40 },
+        { id: 'combos', label: 'COMBOS', count: 10 },
+        { id: 'specials', label: 'SPECIALS', count: null },
+      ];
+    
+    default:
+      // Fallback for unknown sports
+      return [
+        ...baseTabs,
+        { id: 'combos', label: 'COMBOS', count: 9 },
+        { id: 'specials', label: 'SPECIALS', count: null },
+      ];
+  }
+};
 
 export function MoreMarkets() {
   const [, setLocation] = useLocation();
@@ -128,6 +189,9 @@ export function MoreMarkets() {
     );
   }
 
+  // Get sport-specific market tabs
+  const marketTabs = getMarketTabsBySport(matchDetails.sport);
+
   return (
     <div className="min-h-screen bg-background">
       {/* Header */}
@@ -220,38 +284,54 @@ export function MoreMarkets() {
           </div>
         )}
 
-        {selectedMarket === 'popular' && (
+        {selectedMarket !== 'all' && (
           <div className="text-white text-center py-8">
-            <div className="text-lg">Popular Markets</div>
-            <div className="text-gray-400 mt-2">12 markets available</div>
-          </div>
-        )}
-
-        {selectedMarket === 'goals' && (
-          <div className="text-white text-center py-8">
-            <div className="text-lg">Goals Markets</div>
-            <div className="text-gray-400 mt-2">33 markets available</div>
-          </div>
-        )}
-
-        {selectedMarket === 'halves' && (
-          <div className="text-white text-center py-8">
-            <div className="text-lg">Halves Markets</div>
-            <div className="text-gray-400 mt-2">38 markets available</div>
-          </div>
-        )}
-
-        {selectedMarket === 'combos' && (
-          <div className="text-white text-center py-8">
-            <div className="text-lg">Combo Markets</div>
-            <div className="text-gray-400 mt-2">9 markets available</div>
-          </div>
-        )}
-
-        {['specials', 'corners', 'booking'].includes(selectedMarket) && (
-          <div className="text-white text-center py-8">
-            <div className="text-lg capitalize">{selectedMarket} Markets</div>
-            <div className="text-gray-400 mt-2">Markets available</div>
+            <div className="text-lg">
+              {selectedMarket === 'popular' ? 'Popular Markets' : 
+               selectedMarket === 'player-props' ? 'Player Props' :
+               selectedMarket === 'team-props' ? 'Team Props' :
+               `${selectedMarket.charAt(0).toUpperCase() + selectedMarket.slice(1).replace('-', ' ')} Markets`}
+            </div>
+            <div className="text-gray-400 mt-2">
+              {marketTabs.find(tab => tab.id === selectedMarket)?.count || 'Multiple'} markets available
+            </div>
+            
+            {/* Sport-specific market examples */}
+            {matchDetails.sport.toLowerCase() === 'basketball' && selectedMarket === 'points' && (
+              <div className="mt-4 space-y-2 text-left">
+                <div className="bg-slate-800 rounded-lg p-3">
+                  <div className="text-sm text-gray-300">Total Points</div>
+                  <div className="flex gap-2 mt-1">
+                    <button className="bg-slate-700 px-3 py-1 rounded text-sm">Over 215.5 (1.91)</button>
+                    <button className="bg-slate-700 px-3 py-1 rounded text-sm">Under 215.5 (1.91)</button>
+                  </div>
+                </div>
+              </div>
+            )}
+            
+            {matchDetails.sport.toLowerCase() === 'tennis' && selectedMarket === 'sets' && (
+              <div className="mt-4 space-y-2 text-left">
+                <div className="bg-slate-800 rounded-lg p-3">
+                  <div className="text-sm text-gray-300">Set Betting</div>
+                  <div className="flex gap-2 mt-1">
+                    <button className="bg-slate-700 px-3 py-1 rounded text-sm">2-0 (3.20)</button>
+                    <button className="bg-slate-700 px-3 py-1 rounded text-sm">2-1 (2.85)</button>
+                  </div>
+                </div>
+              </div>
+            )}
+            
+            {matchDetails.sport.toLowerCase() === 'ice hockey' && selectedMarket === 'periods' && (
+              <div className="mt-4 space-y-2 text-left">
+                <div className="bg-slate-800 rounded-lg p-3">
+                  <div className="text-sm text-gray-300">Period Betting</div>
+                  <div className="flex gap-2 mt-1">
+                    <button className="bg-slate-700 px-3 py-1 rounded text-sm">1st Period Win (2.10)</button>
+                    <button className="bg-slate-700 px-3 py-1 rounded text-sm">2nd Period Draw (3.40)</button>
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
         )}
       </div>
