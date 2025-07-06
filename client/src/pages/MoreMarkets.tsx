@@ -295,8 +295,7 @@ function FootballBettingMarkets({ selectedMarket, homeTeam, awayTeam, sport }: F
   // Comprehensive football betting markets based on the screenshots
   const footballMarkets: BettingMarket[] = [
     // Main Markets
-    { id: '1x2-full-time-2up', name: '1X2 | Full Time 2UP', category: 'all', odds: { [homeTeam]: '2.15', 'Draw': '3.40', [awayTeam]: '3.20' } },
-    { id: 'to-qualify', name: 'To Qualify', category: 'all', odds: { [homeTeam]: '1.85', [awayTeam]: '1.95' } },
+    { id: '1x2-full-time', name: '1X2 | Full Time', category: 'all', odds: { [homeTeam]: '2.15', 'Draw': '3.40', [awayTeam]: '3.20' } },
     { id: 'double-chance-full-time', name: 'Double Chance | Full Time', category: 'all', odds: { [`${homeTeam} or Draw`]: '1.55', [`${homeTeam} or ${awayTeam}`]: '1.35', [`Draw or ${awayTeam}`]: '1.65' } },
     { id: 'both-teams-score-full-time', name: 'Both Teams To Score | Full Time', category: 'all', odds: { 'Yes': '1.75', 'No': '2.05' } },
     
@@ -420,7 +419,7 @@ function FootballBettingMarkets({ selectedMarket, homeTeam, awayTeam, sport }: F
     if (selectedMarket === 'all') return footballMarkets;
     if (selectedMarket === 'popular') {
       return footballMarkets.filter(market => 
-        ['1x2-full-time-2up', 'both-teams-score-full-time', 'over-under-full-time', 'double-chance-full-time', 'correct-score-full-time', 'half-time-full-time'].includes(market.id)
+        ['1x2-full-time', 'both-teams-score-full-time', 'over-under-full-time', 'double-chance-full-time', 'correct-score-full-time', 'half-time-full-time'].includes(market.id)
       );
     }
     return footballMarkets.filter(market => market.category === selectedMarket);
@@ -482,16 +481,7 @@ function FootballBettingMarkets({ selectedMarket, homeTeam, awayTeam, sport }: F
               </div>
               
               <div className="flex items-center space-x-2">
-                {market.id === '1x2-full-time-2up' && (
-                  <>
-                    <div className="bg-orange-500 text-white px-2 py-1 rounded text-sm">
-                      2
-                    </div>
-                    <div className="bg-purple-600 text-white px-3 py-1 rounded text-sm">
-                      ⚡ Boosted
-                    </div>
-                  </>
-                )}
+
               </div>
             </button>
 
