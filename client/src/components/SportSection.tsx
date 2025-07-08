@@ -2,6 +2,11 @@ import { useState, useEffect, useCallback } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
 import { Loader2 } from "lucide-react";
+import { FilterBar } from "./FilterBar";
+import { AllSection } from "./AllSection";
+import { TopLeaguesSection } from "./TopLeaguesSection";
+import { CompetitionsSection } from "./CompetitionsSection";
+import { LiveSection } from "./LiveSection";
 
 interface SportGame {
   id: string;
@@ -66,8 +71,78 @@ const sportConfig = {
 export function SportSection({ sport, onBetClick }: SportSectionProps) {
   const [displayedLeagues, setDisplayedLeagues] = useState<number>(3);
   const [isLoadingMore, setIsLoadingMore] = useState(false);
+  const [activeFilter, setActiveFilter] = useState<string>('all');
+  const [selectedDate, setSelectedDate] = useState<Date>(new Date());
 
   const config = sportConfig[sport];
+
+  // Handle filter change
+  const handleFilterChange = (filter: string) => {
+    setActiveFilter(filter);
+  };
+
+  // Handle date change
+  const handleDateChange = (date: Date) => {
+    setSelectedDate(date);
+  };
+
+  // Render content based on active filter
+  const renderFilteredContent = () => {
+    switch (activeFilter) {
+      case 'all':
+        return <AllSection selectedDate={selectedDate} sport={sport} onBetClick={onBetClick} />;
+      case 'top-leagues':
+        return <TopLeaguesSection onBetClick={onBetClick} onLeagueClick={() => {}} sport={sport} />;
+      case 'competitions':
+        return <CompetitionsSection onBetClick={onBetClick} onLeagueClick={() => {}} sport={sport} />;
+      case 'live':
+        return <LiveSection sport={sport} onBetClick={onBetClick} />;
+      default:
+        return renderDefaultContent();
+    }
+  };
+
+  const renderDefaultContent = () => {
+    if (isLoading) {
+      return (
+        <div className="flex justify-center items-center py-8">
+          <Loader2 className="h-8 w-8 animate-spin text-blue-400" />
+          <span className="ml-2 text-gray-400">Loading {config.title.toLowerCase()} matches...</span>
+        </div>
+      );
+    }
+
+    if (error) {
+      return (
+        <div className="text-center py-4">
+          <p className="text-red-400 mb-4">Failed to load {config.title.toLowerCase()} matches</p>
+          <Button onClick={() => window.location.reload()} variant="outline">
+            Retry
+          </Button>
+        </div>
+      );
+    }
+
+    if (!sportData || sportData.length === 0) {
+      return (
+        <div className="text-center py-4">
+          <p className="text-gray-400">No {config.title.toLowerCase()} matches available at the moment</p>
+        </div>
+      );
+    }
+
+    return (
+      <DefaultSportContent 
+        sport={sport}
+        config={config}
+        sportData={sportData}
+        displayedLeagues={displayedLeagues}
+        onBetClick={onBetClick}
+        isLoadingMore={isLoadingMore}
+        loadMoreLeagues={loadMoreLeagues}
+      />
+    );
+  };
 
   const { data: sportData, isLoading, error } = useQuery<LeagueData[]>({
     queryKey: [config.endpoint],
@@ -184,6 +259,26 @@ export function SportSection({ sport, onBetClick }: SportSectionProps) {
 
   return (
     <div className="space-y-6">
+      {/* Filter Bar */}
+      <FilterBar 
+        activeFilter={activeFilter}
+        onFilterChange={handleFilterChange}
+        selectedDate={selectedDate}
+        onDateChange={handleDateChange}
+      />
+
+      {/* Render filtered content */}
+      {renderFilteredContent()}
+    </div>
+  );
+}
+
+// Separate component for rendering the default sport content
+function DefaultSportContent({ sport, config, sportData, displayedLeagues, onBetClick, isLoadingMore, loadMoreLeagues }: any) {
+  const displayedData = sportData ? sportData.slice(0, displayedLeagues) : [];
+
+  return (
+    <div className="space-y-6">
       {/* Basketball Leagues Selection Box */}
       {sport === 'basketball' && (
         <div className="bg-slate-800 rounded-lg border border-gray-700 p-4">
@@ -254,7 +349,7 @@ export function SportSection({ sport, onBetClick }: SportSectionProps) {
           {config.title} Matches
         </h2>
         <div className="text-sm text-gray-400">
-          Showing {displayedData.length} of {sportData.length} leagues
+          Showing {displayedData.length} of {sportData?.length || 0} leagues
         </div>
       </div>
 
