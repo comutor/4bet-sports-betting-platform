@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
 import { Loader2 } from "lucide-react";
+import { useLocation } from "wouter";
 
 interface FeaturedMatch {
   id: string;
@@ -9,6 +10,7 @@ interface FeaturedMatch {
   league: string;
   sport: string;
   time: string;
+  commence_time?: string;
   odds: {
     home: string;
     draw?: string;
@@ -21,11 +23,45 @@ interface FeaturedMatchesProps {
 }
 
 export function FeaturedMatches({ onBetClick }: FeaturedMatchesProps) {
+  const [, setLocation] = useLocation();
   const { data: featuredMatches, isLoading } = useQuery<FeaturedMatch[]>({
     queryKey: ['/api/featured-matches'],
     staleTime: 5 * 60 * 1000, // 5 minutes
     refetchInterval: 2 * 60 * 1000, // 2 minutes
   });
+
+  const formatMatchTime = (timeString: string | undefined) => {
+    if (!timeString) return '';
+    
+    try {
+      const matchDate = new Date(timeString);
+      const today = new Date();
+      const tomorrow = new Date(today);
+      tomorrow.setDate(today.getDate() + 1);
+      
+      const isToday = matchDate.toDateString() === today.toDateString();
+      const isTomorrow = matchDate.toDateString() === tomorrow.toDateString();
+      
+      const timeOnly = matchDate.toLocaleTimeString('en-US', {
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: false
+      });
+      
+      if (isToday) {
+        return `Today ${timeOnly}`;
+      } else if (isTomorrow) {
+        return `Tomorrow ${timeOnly}`;
+      } else {
+        return matchDate.toLocaleDateString('en-US', {
+          month: 'short',
+          day: 'numeric'
+        }) + ` ${timeOnly}`;
+      }
+    } catch (error) {
+      return timeString;
+    }
+  };
 
   if (isLoading) {
     return (
@@ -79,7 +115,7 @@ export function FeaturedMatches({ onBetClick }: FeaturedMatchesProps) {
                 <span className="text-lg">{getSportIcon(match.sport)}</span>
                 <span className="text-sm text-gray-400">{match.league}</span>
               </div>
-              <span className="text-xs text-gray-400">{match.time}</span>
+              <span className="text-xs text-gray-400">{formatMatchTime(match.commence_time || match.time)}</span>
             </div>
             
             <div className="text-center mb-4">
@@ -88,47 +124,70 @@ export function FeaturedMatches({ onBetClick }: FeaturedMatchesProps) {
               </div>
             </div>
             
-            <div className="flex justify-center space-x-2">
-              <Button
-                size="sm"
-                variant="outline"
-                className="text-xs px-3 py-1 h-8 border-gray-500 text-white hover:bg-blue-600 flex-1"
-                onClick={() => onBetClick({
-                  match: `${match.homeTeam} vs ${match.awayTeam}`,
-                  selection: match.homeTeam,
-                  odds: match.odds.home
-                })}
-              >
-                {match.homeTeam} {match.odds.home}
-              </Button>
-              
-              {match.odds.draw && (
+            <div className="space-y-3">
+              <div className="flex justify-center space-x-2">
                 <Button
                   size="sm"
                   variant="outline"
-                  className="text-xs px-3 py-1 h-8 border-gray-500 text-white hover:bg-blue-600"
+                  className="text-xs px-3 py-1 h-8 border-gray-500 text-white hover:bg-blue-600 flex-1"
                   onClick={() => onBetClick({
                     match: `${match.homeTeam} vs ${match.awayTeam}`,
-                    selection: "Draw",
-                    odds: match.odds.draw
+                    selection: match.homeTeam,
+                    odds: match.odds.home
                   })}
                 >
-                  Draw {match.odds.draw}
+                  {match.homeTeam} {match.odds.home}
                 </Button>
-              )}
+                
+                {match.odds.draw && (
+                  <Button
+                    size="sm"
+                    variant="outline"
+                    className="text-xs px-3 py-1 h-8 border-gray-500 text-white hover:bg-blue-600"
+                    onClick={() => onBetClick({
+                      match: `${match.homeTeam} vs ${match.awayTeam}`,
+                      selection: "Draw",
+                      odds: match.odds.draw
+                    })}
+                  >
+                    Draw {match.odds.draw}
+                  </Button>
+                )}
+                
+                <Button
+                  size="sm"
+                  variant="outline"
+                  className="text-xs px-3 py-1 h-8 border-gray-500 text-white hover:bg-blue-600 flex-1"
+                  onClick={() => onBetClick({
+                    match: `${match.homeTeam} vs ${match.awayTeam}`,
+                    selection: match.awayTeam,
+                    odds: match.odds.away
+                  })}
+                >
+                  {match.awayTeam} {match.odds.away}
+                </Button>
+              </div>
               
-              <Button
-                size="sm"
-                variant="outline"
-                className="text-xs px-3 py-1 h-8 border-gray-500 text-white hover:bg-blue-600 flex-1"
-                onClick={() => onBetClick({
-                  match: `${match.homeTeam} vs ${match.awayTeam}`,
-                  selection: match.awayTeam,
-                  odds: match.odds.away
-                })}
-              >
-                {match.awayTeam} {match.odds.away}
-              </Button>
+              {/* More Markets Button */}
+              <div className="flex justify-center">
+                <Button
+                  size="sm"
+                  variant="ghost"
+                  className="text-xs text-blue-400 hover:text-blue-300 hover:bg-slate-700 px-3 py-1 h-6"
+                  onClick={() => {
+                    const params = new URLSearchParams({
+                      homeTeam: match.homeTeam,
+                      awayTeam: match.awayTeam,
+                      league: match.league,
+                      sport: match.sport.toLowerCase(),
+                      time: formatMatchTime(match.commence_time || match.time)
+                    });
+                    setLocation(`/more-markets/${match.id}?${params.toString()}`);
+                  }}
+                >
+                  +25 More Markets
+                </Button>
+              </div>
             </div>
           </div>
         ))}
