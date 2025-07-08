@@ -39,8 +39,8 @@ export function HamburgerMenu({ isOpen, onClose, onTabChange, activeTab }: Hambu
   const sportsCategories = [
     { id: 'football', label: 'Football', icon: 'fas fa-futbol' },
     { id: 'basketball', label: 'Basketball', icon: 'fas fa-basketball' },
-    { id: 'cricket', label: 'Cricket', icon: 'fas fa-baseball-ball' },
     { id: 'tennis', label: 'Tennis', icon: 'fas fa-table-tennis' },
+    { id: 'cricket', label: 'Cricket', icon: 'fas fa-baseball-ball' },
     { id: 'hockey', label: 'Hockey', icon: 'fas fa-hockey-puck' },
     { id: 'nfl', label: 'NFL', icon: 'fas fa-football-ball' },
     { id: 'volleyball', label: 'Volleyball', icon: 'fas fa-volleyball' },

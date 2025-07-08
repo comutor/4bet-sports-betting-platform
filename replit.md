@@ -101,6 +101,7 @@ The application uses PostgreSQL with the following core entities:
 ## Changelog
 ```
 Changelog:
+- July 8, 2025. Reordered sports navigation to prioritize Tennis before Cricket: Updated both TopNavigation and HamburgerMenu components to show Tennis as the 3rd sport and Cricket as 4th, reflecting user preferences for sports ordering
 - July 8, 2025. Replaced Sports button with Home button: Removed confusing "Sports" navigation button and replaced it with "Home" button that corresponds to Football section. Updated all navigation, filter logic, and logout flows to use 'home' as the default tab. Home page now loads Football content directly, simplifying user experience and removing unnecessary AllSportsSection component
 - July 7, 2025. Reordered sports navigation by usage priority: Updated sports tabs to prioritize most used sports (Football, Basketball, Hockey, NFL, Volleyball, Rugby) first, followed by other sports. Removed NBA as separate tab since it's a league under Basketball. Updated both top navigation and hamburger menu with consistent ordering
 - July 7, 2025. Updated sports navigation labels to match reference design: Added all 12 sports from reference image (AFL, Baseball, Basketball, Football, Formula-1, Handball, Hockey, MMA, NBA, NFL, Rugby, Volleyball) with proper routing and "Coming Soon" pages for sports under development
