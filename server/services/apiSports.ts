@@ -112,11 +112,15 @@ export class ApiSportsService {
   private baseUrl = 'https://api-football-v1.p.rapidapi.com/v3';
   private cache = new Map<string, { data: any; timestamp: number }>();
   private cacheTimeout = 30 * 60 * 1000; // 30 minutes
+  private apiEnabled = false; // Temporarily disable until valid key
 
   constructor() {
     this.apiKey = process.env.API_SPORTS_KEY || '';
     if (!this.apiKey) {
-      throw new Error('API_SPORTS_KEY environment variable is required');
+      console.log('API_SPORTS_KEY not found, using fallback to Odds API');
+      this.apiEnabled = false;
+    } else {
+      this.apiEnabled = true;
     }
     
     // Run cache cleanup every hour
@@ -227,6 +231,10 @@ export class ApiSportsService {
   }
 
   private async makeRequest(endpoint: string, params: Record<string, any> = {}): Promise<any> {
+    if (!this.apiEnabled) {
+      throw new Error('API Sports service disabled - no valid subscription');
+    }
+
     const cacheKey = `api-sports-${endpoint}-${JSON.stringify(params)}`;
     
     if (await this.isCacheValid(cacheKey)) {
@@ -250,10 +258,20 @@ export class ApiSportsService {
       });
 
       if (!response.ok) {
+        if (response.status === 429) {
+          throw new Error('API Sports rate limit exceeded');
+        }
         throw new Error(`API Sports request failed: ${response.status}`);
       }
 
       const data = await response.json();
+      
+      // Check if response indicates subscription issue
+      if (data.message && data.message.includes('not subscribed')) {
+        this.apiEnabled = false;
+        throw new Error('API Sports subscription invalid');
+      }
+      
       await this.setCache(cacheKey, data);
       return data;
     } catch (error) {
@@ -323,86 +341,121 @@ export class ApiSportsService {
     }
   }
 
-  // Get top European leagues with their competitions
+  // Get top European leagues with rate limiting for free tier
   async getTopEuropeanLeagues(): Promise<any[]> {
-    const topLeagues = [
-      { id: 39, name: 'Premier League', country: 'England', flag: '🏴󠁧󠁢󠁥󠁮󠁧󠁿' },
-      { id: 140, name: 'La Liga', country: 'Spain', flag: '🇪🇸' },
-      { id: 78, name: 'Bundesliga', country: 'Germany', flag: '🇩🇪' },
-      { id: 135, name: 'Serie A', country: 'Italy', flag: '🇮🇹' },
-      { id: 61, name: 'Ligue 1', country: 'France', flag: '🇫🇷' },
-      { id: 94, name: 'Primeira Liga', country: 'Portugal', flag: '🇵🇹' },
-      { id: 88, name: 'Eredivisie', country: 'Netherlands', flag: '🇳🇱' },
-      { id: 144, name: 'Jupiler Pro League', country: 'Belgium', flag: '🇧🇪' }
-    ];
-
-    const currentSeason = new Date().getFullYear();
-    const results = [];
-
-    for (const league of topLeagues) {
-      try {
-        const fixtures = await this.getFixturesByLeague(league.id, currentSeason);
-        
-        results.push({
-          ...league,
-          fixtures: fixtures.slice(0, 10) // Limit to 10 fixtures per league
-        });
-      } catch (error) {
-        console.error(`Failed to fetch fixtures for ${league.name}:`, error);
-        results.push({
-          ...league,
-          fixtures: []
-        });
-      }
+    const today = new Date().toISOString().split('T')[0];
+    
+    try {
+      const fixtures = await this.getFixturesByDate(today);
+      
+      // Filter for top leagues
+      const topLeagueNames = [
+        'Premier League', 'La Liga', 'Bundesliga', 'Serie A', 'Ligue 1',
+        'Champions League', 'Europa League', 'Conference League'
+      ];
+      
+      const topLeagueFixtures = fixtures.filter(fixture => 
+        topLeagueNames.some(league => 
+          fixture.league.name.includes(league)
+        )
+      );
+      
+      // Group by league
+      const leaguesMap = new Map();
+      
+      topLeagueFixtures.forEach(fixture => {
+        const leagueName = fixture.league.name;
+        if (!leaguesMap.has(leagueName)) {
+          leaguesMap.set(leagueName, {
+            id: fixture.league.id,
+            name: leagueName,
+            country: fixture.league.country,
+            flag: this.getCountryFlag(fixture.league.country),
+            fixtures: []
+          });
+        }
+        leaguesMap.get(leagueName).fixtures.push(fixture);
+      });
+      
+      return Array.from(leaguesMap.values());
+    } catch (error) {
+      console.error('Failed to fetch top European leagues:', error);
+      return [];
     }
-
-    return results;
   }
 
-  // Get competitions organized by country
+  // Get competitions organized by country with rate limiting
   async getCompetitionsByCountry(): Promise<any[]> {
-    const countries = [
-      { name: 'England', code: 'GB', flag: '🏴󠁧󠁢󠁥󠁮󠁧󠁿', leagueIds: [39, 40, 41, 42, 2, 48] },
-      { name: 'Spain', code: 'ES', flag: '🇪🇸', leagueIds: [140, 141, 143, 556] },
-      { name: 'Germany', code: 'DE', flag: '🇩🇪', leagueIds: [78, 79, 81, 82] },
-      { name: 'Italy', code: 'IT', flag: '🇮🇹', leagueIds: [135, 136, 137, 138] },
-      { name: 'France', code: 'FR', flag: '🇫🇷', leagueIds: [61, 62, 66, 67] },
-      { name: 'Portugal', code: 'PT', flag: '🇵🇹', leagueIds: [94, 95, 96, 97] },
-      { name: 'Netherlands', code: 'NL', flag: '🇳🇱', leagueIds: [88, 89, 90, 91] },
-      { name: 'Belgium', code: 'BE', flag: '🇧🇪', leagueIds: [144, 145, 146] }
-    ];
-
-    const currentSeason = new Date().getFullYear();
-    const results = [];
-
-    for (const country of countries) {
-      const leagues = [];
+    // For free tier, limit to just Premier League to avoid rate limits
+    const today = new Date().toISOString().split('T')[0];
+    
+    try {
+      const fixtures = await this.getFixturesByDate(today);
       
-      for (const leagueId of country.leagueIds) {
-        try {
-          const fixtures = await this.getFixturesByLeague(leagueId, currentSeason);
-          
-          if (fixtures.length > 0) {
-            leagues.push({
-              id: leagueId,
-              name: fixtures[0].league.name,
-              fixtures: fixtures.slice(0, 8) // Limit fixtures per league
-            });
-          }
-        } catch (error) {
-          console.error(`Failed to fetch league ${leagueId} for ${country.name}:`, error);
+      const countriesData = [];
+      const countries = new Map();
+      
+      // Group fixtures by country and league
+      fixtures.forEach(fixture => {
+        const countryName = fixture.league.country;
+        const leagueName = fixture.league.name;
+        
+        if (!countries.has(countryName)) {
+          countries.set(countryName, {
+            name: countryName,
+            flag: this.getCountryFlag(countryName),
+            leagues: new Map()
+          });
         }
-      }
-
-      if (leagues.length > 0) {
-        results.push({
-          ...country,
-          leagues
-        });
-      }
+        
+        const country = countries.get(countryName);
+        if (!country.leagues.has(leagueName)) {
+          country.leagues.set(leagueName, {
+            id: fixture.league.id,
+            name: leagueName,
+            fixtures: []
+          });
+        }
+        
+        country.leagues.get(leagueName).fixtures.push(fixture);
+      });
+      
+      // Convert to expected format
+      countries.forEach(country => {
+        if (country.leagues.size > 0) {
+          countriesData.push({
+            name: country.name,
+            flag: country.flag,
+            leagues: Array.from(country.leagues.values())
+          });
+        }
+      });
+      
+      return countriesData;
+    } catch (error) {
+      console.error('Failed to fetch competitions by country:', error);
+      return [];
     }
+  }
 
-    return results;
+  private getCountryFlag(countryName: string): string {
+    const flagMap: { [key: string]: string } = {
+      'England': '🏴󠁧󠁢󠁥󠁮󠁧󠁿',
+      'Spain': '🇪🇸',
+      'Germany': '🇩🇪',
+      'Italy': '🇮🇹',
+      'France': '🇫🇷',
+      'Portugal': '🇵🇹',
+      'Netherlands': '🇳🇱',
+      'Belgium': '🇧🇪',
+      'Brazil': '🇧🇷',
+      'Argentina': '🇦🇷',
+      'Mexico': '🇲🇽',
+      'USA': '🇺🇸',
+      'Japan': '🇯🇵',
+      'Australia': '🇦🇺'
+    };
+    return flagMap[countryName] || '🏳️';
   }
 
   // Get international competitions
