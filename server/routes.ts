@@ -438,10 +438,22 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Football games by country priority - now using API Sports
+  // Football games by country priority - fallback to Odds API temporarily
   app.get("/api/football/countries", async (req, res) => {
     try {
-      const footballData = await apiSportsService.getCompetitionsByCountry();
+      // Try API Sports first, fallback to Odds API
+      try {
+        const footballData = await apiSportsService.getCompetitionsByCountry();
+        if (footballData && footballData.length > 0) {
+          res.json(footballData);
+          return;
+        }
+      } catch (apiSportsError) {
+        console.log("API Sports failed, falling back to Odds API");
+      }
+      
+      // Fallback to Odds API
+      const footballData = await oddsApiService.getFootballGamesByCountryPriority();
       res.json(footballData);
     } catch (error) {
       console.error("Error fetching football data:", error);
@@ -457,33 +469,73 @@ export async function registerRoutes(app: Express): Promise<Server> {
       let eventId = 1;
 
       if (sport === 'football') {
-        const footballData = await apiSportsService.getTopEuropeanLeagues();
-        
-        if (footballData && footballData.length > 0) {
-          footballData.forEach(league => {
-            if (league.fixtures && league.fixtures.length > 0) {
-              league.fixtures.forEach(match => {
-                topLeagueMatches.push({
-                  id: eventId++,
-                  sport: 'Football',
-                  status: new Date(match.fixture.date) > new Date() ? 'upcoming' : 'live',
-                  homeTeam: match.teams.home.name,
-                  awayTeam: match.teams.away.name,
-                  homeScore: match.goals.home,
-                  awayScore: match.goals.away,
-                  league: match.league.name,
-                  country: match.league.country,
-                  startTime: new Date(match.fixture.date),
-                  currentTime: null,
-                  odds: {
-                    home: 2.0, // Will be replaced with real odds later
-                    draw: 3.0,
-                    away: 2.5
+        // Try API Sports first, fallback to Odds API
+        try {
+          const footballData = await apiSportsService.getTopEuropeanLeagues();
+          
+          if (footballData && footballData.length > 0) {
+            footballData.forEach(league => {
+              if (league.fixtures && league.fixtures.length > 0) {
+                league.fixtures.forEach(match => {
+                  topLeagueMatches.push({
+                    id: eventId++,
+                    sport: 'Football',
+                    status: new Date(match.fixture.date) > new Date() ? 'upcoming' : 'live',
+                    homeTeam: match.teams.home.name,
+                    awayTeam: match.teams.away.name,
+                    homeScore: match.goals.home,
+                    awayScore: match.goals.away,
+                    league: match.league.name,
+                    country: match.league.country,
+                    startTime: new Date(match.fixture.date),
+                    currentTime: null,
+                    odds: {
+                      home: 2.0,
+                      draw: 3.0,
+                      away: 2.5
+                    }
+                  });
+                });
+              }
+            });
+          }
+        } catch (apiSportsError) {
+          console.log("API Sports failed for top leagues, falling back to Odds API");
+          
+          // Fallback to Odds API
+          const footballData = await oddsApiService.getFootballGamesByCountryPriority();
+          
+          // Filter only top leagues
+          const topLeagues = ['Premier League', 'La Liga', 'Bundesliga', 'Serie A', 'Ligue 1', 'Champions League', 'Europa League'];
+          
+          if (footballData && footballData.length > 0) {
+            footballData.forEach(country => {
+              if (country.games && country.games.length > 0) {
+                country.games.forEach(match => {
+                  if (topLeagues.some(league => match.league_name?.includes(league) || match.sport_title?.includes(league))) {
+                    topLeagueMatches.push({
+                      id: eventId++,
+                      sport: 'Football',
+                      status: new Date(match.commence_time) > new Date() ? 'upcoming' : 'live',
+                      homeTeam: match.home_team,
+                      awayTeam: match.away_team,
+                      homeScore: null,
+                      awayScore: null,
+                      league: match.league_name || match.sport_title,
+                      country: country.country,
+                      startTime: new Date(match.commence_time),
+                      currentTime: null,
+                      odds: {
+                        home: match.bookmakers?.[0]?.markets?.[0]?.outcomes?.find((o: any) => o.name === match.home_team)?.price || 2.0,
+                        draw: match.bookmakers?.[0]?.markets?.[0]?.outcomes?.find((o: any) => o.name === 'Draw')?.price || 3.0,
+                        away: match.bookmakers?.[0]?.markets?.[0]?.outcomes?.find((o: any) => o.name === match.away_team)?.price || 2.5
+                      }
+                    });
                   }
                 });
-              });
-            }
-          });
+              }
+            });
+          }
         }
       }
 
@@ -741,37 +793,72 @@ export async function registerRoutes(app: Express): Promise<Server> {
       let eventId = 1;
 
       if (sport === 'football') {
-        const footballData = await apiSportsService.getCompetitionsByCountry();
-        
-        if (footballData && footballData.length > 0) {
-          footballData.forEach(country => {
-            if (country.leagues && country.leagues.length > 0) {
-              country.leagues.forEach(league => {
-                if (league.fixtures && league.fixtures.length > 0) {
-                  league.fixtures.forEach(match => {
-                    competitionMatches.push({
-                      id: eventId++,
-                      sport: 'Football',
-                      status: new Date(match.fixture.date) > new Date() ? 'upcoming' : 'live',
-                      homeTeam: match.teams.home.name,
-                      awayTeam: match.teams.away.name,
-                      homeScore: match.goals.home,
-                      awayScore: match.goals.away,
-                      league: match.league.name,
-                      country: match.league.country,
-                      startTime: new Date(match.fixture.date),
-                      currentTime: null,
-                      odds: {
-                        home: 2.0,
-                        draw: 3.0,
-                        away: 2.5
-                      }
+        // Try API Sports first, fallback to Odds API
+        try {
+          const footballData = await apiSportsService.getCompetitionsByCountry();
+          
+          if (footballData && footballData.length > 0) {
+            footballData.forEach(country => {
+              if (country.leagues && country.leagues.length > 0) {
+                country.leagues.forEach(league => {
+                  if (league.fixtures && league.fixtures.length > 0) {
+                    league.fixtures.forEach(match => {
+                      competitionMatches.push({
+                        id: eventId++,
+                        sport: 'Football',
+                        status: new Date(match.fixture.date) > new Date() ? 'upcoming' : 'live',
+                        homeTeam: match.teams.home.name,
+                        awayTeam: match.teams.away.name,
+                        homeScore: match.goals.home,
+                        awayScore: match.goals.away,
+                        league: match.league.name,
+                        country: match.league.country,
+                        startTime: new Date(match.fixture.date),
+                        currentTime: null,
+                        odds: {
+                          home: 2.0,
+                          draw: 3.0,
+                          away: 2.5
+                        }
+                      });
                     });
+                  }
+                });
+              }
+            });
+          }
+        } catch (apiSportsError) {
+          console.log("API Sports failed for competitions, falling back to Odds API");
+          
+          // Fallback to Odds API
+          const footballData = await oddsApiService.getFootballGamesByCountryPriority();
+          
+          if (footballData && footballData.length > 0) {
+            footballData.forEach(country => {
+              if (country.games && country.games.length > 0) {
+                country.games.forEach(match => {
+                  competitionMatches.push({
+                    id: eventId++,
+                    sport: 'Football',
+                    status: new Date(match.commence_time) > new Date() ? 'upcoming' : 'live',
+                    homeTeam: match.home_team,
+                    awayTeam: match.away_team,
+                    homeScore: null,
+                    awayScore: null,
+                    league: match.league_name || match.sport_title,
+                    country: country.country,
+                    startTime: new Date(match.commence_time),
+                    currentTime: null,
+                    odds: {
+                      home: match.bookmakers?.[0]?.markets?.[0]?.outcomes?.find((o: any) => o.name === match.home_team)?.price || 2.0,
+                      draw: match.bookmakers?.[0]?.markets?.[0]?.outcomes?.find((o: any) => o.name === 'Draw')?.price || 3.0,
+                      away: match.bookmakers?.[0]?.markets?.[0]?.outcomes?.find((o: any) => o.name === match.away_team)?.price || 2.5
+                    }
                   });
-                }
-              });
-            }
-          });
+                });
+              }
+            });
+          }
         }
       }
 

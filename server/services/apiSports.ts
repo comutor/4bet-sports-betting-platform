@@ -109,7 +109,7 @@ export interface ApiSportsStanding {
 
 export class ApiSportsService {
   private apiKey: string;
-  private baseUrl = 'https://api-sports.io/v3';
+  private baseUrl = 'https://api-football-v1.p.rapidapi.com/v3';
   private cache = new Map<string, { data: any; timestamp: number }>();
   private cacheTimeout = 30 * 60 * 1000; // 30 minutes
 
@@ -245,7 +245,7 @@ export class ApiSportsService {
         method: 'GET',
         headers: {
           'X-RapidAPI-Key': this.apiKey,
-          'X-RapidAPI-Host': 'api-sports.io'
+          'X-RapidAPI-Host': 'api-football-v1.p.rapidapi.com'
         }
       });
 
