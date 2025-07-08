@@ -785,6 +785,172 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // New endpoint for countries with leagues structure (API Sports style)
+  app.get("/api/competitions/countries/:sport", async (req, res) => {
+    try {
+      const { sport } = req.params;
+      
+      if (sport === 'football') {
+        // Try API Sports first for better country/league organization
+        try {
+          const leagues = await apiSportsService.getLeagues();
+          
+          // Group leagues by country
+          const countriesMap = new Map();
+          
+          leagues.forEach(league => {
+            const countryName = league.country.name;
+            if (!countriesMap.has(countryName)) {
+              countriesMap.set(countryName, {
+                name: countryName,
+                code: league.country.code || '',
+                flag: league.country.flag || '',
+                leagues: []
+              });
+            }
+            
+            countriesMap.get(countryName).leagues.push({
+              id: league.league.id,
+              name: league.league.name,
+              type: league.league.type,
+              logo: league.league.logo,
+              country: countryName,
+              current: league.seasons?.some(s => s.current) || false
+            });
+          });
+          
+          // Convert to array and sort alphabetically
+          const countries = Array.from(countriesMap.values()).sort((a, b) => a.name.localeCompare(b.name));
+          res.json(countries);
+          return;
+        } catch (apiSportsError) {
+          console.log('API Sports failed for leagues, creating manual structure');
+        }
+        
+        // Fallback: Create manual country structure from existing data
+        const footballData = await oddsApiService.getFootballGamesByCountryPriority();
+        const countriesMap = new Map();
+        
+        footballData.forEach(countryData => {
+          if (!countriesMap.has(countryData.country)) {
+            countriesMap.set(countryData.country, {
+              name: countryData.country,
+              code: '',
+              flag: countryData.flag || '',
+              leagues: new Set()
+            });
+          }
+          
+          countryData.games.forEach(game => {
+            if (game.league_name) {
+              countriesMap.get(countryData.country).leagues.add(game.league_name);
+            }
+          });
+        });
+        
+        // Convert sets to arrays
+        const countries = Array.from(countriesMap.values()).map(country => ({
+          ...country,
+          leagues: Array.from(country.leagues).map((name, index) => ({
+            id: index + 1,
+            name,
+            type: 'League',
+            logo: '',
+            country: country.name,
+            current: true
+          }))
+        })).sort((a, b) => a.name.localeCompare(b.name));
+        
+        res.json(countries);
+      } else {
+        // Manual structure for other sports
+        const sportStructures = {
+          basketball: [
+            {
+              name: 'United States',
+              code: 'US',
+              flag: '🇺🇸',
+              leagues: [
+                { id: 1, name: 'NBA', type: 'Professional', logo: '', country: 'United States', current: true },
+                { id: 2, name: 'WNBA', type: 'Professional', logo: '', country: 'United States', current: true }
+              ]
+            },
+            {
+              name: 'Europe',
+              code: 'EU',
+              flag: '🇪🇺',
+              leagues: [
+                { id: 3, name: 'EuroLeague', type: 'Continental', logo: '', country: 'Europe', current: true }
+              ]
+            },
+            {
+              name: 'Australia',
+              code: 'AU',
+              flag: '🇦🇺',
+              leagues: [
+                { id: 4, name: 'NBL', type: 'Professional', logo: '', country: 'Australia', current: true }
+              ]
+            }
+          ],
+          cricket: [
+            {
+              name: 'Australia',
+              code: 'AU',
+              flag: '🇦🇺',
+              leagues: [
+                { id: 1, name: 'Big Bash League', type: 'T20', logo: '', country: 'Australia', current: true }
+              ]
+            },
+            {
+              name: 'England',
+              code: 'GB',
+              flag: '🏴󠁧󠁢󠁥󠁮󠁧󠁿',
+              leagues: [
+                { id: 2, name: 'County Championship', type: 'First Class', logo: '', country: 'England', current: true }
+              ]
+            },
+            {
+              name: 'India',
+              code: 'IN',
+              flag: '🇮🇳',
+              leagues: [
+                { id: 3, name: 'Indian Premier League', type: 'T20', logo: '', country: 'India', current: true }
+              ]
+            },
+            {
+              name: 'International',
+              code: 'INT',
+              flag: '🌍',
+              leagues: [
+                { id: 4, name: 'Test Matches', type: 'Test', logo: '', country: 'International', current: true },
+                { id: 5, name: 'One Day International', type: 'ODI', logo: '', country: 'International', current: true },
+                { id: 6, name: 'T20 International', type: 'T20I', logo: '', country: 'International', current: true }
+              ]
+            }
+          ],
+          tennis: [
+            {
+              name: 'International',
+              code: 'INT',
+              flag: '🌍',
+              leagues: [
+                { id: 1, name: 'ATP Tour', type: 'Professional', logo: '', country: 'International', current: true },
+                { id: 2, name: 'WTA Tour', type: 'Professional', logo: '', country: 'International', current: true },
+                { id: 3, name: 'ITF Men', type: 'Professional', logo: '', country: 'International', current: true },
+                { id: 4, name: 'ITF Women', type: 'Professional', logo: '', country: 'International', current: true }
+              ]
+            }
+          ]
+        };
+        
+        res.json(sportStructures[sport] || []);
+      }
+    } catch (error) {
+      console.error("Error fetching countries/leagues:", error);
+      res.status(500).json({ error: "Failed to fetch countries and leagues" });
+    }
+  });
+
   // Competitions endpoint - Live API Integration  
   app.get('/api/competitions/:sport', async (req, res) => {
     try {
