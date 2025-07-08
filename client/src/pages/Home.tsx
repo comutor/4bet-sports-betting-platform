@@ -21,7 +21,7 @@ import { FootballSection } from "@/components/FootballSection";
 import { SportSection } from "@/components/SportSection";
 import { MyBetsSection } from "@/components/MyBetsSection";
 import { StatementSection } from "@/components/StatementSection";
-import { AllSportsSection } from "@/components/AllSportsSection";
+
 import { AllSection } from "@/components/AllSection";
 import { LeagueMatchesSection } from "@/components/LeagueMatchesSection";
 
@@ -34,7 +34,7 @@ import { sampleFeaturedEvents } from "@/lib/betting-data";
 import { Button } from "@/components/ui/button";
 
 export default function Home() {
-  const [activeTab, setActiveTab] = useState('football');
+  const [activeTab, setActiveTab] = useState('home');
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userBalance, setUserBalance] = useState('0.00');
@@ -199,7 +199,7 @@ export default function Home() {
         setUserBalance('0.00');
         setUserCountry('');
         setUserData(null);
-        setActiveTab('football');
+        setActiveTab('home');
       }
     } catch (error) {
       console.error('Logout failed:', error);
@@ -208,7 +208,7 @@ export default function Home() {
       setUserData(null);
       setUserBalance('0.00');
       setUserCountry('');
-      setActiveTab('football');
+      setActiveTab('home');
     }
   };
 
@@ -268,32 +268,35 @@ export default function Home() {
     }
 
     // Check if all filter is active for any sport tab
-    if (['afl', 'baseball', 'basketball', 'football', 'formula-1', 'handball', 'hockey', 'mma', 'nfl', 'rugby', 'volleyball'].includes(activeTab) && 
+    if (['afl', 'baseball', 'basketball', 'football', 'home', 'formula-1', 'handball', 'hockey', 'mma', 'nfl', 'rugby', 'volleyball'].includes(activeTab) && 
         activeFilter === 'all') {
-      return <AllSection selectedDate={selectedDate} sport={activeTab} onBetClick={handleBetClick} />;
+      const sport = activeTab === 'home' ? 'football' : activeTab;
+      return <AllSection selectedDate={selectedDate} sport={sport} onBetClick={handleBetClick} />;
     }
 
     // Check if competitions filter is active for any sport tab
-    if (['afl', 'baseball', 'basketball', 'football', 'formula-1', 'handball', 'hockey', 'mma', 'nfl', 'rugby', 'volleyball'].includes(activeTab) && 
+    if (['afl', 'baseball', 'basketball', 'football', 'home', 'formula-1', 'handball', 'hockey', 'mma', 'nfl', 'rugby', 'volleyball'].includes(activeTab) && 
         activeFilter === 'competitions') {
-      return <CompetitionsSection onBetClick={handleBetClick} onLeagueClick={handleLeagueClick} sport={activeTab} />;
+      const sport = activeTab === 'home' ? 'football' : activeTab;
+      return <CompetitionsSection onBetClick={handleBetClick} onLeagueClick={handleLeagueClick} sport={sport} />;
     }
 
     // Check if top-leagues filter is active for any sport tab
-    if (['afl', 'baseball', 'basketball', 'football', 'formula-1', 'handball', 'hockey', 'mma', 'nfl', 'rugby', 'volleyball'].includes(activeTab) && 
+    if (['afl', 'baseball', 'basketball', 'football', 'home', 'formula-1', 'handball', 'hockey', 'mma', 'nfl', 'rugby', 'volleyball'].includes(activeTab) && 
         activeFilter === 'top-leagues') {
-      return <TopLeaguesSection onBetClick={handleBetClick} onLeagueClick={handleLeagueClick} sport={activeTab} />;
+      const sport = activeTab === 'home' ? 'football' : activeTab;
+      return <TopLeaguesSection onBetClick={handleBetClick} onLeagueClick={handleLeagueClick} sport={sport} />;
     }
 
     // Check if live filter is active for any sport tab
-    if (['afl', 'baseball', 'basketball', 'football', 'formula-1', 'handball', 'hockey', 'mma', 'nfl', 'rugby', 'volleyball'].includes(activeTab) && 
+    if (['afl', 'baseball', 'basketball', 'football', 'home', 'formula-1', 'handball', 'hockey', 'mma', 'nfl', 'rugby', 'volleyball'].includes(activeTab) && 
         activeFilter === 'live') {
-      return <LiveSection sport={activeTab} onBetClick={handleBetClick} />;
+      const sport = activeTab === 'home' ? 'football' : activeTab;
+      return <LiveSection sport={sport} onBetClick={handleBetClick} />;
     }
 
     switch (activeTab) {
-      case 'sports':
-        return <AllSportsSection onBetClick={handleBetClick} />;
+      case 'home':
       case 'football':
         return <FootballSection onBetClick={handleBetClick} isInBetslip={isInBetslip} />;
       case 'basketball':
