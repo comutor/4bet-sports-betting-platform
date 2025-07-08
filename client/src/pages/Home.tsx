@@ -305,49 +305,19 @@ export default function Home() {
       case 'volleyball':
         return <SportSection sport="volleyball" onBetClick={handleBetClick} />;
       
-      // New sports - Coming Soon implementations
+      // All sports now use SportSection with FilterBar
       case 'afl':
-        return (
-          <div className="text-center py-4">
-            <h2 className="text-2xl font-bold mb-4">AFL Coming Soon</h2>
-            <p className="text-gray-400">Australian Football League betting is under development.</p>
-          </div>
-        );
+        return <SportSection sport="afl" onBetClick={handleBetClick} />;
       case 'formula-1':
-        return (
-          <div className="text-center py-4">
-            <h2 className="text-2xl font-bold mb-4">Formula-1 Coming Soon</h2>
-            <p className="text-gray-400">Formula 1 betting is under development.</p>
-          </div>
-        );
+        return <SportSection sport="formula-1" onBetClick={handleBetClick} />;
       case 'handball':
-        return (
-          <div className="text-center py-4">
-            <h2 className="text-2xl font-bold mb-4">Handball Coming Soon</h2>
-            <p className="text-gray-400">Handball betting is under development.</p>
-          </div>
-        );
+        return <SportSection sport="handball" onBetClick={handleBetClick} />;
       case 'mma':
-        return (
-          <div className="text-center py-4">
-            <h2 className="text-2xl font-bold mb-4">MMA Coming Soon</h2>
-            <p className="text-gray-400">Mixed Martial Arts betting is under development.</p>
-          </div>
-        );
+        return <SportSection sport="mma" onBetClick={handleBetClick} />;
       case 'nfl':
-        return (
-          <div className="text-center py-4">
-            <h2 className="text-2xl font-bold mb-4">NFL Coming Soon</h2>
-            <p className="text-gray-400">National Football League betting is under development.</p>
-          </div>
-        );
+        return <SportSection sport="nfl" onBetClick={handleBetClick} />;
       case 'rugby':
-        return (
-          <div className="text-center py-4">
-            <h2 className="text-2xl font-bold mb-4">Rugby Coming Soon</h2>
-            <p className="text-gray-400">Rugby betting is under development.</p>
-          </div>
-        );
+        return <SportSection sport="rugby" onBetClick={handleBetClick} />;
       case 'live':
         return <LiveSection sport={activeTab} onBetClick={handleBetClick} />;
       case 'my-bets':
