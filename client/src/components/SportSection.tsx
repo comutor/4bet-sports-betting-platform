@@ -13,88 +13,135 @@ interface SportGame {
   home_team: string;
   away_team: string;
   commence_time: string;
-  league_name: string;
-  country: string;
-  country_flag: string;
-  priority: number;
-  bookmakers: Array<{
-    markets: Array<{
-      outcomes: Array<{
+  bookmakers?: {
+    markets: {
+      outcomes: {
         name: string;
         price: number;
-      }>;
-    }>;
-  }>;
+      }[];
+    }[];
+  }[];
 }
 
 interface LeagueData {
   league: string;
-  country: string;
-  flag: string;
-  games: SportGame[];
-  priority: number;
+  country?: string;
+  flag?: string;
+  matches: SportGame[];
 }
 
 interface SportSectionProps {
-  sport: 'basketball' | 'hockey' | 'tennis' | 'baseball' | 'volleyball';
-  onBetClick: (eventName: string, selection: string, odds: string) => void;
+  sport: string;
+  onBetClick: (bet: any) => void;
 }
 
-const sportConfig = {
+const sportConfigs = {
   basketball: {
-    title: 'Basketball',
-    icon: '🏀',
-    endpoint: '/api/basketball/leagues'
+    title: "Basketball",
+    icon: "🏀",
+    endpoint: "/api/sports/basketball"
   },
   hockey: {
-    title: 'Ice Hockey',
-    icon: '🏒',
-    endpoint: '/api/hockey/leagues'
-  },
-  tennis: {
-    title: 'Tennis',
-    icon: '🎾',
-    endpoint: '/api/tennis/tournaments'
+    title: "Ice Hockey", 
+    icon: "🏒",
+    endpoint: "/api/sports/hockey"
   },
   baseball: {
-    title: 'Baseball',
-    icon: '⚾',
-    endpoint: '/api/baseball/leagues'
+    title: "Baseball",
+    icon: "⚾",
+    endpoint: "/api/sports/baseball"
   },
   volleyball: {
-    title: 'Volleyball',
-    icon: '🏐',
-    endpoint: '/api/volleyball/leagues'
+    title: "Volleyball",
+    icon: "🏐",
+    endpoint: "/api/sports/volleyball"
+  },
+  afl: {
+    title: "AFL",
+    icon: "🏉",
+    endpoint: "/api/sports/afl"
+  },
+  "formula-1": {
+    title: "Formula 1",
+    icon: "🏎️",
+    endpoint: "/api/sports/formula1"
+  },
+  handball: {
+    title: "Handball",
+    icon: "🤾",
+    endpoint: "/api/sports/handball"
+  },
+  mma: {
+    title: "MMA",
+    icon: "🥊",
+    endpoint: "/api/sports/mma"
+  },
+  nfl: {
+    title: "NFL",
+    icon: "🏈",
+    endpoint: "/api/sports/nfl"
+  },
+  rugby: {
+    title: "Rugby",
+    icon: "🏉",
+    endpoint: "/api/sports/rugby"
   }
 };
 
 export function SportSection({ sport, onBetClick }: SportSectionProps) {
-  const [displayedLeagues, setDisplayedLeagues] = useState<number>(3);
+  const [activeFilter, setActiveFilter] = useState("default");
+  const [selectedDate, setSelectedDate] = useState(new Date());
+  const [displayedLeagues, setDisplayedLeagues] = useState(6);
   const [isLoadingMore, setIsLoadingMore] = useState(false);
-  const [activeFilter, setActiveFilter] = useState<string>('all');
-  const [selectedDate, setSelectedDate] = useState<Date>(new Date());
 
-  const config = sportConfig[sport];
+  const config = sportConfigs[sport as keyof typeof sportConfigs];
 
-  // Handle filter change
+  const { data: sportData, isLoading, error } = useQuery<LeagueData[]>({
+    queryKey: [config.endpoint],
+    staleTime: 5 * 60 * 1000, // 5 minutes
+    refetchInterval: 2 * 60 * 1000, // 2 minutes
+  });
+
   const handleFilterChange = (filter: string) => {
     setActiveFilter(filter);
   };
 
-  // Handle date change
   const handleDateChange = (date: Date) => {
     setSelectedDate(date);
   };
 
-  // Render content based on active filter
+  const loadMoreLeagues = () => {
+    if (!sportData || isLoadingMore || displayedLeagues >= sportData.length) return;
+    
+    setIsLoadingMore(true);
+    setTimeout(() => {
+      setDisplayedLeagues(prev => Math.min(prev + 2, sportData.length));
+      setIsLoadingMore(false);
+    }, 800);
+  };
+
+  const handleScroll = useCallback(() => {
+    if (
+      window.innerHeight + document.documentElement.scrollTop
+      >= document.documentElement.offsetHeight - 1000
+    ) {
+      loadMoreLeagues();
+    }
+  }, []);
+
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [handleScroll]);
+
   const renderFilteredContent = () => {
     switch (activeFilter) {
       case 'all':
-        return <AllSection selectedDate={selectedDate} sport={sport} onBetClick={onBetClick} />;
+        return <AllSection sport={sport} selectedDate={selectedDate} onBetClick={onBetClick} />;
       case 'top-leagues':
-        return <TopLeaguesSection onBetClick={onBetClick} onLeagueClick={() => {}} sport={sport} />;
+        return <TopLeaguesSection sport={sport} onBetClick={onBetClick} />;
       case 'competitions':
-        return <CompetitionsSection onBetClick={onBetClick} onLeagueClick={() => {}} sport={sport} />;
+        return <CompetitionsSection sport={sport} onBetClick={onBetClick} />;
       case 'live':
         return <LiveSection sport={sport} onBetClick={onBetClick} />;
       default:
@@ -131,48 +178,36 @@ export function SportSection({ sport, onBetClick }: SportSectionProps) {
       );
     }
 
-    return (
-      <DefaultSportContent 
-        sport={sport}
-        config={config}
-        sportData={sportData}
-        displayedLeagues={displayedLeagues}
-        onBetClick={onBetClick}
-        isLoadingMore={isLoadingMore}
-        loadMoreLeagues={loadMoreLeagues}
+    return <DefaultSportContent 
+      sport={sport}
+      config={config}
+      sportData={sportData}
+      displayedLeagues={displayedLeagues}
+      onBetClick={onBetClick}
+      isLoadingMore={isLoadingMore}
+      loadMoreLeagues={loadMoreLeagues}
+    />;
+  };
+
+  return (
+    <div className="space-y-6">
+      {/* Filter Bar - Always show this */}
+      <FilterBar 
+        activeFilter={activeFilter}
+        onFilterChange={handleFilterChange}
+        selectedDate={selectedDate}
+        onDateChange={handleDateChange}
       />
-    );
-  };
 
-  const { data: sportData, isLoading, error } = useQuery<LeagueData[]>({
-    queryKey: [config.endpoint],
-    staleTime: 5 * 60 * 1000, // 5 minutes
-    refetchInterval: 2 * 60 * 1000, // 2 minutes
-  });
+      {/* Render filtered content */}
+      {renderFilteredContent()}
+    </div>
+  );
+}
 
-  const handleScroll = useCallback(() => {
-    if (
-      window.innerHeight + document.documentElement.scrollTop
-      >= document.documentElement.offsetHeight - 1000
-    ) {
-      loadMoreLeagues();
-    }
-  }, []);
-
-  useEffect(() => {
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, [handleScroll]);
-
-  const loadMoreLeagues = () => {
-    if (!sportData || isLoadingMore || displayedLeagues >= sportData.length) return;
-    
-    setIsLoadingMore(true);
-    setTimeout(() => {
-      setDisplayedLeagues(prev => Math.min(prev + 2, sportData.length));
-      setIsLoadingMore(false);
-    }, 800);
-  };
+// Separate component for rendering the default sport content
+function DefaultSportContent({ sport, config, sportData, displayedLeagues, onBetClick, isLoadingMore, loadMoreLeagues }: any) {
+  const displayedData = sportData ? sportData.slice(0, displayedLeagues) : [];
 
   const formatMatchTime = (commence_time: string) => {
     const matchDate = new Date(commence_time);
@@ -205,17 +240,11 @@ export function SportSection({ sport, onBetClick }: SportSectionProps) {
     return `${dateStr} ${timeStr}`;
   };
 
-  const getOdds = (game: SportGame) => {
-    if (!game.bookmakers || game.bookmakers.length === 0) {
-      return { home: "N/A", away: "N/A", draw: sport === 'basketball' || sport === 'hockey' ? undefined : "N/A" };
-    }
+  const getMatchOdds = (game: SportGame) => {
+    const markets = game.bookmakers?.[0]?.markets || [];
+    const h2hMarket = markets.find(m => m.outcomes?.length >= 2);
+    const outcomes = h2hMarket?.outcomes || [];
     
-    const market = game.bookmakers[0]?.markets?.[0];
-    if (!market || !market.outcomes) {
-      return { home: "N/A", away: "N/A", draw: sport === 'basketball' || sport === 'hockey' ? undefined : "N/A" };
-    }
-    
-    const outcomes = market.outcomes;
     const homeOdds = outcomes.find(o => o.name === game.home_team)?.price;
     const awayOdds = outcomes.find(o => o.name === game.away_team)?.price;
     const drawOdds = outcomes.find(o => o.name === "Draw")?.price;
@@ -226,56 +255,6 @@ export function SportSection({ sport, onBetClick }: SportSectionProps) {
       draw: sport === 'basketball' || sport === 'hockey' ? undefined : (drawOdds ? drawOdds.toFixed(2) : "N/A")
     };
   };
-
-  if (isLoading) {
-    return (
-      <div className="flex items-center justify-center py-4">
-        <Loader2 className="h-8 w-8 animate-spin text-primary" />
-        <span className="ml-2 text-gray-400">Loading {config.title.toLowerCase()} matches...</span>
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div className="text-center py-4">
-        <p className="text-red-400 mb-4">Failed to load {config.title.toLowerCase()} matches</p>
-        <Button onClick={() => window.location.reload()} variant="outline">
-          Retry
-        </Button>
-      </div>
-    );
-  }
-
-  if (!sportData || sportData.length === 0) {
-    return (
-      <div className="text-center py-4">
-        <p className="text-gray-400">No {config.title.toLowerCase()} matches available at the moment</p>
-      </div>
-    );
-  }
-
-  const displayedData = sportData.slice(0, displayedLeagues);
-
-  return (
-    <div className="space-y-6">
-      {/* Filter Bar */}
-      <FilterBar 
-        activeFilter={activeFilter}
-        onFilterChange={handleFilterChange}
-        selectedDate={selectedDate}
-        onDateChange={handleDateChange}
-      />
-
-      {/* Render filtered content */}
-      {renderFilteredContent()}
-    </div>
-  );
-}
-
-// Separate component for rendering the default sport content
-function DefaultSportContent({ sport, config, sportData, displayedLeagues, onBetClick, isLoadingMore, loadMoreLeagues }: any) {
-  const displayedData = sportData ? sportData.slice(0, displayedLeagues) : [];
 
   return (
     <div className="space-y-6">
@@ -355,150 +334,100 @@ function DefaultSportContent({ sport, config, sportData, displayedLeagues, onBet
 
       {/* Leagues */}
       <div className="space-y-4">
-        {displayedData.map((leagueData) => (
-          <LeagueSection
-            key={leagueData.league}
-            leagueData={leagueData}
-            onBetClick={onBetClick}
-            formatMatchTime={formatMatchTime}
-            getOdds={getOdds}
-            sport={sport}
-          />
-        ))}
-      </div>
-
-      {/* Load More Button/Indicator */}
-      {displayedLeagues < sportData.length && (
-        <div className="flex justify-center py-6">
-          {isLoadingMore ? (
-            <div className="flex items-center text-gray-400">
-              <Loader2 className="h-5 w-5 animate-spin mr-2" />
-              Loading more leagues...
+        {displayedData.map((league: LeagueData, index: number) => (
+          <div key={index} className="bg-slate-800 rounded-lg border border-gray-700 p-4">
+            <div className="flex items-center gap-2 mb-4">
+              {league.flag && <span className="text-lg">{league.flag}</span>}
+              <h3 className="text-lg font-semibold text-white">{league.league}</h3>
+              {league.country && (
+                <span className="text-sm text-gray-400">({league.country})</span>
+              )}
             </div>
-          ) : (
-            <Button 
-              onClick={loadMoreLeagues}
-              variant="outline"
-              className="border-gray-600 text-gray-300 hover:bg-slate-700"
-            >
-              Load More Leagues
-            </Button>
-          )}
-        </div>
-      )}
-
-      {displayedLeagues >= sportData.length && (
-        <div className="text-center py-4">
-          <p className="text-gray-500">All leagues loaded</p>
-        </div>
-      )}
-    </div>
-  );
-}
-
-interface LeagueSectionProps {
-  leagueData: LeagueData;
-  onBetClick: (eventName: string, selection: string, odds: string) => void;
-  formatMatchTime: (time: string) => string;
-  getOdds: (game: SportGame) => { home: string; away: string; draw?: string };
-  sport: string;
-}
-
-function LeagueSection({ leagueData, onBetClick, formatMatchTime, getOdds, sport }: LeagueSectionProps) {
-  const [expanded, setExpanded] = useState(true);
-
-  return (
-    <div className="bg-slate-800 rounded-lg overflow-hidden">
-      {/* League Header */}
-      <button
-        onClick={() => setExpanded(!expanded)}
-        className="w-full px-4 py-3 bg-slate-700 hover:bg-slate-600 transition-colors flex items-center justify-between"
-      >
-        <div className="flex items-center gap-3">
-          <span className="text-2xl">{leagueData.flag}</span>
-          <h4 className="font-semibold text-white">{leagueData.league}</h4>
-          <span className="text-sm text-gray-400">({leagueData.games.length} matches)</span>
-        </div>
-        <i className={`fas fa-chevron-${expanded ? 'up' : 'down'} text-gray-400`}></i>
-      </button>
-
-      {/* Games List */}
-      {expanded && (
-        <div className="divide-y divide-gray-700">
-          {leagueData.games.slice(0, 6).map((game) => {
-            const odds = getOdds(game);
-            return (
-              <div key={game.id} className="p-4 hover:bg-slate-700 transition-colors">
-                <div className="flex items-center justify-between">
-                  <div className="flex-1">
-                    <div className="text-sm text-gray-400 mb-1">
-                      {game.league_name} • {formatMatchTime(game.commence_time)}
-                    </div>
-                    <div className="font-medium text-white">
-                      {game.home_team} vs {game.away_team}
-                    </div>
-                  </div>
-                  
-                  <div className="flex gap-2 ml-4 items-center">
-                    <div className="flex gap-2 flex-1 lg:gap-3">
-                      <Button
-                        size="sm"
-                        variant="outline"
-                        className="border-gray-600 text-gray-300 hover:bg-primary hover:text-white flex-1"
-                        onClick={() => onBetClick(`${game.home_team} vs ${game.away_team}`, game.home_team, odds.home)}
-                      >
-                        {odds.home}
-                      </Button>
-                      {odds.draw && (
+            
+            <div className="space-y-3">
+              {league.matches.slice(0, 3).map((match: SportGame) => {
+                const odds = getMatchOdds(match);
+                return (
+                  <div
+                    key={match.id}
+                    className="bg-slate-700 rounded-lg p-3 border border-gray-600"
+                  >
+                    <div className="flex items-center justify-between">
+                      <div className="flex-1">
+                        <div className="text-sm text-gray-400 mb-1">
+                          {formatMatchTime(match.commence_time)}
+                        </div>
+                        <div className="text-white font-medium">
+                          {match.home_team} vs {match.away_team}
+                        </div>
+                      </div>
+                      <div className="flex gap-2">
                         <Button
                           size="sm"
                           variant="outline"
-                          className="border-gray-600 text-gray-300 hover:bg-primary hover:text-white flex-1"
-                          onClick={() => onBetClick(`${game.home_team} vs ${game.away_team}`, "Draw", odds.draw!)}
+                          className="text-xs px-2 py-1 h-8 border-gray-500 text-white hover:bg-blue-600"
+                          onClick={() => onBetClick({
+                            match: `${match.home_team} vs ${match.away_team}`,
+                            selection: match.home_team,
+                            odds: odds.home
+                          })}
                         >
-                          {odds.draw}
+                          {odds.home}
                         </Button>
-                      )}
-                      <Button
-                        size="sm"
-                        variant="outline"
-                        className="border-gray-600 text-gray-300 hover:bg-primary hover:text-white flex-1"
-                        onClick={() => onBetClick(`${game.home_team} vs ${game.away_team}`, game.away_team, odds.away)}
-                      >
-                        {odds.away}
-                      </Button>
+                        {odds.draw && (
+                          <Button
+                            size="sm"
+                            variant="outline"
+                            className="text-xs px-2 py-1 h-8 border-gray-500 text-white hover:bg-blue-600"
+                            onClick={() => onBetClick({
+                              match: `${match.home_team} vs ${match.away_team}`,
+                              selection: "Draw",
+                              odds: odds.draw
+                            })}
+                          >
+                            {odds.draw}
+                          </Button>
+                        )}
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          className="text-xs px-2 py-1 h-8 border-gray-500 text-white hover:bg-blue-600"
+                          onClick={() => onBetClick({
+                            match: `${match.home_team} vs ${match.away_team}`,
+                            selection: match.away_team,
+                            odds: odds.away
+                          })}
+                        >
+                          {odds.away}
+                        </Button>
+                      </div>
                     </div>
-                    
-                    <Button
-                      size="sm"
-                      variant="ghost"
-                      className="text-blue-400 hover:text-blue-300 hover:bg-blue-500/10 px-3 min-w-[50px] ml-2"
-                      onClick={() => {
-                        const queryParams = new URLSearchParams({
-                          homeTeam: encodeURIComponent(game.home_team),
-                          awayTeam: encodeURIComponent(game.away_team),
-                          league: encodeURIComponent(game.league_name),
-                          commenceTime: game.commence_time,
-                          sport: config.title
-                        });
-                        window.location.href = `/more-markets/${game.id}?${queryParams.toString()}`;
-                      }}
-                    >
-                      <span className="text-xs font-medium">+25</span>
-                    </Button>
                   </div>
-                </div>
-              </div>
-            );
-          })}
-          
-          {leagueData.games.length > 6 && (
-            <div className="p-3 text-center">
-              <button className="text-sm text-primary hover:text-primary-light">
-                View all {leagueData.games.length} matches
-              </button>
+                );
+              })}
             </div>
-          )}
+          </div>
+        ))}
+      </div>
+
+      {/* Load More Button */}
+      {sportData && displayedLeagues < sportData.length && (
+        <div className="flex justify-center">
+          <Button
+            onClick={loadMoreLeagues}
+            disabled={isLoadingMore}
+            variant="outline"
+            className="border-gray-600 text-white hover:bg-slate-700"
+          >
+            {isLoadingMore ? (
+              <>
+                <Loader2 className="w-4 h-4 animate-spin mr-2" />
+                Loading...
+              </>
+            ) : (
+              `Load More Leagues (${sportData.length - displayedLeagues} remaining)`
+            )}
+          </Button>
         </div>
       )}
     </div>
