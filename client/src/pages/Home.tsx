@@ -297,8 +297,9 @@ export default function Home() {
 
     switch (activeTab) {
       case 'home':
+        return <FootballSection onBetClick={handleBetClick} isInBetslip={isInBetslip} isHomePage={true} />;
       case 'football':
-        return <FootballSection onBetClick={handleBetClick} isInBetslip={isInBetslip} />;
+        return <FootballSection onBetClick={handleBetClick} isInBetslip={isInBetslip} isHomePage={false} />;
       case 'basketball':
         return <SportSection sport="basketball" onBetClick={handleBetClick} />;
       case 'hockey':
@@ -363,9 +364,9 @@ export default function Home() {
           </div>
         );
       case 'home':
-        return <FootballSection onBetClick={handleBetClick} isInBetslip={isInBetslip} />;
+        return <FootballSection onBetClick={handleBetClick} isInBetslip={isInBetslip} isHomePage={false} />;
       default:
-        return <FootballSection onBetClick={handleBetClick} isInBetslip={isInBetslip} />;
+        return <FootballSection onBetClick={handleBetClick} isInBetslip={isInBetslip} isHomePage={false} />;
     }
   };
 

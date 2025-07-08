@@ -34,9 +34,10 @@ interface CountryFootballData {
 interface FootballSectionProps {
   onBetClick: (eventName: string, selection: string, odds: string) => void;
   isInBetslip?: (eventName: string, selection: string) => boolean;
+  isHomePage?: boolean;
 }
 
-export function FootballSection({ onBetClick, isInBetslip }: FootballSectionProps) {
+export function FootballSection({ onBetClick, isInBetslip, isHomePage = false }: FootballSectionProps) {
   const [, setLocation] = useLocation();
   const [displayedCountries, setDisplayedCountries] = useState<number>(6);
   const [isLoadingMore, setIsLoadingMore] = useState(false);
@@ -172,13 +173,15 @@ export function FootballSection({ onBetClick, isInBetslip }: FootballSectionProp
       {/* Featured Matches */}
       <FeaturedMatches onBetClick={onBetClick} />
       
-      {/* Header */}
-      <div className="flex items-center justify-between">
-        <h2 className="text-2xl font-bold text-white">All Football Matches</h2>
-        <div className="text-sm text-gray-400">
-          Showing {displayedData.length} of {footballData.length} countries
-        </div>
-      </div>
+      {!isHomePage && (
+        <>
+          {/* Header */}
+          <div className="flex items-center justify-between">
+            <h2 className="text-2xl font-bold text-white">All Football Matches</h2>
+            <div className="text-sm text-gray-400">
+              Showing {displayedData.length} of {footballData.length} countries
+            </div>
+          </div>
 
       {/* Popular Countries Section */}
       {popularCountries.length > 0 && (
@@ -240,12 +243,68 @@ export function FootballSection({ onBetClick, isInBetslip }: FootballSectionProp
         </div>
       )}
 
-      {displayedCountries >= footballData.length && (
-        <div className="py-4">
-          <p className="text-gray-500">All countries loaded</p>
-        </div>
+          {displayedCountries >= footballData.length && (
+            <div className="py-4">
+              <p className="text-gray-500">All countries loaded</p>
+            </div>
+          )}
+        </>
       )}
 
+      {isHomePage && (
+        <div className="space-y-6">
+          {/* Popular Bets Section */}
+          <div className="bg-slate-800 rounded-lg border border-gray-700 p-6">
+            <h3 className="text-xl font-bold text-white mb-4 flex items-center">
+              <span className="text-2xl mr-2">🔥</span>
+              Popular Bets Today
+            </h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {popularCountries.slice(0, 2).map((countryData) => 
+                countryData.games.slice(0, 2).map((game) => {
+                  const odds = getOdds(game);
+                  return (
+                    <div key={game.id} className="bg-slate-700 rounded-lg p-4 border border-gray-600">
+                      <div className="text-sm text-gray-400 mb-2">
+                        {game.league_name} • {formatMatchTime(game.commence_time)}
+                      </div>
+                      <div className="text-white font-medium mb-3 text-center">
+                        {game.home_team} vs {game.away_team}
+                      </div>
+                      <div className="flex justify-center space-x-2">
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          className="text-xs px-3 py-1 h-8 border-gray-500 text-white hover:bg-blue-600 flex-1"
+                          onClick={() => onBetClick(`${game.home_team} vs ${game.away_team}`, game.home_team, odds.home)}
+                        >
+                          {game.home_team} {odds.home}
+                        </Button>
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          className="text-xs px-3 py-1 h-8 border-gray-500 text-white hover:bg-blue-600"
+                          onClick={() => onBetClick(`${game.home_team} vs ${game.away_team}`, "Draw", odds.draw)}
+                        >
+                          Draw {odds.draw}
+                        </Button>
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          className="text-xs px-3 py-1 h-8 border-gray-500 text-white hover:bg-blue-600 flex-1"
+                          onClick={() => onBetClick(`${game.home_team} vs ${game.away_team}`, game.away_team, odds.away)}
+                        >
+                          {game.away_team} {odds.away}
+                        </Button>
+                      </div>
+                    </div>
+                  );
+                })
+              )}
+            </div>
+          </div>
+        </div>
+      )}
 
     </div>
   );
