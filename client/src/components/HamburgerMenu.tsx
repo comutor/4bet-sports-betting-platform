@@ -37,18 +37,17 @@ export function HamburgerMenu({ isOpen, onClose, onTabChange, activeTab }: Hambu
   ];
 
   const sportsCategories = [
-    { id: 'afl', label: 'AFL', icon: 'fas fa-football-ball' },
-    { id: 'baseball', label: 'Baseball', icon: 'fas fa-baseball' },
-    { id: 'basketball', label: 'Basketball', icon: 'fas fa-basketball' },
     { id: 'football', label: 'Football', icon: 'fas fa-futbol' },
+    { id: 'basketball', label: 'Basketball', icon: 'fas fa-basketball' },
+    { id: 'hockey', label: 'Hockey', icon: 'fas fa-hockey-puck' },
+    { id: 'nfl', label: 'NFL', icon: 'fas fa-football-ball' },
+    { id: 'volleyball', label: 'Volleyball', icon: 'fas fa-volleyball' },
+    { id: 'rugby', label: 'Rugby', icon: 'fas fa-football-ball' },
+    { id: 'baseball', label: 'Baseball', icon: 'fas fa-baseball' },
+    { id: 'afl', label: 'AFL', icon: 'fas fa-football-ball' },
     { id: 'formula-1', label: 'Formula-1', icon: 'fas fa-flag-checkered' },
     { id: 'handball', label: 'Handball', icon: 'fas fa-hand-paper' },
-    { id: 'hockey', label: 'Hockey', icon: 'fas fa-hockey-puck' },
-    { id: 'mma', label: 'MMA', icon: 'fas fa-fist-raised' },
-    { id: 'nba', label: 'NBA', icon: 'fas fa-basketball' },
-    { id: 'nfl', label: 'NFL', icon: 'fas fa-football-ball' },
-    { id: 'rugby', label: 'Rugby', icon: 'fas fa-football-ball' },
-    { id: 'volleyball', label: 'Volleyball', icon: 'fas fa-volleyball' }
+    { id: 'mma', label: 'MMA', icon: 'fas fa-fist-raised' }
   ];
 
   const topCountries = [
@@ -250,7 +249,6 @@ export function HamburgerMenu({ isOpen, onClose, onTabChange, activeTab }: Hambu
       'handball': 'handball',
       'hockey': 'hockey',
       'mma': 'mma',
-      'nba': 'nba',
       'nfl': 'nfl',
       'rugby': 'rugby',
       'volleyball': 'volleyball'

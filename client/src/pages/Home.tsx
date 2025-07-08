@@ -268,25 +268,25 @@ export default function Home() {
     }
 
     // Check if all filter is active for any sport tab
-    if (['afl', 'baseball', 'basketball', 'football', 'formula-1', 'handball', 'hockey', 'mma', 'nba', 'nfl', 'rugby', 'volleyball'].includes(activeTab) && 
+    if (['afl', 'baseball', 'basketball', 'football', 'formula-1', 'handball', 'hockey', 'mma', 'nfl', 'rugby', 'volleyball'].includes(activeTab) && 
         activeFilter === 'all') {
       return <AllSection selectedDate={selectedDate} sport={activeTab} onBetClick={handleBetClick} />;
     }
 
     // Check if competitions filter is active for any sport tab
-    if (['afl', 'baseball', 'basketball', 'football', 'formula-1', 'handball', 'hockey', 'mma', 'nba', 'nfl', 'rugby', 'volleyball'].includes(activeTab) && 
+    if (['afl', 'baseball', 'basketball', 'football', 'formula-1', 'handball', 'hockey', 'mma', 'nfl', 'rugby', 'volleyball'].includes(activeTab) && 
         activeFilter === 'competitions') {
       return <CompetitionsSection onBetClick={handleBetClick} onLeagueClick={handleLeagueClick} sport={activeTab} />;
     }
 
     // Check if top-leagues filter is active for any sport tab
-    if (['afl', 'baseball', 'basketball', 'football', 'formula-1', 'handball', 'hockey', 'mma', 'nba', 'nfl', 'rugby', 'volleyball'].includes(activeTab) && 
+    if (['afl', 'baseball', 'basketball', 'football', 'formula-1', 'handball', 'hockey', 'mma', 'nfl', 'rugby', 'volleyball'].includes(activeTab) && 
         activeFilter === 'top-leagues') {
       return <TopLeaguesSection onBetClick={handleBetClick} onLeagueClick={handleLeagueClick} sport={activeTab} />;
     }
 
     // Check if live filter is active for any sport tab
-    if (['afl', 'baseball', 'basketball', 'football', 'formula-1', 'handball', 'hockey', 'mma', 'nba', 'nfl', 'rugby', 'volleyball'].includes(activeTab) && 
+    if (['afl', 'baseball', 'basketball', 'football', 'formula-1', 'handball', 'hockey', 'mma', 'nfl', 'rugby', 'volleyball'].includes(activeTab) && 
         activeFilter === 'live') {
       return <LiveSection sport={activeTab} onBetClick={handleBetClick} />;
     }
@@ -334,8 +334,6 @@ export default function Home() {
             <p className="text-gray-400">Mixed Martial Arts betting is under development.</p>
           </div>
         );
-      case 'nba':
-        return <SportSection sport="basketball" onBetClick={handleBetClick} />;
       case 'nfl':
         return (
           <div className="text-center py-4">
