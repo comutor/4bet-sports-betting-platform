@@ -533,6 +533,125 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Featured matches endpoint
+  app.get("/api/featured-matches", async (req, res) => {
+    try {
+      const featuredMatches: any[] = [];
+      let eventId = 1;
+
+      // Get featured football matches
+      const footballData = await oddsApiService.getFootballGamesByCountryPriority();
+      if (footballData && footballData.length > 0) {
+        const premierLeagueMatches = footballData.find(country => 
+          country.games?.some((match: any) => match.league_name?.includes('Premier League'))
+        );
+        
+        if (premierLeagueMatches?.games) {
+          const topMatch = premierLeagueMatches.games[0];
+          if (topMatch) {
+            featuredMatches.push({
+              id: `featured-${eventId++}`,
+              homeTeam: topMatch.home_team,
+              awayTeam: topMatch.away_team,
+              league: 'Premier League',
+              sport: 'Football',
+              time: new Date(topMatch.commence_time).toLocaleDateString('en-GB', { 
+                weekday: 'short', 
+                hour: '2-digit',
+                minute: '2-digit'
+              }),
+              odds: {
+                home: (topMatch.bookmakers?.[0]?.markets?.[0]?.outcomes?.find((o: any) => o.name === topMatch.home_team)?.price || 2.0).toFixed(2),
+                draw: (topMatch.bookmakers?.[0]?.markets?.[0]?.outcomes?.find((o: any) => o.name === 'Draw')?.price || 3.0).toFixed(2),
+                away: (topMatch.bookmakers?.[0]?.markets?.[0]?.outcomes?.find((o: any) => o.name === topMatch.away_team)?.price || 2.5).toFixed(2)
+              }
+            });
+          }
+        }
+      }
+
+      // Get featured basketball matches
+      const basketballData = await oddsApiService.getBasketballGamesByPriority();
+      if (basketballData && basketballData.length > 0) {
+        const wnbaMatches = basketballData.find(league => league.league === 'WNBA');
+        if (wnbaMatches?.games && wnbaMatches.games.length > 0) {
+          const topMatch = wnbaMatches.games[0];
+          featuredMatches.push({
+            id: `featured-${eventId++}`,
+            homeTeam: topMatch.home_team,
+            awayTeam: topMatch.away_team,
+            league: 'WNBA',
+            sport: 'Basketball',
+            time: new Date(topMatch.commence_time).toLocaleDateString('en-GB', { 
+              weekday: 'short', 
+              hour: '2-digit',
+              minute: '2-digit'
+            }),
+            odds: {
+              home: (topMatch.bookmakers?.[0]?.markets?.[0]?.outcomes?.find((o: any) => o.name === topMatch.home_team)?.price || 1.9).toFixed(2),
+              away: (topMatch.bookmakers?.[0]?.markets?.[0]?.outcomes?.find((o: any) => o.name === topMatch.away_team)?.price || 1.9).toFixed(2)
+            }
+          });
+        }
+      }
+
+      // Get featured hockey matches
+      const hockeyData = await oddsApiService.getIceHockeyGamesByPriority();
+      if (hockeyData && hockeyData.length > 0) {
+        const nhlMatches = hockeyData.find(league => league.league === 'NHL');
+        if (nhlMatches?.games && nhlMatches.games.length > 0) {
+          const topMatch = nhlMatches.games[0];
+          featuredMatches.push({
+            id: `featured-${eventId++}`,
+            homeTeam: topMatch.home_team,
+            awayTeam: topMatch.away_team,
+            league: 'NHL',
+            sport: 'Hockey',
+            time: new Date(topMatch.commence_time).toLocaleDateString('en-GB', { 
+              weekday: 'short', 
+              hour: '2-digit',
+              minute: '2-digit'
+            }),
+            odds: {
+              home: (topMatch.bookmakers?.[0]?.markets?.[0]?.outcomes?.find((o: any) => o.name === topMatch.home_team)?.price || 2.1).toFixed(2),
+              away: (topMatch.bookmakers?.[0]?.markets?.[0]?.outcomes?.find((o: any) => o.name === topMatch.away_team)?.price || 1.8).toFixed(2)
+            }
+          });
+        }
+      }
+
+      // Get featured tennis matches
+      const tennisData = await oddsApiService.getTennisGamesByPriority();
+      if (tennisData && tennisData.length > 0) {
+        const atpMatches = tennisData.find(tournament => tournament.league?.includes('ATP'));
+        if (atpMatches?.games && atpMatches.games.length > 0) {
+          const topMatch = atpMatches.games[0];
+          featuredMatches.push({
+            id: `featured-${eventId++}`,
+            homeTeam: topMatch.home_team,
+            awayTeam: topMatch.away_team,
+            league: 'ATP',
+            sport: 'Tennis',
+            time: new Date(topMatch.commence_time).toLocaleDateString('en-GB', { 
+              weekday: 'short', 
+              hour: '2-digit',
+              minute: '2-digit'
+            }),
+            odds: {
+              home: (topMatch.bookmakers?.[0]?.markets?.[0]?.outcomes?.find((o: any) => o.name === topMatch.home_team)?.price || 1.7).toFixed(2),
+              away: (topMatch.bookmakers?.[0]?.markets?.[0]?.outcomes?.find((o: any) => o.name === topMatch.away_team)?.price || 2.1).toFixed(2)
+            }
+          });
+        }
+      }
+
+      res.json(featuredMatches);
+    } catch (error) {
+      console.error('Error fetching featured matches:', error);
+      res.status(500).json({ message: 'Failed to fetch featured matches' });
+    }
+  });
+
   // Competitions endpoint - Live API Integration  
   app.get('/api/competitions/:sport', async (req, res) => {
     try {

@@ -3,6 +3,8 @@ import { useQuery } from "@tanstack/react-query";
 import { useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Loader2 } from "lucide-react";
+import { AdvertisementBanner } from "./AdvertisementBanner";
+import { FeaturedMatches } from "./FeaturedMatches";
 
 interface FootballGame {
   id: string;
@@ -164,9 +166,15 @@ export function FootballSection({ onBetClick, isInBetslip }: FootballSectionProp
 
   return (
     <div className="space-y-6">
+      {/* Advertisement Banner */}
+      <AdvertisementBanner />
+      
+      {/* Featured Matches */}
+      <FeaturedMatches onBetClick={onBetClick} />
+      
       {/* Header */}
       <div className="flex items-center justify-between">
-        <h2 className="text-2xl font-bold text-white">Football Matches</h2>
+        <h2 className="text-2xl font-bold text-white">All Football Matches</h2>
         <div className="text-sm text-gray-400">
           Showing {displayedData.length} of {footballData.length} countries
         </div>

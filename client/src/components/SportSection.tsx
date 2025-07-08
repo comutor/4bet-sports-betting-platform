@@ -7,6 +7,8 @@ import { AllSection } from "./AllSection";
 import { TopLeaguesSection } from "./TopLeaguesSection";
 import { CompetitionsSection } from "./CompetitionsSection";
 import { LiveSection } from "./LiveSection";
+import { AdvertisementBanner } from "./AdvertisementBanner";
+import { FeaturedMatches } from "./FeaturedMatches";
 
 interface SportGame {
   id: string;
@@ -191,6 +193,12 @@ export function SportSection({ sport, onBetClick }: SportSectionProps) {
 
   return (
     <div className="space-y-6">
+      {/* Advertisement Banner */}
+      <AdvertisementBanner />
+      
+      {/* Featured Matches */}
+      <FeaturedMatches onBetClick={onBetClick} />
+      
       {/* Filter Bar - Always show this */}
       <FilterBar 
         activeFilter={activeFilter}
