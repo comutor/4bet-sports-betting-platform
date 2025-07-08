@@ -272,25 +272,25 @@ export default function Home() {
     }
 
     // Check if all filter is active for any sport tab (excluding home)
-    if (['afl', 'baseball', 'basketball', 'football', 'formula-1', 'handball', 'hockey', 'mma', 'nfl', 'rugby', 'volleyball'].includes(activeTab) && 
+    if (['afl', 'baseball', 'basketball', 'cricket', 'football', 'formula-1', 'handball', 'hockey', 'mma', 'nfl', 'rugby', 'tennis', 'volleyball'].includes(activeTab) && 
         activeFilter === 'all') {
       return <AllSection selectedDate={selectedDate} sport={activeTab} onBetClick={handleBetClick} />;
     }
 
     // Check if competitions filter is active for any sport tab (excluding home)
-    if (['afl', 'baseball', 'basketball', 'football', 'formula-1', 'handball', 'hockey', 'mma', 'nfl', 'rugby', 'volleyball'].includes(activeTab) && 
+    if (['afl', 'baseball', 'basketball', 'cricket', 'football', 'formula-1', 'handball', 'hockey', 'mma', 'nfl', 'rugby', 'tennis', 'volleyball'].includes(activeTab) && 
         activeFilter === 'competitions') {
       return <CompetitionsSection onBetClick={handleBetClick} onLeagueClick={handleLeagueClick} sport={activeTab} />;
     }
 
     // Check if top-leagues filter is active for any sport tab (excluding home)
-    if (['afl', 'baseball', 'basketball', 'football', 'formula-1', 'handball', 'hockey', 'mma', 'nfl', 'rugby', 'volleyball'].includes(activeTab) && 
+    if (['afl', 'baseball', 'basketball', 'cricket', 'football', 'formula-1', 'handball', 'hockey', 'mma', 'nfl', 'rugby', 'tennis', 'volleyball'].includes(activeTab) && 
         activeFilter === 'top-leagues') {
       return <TopLeaguesSection onBetClick={handleBetClick} onLeagueClick={handleLeagueClick} sport={activeTab} />;
     }
 
     // Check if live filter is active for any sport tab (excluding home)
-    if (['afl', 'baseball', 'basketball', 'football', 'formula-1', 'handball', 'hockey', 'mma', 'nfl', 'rugby', 'volleyball'].includes(activeTab) && 
+    if (['afl', 'baseball', 'basketball', 'cricket', 'football', 'formula-1', 'handball', 'hockey', 'mma', 'nfl', 'rugby', 'tennis', 'volleyball'].includes(activeTab) && 
         activeFilter === 'live') {
       return <LiveSection sport={activeTab} onBetClick={handleBetClick} />;
     }
@@ -302,6 +302,10 @@ export default function Home() {
         return <FootballSection onBetClick={handleBetClick} isInBetslip={isInBetslip} isHomePage={false} />;
       case 'basketball':
         return <SportSection sport="basketball" onBetClick={handleBetClick} />;
+      case 'cricket':
+        return <SportSection sport="cricket" onBetClick={handleBetClick} />;
+      case 'tennis':
+        return <SportSection sport="tennis" onBetClick={handleBetClick} />;
       case 'hockey':
         return <SportSection sport="hockey" onBetClick={handleBetClick} />;
       case 'baseball':
@@ -363,8 +367,6 @@ export default function Home() {
             <p className="text-gray-400">This section is under development.</p>
           </div>
         );
-      case 'home':
-        return <FootballSection onBetClick={handleBetClick} isInBetslip={isInBetslip} isHomePage={false} />;
       default:
         return <FootballSection onBetClick={handleBetClick} isInBetslip={isInBetslip} isHomePage={false} />;
     }

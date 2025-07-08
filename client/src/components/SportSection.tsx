@@ -43,6 +43,16 @@ const sportConfigs = {
     icon: "🏀",
     endpoint: "/api/sports/basketball"
   },
+  cricket: {
+    title: "Cricket",
+    icon: "🏏",
+    endpoint: "/api/sports/cricket"
+  },
+  tennis: {
+    title: "Tennis",
+    icon: "🎾",
+    endpoint: "/api/sports/tennis"
+  },
   hockey: {
     title: "Ice Hockey", 
     icon: "🏒",

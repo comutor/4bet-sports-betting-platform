@@ -51,9 +51,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
       let eventId = 1;
 
       // Fetch live data from all sports
-      const [footballData, basketballData, tennisData, hockeyData] = await Promise.all([
+      const [footballData, basketballData, cricketData, tennisData, hockeyData] = await Promise.all([
         oddsApiService.getFootballGamesByCountryPriority(),
         oddsApiService.getBasketballGamesByPriority(), 
+        oddsApiService.getCricketGamesByPriority(),
         oddsApiService.getTennisGamesByPriority(),
         oddsApiService.getIceHockeyGamesByPriority()
       ]);
@@ -126,6 +127,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
       // Map frontend sport names to API sport keys
       const sportKeyMap: { [key: string]: string[] } = {
         'basketball': ['basketball_nba', 'basketball_wnba'],
+        'cricket': ['cricket_ipl', 'cricket_test_match', 'cricket_odi'],
+        'tennis': ['tennis_atp', 'tennis_wta'],
         'football': ['soccer_epl', 'soccer_spain_la_liga', 'soccer_germany_bundesliga', 'soccer_italy_serie_a'],
         'american_football': ['americanfootball_nfl'],
         'baseball': ['baseball_mlb'],
@@ -191,9 +194,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const allEvents: any[] = [];
 
       // Fetch live data from all sports
-      const [footballData, basketballData, tennisData, hockeyData] = await Promise.all([
+      const [footballData, basketballData, cricketData, tennisData, hockeyData] = await Promise.all([
         oddsApiService.getFootballGamesByCountryPriority(),
         oddsApiService.getBasketballGamesByPriority(), 
+        oddsApiService.getCricketGamesByPriority(),
         oddsApiService.getTennisGamesByPriority(),
         oddsApiService.getIceHockeyGamesByPriority()
       ]);
@@ -258,6 +262,38 @@ export async function registerRoutes(app: Express): Promise<Server> {
                   odds: {
                     home: match.bookmakers?.[0]?.markets?.[0]?.outcomes?.find((o: any) => o.name === match.home_team)?.price || 1.9,
                     away: match.bookmakers?.[0]?.markets?.[0]?.outcomes?.find((o: any) => o.name === match.away_team)?.price || 1.9
+                  }
+                });
+              }
+            });
+          }
+        });
+      }
+
+      // Process Cricket events
+      if (cricketData && cricketData.length > 0) {
+        cricketData.forEach(tournament => {
+          if (tournament.games && tournament.games.length > 0) {
+            tournament.games.forEach(match => {
+              const matchDate = new Date(match.commence_time);
+              matchDate.setHours(0, 0, 0, 0);
+              
+              // Check if match is on the target date
+              if (matchDate.getTime() === targetDate.getTime()) {
+                allEvents.push({
+                  id: eventId++,
+                  sport: 'Cricket',
+                  status: new Date(match.commence_time) > new Date() ? 'upcoming' : 'live',
+                  homeTeam: match.home_team,
+                  awayTeam: match.away_team,
+                  homeScore: null,
+                  awayScore: null,
+                  league: tournament.league,
+                  startTime: new Date(match.commence_time),
+                  currentTime: null,
+                  odds: {
+                    home: match.bookmakers?.[0]?.markets?.[0]?.outcomes?.find((o: any) => o.name === match.home_team)?.price || 1.8,
+                    away: match.bookmakers?.[0]?.markets?.[0]?.outcomes?.find((o: any) => o.name === match.away_team)?.price || 2.0
                   }
                 });
               }
@@ -456,6 +492,35 @@ export async function registerRoutes(app: Express): Promise<Server> {
                   odds: {
                     home: match.bookmakers?.[0]?.markets?.[0]?.outcomes?.find((o: any) => o.name === match.home_team)?.price || 1.9,
                     away: match.bookmakers?.[0]?.markets?.[0]?.outcomes?.find((o: any) => o.name === match.away_team)?.price || 1.9
+                  }
+                });
+              });
+            }
+          });
+        }
+      }
+
+      if (sport === 'cricket') {
+        const cricketData = await oddsApiService.getCricketGamesByPriority();
+        
+        if (cricketData && cricketData.length > 0) {
+          cricketData.forEach(tournament => {
+            if (tournament.games && tournament.games.length > 0) {
+              tournament.games.forEach(match => {
+                topLeagueMatches.push({
+                  id: eventId++,
+                  sport: 'Cricket',
+                  status: new Date(match.commence_time) > new Date() ? 'upcoming' : 'live',
+                  homeTeam: match.home_team,
+                  awayTeam: match.away_team,
+                  homeScore: null,
+                  awayScore: null,
+                  league: tournament.league,
+                  startTime: new Date(match.commence_time),
+                  currentTime: null,
+                  odds: {
+                    home: match.bookmakers?.[0]?.markets?.[0]?.outcomes?.find((o: any) => o.name === match.home_team)?.price || 1.8,
+                    away: match.bookmakers?.[0]?.markets?.[0]?.outcomes?.find((o: any) => o.name === match.away_team)?.price || 2.0
                   }
                 });
               });
@@ -711,6 +776,35 @@ export async function registerRoutes(app: Express): Promise<Server> {
                   odds: {
                     home: match.bookmakers?.[0]?.markets?.[0]?.outcomes?.find((o: any) => o.name === match.home_team)?.price || 1.9,
                     away: match.bookmakers?.[0]?.markets?.[0]?.outcomes?.find((o: any) => o.name === match.away_team)?.price || 1.9
+                  }
+                });
+              });
+            }
+          });
+        }
+      }
+
+      if (sport === 'cricket') {
+        const cricketData = await oddsApiService.getCricketGamesByPriority();
+        
+        if (cricketData && cricketData.length > 0) {
+          cricketData.forEach(tournament => {
+            if (tournament.games && tournament.games.length > 0) {
+              tournament.games.forEach(match => {
+                competitionMatches.push({
+                  id: eventId++,
+                  sport: 'Cricket',
+                  status: new Date(match.commence_time) > new Date() ? 'upcoming' : 'live',
+                  homeTeam: match.home_team,
+                  awayTeam: match.away_team,
+                  homeScore: null,
+                  awayScore: null,
+                  league: tournament.league,
+                  startTime: new Date(match.commence_time),
+                  currentTime: null,
+                  odds: {
+                    home: match.bookmakers?.[0]?.markets?.[0]?.outcomes?.find((o: any) => o.name === match.home_team)?.price || 1.8,
+                    away: match.bookmakers?.[0]?.markets?.[0]?.outcomes?.find((o: any) => o.name === match.away_team)?.price || 2.0
                   }
                 });
               });
@@ -1792,6 +1886,28 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   aviatorGame.on('betCashedOut', (data) => {
     broadcast({ type: 'betCashedOut', data });
+  });
+
+  // Cricket sports endpoint
+  app.get("/api/sports/cricket", async (req, res) => {
+    try {
+      const cricketData = await oddsApiService.getCricketGamesByPriority();
+      res.json(cricketData);
+    } catch (error) {
+      console.error("Error fetching cricket data:", error);
+      res.status(500).json({ error: "Failed to fetch cricket data" });
+    }
+  });
+
+  // Tennis sports endpoint
+  app.get("/api/sports/tennis", async (req, res) => {
+    try {
+      const tennisData = await oddsApiService.getTennisGamesByPriority();
+      res.json(tennisData);
+    } catch (error) {
+      console.error("Error fetching tennis data:", error);
+      res.status(500).json({ error: "Failed to fetch tennis data" });
+    }
   });
 
   return httpServer;

@@ -446,6 +446,49 @@ export class OddsApiService {
     return allGames.sort((a, b) => a.priority - b.priority);
   }
 
+  // Get cricket games organized by tournament priority
+  async getCricketGamesByPriority() {
+    const cricketLeagues = [
+      { name: 'IPL', key: 'cricket_ipl', country: 'India', flag: '🏏', priority: 1 },
+      { name: 'Test Championship', key: 'cricket_test_match', country: 'International', flag: '🏏', priority: 2 },
+      { name: 'ODI', key: 'cricket_odi', country: 'International', flag: '🏏', priority: 3 },
+      { name: 'T20 International', key: 'cricket_t20', country: 'International', flag: '🏏', priority: 4 },
+      { name: 'Big Bash League', key: 'cricket_big_bash', country: 'Australia', flag: '🏏', priority: 5 },
+      { name: 'County Championship', key: 'cricket_county_championship', country: 'England', flag: '🏏', priority: 6 }
+    ];
+
+    const allGames = [];
+
+    for (const league of cricketLeagues) {
+      try {
+        const games = await this.getOdds(league.key);
+        console.log(`Fetched ${games.length} events for ${league.key}`);
+        
+        const transformedGames = games.map(game => ({
+          ...game,
+          league_name: league.name,
+          country: league.country,
+          country_flag: league.flag,
+          priority: league.priority
+        }));
+
+        if (transformedGames.length > 0) {
+          allGames.push({
+            league: league.name,
+            country: league.country,
+            flag: league.flag,
+            games: transformedGames,
+            priority: league.priority
+          });
+        }
+      } catch (error) {
+        console.error(`Error fetching ${league.key}:`, error);
+      }
+    }
+
+    return allGames.sort((a, b) => a.priority - b.priority);
+  }
+
   // Get baseball games organized by league priority
   async getBaseballGamesByPriority() {
     const baseballLeagues = [
