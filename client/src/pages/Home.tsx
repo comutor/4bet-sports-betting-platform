@@ -268,25 +268,25 @@ export default function Home() {
     }
 
     // Check if all filter is active for any sport tab
-    if (['football', 'basketball', 'tennis', 'ice-hockey', 'american-football', 'baseball'].includes(activeTab) && 
+    if (['afl', 'baseball', 'basketball', 'football', 'formula-1', 'handball', 'hockey', 'mma', 'nba', 'nfl', 'rugby', 'volleyball'].includes(activeTab) && 
         activeFilter === 'all') {
       return <AllSection selectedDate={selectedDate} sport={activeTab} onBetClick={handleBetClick} />;
     }
 
     // Check if competitions filter is active for any sport tab
-    if (['football', 'basketball', 'tennis', 'ice-hockey', 'american-football', 'esports'].includes(activeTab) && 
+    if (['afl', 'baseball', 'basketball', 'football', 'formula-1', 'handball', 'hockey', 'mma', 'nba', 'nfl', 'rugby', 'volleyball'].includes(activeTab) && 
         activeFilter === 'competitions') {
       return <CompetitionsSection onBetClick={handleBetClick} onLeagueClick={handleLeagueClick} sport={activeTab} />;
     }
 
     // Check if top-leagues filter is active for any sport tab
-    if (['football', 'basketball', 'tennis', 'ice-hockey', 'american-football', 'baseball'].includes(activeTab) && 
+    if (['afl', 'baseball', 'basketball', 'football', 'formula-1', 'handball', 'hockey', 'mma', 'nba', 'nfl', 'rugby', 'volleyball'].includes(activeTab) && 
         activeFilter === 'top-leagues') {
       return <TopLeaguesSection onBetClick={handleBetClick} onLeagueClick={handleLeagueClick} sport={activeTab} />;
     }
 
     // Check if live filter is active for any sport tab
-    if (['football', 'basketball', 'tennis', 'ice-hockey', 'american-football', 'baseball'].includes(activeTab) && 
+    if (['afl', 'baseball', 'basketball', 'football', 'formula-1', 'handball', 'hockey', 'mma', 'nba', 'nfl', 'rugby', 'volleyball'].includes(activeTab) && 
         activeFilter === 'live') {
       return <LiveSection sport={activeTab} onBetClick={handleBetClick} />;
     }
@@ -298,31 +298,58 @@ export default function Home() {
         return <FootballSection onBetClick={handleBetClick} isInBetslip={isInBetslip} />;
       case 'basketball':
         return <SportSection sport="basketball" onBetClick={handleBetClick} />;
-      case 'tennis':
-        return <SportSection sport="tennis" onBetClick={handleBetClick} />;
-      case 'ice-hockey':
-        return <SportSection sport="hockey" onBetClick={handleBetClick} />;
-      case 'american-football':
-        return (
-          <div className="text-center py-4">
-            <h2 className="text-2xl font-bold mb-4">Coming Soon</h2>
-            <p className="text-gray-400">American Football betting is under development.</p>
-          </div>
-        );
-      case 'esports':
-        return (
-          <div className="text-center py-4">
-            <h2 className="text-2xl font-bold mb-4">Coming Soon</h2>
-            <p className="text-gray-400">Esports betting is under development.</p>
-          </div>
-        );
-
       case 'hockey':
         return <SportSection sport="hockey" onBetClick={handleBetClick} />;
       case 'baseball':
         return <SportSection sport="baseball" onBetClick={handleBetClick} />;
       case 'volleyball':
         return <SportSection sport="volleyball" onBetClick={handleBetClick} />;
+      
+      // New sports - Coming Soon implementations
+      case 'afl':
+        return (
+          <div className="text-center py-4">
+            <h2 className="text-2xl font-bold mb-4">AFL Coming Soon</h2>
+            <p className="text-gray-400">Australian Football League betting is under development.</p>
+          </div>
+        );
+      case 'formula-1':
+        return (
+          <div className="text-center py-4">
+            <h2 className="text-2xl font-bold mb-4">Formula-1 Coming Soon</h2>
+            <p className="text-gray-400">Formula 1 betting is under development.</p>
+          </div>
+        );
+      case 'handball':
+        return (
+          <div className="text-center py-4">
+            <h2 className="text-2xl font-bold mb-4">Handball Coming Soon</h2>
+            <p className="text-gray-400">Handball betting is under development.</p>
+          </div>
+        );
+      case 'mma':
+        return (
+          <div className="text-center py-4">
+            <h2 className="text-2xl font-bold mb-4">MMA Coming Soon</h2>
+            <p className="text-gray-400">Mixed Martial Arts betting is under development.</p>
+          </div>
+        );
+      case 'nba':
+        return <SportSection sport="basketball" onBetClick={handleBetClick} />;
+      case 'nfl':
+        return (
+          <div className="text-center py-4">
+            <h2 className="text-2xl font-bold mb-4">NFL Coming Soon</h2>
+            <p className="text-gray-400">National Football League betting is under development.</p>
+          </div>
+        );
+      case 'rugby':
+        return (
+          <div className="text-center py-4">
+            <h2 className="text-2xl font-bold mb-4">Rugby Coming Soon</h2>
+            <p className="text-gray-400">Rugby betting is under development.</p>
+          </div>
+        );
       case 'live':
         return <LiveSection sport={activeTab} onBetClick={handleBetClick} />;
       case 'my-bets':

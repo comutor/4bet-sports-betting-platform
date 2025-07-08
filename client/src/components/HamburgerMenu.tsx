@@ -37,14 +37,18 @@ export function HamburgerMenu({ isOpen, onClose, onTabChange, activeTab }: Hambu
   ];
 
   const sportsCategories = [
-    { id: 'football', label: 'Football', icon: 'fas fa-futbol' },
-    { id: 'basketball', label: 'Basketball', icon: 'fas fa-basketball' },
-    { id: 'tennis', label: 'Tennis', icon: 'fas fa-table-tennis' },
-    { id: 'ice-hockey', label: 'Ice Hockey', icon: 'fas fa-hockey-puck' },
-    { id: 'american-football', label: 'American Football', icon: 'fas fa-football-ball' },
+    { id: 'afl', label: 'AFL', icon: 'fas fa-football-ball' },
     { id: 'baseball', label: 'Baseball', icon: 'fas fa-baseball' },
-    { id: 'volleyball', label: 'Volleyball', icon: 'fas fa-volleyball' },
-    { id: 'esports', label: 'Esports', icon: 'fas fa-gamepad' }
+    { id: 'basketball', label: 'Basketball', icon: 'fas fa-basketball' },
+    { id: 'football', label: 'Football', icon: 'fas fa-futbol' },
+    { id: 'formula-1', label: 'Formula-1', icon: 'fas fa-flag-checkered' },
+    { id: 'handball', label: 'Handball', icon: 'fas fa-hand-paper' },
+    { id: 'hockey', label: 'Hockey', icon: 'fas fa-hockey-puck' },
+    { id: 'mma', label: 'MMA', icon: 'fas fa-fist-raised' },
+    { id: 'nba', label: 'NBA', icon: 'fas fa-basketball' },
+    { id: 'nfl', label: 'NFL', icon: 'fas fa-football-ball' },
+    { id: 'rugby', label: 'Rugby', icon: 'fas fa-football-ball' },
+    { id: 'volleyball', label: 'Volleyball', icon: 'fas fa-volleyball' }
   ];
 
   const topCountries = [
@@ -238,14 +242,18 @@ export function HamburgerMenu({ isOpen, onClose, onTabChange, activeTab }: Hambu
   const handleSportClick = (sportId: string) => {
     // Map hamburger menu sport IDs to top navigation sport IDs
     const sportMapping: { [key: string]: string } = {
-      'football': 'football',
-      'basketball': 'basketball', 
-      'tennis': 'tennis',
-      'ice-hockey': 'ice-hockey',
-      'american-football': 'american-football',
+      'afl': 'afl',
       'baseball': 'baseball',
-      'volleyball': 'volleyball',
-      'esports': 'esports'
+      'basketball': 'basketball',
+      'football': 'football',
+      'formula-1': 'formula-1',
+      'handball': 'handball',
+      'hockey': 'hockey',
+      'mma': 'mma',
+      'nba': 'nba',
+      'nfl': 'nfl',
+      'rugby': 'rugby',
+      'volleyball': 'volleyball'
     };
 
     // Navigate directly to the specific sport tab

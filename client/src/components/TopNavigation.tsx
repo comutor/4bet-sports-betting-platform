@@ -59,13 +59,20 @@ export function TopNavigation({
     }
   }, [isVisible]);
 
-  // Most popular sports for top navigation
+  // Most popular sports for top navigation - based on reference design
   const popularSports = [
-    { id: 'football', label: 'Football', icon: 'fas fa-futbol' },
+    { id: 'afl', label: 'AFL', icon: 'fas fa-football-ball' },
+    { id: 'baseball', label: 'Baseball', icon: 'fas fa-baseball' },
     { id: 'basketball', label: 'Basketball', icon: 'fas fa-basketball' },
-    { id: 'tennis', label: 'Tennis', icon: 'fas fa-table-tennis' },
-    { id: 'aviator', label: 'Aviator', icon: 'fas fa-plane' },
-    { id: 'ice-hockey', label: 'Ice Hockey', icon: 'fas fa-hockey-puck' }
+    { id: 'football', label: 'Football', icon: 'fas fa-futbol' },
+    { id: 'formula-1', label: 'Formula-1', icon: 'fas fa-flag-checkered' },
+    { id: 'handball', label: 'Handball', icon: 'fas fa-hand-paper' },
+    { id: 'hockey', label: 'Hockey', icon: 'fas fa-hockey-puck' },
+    { id: 'mma', label: 'MMA', icon: 'fas fa-fist-raised' },
+    { id: 'nba', label: 'NBA', icon: 'fas fa-basketball' },
+    { id: 'nfl', label: 'NFL', icon: 'fas fa-football-ball' },
+    { id: 'rugby', label: 'Rugby', icon: 'fas fa-football-ball' },
+    { id: 'volleyball', label: 'Volleyball', icon: 'fas fa-volleyball' }
   ];
 
   return (
