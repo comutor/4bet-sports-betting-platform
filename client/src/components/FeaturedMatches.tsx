@@ -19,7 +19,7 @@ interface FeaturedMatch {
 }
 
 interface FeaturedMatchesProps {
-  onBetClick: (bet: any) => void;
+  onBetClick: (eventName: string, selection: string, odds: string) => void;
 }
 
 export function FeaturedMatches({ onBetClick }: FeaturedMatchesProps) {
@@ -33,8 +33,18 @@ export function FeaturedMatches({ onBetClick }: FeaturedMatchesProps) {
   const formatMatchTime = (timeString: string | undefined) => {
     if (!timeString) return '';
     
+    // If it's already a formatted string like "Fri 19:00" or "Tue 15:30", return as is
+    if (timeString.includes(':') && (timeString.includes(' ') || timeString.length <= 8)) {
+      return timeString;
+    }
+    
+    // Try to parse as ISO date string for commence_time field
     try {
       const matchDate = new Date(timeString);
+      if (isNaN(matchDate.getTime())) {
+        return timeString; // Return original if not a valid date
+      }
+      
       const today = new Date();
       const tomorrow = new Date(today);
       tomorrow.setDate(today.getDate() + 1);
@@ -115,7 +125,7 @@ export function FeaturedMatches({ onBetClick }: FeaturedMatchesProps) {
                 <span className="text-lg">{getSportIcon(match.sport)}</span>
                 <span className="text-sm text-gray-400">{match.league}</span>
               </div>
-              <span className="text-xs text-gray-400">{formatMatchTime(match.commence_time || match.time)}</span>
+              <span className="text-xs text-gray-400">{formatMatchTime(match.time)}</span>
             </div>
             
             <div className="text-center mb-4">
@@ -130,11 +140,7 @@ export function FeaturedMatches({ onBetClick }: FeaturedMatchesProps) {
                   size="sm"
                   variant="outline"
                   className="text-xs px-3 py-1 h-8 border-gray-500 text-white hover:bg-blue-600 flex-1"
-                  onClick={() => onBetClick({
-                    match: `${match.homeTeam} vs ${match.awayTeam}`,
-                    selection: match.homeTeam,
-                    odds: match.odds.home
-                  })}
+                  onClick={() => onBetClick(`${match.homeTeam} vs ${match.awayTeam}`, match.homeTeam, match.odds.home)}
                 >
                   {match.homeTeam} {match.odds.home}
                 </Button>
@@ -144,11 +150,7 @@ export function FeaturedMatches({ onBetClick }: FeaturedMatchesProps) {
                     size="sm"
                     variant="outline"
                     className="text-xs px-3 py-1 h-8 border-gray-500 text-white hover:bg-blue-600"
-                    onClick={() => onBetClick({
-                      match: `${match.homeTeam} vs ${match.awayTeam}`,
-                      selection: "Draw",
-                      odds: match.odds.draw
-                    })}
+                    onClick={() => onBetClick(`${match.homeTeam} vs ${match.awayTeam}`, "Draw", match.odds.draw)}
                   >
                     Draw {match.odds.draw}
                   </Button>
@@ -158,11 +160,7 @@ export function FeaturedMatches({ onBetClick }: FeaturedMatchesProps) {
                   size="sm"
                   variant="outline"
                   className="text-xs px-3 py-1 h-8 border-gray-500 text-white hover:bg-blue-600 flex-1"
-                  onClick={() => onBetClick({
-                    match: `${match.homeTeam} vs ${match.awayTeam}`,
-                    selection: match.awayTeam,
-                    odds: match.odds.away
-                  })}
+                  onClick={() => onBetClick(`${match.homeTeam} vs ${match.awayTeam}`, match.awayTeam, match.odds.away)}
                 >
                   {match.awayTeam} {match.odds.away}
                 </Button>
@@ -180,7 +178,7 @@ export function FeaturedMatches({ onBetClick }: FeaturedMatchesProps) {
                       awayTeam: match.awayTeam,
                       league: match.league,
                       sport: match.sport.toLowerCase(),
-                      time: formatMatchTime(match.commence_time || match.time)
+                      time: match.time
                     });
                     setLocation(`/more-markets/${match.id}?${params.toString()}`);
                   }}
