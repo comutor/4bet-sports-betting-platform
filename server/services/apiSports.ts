@@ -112,7 +112,7 @@ export class ApiSportsService {
   private baseUrl = 'https://api-football-v1.p.rapidapi.com/v3';
   private cache = new Map<string, { data: any; timestamp: number }>();
   private cacheTimeout = 30 * 60 * 1000; // 30 minutes
-  private apiEnabled = false; // Temporarily disable until valid key
+  private apiEnabled = true; // Enable with new API key
 
   constructor() {
     this.apiKey = process.env.API_SPORTS_KEY || '';
@@ -121,6 +121,7 @@ export class ApiSportsService {
       this.apiEnabled = false;
     } else {
       this.apiEnabled = true;
+      console.log('API Sports service initialized with new key');
     }
     
     // Run cache cleanup every hour
@@ -259,7 +260,12 @@ export class ApiSportsService {
 
       if (!response.ok) {
         if (response.status === 429) {
+          console.log('API Sports rate limit hit, falling back to cached data or Odds API');
           throw new Error('API Sports rate limit exceeded');
+        }
+        if (response.status === 403) {
+          console.log('API Sports access forbidden, falling back to Odds API');
+          throw new Error('API Sports access forbidden');
         }
         throw new Error(`API Sports request failed: ${response.status}`);
       }
@@ -269,7 +275,13 @@ export class ApiSportsService {
       // Check if response indicates subscription issue
       if (data.message && data.message.includes('not subscribed')) {
         this.apiEnabled = false;
+        console.log('API Sports subscription invalid, disabling service');
         throw new Error('API Sports subscription invalid');
+      }
+      
+      if (data.message && data.message.includes('Too many requests')) {
+        console.log('API Sports rate limit detected in response body');
+        throw new Error('API Sports rate limit exceeded');
       }
       
       await this.setCache(cacheKey, data);
