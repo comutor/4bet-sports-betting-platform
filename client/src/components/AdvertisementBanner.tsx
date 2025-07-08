@@ -66,29 +66,29 @@ export function AdvertisementBanner() {
 
   return (
     <div className="w-full py-4">
-      <div className={`w-full h-24 ${currentAd.backgroundColor} rounded-lg flex items-center justify-between px-6 shadow-lg`}>
+      <div className={`w-full h-48 ${currentAd.backgroundColor} rounded-lg flex items-center justify-between px-8 shadow-lg`}>
         <div className="flex-1">
-          <h3 className={`text-lg font-bold ${currentAd.textColor} mb-1`}>
+          <h3 className={`text-2xl font-bold ${currentAd.textColor} mb-3`}>
             {currentAd.title}
           </h3>
-          <p className={`text-sm ${currentAd.textColor} opacity-90`}>
+          <p className={`text-lg ${currentAd.textColor} opacity-90`}>
             {currentAd.description}
           </p>
         </div>
-        <div className="flex-shrink-0 ml-4">
-          <button className={`px-4 py-2 rounded-lg font-semibold text-sm transition-colors ${currentAd.buttonColor}`}>
+        <div className="flex-shrink-0 ml-6">
+          <button className={`px-6 py-3 rounded-lg font-semibold text-lg transition-colors ${currentAd.buttonColor}`}>
             {currentAd.buttonText}
           </button>
         </div>
       </div>
       
       {/* Indicator dots */}
-      <div className="flex justify-center mt-3 space-x-2">
+      <div className="flex justify-center mt-4 space-x-3">
         {advertisementBanners.map((_, index) => (
           <button
             key={index}
             onClick={() => setCurrentAdIndex(index)}
-            className={`w-2 h-2 rounded-full transition-colors ${
+            className={`w-3 h-3 rounded-full transition-colors ${
               index === currentAdIndex ? 'bg-blue-500' : 'bg-gray-400'
             }`}
           />
