@@ -395,7 +395,7 @@ export default function Home() {
       <div className="main-container w-full bg-background min-h-screen relative pt-24">
         
         {/* Filter Bar - shown only for sports tabs */}
-        {['football', 'basketball', 'tennis', 'ice-hockey', 'american-football', 'esports'].includes(activeTab) && (
+        {['football', 'basketball', 'cricket', 'tennis', 'hockey', 'baseball', 'volleyball', 'afl', 'formula-1', 'handball', 'mma', 'nfl', 'rugby'].includes(activeTab) && (
           <FilterBar 
             activeFilter={activeFilter}
             onFilterChange={setActiveFilter}
@@ -405,7 +405,7 @@ export default function Home() {
         )}
         
         <main className={`pb-20 md:pb-4 ${
-          ['football', 'basketball', 'tennis', 'ice-hockey', 'american-football', 'esports'].includes(activeTab) 
+          ['football', 'basketball', 'cricket', 'tennis', 'hockey', 'baseball', 'volleyball', 'afl', 'formula-1', 'handball', 'mma', 'nfl', 'rugby'].includes(activeTab) 
             ? 'pt-0' 
             : 'pt-4'
         }`}>
