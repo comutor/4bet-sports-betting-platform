@@ -82,18 +82,7 @@ export function AdvertisementBanner() {
         </div>
       </div>
       
-      {/* Indicator dots */}
-      <div className="flex justify-center mt-4 space-x-3">
-        {advertisementBanners.map((_, index) => (
-          <button
-            key={index}
-            onClick={() => setCurrentAdIndex(index)}
-            className={`w-3 h-3 rounded-full transition-colors ${
-              index === currentAdIndex ? 'bg-blue-500' : 'bg-gray-400'
-            }`}
-          />
-        ))}
-      </div>
+
     </div>
   );
 }
