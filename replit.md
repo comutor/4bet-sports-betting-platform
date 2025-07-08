@@ -101,6 +101,7 @@ The application uses PostgreSQL with the following core entities:
 ## Changelog
 ```
 Changelog:
+- July 8, 2025. Implemented dual API strategy: Integrated API Sports as main API for football, basketball, hockey, and other sports while keeping Odds API specifically for cricket and tennis. Created ApiSportsService with comprehensive endpoint coverage including fixtures, leagues, competitions, and standings. Updated all football routes to use API Sports with better organized competition structure by country and leagues
 - July 8, 2025. Removed pagination dots from advertisement banner: Cleaned up AdvertisementBanner component by removing indicator dots for cleaner visual appearance
 - July 8, 2025. Reordered sports navigation to prioritize Tennis before Cricket: Updated both TopNavigation and HamburgerMenu components to show Tennis as the 3rd sport and Cricket as 4th, reflecting user preferences for sports ordering
 - July 8, 2025. Replaced Sports button with Home button: Removed confusing "Sports" navigation button and replaced it with "Home" button that corresponds to Football section. Updated all navigation, filter logic, and logout flows to use 'home' as the default tab. Home page now loads Football content directly, simplifying user experience and removing unnecessary AllSportsSection component
