@@ -2555,6 +2555,18 @@ const basketballCompetitions = [
     ]
   },
   {
+    country: "South-America",
+    flag: "🌎",
+    leagues: [
+      "South American Championship",
+      "South American Championship U17",
+      "South American Championship U17 Women",
+      "South American Championship U18",
+      "South American Championship Women",
+      "South American League"
+    ]
+  },
+  {
     country: "Finland",
     flag: "🇫🇮",
     leagues: [
@@ -2885,81 +2897,157 @@ const basketballCompetitions = [
     country: "Russia",
     flag: "🇷🇺",
     leagues: [
-      "VTB United League",
-      "Russian Superleague",
-      "Russian Superleague Women"
+      "PBL",
+      "Premier League W",
+      "Russian Cup",
+      "Russian Cup W",
+      "Super League",
+      "VTB Super Cup",
+      "VTB United League"
+    ]
+  },
+  {
+    country: "Saudi Arabia",
+    flag: "🇸🇦",
+    leagues: [
+      "Premier League"
     ]
   },
   {
     country: "Serbia",
     flag: "🇷🇸",
     leagues: [
-      "KLS",
-      "KLS Women",
-      "Radivoj Korac Cup"
+      "1. ZLS Women",
+      "First League",
+      "Korac cup",
+      "Super League"
+    ]
+  },
+  {
+    country: "Singapore",
+    flag: "🇸🇬",
+    leagues: [
+      "NBL"
     ]
   },
   {
     country: "Slovakia",
     flag: "🇸🇰",
     leagues: [
-      "SBL",
-      "SBL Women"
+      "Extraliga",
+      "Extraliga W",
+      "Slovakia Cup"
     ]
   },
   {
     country: "Slovenia",
     flag: "🇸🇮",
     leagues: [
+      "1 SKL W",
       "Liga Nova KBM",
-      "Liga Nova KBM Women",
-      "Slovenian Cup"
+      "Slovenian Cup",
+      "Supercup"
+    ]
+  },
+  {
+    country: "South Korea",
+    flag: "🇰🇷",
+    leagues: [
+      "KBL",
+      "KBL Cup",
+      "WKBL W"
     ]
   },
   {
     country: "Spain",
     flag: "🇪🇸",
     leagues: [
-      "Liga ACB",
-      "Liga Femenina",
-      "LEB Oro",
-      "LEB Plata",
-      "Copa del Rey",
-      "Copa de la Reina"
+      "ACB",
+      "LEB - Oro",
+      "LEB - Plata",
+      "Liga Femenina W",
+      "Spanish Cup",
+      "Spanish Cup Women",
+      "Supercopa ACB",
+      "Supercopa Women"
     ]
   },
   {
     country: "Sweden",
     flag: "🇸🇪",
     leagues: [
+      "Basketettan W",
       "Basketligan",
-      "Basketligan Women"
+      "Basketligan W",
+      "Superettan"
     ]
   },
   {
     country: "Switzerland",
     flag: "🇨🇭",
     leagues: [
+      "LNA",
+      "SB League W"
+    ]
+  },
+  {
+    country: "Taiwan",
+    flag: "🇹🇼",
+    leagues: [
+      "P. League+",
       "SBL",
-      "SBL Women"
+      "T1 League",
+      "WSBL Women"
+    ]
+  },
+  {
+    country: "Tajikistan",
+    flag: "🇹🇯",
+    leagues: [
+      "National League",
+      "Northern Cup"
+    ]
+  },
+  {
+    country: "Thailand",
+    flag: "🇹🇭",
+    leagues: [
+      "TBL"
     ]
   },
   {
     country: "Turkey",
     flag: "🇹🇷",
     leagues: [
-      "BSL",
-      "BSL Women",
-      "TBL",
-      "Turkish Cup"
+      "Federation Cup",
+      "Federation Cup Women",
+      "KBSL W",
+      "Super Cup",
+      "Super Cup Women",
+      "Super Ligi",
+      "TB2L",
+      "TB2L",
+      "TKBL Women",
+      "Turkish Cup",
+      "Turkish Cup Women"
+    ]
+  },
+  {
+    country: "Turkmenistan",
+    flag: "🇹🇲",
+    leagues: [
+      "NBLT"
     ]
   },
   {
     country: "Ukraine",
     flag: "🇺🇦",
     leagues: [
-      "Superleague",
-      "Superleague Women"
+      "ACBU Superleague",
+      "FBU Superleague",
+      "Super Cup",
+      "Superleague W",
+      "Ukrainian Cup"
     ]
   },
   {
@@ -2967,15 +3055,25 @@ const basketballCompetitions = [
     flag: "🇬🇧",
     leagues: [
       "BBL",
-      "BBL Women",
-      "NBL Division 1",
-      "BBL Cup"
+      "BBL Cup",
+      "BBL Trophy",
+      "Betty Codona Trophy Women",
+      "WBBL Cup Women",
+      "WBBL W"
+    ]
+  },
+  {
+    country: "Uruguay",
+    flag: "🇺🇾",
+    leagues: [
+      "Liga Capital"
     ]
   },
   {
     country: "United States",
     flag: "🇺🇸",
     leagues: [
+      "BIG3",
       "NBA",
       "WNBA",
       "NBA G League",
