@@ -2683,32 +2683,112 @@ const basketballCompetitions = [
       "Lega A",
       "Lega A - Super Cup",
       "Lega Basket Serie A",
-      "Serie A1 W"
+      "Serie A1 W",
+      "Serie A2",
+      "Serie A2 Women - North",
+      "Serie A2 Women - South",
+      "Super Cup Women"
+    ]
+  },
+  {
+    country: "Japan",
+    flag: "🇯🇵",
+    leagues: [
+      "B League",
+      "B2.League",
+      "BJ League",
+      "JBL League",
+      "NBL",
+      "W League Women"
+    ]
+  },
+  {
+    country: "Kazakhstan",
+    flag: "🇰🇿",
+    leagues: [
+      "Championship Women",
+      "Division I",
+      "Higher League",
+      "National League Women",
+      "Premier League"
+    ]
+  },
+  {
+    country: "Kosovo",
+    flag: "🇽🇰",
+    leagues: [
+      "Superliga",
+      "Superliga Women"
     ]
   },
   {
     country: "Latvia",
     flag: "🇱🇻",
     leagues: [
-      "LBL",
-      "LBL Women"
+      "Latvian Cup",
+      "LBL"
+    ]
+  },
+  {
+    country: "Lebanon",
+    flag: "🇱🇧",
+    leagues: [
+      "Division 1"
     ]
   },
   {
     country: "Lithuania",
     flag: "🇱🇹",
     leagues: [
+      "King Mindaugas Cup",
+      "LKF Cup",
       "LKL",
-      "LKL Women",
-      "King Mindaugas Cup"
+      "Moteru Lyga W",
+      "NKL"
+    ]
+  },
+  {
+    country: "Luxembourg",
+    flag: "🇱🇺",
+    leagues: [
+      "Total League",
+      "Total League Women"
+    ]
+  },
+  {
+    country: "Macedonia",
+    flag: "🇲🇰",
+    leagues: [
+      "Macedonian Cup",
+      "Prva Liga",
+      "Prva Liga Women",
+      "Superleague"
+    ]
+  },
+  {
+    country: "Mexico",
+    flag: "🇲🇽",
+    leagues: [
+      "CIBACOPA",
+      "LMBPF Women",
+      "LNBP"
     ]
   },
   {
     country: "Montenegro",
     flag: "🇲🇪",
     leagues: [
-      "Prva Liga",
-      "Prva Liga Women"
+      "Montenegrin Cup",
+      "Prva A Liga"
+    ]
+  },
+  {
+    country: "New Zealand",
+    flag: "🇳🇿",
+    leagues: [
+      "NBL",
+      "NBL Women",
+      "Tauihi Women"
     ]
   },
   {
@@ -2716,8 +2796,10 @@ const basketballCompetitions = [
     flag: "🇳🇱",
     leagues: [
       "DBL",
-      "DBL Women",
-      "NBB Cup"
+      "DBL Cup",
+      "NBB Cup",
+      "Supercup",
+      "WBL Women"
     ]
   },
   {
@@ -2725,34 +2807,78 @@ const basketballCompetitions = [
     flag: "🇳🇴",
     leagues: [
       "BLNO",
-      "BLNO Women"
+      "Kvinneligaen W"
+    ]
+  },
+  {
+    country: "Paraguay",
+    flag: "🇵🇾",
+    leagues: [
+      "LNB"
+    ]
+  },
+  {
+    country: "Philippines",
+    flag: "🇵🇭",
+    leagues: [
+      "Commissioners Cup",
+      "Fiesta Conference",
+      "Governors Cup",
+      "MPBL",
+      "Philippine Cup"
     ]
   },
   {
     country: "Poland",
     flag: "🇵🇱",
     leagues: [
+      "1 Liga",
+      "Ekstraklasa Women",
       "Energa Basket Liga",
-      "Energa Basket Liga Women",
-      "1. Liga",
-      "Polish Cup"
+      "PBA Cup",
+      "Polish Cup",
+      "Polish Cup W",
+      "Super Cup",
+      "Super Cup Women"
     ]
   },
   {
     country: "Portugal",
     flag: "🇵🇹",
     leagues: [
+      "LFB Women",
       "LPB",
-      "LPB Women",
-      "Taca de Portugal"
+      "Proliga",
+      "Super Cup",
+      "Super Cup Women",
+      "Taca da Liga",
+      "Taca de Portugal",
+      "Taca de Portugal Women"
+    ]
+  },
+  {
+    country: "Puerto Rico",
+    flag: "🇵🇷",
+    leagues: [
+      "BSN"
+    ]
+  },
+  {
+    country: "Qatar",
+    flag: "🇶🇦",
+    leagues: [
+      "QBL"
     ]
   },
   {
     country: "Romania",
     flag: "🇷🇴",
     leagues: [
-      "Liga Nationala",
-      "Liga Nationala Women"
+      "Divizia A",
+      "Liga National W",
+      "Romanian Cup",
+      "Romanian Cup Women",
+      "Super Cup"
     ]
   },
   {
