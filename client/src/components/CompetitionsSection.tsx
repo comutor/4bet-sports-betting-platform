@@ -43,17 +43,54 @@ const footballCompetitions = [
     ]
   },
   {
+    country: "Angola",
+    flag: "🇦🇴",
+    leagues: [
+      "Girabola"
+    ]
+  },
+  {
+    country: "Antigua-And-Barbuda",
+    flag: "🇦🇬",
+    leagues: [
+      "Premier Division"
+    ]
+  },
+  {
     country: "Argentina",
     flag: "🇦🇷",
     leagues: [
-      "Primera División",
-      "Primera Nacional",
       "Copa Argentina",
-      "Copa de la Liga",
-      "Supercopa Argentina",
-      "Primera B",
+      "Copa de la Liga Profesional",
+      "Copa de la Superliga",
+      "Liga Profesional Argentina",
+      "Primera B Metropolitana",
       "Primera C",
-      "Primera D"
+      "Primera D",
+      "Primera Nacional",
+      "Reserve League",
+      "Super Copa",
+      "Super Copa Internacional",
+      "Torneo Federal A",
+      "Torneo Promocional Amateur",
+      "Trofeo de Campeones de la Superliga"
+    ]
+  },
+  {
+    country: "Armenia",
+    flag: "🇦🇲",
+    leagues: [
+      "Cup",
+      "First League",
+      "Premier League",
+      "Super Cup"
+    ]
+  },
+  {
+    country: "Aruba",
+    flag: "🇦🇼",
+    leagues: [
+      "Division di Honor"
     ]
   },
   {
@@ -61,11 +98,27 @@ const footballCompetitions = [
     flag: "🇦🇺",
     leagues: [
       "A-League",
-      "NPL",
-      "FFA Cup",
+      "A-League Women",
       "Australia Cup",
+      "Brisbane Premier League",
+      "Capital Territory NPL",
+      "Capital Territory NPL 2",
+      "New South Wales NPL",
+      "New South Wales NPL 2",
+      "NNSW League 1",
+      "Northern NSW NPL",
+      "Northern Territory Premier League",
+      "Queensland NPL",
       "Queensland Premier League",
-      "NSW Premier League"
+      "South Australia NPL",
+      "South Australia State League 1",
+      "Tasmania Northern Championship",
+      "Tasmania NPL",
+      "Tasmania Southern Championship",
+      "Victoria NPL",
+      "Victoria NPL 2",
+      "Western Australia NPL",
+      "Western Australia State League 1"
     ]
   },
   {
