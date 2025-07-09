@@ -2385,7 +2385,407 @@ const basketballCompetitions = [
     leagues: [
       "CBB",
       "LBF W",
+      "LNB",
+      "Super 8"
+    ]
+  },
+  {
+    country: "Bulgaria",
+    flag: "🇧🇬",
+    leagues: [
+      "Bulgarian Cup",
+      "NBL",
+      "Super Cup"
+    ]
+  },
+  {
+    country: "Canada",
+    flag: "🇨🇦",
+    leagues: [
+      "CEBL",
+      "CIS",
+      "NBL",
+      "Super League"
+    ]
+  },
+  {
+    country: "Chile",
+    flag: "🇨🇱",
+    leagues: [
+      "Copa Chile",
+      "Copa LNB",
+      "DIMAYOR",
+      "LNB",
+      "LNB 2",
+      "Supercopa"
+    ]
+  },
+  {
+    country: "China",
+    flag: "🇨🇳",
+    leagues: [
+      "CBA",
+      "WCBA Women"
+    ]
+  },
+  {
+    country: "Colombia",
+    flag: "🇨🇴",
+    leagues: [
+      "LBP"
+    ]
+  },
+  {
+    country: "Croatia",
+    flag: "🇭🇷",
+    leagues: [
+      "A1 Liga",
+      "Croatian Cup",
+      "Premijer Liga Women",
+      "Prva Liga"
+    ]
+  },
+  {
+    country: "Cyprus",
+    flag: "🇨🇾",
+    leagues: [
+      "Division A"
+    ]
+  },
+  {
+    country: "Czech Republic",
+    flag: "🇨🇿",
+    leagues: [
+      "1. Liga",
+      "Czech Cup",
+      "Czech Cup Women",
+      "NBL",
+      "ZBL W"
+    ]
+  },
+  {
+    country: "Denmark",
+    flag: "🇩🇰",
+    leagues: [
+      "Basketligaen",
+      "Dameligaen W",
+      "Denmark Cup",
+      "Denmark Cup Women"
+    ]
+  },
+  {
+    country: "Dominican-Republic",
+    flag: "🇩🇴",
+    leagues: [
       "LNB"
+    ]
+  },
+  {
+    country: "Estonia",
+    flag: "🇪🇪",
+    leagues: [
+      "Estonia Cup",
+      "Korvpalli Meistriliiga"
+    ]
+  },
+  {
+    country: "Europe",
+    flag: "🇪🇺",
+    leagues: [
+      "ABA League",
+      "ABA League 2",
+      "ABA Supercup",
+      "Acropolis Tournament",
+      "Alpe Adria Cup",
+      "Baltic League",
+      "Baltic League Cup",
+      "Baltic League Women",
+      "Beko Supercup",
+      "BIBL",
+      "BNXT League",
+      "CEWL Women",
+      "Champions League",
+      "Czech-Slovak Cup",
+      "ENBL",
+      "EuroBasket",
+      "EuroBasket B",
+      "EuroBasket U16",
+      "EuroBasket U16 B",
+      "EuroBasket U16 C",
+      "EuroBasket U18",
+      "EuroBasket U18 B",
+      "EuroBasket U18 C",
+      "EuroBasket U20",
+      "EuroBasket U20 B",
+      "EuroChallenge",
+      "Eurocup",
+      "EuroCup Women",
+      "Euroleague",
+      "Euroleague Women",
+      "European Challengers U16",
+      "European Challengers U16 Women",
+      "European Challengers U18",
+      "European Challengers U18 Women",
+      "European Challengers U20",
+      "European Challengers U20 Women",
+      "European Championship U16 B Women",
+      "European Championship U16 C Women",
+      "European Championship U16 Women",
+      "European Championship U18 B Women",
+      "European Championship U18 C Women"
+    ]
+  },
+  {
+    country: "Finland",
+    flag: "🇫🇮",
+    leagues: [
+      "Korisliiga",
+      "Korisliiga Women",
+      "Korisliiga Cup"
+    ]
+  },
+  {
+    country: "France",
+    flag: "🇫🇷",
+    leagues: [
+      "Betclic Elite",
+      "LFB Women",
+      "Pro A",
+      "Pro B",
+      "Leaders Cup"
+    ]
+  },
+  {
+    country: "Germany",
+    flag: "🇩🇪",
+    leagues: [
+      "BBL",
+      "DBBL Women",
+      "ProA",
+      "ProB",
+      "BBL Cup"
+    ]
+  },
+  {
+    country: "Greece",
+    flag: "🇬🇷",
+    leagues: [
+      "Basket League",
+      "A2 League",
+      "Greek Cup",
+      "Greek Cup Women",
+      "A1 Women"
+    ]
+  },
+  {
+    country: "Hungary",
+    flag: "🇭🇺",
+    leagues: [
+      "NB I",
+      "NB I Women",
+      "Hungarian Cup"
+    ]
+  },
+  {
+    country: "Iceland",
+    flag: "🇮🇸",
+    leagues: [
+      "Dominos League",
+      "Dominos League Women"
+    ]
+  },
+  {
+    country: "Israel",
+    flag: "🇮🇱",
+    leagues: [
+      "Winner League",
+      "Winner League Women",
+      "State Cup"
+    ]
+  },
+  {
+    country: "Italy",
+    flag: "🇮🇹",
+    leagues: [
+      "Lega Basket Serie A",
+      "Serie A2",
+      "Serie B",
+      "Lega Basket Femminile",
+      "Italian Cup"
+    ]
+  },
+  {
+    country: "Latvia",
+    flag: "🇱🇻",
+    leagues: [
+      "LBL",
+      "LBL Women"
+    ]
+  },
+  {
+    country: "Lithuania",
+    flag: "🇱🇹",
+    leagues: [
+      "LKL",
+      "LKL Women",
+      "King Mindaugas Cup"
+    ]
+  },
+  {
+    country: "Montenegro",
+    flag: "🇲🇪",
+    leagues: [
+      "Prva Liga",
+      "Prva Liga Women"
+    ]
+  },
+  {
+    country: "Netherlands",
+    flag: "🇳🇱",
+    leagues: [
+      "DBL",
+      "DBL Women",
+      "NBB Cup"
+    ]
+  },
+  {
+    country: "Norway",
+    flag: "🇳🇴",
+    leagues: [
+      "BLNO",
+      "BLNO Women"
+    ]
+  },
+  {
+    country: "Poland",
+    flag: "🇵🇱",
+    leagues: [
+      "Energa Basket Liga",
+      "Energa Basket Liga Women",
+      "1. Liga",
+      "Polish Cup"
+    ]
+  },
+  {
+    country: "Portugal",
+    flag: "🇵🇹",
+    leagues: [
+      "LPB",
+      "LPB Women",
+      "Taca de Portugal"
+    ]
+  },
+  {
+    country: "Romania",
+    flag: "🇷🇴",
+    leagues: [
+      "Liga Nationala",
+      "Liga Nationala Women"
+    ]
+  },
+  {
+    country: "Russia",
+    flag: "🇷🇺",
+    leagues: [
+      "VTB United League",
+      "Russian Superleague",
+      "Russian Superleague Women"
+    ]
+  },
+  {
+    country: "Serbia",
+    flag: "🇷🇸",
+    leagues: [
+      "KLS",
+      "KLS Women",
+      "Radivoj Korac Cup"
+    ]
+  },
+  {
+    country: "Slovakia",
+    flag: "🇸🇰",
+    leagues: [
+      "SBL",
+      "SBL Women"
+    ]
+  },
+  {
+    country: "Slovenia",
+    flag: "🇸🇮",
+    leagues: [
+      "Liga Nova KBM",
+      "Liga Nova KBM Women",
+      "Slovenian Cup"
+    ]
+  },
+  {
+    country: "Spain",
+    flag: "🇪🇸",
+    leagues: [
+      "Liga ACB",
+      "Liga Femenina",
+      "LEB Oro",
+      "LEB Plata",
+      "Copa del Rey",
+      "Copa de la Reina"
+    ]
+  },
+  {
+    country: "Sweden",
+    flag: "🇸🇪",
+    leagues: [
+      "Basketligan",
+      "Basketligan Women"
+    ]
+  },
+  {
+    country: "Switzerland",
+    flag: "🇨🇭",
+    leagues: [
+      "SBL",
+      "SBL Women"
+    ]
+  },
+  {
+    country: "Turkey",
+    flag: "🇹🇷",
+    leagues: [
+      "BSL",
+      "BSL Women",
+      "TBL",
+      "Turkish Cup"
+    ]
+  },
+  {
+    country: "Ukraine",
+    flag: "🇺🇦",
+    leagues: [
+      "Superleague",
+      "Superleague Women"
+    ]
+  },
+  {
+    country: "United Kingdom",
+    flag: "🇬🇧",
+    leagues: [
+      "BBL",
+      "BBL Women",
+      "NBL Division 1",
+      "BBL Cup"
+    ]
+  },
+  {
+    country: "United States",
+    flag: "🇺🇸",
+    leagues: [
+      "NBA",
+      "WNBA",
+      "NBA G League",
+      "NCAA Division I",
+      "NCAA Division II",
+      "NCAA Division III",
+      "NBA Summer League",
+      "The Basketball Tournament"
     ]
   }
 ];
