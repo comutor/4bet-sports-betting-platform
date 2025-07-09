@@ -3817,61 +3817,172 @@ const hockeyCompetitions = [
     country: "Slovakia",
     flag: "🇸🇰",
     leagues: [
-      "1. Liga"
+      "2. Liga",
+      "Cassovia Hockey Cup",
+      "Extraliga",
+      "Slovakia Cup",
+      "Super Cup",
+      "Tipos Extraliga"
     ]
   },
   {
     country: "Slovenia",
     flag: "🇸🇮",
     leagues: [
-      "ALPS Hockey League",
-      "Slovenian Championship"
+      "Hokejska liga",
+      "IHL",
+      "Slohokej Liga"
+    ]
+  },
+  {
+    country: "Spain",
+    flag: "🇪🇸",
+    leagues: [
+      "LNH",
+      "LNHH"
     ]
   },
   {
     country: "Sweden",
     flag: "🇸🇪",
     leagues: [
+      "AllEttan Norra",
+      "AllEttan Play Offs",
+      "AllEttan Södra",
+      "Division 1",
+      "Hockey Allsvenskan",
+      "HockeyEttan Norra",
+      "HockeyEttan Norra var",
+      "HockeyEttan Ostra",
+      "HockeyEttan Sodra",
+      "HockeyEttan Sodra var",
+      "HockeyEttan Vastra",
+      "SCA Cupen",
+      "SDHL Women",
       "SHL",
-      "HockeyAllsvenskan",
-      "Division 1"
+      "SuperElit U20"
     ]
   },
   {
     country: "Switzerland",
     flag: "🇨🇭",
     leagues: [
+      "MySports League",
       "National League",
-      "Swiss League",
-      "MySports League"
+      "Swiss Cup",
+      "Swiss League"
+    ]
+  },
+  {
+    country: "Turkey",
+    flag: "🇹🇷",
+    leagues: [
+      "Super Lig"
+    ]
+  },
+  {
+    country: "Ukraine",
+    flag: "🇺🇦",
+    leagues: [
+      "Superleague",
+      "UHL",
+      "Ukrainian Cup"
+    ]
+  },
+  {
+    country: "United Kingdom",
+    flag: "🇬🇧",
+    leagues: [
+      "Challenge Cup",
+      "Elite League"
     ]
   },
   {
     country: "United States",
     flag: "🇺🇸",
     leagues: [
-      "NHL",
       "AHL",
+      "CHL",
       "ECHL",
-      "NCAA Division I",
-      "NWHL"
+      "FHL",
+      "FPHL",
+      "NCAA",
+      "NHL",
+      "NWHL Women",
+      "PHF Women",
+      "PWHL Women",
+      "SPHL",
+      "USHL"
     ]
   },
   {
     country: "World",
     flag: "🌍",
     leagues: [
-      "IIHF World Championship",
-      "IIHF World Junior Championship",
-      "IIHF World U18 Championship",
-      "Winter Olympics",
-      "World Cup of Hockey",
-      "Champions Hockey League",
-      "Spengler Cup",
-      "Deutschland Cup",
-      "Karjala Tournament",
-      "World Championship Women",
-      "World Junior Championship Women"
+      "Club Friendly",
+      "Friendly International",
+      "Friendly International Women",
+      "Germany Cup",
+      "Hlinka-Gretzky Cup",
+      "International Tournament (South Korea)",
+      "Ivan Hlinka Memorial Cup",
+      "Junior Club World Cup",
+      "Mountfield Cup",
+      "Nagano Cup",
+      "NHL 4 Nations Face-Off",
+      "Olympic Games",
+      "Olympic Games Women",
+      "Universiade",
+      "Universiade Women",
+      "Victoria Cup",
+      "WCH IA",
+      "WCH IA Women",
+      "WCH IB",
+      "WCH IB Women",
+      "WCH IIA",
+      "WCH IIA Women",
+      "WCH IIB",
+      "WCH IIB - Qualification Women",
+      "WCH IIB Women",
+      "WCH III",
+      "WCH III - Qualification",
+      "WCH III Women",
+      "WCH IIIA",
+      "WCH IIIA Women",
+      "WCH IIIB",
+      "WCH IIIB Women",
+      "WCH IV",
+      "WCH U18",
+      "WCH U18 Div. I Women",
+      "WCH U18 Div. IA Women",
+      "WCH U18 Div. IB - Qualification Women",
+      "WCH U18 Div. IB Women",
+      "WCH U18 IA",
+      "WCH U18 IA Women",
+      "WCH U18 IB",
+      "WCH U18 IB Women",
+      "WCH U18 II Women",
+      "WCH U18 IIA",
+      "WCH U18 IIA Women",
+      "WCH U18 IIB",
+      "WCH U18 IIB Women",
+      "WCH U18 IIIA",
+      "WCH U18 IIIB",
+      "WCH U18 Women",
+      "WCH U20",
+      "WCH U20 IA",
+      "WCH U20 IB",
+      "WCH U20 IIA",
+      "WCH U20 IIB",
+      "WCH U20 III",
+      "WCH U20 III - Qualification",
+      "WCH U20 IIIA",
+      "WCH U20 IIIB",
+      "WCH Women",
+      "World Championship",
+      "World Cup",
+      "World Hockey Challenge U17",
+      "World Junior A Challenge"
     ]
   }
 ];
