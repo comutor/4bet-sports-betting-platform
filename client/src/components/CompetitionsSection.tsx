@@ -1972,7 +1972,112 @@ const footballCompetitions = [
     leagues: [
       "Major League Soccer",
       "MLS All-Star",
-      "MLS Next Pro"
+      "MLS Next Pro",
+      "NISA",
+      "NPSL",
+      "NWSL - Liga MXF Summer Cup",
+      "NWSL Women",
+      "NWSL Women - Challenge Cup",
+      "US Open Cup",
+      "USL Championship",
+      "USL League One",
+      "USL League One Cup",
+      "USL League Two",
+      "USL Super League",
+      "USL W League",
+      "WPSL"
+    ]
+  },
+  {
+    country: "Uzbekistan",
+    flag: "🇺🇿",
+    leagues: [
+      "Cup",
+      "Pro League A",
+      "Super Cup",
+      "Super League"
+    ]
+  },
+  {
+    country: "Venezuela",
+    flag: "🇻🇪",
+    leagues: [
+      "Copa Venezuela",
+      "Primera División",
+      "Segunda División",
+      "Supercopa"
+    ]
+  },
+  {
+    country: "Vietnam",
+    flag: "🇻🇳",
+    leagues: [
+      "Cup",
+      "Super Cup",
+      "V.League 1",
+      "V.League 2"
+    ]
+  },
+  {
+    country: "Wales",
+    flag: "🏴󠁧󠁢󠁷󠁬󠁳󠁿",
+    leagues: [
+      "FAW Championship",
+      "League Cup",
+      "Premier League",
+      "Welsh Cup"
+    ]
+  },
+  {
+    country: "World",
+    flag: "🌍",
+    leagues: [
+      "AFC Challenge Cup",
+      "AFC Challenge League",
+      "AFC Champions League",
+      "AFC Cup",
+      "AFC U17 Asian Cup",
+      "AFC U17 Asian Cup - Qualification",
+      "AFC U17 Asian Cup - Women",
+      "AFC U20 Asian Cup",
+      "AFC U20 Asian Cup - Qualification",
+      "AFC U20 Asian Cup - Women",
+      "AFC U23 Asian Cup",
+      "AFC U23 Asian Cup - Qualification",
+      "AFC Women's Champions League",
+      "AFF Championship",
+      "AFF U19 Championship",
+      "AFF U23 Championship",
+      "Africa Cup of Nations",
+      "Africa Cup of Nations - Qualification",
+      "Africa Cup of Nations - Women",
+      "Africa Cup of Nations U20",
+      "Africa U23 Cup of Nations - Qualification",
+      "African Football League",
+      "African Nations Championship",
+      "African Nations Championship - Qualification",
+      "AGCFF Gulf Champions League",
+      "Algarve Cup",
+      "All Africa Games",
+      "All-Island Cup - Women",
+      "Arab Championship - U20",
+      "Arab Club Champions Cup",
+      "Arab Cup",
+      "ASEAN Club Championship",
+      "Asian Cup",
+      "Asian Cup - Qualification",
+      "Asian Cup Women",
+      "Asian Cup Women - Qualification",
+      "Asian Games",
+      "Baltic Cup",
+      "CAC Games",
+      "CAF Champions League",
+      "CAF Confederation Cup",
+      "CAF Cup of Nations - U17",
+      "CAF Super Cup",
+      "CAF U23 Cup of Nations",
+      "CAF Women's Champions League",
+      "CAFA Nations Cup"
     ]
   },
 
