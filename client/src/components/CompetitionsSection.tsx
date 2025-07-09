@@ -3192,20 +3192,24 @@ const cricketCompetitions = [
 
 const tennisCompetitions = [
   {
-    country: "International",
+    country: "World",
     flag: "🌍",
     leagues: [
-      "ATP Tour",
-      "WTA Tour",
-      "Grand Slam Events",
-      "ATP Masters 1000",
-      "WTA 1000",
-      "ATP 500",
-      "WTA 500",
-      "ATP 250",
-      "WTA 250",
-      "ITF Men's World Tennis Tour",
-      "ITF Women's World Tennis Tour"
+      "ATP",
+      "Billie Jean",
+      "Challenger",
+      "Davis Cup",
+      "Exhibition",
+      "UTS Nimes Grand Slam",
+      "In Progress",
+      "ITF Men",
+      "ITF Women",
+      "King Cup",
+      "United Cup",
+      "UTR Men",
+      "UTR Women",
+      "WTA",
+      "WTA 125"
     ]
   }
 ];
