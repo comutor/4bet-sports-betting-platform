@@ -2242,44 +2242,150 @@ const footballCompetitions = [
 
 const basketballCompetitions = [
   {
-    country: "United States",
-    flag: "🇺🇸",
+    country: "Africa",
+    flag: "🌍",
     leagues: [
-      "NBA",
-      "WNBA",
-      "NBA G League",
-      "NCAA Division I",
-      "NCAA Division II",
-      "NCAA Division III"
+      "Africa Champions Cup",
+      "Africa Champions Cup Women",
+      "African Championship",
+      "African Championship U16",
+      "African Championship U16 Women",
+      "African Championship U18",
+      "African Championship U18 Women",
+      "AfroBasket",
+      "AfroBasket Women",
+      "AfroCan",
+      "BAL"
     ]
   },
   {
-    country: "Europe",
-    flag: "🇪🇺",
+    country: "Albania",
+    flag: "🇦🇱",
     leagues: [
-      "EuroLeague",
-      "EuroCup",
-      "Basketball Champions League",
-      "FIBA Europe Cup"
+      "Superliga"
     ]
   },
   {
-    country: "Spain",
-    flag: "🇪🇸",
+    country: "Argentina",
+    flag: "🇦🇷",
     leagues: [
-      "Liga ACB",
-      "LEB Oro",
-      "LEB Plata",
-      "Copa del Rey"
+      "Liga A",
+      "Liga Femenina Women",
+      "Super 4",
+      "Super Cup",
+      "Torneo Super 20"
     ]
   },
   {
-    country: "Greece",
-    flag: "🇬🇷",
+    country: "Asia",
+    flag: "🌏",
     leagues: [
-      "Greek Basket League",
-      "Greek A2 League",
-      "Greek Cup"
+      "ABL",
+      "Asia Challenge",
+      "Asia Champions Cup",
+      "Asia Champions League",
+      "Asia Championship U16",
+      "Asia Championship U16 B Women",
+      "Asia Championship U16 Women",
+      "Asia Championship U18",
+      "Asia Championship U18 B Women",
+      "Asia Championship U18 Women",
+      "Asia Cup",
+      "Asia Cup Women",
+      "Asian Games",
+      "Asian Games Women",
+      "EABA Championship",
+      "EASL",
+      "SEABA Championship",
+      "SEABA Championship Women",
+      "Southeast Asian Games",
+      "Southeast Asian Games Women",
+      "The Super 8",
+      "WASL"
+    ]
+  },
+  {
+    country: "Australia",
+    flag: "🇦🇺",
+    leagues: [
+      "NBL",
+      "NBL 1",
+      "NBL 1 W",
+      "NBL W",
+      "NBL1 Central",
+      "NBL1 Central Women",
+      "NBL1 East",
+      "NBL1 East Women",
+      "NBL1 North",
+      "NBL1 North Women",
+      "NBL1 South",
+      "NBL1 South Women",
+      "NBL1 West",
+      "NBL1 West Women",
+      "SEABL",
+      "SEABL Women"
+    ]
+  },
+  {
+    country: "Austria",
+    flag: "🇦🇹",
+    leagues: [
+      "ABL",
+      "Austria Cup",
+      "AWBL Women",
+      "Super Cup",
+      "Superliga",
+      "Superliga Women",
+      "Zweite Liga"
+    ]
+  },
+  {
+    country: "Bahrain",
+    flag: "🇧🇭",
+    leagues: [
+      "Premier League"
+    ]
+  },
+  {
+    country: "Belarus",
+    flag: "🇧🇾",
+    leagues: [
+      "Premier League",
+      "Premier League W"
+    ]
+  },
+  {
+    country: "Belgium",
+    flag: "🇧🇪",
+    leagues: [
+      "Belgian Cup",
+      "EuroMillions Basketball League",
+      "Pro Basketball League",
+      "Top Division Women"
+    ]
+  },
+  {
+    country: "Bolivia",
+    flag: "🇧🇴",
+    leagues: [
+      "Libobasquet"
+    ]
+  },
+  {
+    country: "Bosnia-and-Herzegovina",
+    flag: "🇧🇦",
+    leagues: [
+      "Prvenstvo BiH",
+      "Prvenstvo BiH Women"
+    ]
+  },
+  {
+    country: "Brazil",
+    flag: "🇧🇷",
+    leagues: [
+      "CBB",
+      "LBF W",
+      "LNB"
     ]
   }
 ];
