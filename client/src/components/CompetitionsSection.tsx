@@ -394,22 +394,190 @@ const footballCompetitions = [
     country: "Bulgaria",
     flag: "🇧🇬",
     leagues: [
-      "Cup"
+      "Cup",
+      "First League",
+      "Second League",
+      "Super Cup",
+      "Third League - Northeast",
+      "Third League - Northwest",
+      "Third League - Southeast",
+      "Third League - Southwest"
+    ]
+  },
+  {
+    country: "Burkina-Faso",
+    flag: "🇧🇫",
+    leagues: [
+      "Ligue 1"
+    ]
+  },
+  {
+    country: "Burundi",
+    flag: "🇧🇮",
+    leagues: [
+      "Ligue A"
+    ]
+  },
+  {
+    country: "Cambodia",
+    flag: "🇰🇭",
+    leagues: [
+      "C-League",
+      "Hun Sen Cup"
+    ]
+  },
+  {
+    country: "Cameroon",
+    flag: "🇨🇲",
+    leagues: [
+      "Elite One",
+      "Elite Two",
+      "Super Cup"
+    ]
+  },
+  {
+    country: "Canada",
+    flag: "🇨🇦",
+    leagues: [
+      "Canadian Championship",
+      "Canadian Premier League",
+      "Canadian Soccer League",
+      "League 1 Ontario",
+      "Northern Super League",
+      "Pacific Coast Soccer League"
+    ]
+  },
+  {
+    country: "Chile",
+    flag: "🇨🇱",
+    leagues: [
+      "Copa Chile",
+      "Primera B",
+      "Primera División",
+      "Segunda División",
+      "Super Cup"
+    ]
+  },
+  {
+    country: "China",
+    flag: "🇨🇳",
+    leagues: [
+      "FA Cup",
+      "League One",
+      "League Two",
+      "Super Cup",
+      "Super League"
+    ]
+  },
+  {
+    country: "Chinese-Taipei",
+    flag: "🇹🇼",
+    leagues: [
+      "Taiwan Football Premier League"
+    ]
+  },
+  {
+    country: "Colombia",
+    flag: "🇨🇴",
+    leagues: [
+      "Copa Colombia",
+      "Liga Femenina",
+      "Primera A",
+      "Primera B",
+      "Superliga"
+    ]
+  },
+  {
+    country: "Congo",
+    flag: "🇨🇬",
+    leagues: [
+      "Ligue 1"
+    ]
+  },
+  {
+    country: "Congo-DR",
+    flag: "🇨🇩",
+    leagues: [
+      "Ligue 1"
+    ]
+  },
+  {
+    country: "Costa-Rica",
+    flag: "🇨🇷",
+    leagues: [
+      "Copa Costa Rica",
+      "Liga de Ascenso",
+      "Primera División",
+      "Recopa",
+      "Supercopa"
+    ]
+  },
+  {
+    country: "Crimea",
+    flag: "🇺🇦",
+    leagues: [
+      "Premier League"
     ]
   },
   {
     country: "Croatia",
     flag: "🇭🇷",
     leagues: [
-      "1. HNL",
-      "2. HNL",
-      "Croatian Cup",
+      "Cup",
+      "First NL",
+      "HNL",
+      "Second NL",
       "Super Cup",
-      "3. HNL - Center",
-      "3. HNL - East",
-      "3. HNL - North",
-      "3. HNL - South",
-      "3. HNL - West"
+      "Third NL - Istok",
+      "Third NL - Jug",
+      "Third NL - Sjever",
+      "Third NL - Sredite",
+      "Third NL - Zapad"
+    ]
+  },
+  {
+    country: "Cuba",
+    flag: "🇨🇺",
+    leagues: [
+      "Primera División"
+    ]
+  },
+  {
+    country: "Curacao",
+    flag: "🇨🇼",
+    leagues: [
+      "Curaçao Sekshon Pagá"
+    ]
+  },
+  {
+    country: "Cyprus",
+    flag: "🇨🇾",
+    leagues: [
+      "1. Division",
+      "2. Division",
+      "3. Division",
+      "Cup",
+      "Super Cup"
+    ]
+  },
+  {
+    country: "Czech-Republic",
+    flag: "🇨🇿",
+    leagues: [
+      "1. Liga U19",
+      "1. Liga Women",
+      "3. liga - CFL A",
+      "3. liga - CFL B",
+      "3. liga - MSFL",
+      "3. liga - Promotion Play-off",
+      "4. liga - Divizie A",
+      "4. liga - Divizie B",
+      "4. liga - Divizie C",
+      "4. liga - Divizie D",
+      "4. liga - Divizie E",
+      "4. liga - Divizie F",
+      "Cup",
+      "Czech Liga"
     ]
   },
   {
