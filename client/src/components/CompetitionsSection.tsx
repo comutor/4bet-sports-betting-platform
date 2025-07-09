@@ -988,21 +988,403 @@ const footballCompetitions = [
     leagues: [
       "Liga 1",
       "Liga 2",
-      "Piala Indonesia"
+      "Piala Indonesia",
+      "Piala Presiden"
+    ]
+  },
+  {
+    country: "Iran",
+    flag: "🇮🇷",
+    leagues: [
+      "Azadegan League",
+      "Hazfi Cup",
+      "Persian Gulf Pro League",
+      "Super Cup"
+    ]
+  },
+  {
+    country: "Iraq",
+    flag: "🇮🇶",
+    leagues: [
+      "Iraqi League"
+    ]
+  },
+  {
+    country: "Ireland",
+    flag: "🇮🇪",
+    leagues: [
+      "FAI Cup",
+      "FAI President's Cup",
+      "First Division",
+      "League Cup",
+      "Premier Division",
+      "Women's President's Cup"
+    ]
+  },
+  {
+    country: "Israel",
+    flag: "🇮🇱",
+    leagues: [
+      "Liga Alef",
+      "Liga Leumit",
+      "Ligat Ha'al",
+      "State Cup",
+      "Super Cup",
+      "Toto Cup Ligat Al"
     ]
   },
   {
     country: "Italy",
     flag: "🇮🇹",
     leagues: [
+      "Campionato Primavera - 1",
+      "Campionato Primavera - 2",
+      "Coppa Italia",
+      "Coppa Italia Primavera",
+      "Coppa Italia Serie C",
+      "Coppa Italia Serie D",
+      "Coppa Italia Women",
       "Serie A",
+      "Serie A Women",
       "Serie B",
       "Serie C",
-      "Serie D",
-      "Coppa Italia",
-      "Supercoppa Italiana",
-      "Primavera 1",
-      "Primavera 2"
+      "Serie C - Girone B",
+      "Serie C - Girone C",
+      "Serie C - Promotion - Play-offs",
+      "Serie C - Relegation - Play-offs",
+      "Serie C - Supercoppa Lega Finals",
+      "Serie D - Championship Round",
+      "Serie D - Girone A",
+      "Serie D - Girone B",
+      "Serie D - Girone C",
+      "Serie D - Girone D",
+      "Serie D - Girone E",
+      "Serie D - Girone F",
+      "Serie D - Girone G",
+      "Serie D - Girone H",
+      "Serie D - Girone I",
+      "Serie D - Promotion - Play-offs",
+      "Serie D - Relegation - Play-offs",
+      "Super Cup",
+      "Super Cup Primavera"
+    ]
+  },
+  {
+    country: "Ivory-Coast",
+    flag: "🇨🇮",
+    leagues: [
+      "Ligue 1"
+    ]
+  },
+  {
+    country: "Jamaica",
+    flag: "🇯🇲",
+    leagues: [
+      "Premier League"
+    ]
+  },
+  {
+    country: "Japan",
+    flag: "🇯🇵",
+    leagues: [
+      "Emperor Cup",
+      "J-League Cup",
+      "J1 League",
+      "J2 League",
+      "J3 League",
+      "Japan Football League",
+      "Super Cup",
+      "WE League"
+    ]
+  },
+  {
+    country: "Jordan",
+    flag: "🇯🇴",
+    leagues: [
+      "Cup",
+      "League",
+      "Shield Cup",
+      "Super Cup"
+    ]
+  },
+  {
+    country: "Kazakhstan",
+    flag: "🇰🇿",
+    leagues: [
+      "1. Division",
+      "Cup",
+      "Premier League",
+      "Super Cup"
+    ]
+  },
+  {
+    country: "Kenya",
+    flag: "🇰🇪",
+    leagues: [
+      "FKF Premier League",
+      "Shield Cup",
+      "Super League"
+    ]
+  },
+  {
+    country: "Kosovo",
+    flag: "🇽🇰",
+    leagues: [
+      "Cup",
+      "Super Cup",
+      "Superliga"
+    ]
+  },
+  {
+    country: "Kuwait",
+    flag: "🇰🇼",
+    leagues: [
+      "Crown Prince Cup",
+      "Division 1",
+      "Emir Cup",
+      "Premier League",
+      "Super Cup"
+    ]
+  },
+  {
+    country: "Kyrgyzstan",
+    flag: "🇰🇬",
+    leagues: [
+      "Premier League"
+    ]
+  },
+  {
+    country: "Laos",
+    flag: "🇱🇦",
+    leagues: [
+      "Lao League"
+    ]
+  },
+  {
+    country: "Latvia",
+    flag: "🇱🇻",
+    leagues: [
+      "1. Liga",
+      "Cup",
+      "Super Cup",
+      "Virsliga"
+    ]
+  },
+  {
+    country: "Lebanon",
+    flag: "🇱🇧",
+    leagues: [
+      "Cup",
+      "Federation Cup",
+      "Premier League"
+    ]
+  },
+  {
+    country: "Lesotho",
+    flag: "🇱🇸",
+    leagues: [
+      "Premier League"
+    ]
+  },
+  {
+    country: "Liberia",
+    flag: "🇱🇷",
+    leagues: [
+      "LFA First Division"
+    ]
+  },
+  {
+    country: "Libya",
+    flag: "🇱🇾",
+    leagues: [
+      "Premier League"
+    ]
+  },
+  {
+    country: "Liechtenstein",
+    flag: "🇱🇮",
+    leagues: [
+      "Cup"
+    ]
+  },
+  {
+    country: "Lithuania",
+    flag: "🇱🇹",
+    leagues: [
+      "1 Lyga",
+      "A Lyga",
+      "Cup",
+      "Super Cup"
+    ]
+  },
+  {
+    country: "Luxembourg",
+    flag: "🇱🇺",
+    leagues: [
+      "Cup",
+      "National Division"
+    ]
+  },
+  {
+    country: "Macao",
+    flag: "🇲🇴",
+    leagues: [
+      "Primeira Divisão"
+    ]
+  },
+  {
+    country: "Macedonia",
+    flag: "🇲🇰",
+    leagues: [
+      "Cup",
+      "First League",
+      "Second League"
+    ]
+  },
+  {
+    country: "Malawi",
+    flag: "🇲🇼",
+    leagues: [
+      "Super League"
+    ]
+  },
+  {
+    country: "Malaysia",
+    flag: "🇲🇾",
+    leagues: [
+      "FA Cup",
+      "Malaysia Cup",
+      "MFL Cup",
+      "Premier League",
+      "Super League"
+    ]
+  },
+  {
+    country: "Maldives",
+    flag: "🇲🇻",
+    leagues: [
+      "Dhivehi Premier League"
+    ]
+  },
+  {
+    country: "Mali",
+    flag: "🇲🇱",
+    leagues: [
+      "Première Division"
+    ]
+  },
+  {
+    country: "Malta",
+    flag: "🇲🇹",
+    leagues: [
+      "Challenge Cup",
+      "Challenge League",
+      "FA Trophy",
+      "Premier League",
+      "Super Cup"
+    ]
+  },
+  {
+    country: "Mauritania",
+    flag: "🇲🇷",
+    leagues: [
+      "Premier League"
+    ]
+  },
+  {
+    country: "Mauritius",
+    flag: "🇲🇺",
+    leagues: [
+      "Mauritian League"
+    ]
+  },
+  {
+    country: "Mexico",
+    flag: "🇲🇽",
+    leagues: [
+      "Campeón de Campeones",
+      "Copa MX",
+      "Copa por México",
+      "Liga de Expansión MX",
+      "Liga MX",
+      "Liga MX Femenil",
+      "Liga Premier Serie A",
+      "Liga Premier Serie B",
+      "U20 League",
+      "U23 League"
+    ]
+  },
+  {
+    country: "Moldova",
+    flag: "🇲🇩",
+    leagues: [
+      "Cupa",
+      "Liga 1",
+      "Super Liga"
+    ]
+  },
+  {
+    country: "Mongolia",
+    flag: "🇲🇳",
+    leagues: [
+      "Premier League",
+      "Super Cup"
+    ]
+  },
+  {
+    country: "Montenegro",
+    flag: "🇲🇪",
+    leagues: [
+      "Cup",
+      "First League",
+      "Second League"
+    ]
+  },
+  {
+    country: "Morocco",
+    flag: "🇲🇦",
+    leagues: [
+      "Botola 2",
+      "Botola Pro",
+      "Cup"
+    ]
+  },
+  {
+    country: "Myanmar",
+    flag: "🇲🇲",
+    leagues: [
+      "National League"
+    ]
+  },
+  {
+    country: "Namibia",
+    flag: "🇳🇦",
+    leagues: [
+      "Premier League"
+    ]
+  },
+  {
+    country: "Nepal",
+    flag: "🇳🇵",
+    leagues: [
+      "A Division"
+    ]
+  },
+  {
+    country: "Netherlands",
+    flag: "🇳🇱",
+    leagues: [
+      "Derde Divisie - Relegation Round",
+      "Derde Divisie - Saturday",
+      "Derde Divisie - Sunday",
+      "Eerste Divisie",
+      "Eredivisie",
+      "Eredivisie Women",
+      "KNVB Beker",
+      "Reserve League",
+      "Super Cup",
+      "Tweede Divisie",
+      "U18 Divisie 1"
     ]
   },
   {
