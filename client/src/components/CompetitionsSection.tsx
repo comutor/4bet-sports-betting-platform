@@ -3987,6 +3987,272 @@ const hockeyCompetitions = [
   }
 ];
 
+const baseballCompetitions = [
+  {
+    country: "Asia",
+    flag: "🌏",
+    leagues: [
+      "Asia Professional Championship",
+      "Asian Games"
+    ]
+  },
+  {
+    country: "Australia",
+    flag: "🇦🇺",
+    leagues: [
+      "ABL"
+    ]
+  },
+  {
+    country: "Austria",
+    flag: "🇦🇹",
+    leagues: [
+      "ABL",
+      "Bundesliga"
+    ]
+  },
+  {
+    country: "Belgium",
+    flag: "🇧🇪",
+    leagues: [
+      "Division 1"
+    ]
+  },
+  {
+    country: "Colombia",
+    flag: "🇨🇴",
+    leagues: [
+      "LCBP",
+      "LPB"
+    ]
+  },
+  {
+    country: "Cuba",
+    flag: "🇨🇺",
+    leagues: [
+      "Liga Elite",
+      "Serie Nacional"
+    ]
+  },
+  {
+    country: "Czech Republic",
+    flag: "🇨🇿",
+    leagues: [
+      "Czech Cup",
+      "Extraliga"
+    ]
+  },
+  {
+    country: "Dominican Republic",
+    flag: "🇩🇴",
+    leagues: [
+      "LIDOM"
+    ]
+  },
+  {
+    country: "Europe",
+    flag: "🇪🇺",
+    leagues: [
+      "C.E.B. Cup",
+      "Champions Cup",
+      "Confederation Cup",
+      "EuroBaseball",
+      "EuroBaseball U23",
+      "EuroBaseball Women",
+      "European Championship",
+      "European Championship U23",
+      "European Championship Women",
+      "European Cup",
+      "Federations Cup",
+      "Prague Baseball Week",
+      "Super 6"
+    ]
+  },
+  {
+    country: "Finland",
+    flag: "🇫🇮",
+    leagues: [
+      "SM-sarja"
+    ]
+  },
+  {
+    country: "France",
+    flag: "🇫🇷",
+    leagues: [
+      "Division 1"
+    ]
+  },
+  {
+    country: "Germany",
+    flag: "🇩🇪",
+    leagues: [
+      "Bundesliga",
+      "Bundesliga North",
+      "Bundesliga South"
+    ]
+  },
+  {
+    country: "Italy",
+    flag: "🇮🇹",
+    leagues: [
+      "IBL",
+      "Serie A1"
+    ]
+  },
+  {
+    country: "Japan",
+    flag: "🇯🇵",
+    leagues: [
+      "NPB",
+      "NPB Minor League",
+      "Spring Koshien",
+      "Summer Koshien"
+    ]
+  },
+  {
+    country: "Lithuania",
+    flag: "🇱🇹",
+    leagues: [
+      "LBL"
+    ]
+  },
+  {
+    country: "Mexico",
+    flag: "🇲🇽",
+    leagues: [
+      "LMB",
+      "LMP"
+    ]
+  },
+  {
+    country: "Netherlands",
+    flag: "🇳🇱",
+    leagues: [
+      "Hoofdklasse"
+    ]
+  },
+  {
+    country: "Nicaragua",
+    flag: "🇳🇮",
+    leagues: [
+      "CNBS"
+    ]
+  },
+  {
+    country: "North Central America",
+    flag: "🌎",
+    leagues: [
+      "Caribbean Series",
+      "Central American & Caribbean Games"
+    ]
+  },
+  {
+    country: "Norway",
+    flag: "🇳🇴",
+    leagues: [
+      "Eliteserien",
+      "NBL"
+    ]
+  },
+  {
+    country: "Puerto Rico",
+    flag: "🇵🇷",
+    leagues: [
+      "LBPRC"
+    ]
+  },
+  {
+    country: "Russia",
+    flag: "🇷🇺",
+    leagues: [
+      "Championship"
+    ]
+  },
+  {
+    country: "South Korea",
+    flag: "🇰🇷",
+    leagues: [
+      "KBO",
+      "KBO Futures League"
+    ]
+  },
+  {
+    country: "Spain",
+    flag: "🇪🇸",
+    leagues: [
+      "Division de Honor"
+    ]
+  },
+  {
+    country: "Sweden",
+    flag: "🇸🇪",
+    leagues: [
+      "Elitserien"
+    ]
+  },
+  {
+    country: "Switzerland",
+    flag: "🇨🇭",
+    leagues: [
+      "NLA"
+    ]
+  },
+  {
+    country: "Taiwan",
+    flag: "🇹🇼",
+    leagues: [
+      "CPBL",
+      "CPBL Minor League"
+    ]
+  },
+  {
+    country: "United Kingdom",
+    flag: "🇬🇧",
+    leagues: [
+      "NBL"
+    ]
+  },
+  {
+    country: "United States",
+    flag: "🇺🇸",
+    leagues: [
+      "FL",
+      "IL",
+      "MLB",
+      "MLB - Spring Training",
+      "PCL",
+      "Triple-A East",
+      "Triple-A National Championship",
+      "Triple-A West"
+    ]
+  },
+  {
+    country: "Venezuela",
+    flag: "🇻🇪",
+    leagues: [
+      "LMBP",
+      "LVBP"
+    ]
+  },
+  {
+    country: "World",
+    flag: "🌍",
+    leagues: [
+      "All-Star Series",
+      "Champions League Americas",
+      "Friendly International",
+      "Olympic Games",
+      "Pan American Games",
+      "Serie de las Americas",
+      "Universiade",
+      "WBSC Premier 12",
+      "World Baseball Classic",
+      "World Cup U23",
+      "World Cup Women"
+    ]
+  }
+];
+
 export function CompetitionsSection({ sport }: CompetitionsSectionProps) {
   const [expandedCountries, setExpandedCountries] = useState<Set<string>>(new Set());
 
@@ -4002,6 +4268,8 @@ export function CompetitionsSection({ sport }: CompetitionsSectionProps) {
         return tennisCompetitions;
       case 'hockey':
         return hockeyCompetitions;
+      case 'baseball':
+        return baseballCompetitions;
       default:
         return [];
     }
