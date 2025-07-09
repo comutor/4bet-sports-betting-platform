@@ -1543,7 +1543,136 @@ const footballCompetitions = [
       "Campeonato de Portugal Prio - Group F",
       "Campeonato de Portugal Prio - Group G",
       "Campeonato de Portugal Prio - Group H",
-      "Campeonato de Portugal Prio - Promotion Round"
+      "Campeonato de Portugal Prio - Promotion Round",
+      "Júniores U19",
+      "Liga 3",
+      "Liga Revelação U23",
+      "Primeira Liga",
+      "Segunda Liga",
+      "Super Cup",
+      "Taça da Liga",
+      "Taça de Portugal",
+      "Taça Revelação U23"
+    ]
+  },
+  {
+    country: "Qatar",
+    flag: "🇶🇦",
+    leagues: [
+      "Emir Cup",
+      "Qatar Cup",
+      "QFA Cup",
+      "QSL Cup",
+      "Second Division",
+      "Stars League"
+    ]
+  },
+  {
+    country: "Romania",
+    flag: "🇷🇴",
+    leagues: [
+      "Cupa României",
+      "Liga 1 Feminin",
+      "Liga I",
+      "Liga II",
+      "Liga III - Play-offs",
+      "Liga III - Serie 1",
+      "Liga III - Serie 10",
+      "Liga III - Serie 2",
+      "Liga III - Serie 3",
+      "Liga III - Serie 4",
+      "Liga III - Serie 5",
+      "Liga III - Serie 6",
+      "Liga III - Serie 7",
+      "Liga III - Serie 8",
+      "Liga III - Serie 9",
+      "Supercupa"
+    ]
+  },
+  {
+    country: "Russia",
+    flag: "🇷🇺",
+    leagues: [
+      "Cup",
+      "First League",
+      "Premier League",
+      "Second League - Group 1",
+      "Second League - Group 2",
+      "Second League - Group 3",
+      "Second League - Group 4",
+      "Second League A - Fall Season Gold",
+      "Second League A - Fall Season Silver",
+      "Second League A - Promotion Play-offs",
+      "Second League A - Spring Season Gold",
+      "Second League A - Spring Season Silver",
+      "Super Cup",
+      "Supreme Division Women",
+      "Youth Championship"
+    ]
+  },
+  {
+    country: "Rwanda",
+    flag: "🇷🇼",
+    leagues: [
+      "National Soccer League"
+    ]
+  },
+  {
+    country: "San-Marino",
+    flag: "🇸🇲",
+    leagues: [
+      "Campionato",
+      "Coppa Titano",
+      "Super Cup"
+    ]
+  },
+  {
+    country: "Saudi-Arabia",
+    flag: "🇸🇦",
+    leagues: [
+      "Crown Prince Cup",
+      "Division 1",
+      "Division 2",
+      "King's Cup",
+      "Pro League",
+      "Super Cup"
+    ]
+  },
+  {
+    country: "Scotland",
+    flag: "🏴󠁧󠁢󠁳󠁣󠁴󠁿",
+    leagues: [
+      "Challenge Cup",
+      "Championship",
+      "FA Cup",
+      "Football League - Championship",
+      "Football League - Highland League",
+      "Football League - Lowland League",
+      "League Cup",
+      "League One",
+      "League Two",
+      "Premiership",
+      "SWF Scottish Cup",
+      "SWPL Cup"
+    ]
+  },
+  {
+    country: "Senegal",
+    flag: "🇸🇳",
+    leagues: [
+      "Ligue 1"
+    ]
+  },
+  {
+    country: "Serbia",
+    flag: "🇷🇸",
+    leagues: [
+      "Cup",
+      "Prva Liga",
+      "Srpska Liga - Belgrade",
+      "Srpska Liga - East",
+      "Srpska Liga - Vojvodina",
+      "Srpska Liga - West"
     ]
   },
   {
