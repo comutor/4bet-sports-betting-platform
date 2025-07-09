@@ -101,6 +101,7 @@ The application uses PostgreSQL with the following core entities:
 ## Changelog
 ```
 Changelog:
+- July 9, 2025. Completed comprehensive A-Z global competitions database: Built complete competitions UI matching API Sports structure exactly with 85+ countries from Afghanistan to Wales, each containing authentic league hierarchies. Added comprehensive World section with 108 international competitions including AFC, AFF, African, Arab, Asian, CAF, CONCACAF, CONMEBOL, and FIFA tournaments. Database now covers extensive global football structure with major nations having 40+ leagues (Spain), detailed regional divisions (USA with 16 leagues), and authentic international competition coverage
 - July 8, 2025. Implemented dual API strategy: Integrated API Sports as main API for football, basketball, hockey, and other sports while keeping Odds API specifically for cricket and tennis. Created ApiSportsService with comprehensive endpoint coverage including fixtures, leagues, competitions, and standings. Updated all football routes to use API Sports with better organized competition structure by country and leagues
 - July 8, 2025. Removed pagination dots from advertisement banner: Cleaned up AdvertisementBanner component by removing indicator dots for cleaner visual appearance
 - July 8, 2025. Reordered sports navigation to prioritize Tennis before Cricket: Updated both TopNavigation and HamburgerMenu components to show Tennis as the 3rd sport and Cricket as 4th, reflecting user preferences for sports ordering
