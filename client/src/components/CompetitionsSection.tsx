@@ -4253,6 +4253,498 @@ const baseballCompetitions = [
   }
 ];
 
+const volleyballCompetitions = [
+  {
+    country: "Africa",
+    flag: "🌍",
+    leagues: [
+      "African Championship",
+      "African Championship Women",
+      "African Club Championship",
+      "African Club Championship Women"
+    ]
+  },
+  {
+    country: "Argentina",
+    flag: "🇦🇷",
+    leagues: [
+      "Copa ACLAV",
+      "Copa Master",
+      "Liga Women",
+      "LVA"
+    ]
+  },
+  {
+    country: "Asia",
+    flag: "🌏",
+    leagues: [
+      "Asian Championship",
+      "Asian Championship U18",
+      "Asian Championship U19 Women",
+      "Asian Championship U20",
+      "Asian Championship U23",
+      "Asian Championship U23 Women",
+      "Asian Championship Women",
+      "Asian Club Championship",
+      "Asian Club Championship Women",
+      "Asian Cup",
+      "Asian Cup Women",
+      "Asian Games",
+      "Asian Games Women",
+      "Southeast Asian Games",
+      "Southeast Asian Games Women"
+    ]
+  },
+  {
+    country: "Australia",
+    flag: "🇦🇺",
+    leagues: [
+      "AVL",
+      "AVL Women",
+      "V-League"
+    ]
+  },
+  {
+    country: "Austria",
+    flag: "🇦🇹",
+    leagues: [
+      "2. Bundesliga",
+      "2. Bundesliga Women",
+      "Austria Cup",
+      "Austria Cup Women",
+      "AVL",
+      "AVL Women"
+    ]
+  },
+  {
+    country: "Azerbaijan",
+    flag: "🇦🇿",
+    leagues: [
+      "Super League Women"
+    ]
+  },
+  {
+    country: "Belarus",
+    flag: "🇧🇾",
+    leagues: [
+      "Championship Women",
+      "Division A"
+    ]
+  },
+  {
+    country: "Belgium",
+    flag: "🇧🇪",
+    leagues: [
+      "Belgian Cup",
+      "Belgian Cup Women",
+      "EuroMillions League",
+      "Liga A Women",
+      "Super Cup",
+      "Super Cup Women"
+    ]
+  },
+  {
+    country: "Bosnia and Herzegovina",
+    flag: "🇧🇦",
+    leagues: [
+      "Premijer liga"
+    ]
+  },
+  {
+    country: "Brazil",
+    flag: "🇧🇷",
+    leagues: [
+      "SuperLiga",
+      "Superliga Women"
+    ]
+  },
+  {
+    country: "Bulgaria",
+    flag: "🇧🇬",
+    leagues: [
+      "Bulgaria Cup",
+      "Bulgaria Cup Women",
+      "Supercup",
+      "SuperLiga",
+      "Superliga Women"
+    ]
+  },
+  {
+    country: "China",
+    flag: "🇨🇳",
+    leagues: [
+      "CVL",
+      "CVL Women"
+    ]
+  },
+  {
+    country: "Croatia",
+    flag: "🇭🇷",
+    leagues: [
+      "Prva Liga",
+      "Prva Liga Women",
+      "Superliga",
+      "Superliga Women"
+    ]
+  },
+  {
+    country: "Cyprus",
+    flag: "🇨🇾",
+    leagues: [
+      "Opap Championship"
+    ]
+  },
+  {
+    country: "Czech Republic",
+    flag: "🇨🇿",
+    leagues: [
+      "1. liga",
+      "1. liga Women",
+      "Czech Cup",
+      "Czech Cup Women",
+      "Extraliga",
+      "Extraliga Women",
+      "Super Cup",
+      "Super Cup Women"
+    ]
+  },
+  {
+    country: "Denmark",
+    flag: "🇩🇰",
+    leagues: [
+      "1. Division East",
+      "1. Division East Women",
+      "1. Division West",
+      "1. Division West Women",
+      "Landspokal Cup",
+      "Landspokal Cup Women",
+      "Volleyligaen",
+      "Volleyligaen Women"
+    ]
+  },
+  {
+    country: "England",
+    flag: "🏴󠁧󠁢󠁥󠁮󠁧󠁿",
+    leagues: [
+      "Super League",
+      "Super League Women"
+    ]
+  },
+  {
+    country: "Estonia",
+    flag: "🇪🇪",
+    leagues: [
+      "EMV",
+      "Esiliiga",
+      "Meistriliiga Women"
+    ]
+  },
+  {
+    country: "Europe",
+    flag: "🇪🇺",
+    leagues: [
+      "Champions League",
+      "European Championships",
+      "European Championships Women",
+      "European League",
+      "European League Women"
+    ]
+  },
+  {
+    country: "Finland",
+    flag: "🇫🇮",
+    leagues: [
+      "Mestaruusliiga",
+      "Mestaruusliiga Women"
+    ]
+  },
+  {
+    country: "France",
+    flag: "🇫🇷",
+    leagues: [
+      "Coupe de France",
+      "Coupe de France Women",
+      "Ligue A",
+      "Ligue A Women",
+      "Ligue B",
+      "Supercup",
+      "Supercup Women"
+    ]
+  },
+  {
+    country: "Germany",
+    flag: "🇩🇪",
+    leagues: [
+      "1. Bundesliga",
+      "1. Bundesliga Women",
+      "2. Bundesliga North",
+      "2. Bundesliga North Women",
+      "2. Bundesliga South",
+      "2. Bundesliga South Women",
+      "DVV Cup",
+      "DVV Cup Women",
+      "VBL Supercup",
+      "VBL Supercup Women"
+    ]
+  },
+  {
+    country: "Greece",
+    flag: "🇬🇷",
+    leagues: [
+      "A1",
+      "A1 Women",
+      "Greek Cup",
+      "League Cup"
+    ]
+  },
+  {
+    country: "Hungary",
+    flag: "🇭🇺",
+    leagues: [
+      "Hungarian Cup",
+      "Hungarian Cup Women",
+      "NB I",
+      "NB I Women"
+    ]
+  },
+  {
+    country: "Iceland",
+    flag: "🇮🇸",
+    leagues: [
+      "Mizunodeild",
+      "Mizunodeild Women"
+    ]
+  },
+  {
+    country: "Iran",
+    flag: "🇮🇷",
+    leagues: [
+      "Super League"
+    ]
+  },
+  {
+    country: "Israel",
+    flag: "🇮🇱",
+    leagues: [
+      "Premier League"
+    ]
+  },
+  {
+    country: "Italy",
+    flag: "🇮🇹",
+    leagues: [
+      "Coppa Italia A1",
+      "Coppa Italia A1 Women",
+      "Coppa Italia A2 Women",
+      "Coppa Italia A2-A3",
+      "Serie A1 Women",
+      "Serie A2",
+      "Serie A2 Women",
+      "Super Cup",
+      "Super Cup Women",
+      "SuperLega"
+    ]
+  },
+  {
+    country: "Kazakhstan",
+    flag: "🇰🇿",
+    leagues: [
+      "National League",
+      "National League Women"
+    ]
+  },
+  {
+    country: "Japan",
+    flag: "🇯🇵",
+    leagues: [
+      "V.League",
+      "V.League Women"
+    ]
+  },
+  {
+    country: "Latvia",
+    flag: "🇱🇻",
+    leagues: [
+      "Nacionala Liga",
+      "Nacionala Liga Women"
+    ]
+  },
+  {
+    country: "Lebanon",
+    flag: "🇱🇧",
+    leagues: [
+      "1st Division"
+    ]
+  },
+  {
+    country: "Morocco",
+    flag: "🇲🇦",
+    leagues: [
+      "Super League"
+    ]
+  },
+  {
+    country: "Netherlands",
+    flag: "🇳🇱",
+    leagues: [
+      "Eredivisie",
+      "Eredivisie Women"
+    ]
+  },
+  {
+    country: "Norway",
+    flag: "🇳🇴",
+    leagues: [
+      "Eliteserien",
+      "Eliteserien Women"
+    ]
+  },
+  {
+    country: "Peru",
+    flag: "🇵🇪",
+    leagues: [
+      "Copa Nacional Women",
+      "LNSV",
+      "LNSV Women"
+    ]
+  },
+  {
+    country: "Poland",
+    flag: "🇵🇱",
+    leagues: [
+      "I. Liga",
+      "I. Liga Women",
+      "PlusLiga",
+      "Polish Cup",
+      "Polish Cup Women",
+      "Super Cup",
+      "Super Cup Women",
+      "TAURON Liga Women"
+    ]
+  },
+  {
+    country: "Portugal",
+    flag: "🇵🇹",
+    leagues: [
+      "1. Divisao Women",
+      "Campeonato Honda",
+      "Campeonato Nacional",
+      "Super Cup"
+    ]
+  },
+  {
+    country: "Romania",
+    flag: "🇷🇴",
+    leagues: [
+      "Divizia A1",
+      "Divizia A1 Women"
+    ]
+  },
+  {
+    country: "Russia",
+    flag: "🇷🇺",
+    leagues: [
+      "Russian Cup",
+      "Russian Cup Women",
+      "Superliga",
+      "Superliga Women"
+    ]
+  },
+  {
+    country: "Serbia",
+    flag: "🇷🇸",
+    leagues: [
+      "Serbian Cup",
+      "Serbian Cup Women",
+      "Superliga",
+      "Superliga Women"
+    ]
+  },
+  {
+    country: "Slovenia",
+    flag: "🇸🇮",
+    leagues: [
+      "1. DOL",
+      "1. DOL Women"
+    ]
+  },
+  {
+    country: "Spain",
+    flag: "🇪🇸",
+    leagues: [
+      "Superliga",
+      "Superliga Women"
+    ]
+  },
+  {
+    country: "Sweden",
+    flag: "🇸🇪",
+    leagues: [
+      "Elitserien",
+      "Elitserien Women"
+    ]
+  },
+  {
+    country: "Switzerland",
+    flag: "🇨🇭",
+    leagues: [
+      "NLA",
+      "NLA Women"
+    ]
+  },
+  {
+    country: "Turkey",
+    flag: "🇹🇷",
+    leagues: [
+      "Efeler Ligi",
+      "Sultanlar Ligi",
+      "Turkish Cup",
+      "Turkish Cup Women"
+    ]
+  },
+  {
+    country: "Ukraine",
+    flag: "🇺🇦",
+    leagues: [
+      "Superliga",
+      "Superliga Women"
+    ]
+  },
+  {
+    country: "United States",
+    flag: "🇺🇸",
+    leagues: [
+      "NCAA Division I",
+      "NCAA Division I Women",
+      "Pro Volleyball Federation"
+    ]
+  },
+  {
+    country: "World",
+    flag: "🌍",
+    leagues: [
+      "CEV Champions League",
+      "CEV Champions League Women",
+      "CEV Cup",
+      "CEV Cup Women",
+      "FIVB Club World Championship",
+      "FIVB Club World Championship Women",
+      "FIVB Nations League",
+      "FIVB Nations League Women",
+      "FIVB World Championship",
+      "FIVB World Championship Women",
+      "FIVB World Cup",
+      "FIVB World Cup Women",
+      "Olympic Games",
+      "Olympic Games Women",
+      "Pan American Games",
+      "Pan American Games Women",
+      "World Grand Champions Cup",
+      "World Grand Champions Cup Women"
+    ]
+  }
+];
+
 export function CompetitionsSection({ sport }: CompetitionsSectionProps) {
   const [expandedCountries, setExpandedCountries] = useState<Set<string>>(new Set());
 
@@ -4270,6 +4762,8 @@ export function CompetitionsSection({ sport }: CompetitionsSectionProps) {
         return hockeyCompetitions;
       case 'baseball':
         return baseballCompetitions;
+      case 'volleyball':
+        return volleyballCompetitions;
       default:
         return [];
     }
