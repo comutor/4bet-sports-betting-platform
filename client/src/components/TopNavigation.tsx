@@ -66,14 +66,9 @@ export function TopNavigation({
     { id: 'tennis', label: 'Tennis', icon: 'fas fa-table-tennis' },
     { id: 'cricket', label: 'Cricket', icon: 'fas fa-baseball-ball' },
     { id: 'hockey', label: 'Hockey', icon: 'fas fa-hockey-puck' },
-    { id: 'nfl', label: 'NFL', icon: 'fas fa-football-ball' },
     { id: 'volleyball', label: 'Volleyball', icon: 'fas fa-volleyball' },
     { id: 'rugby', label: 'Rugby', icon: 'fas fa-football-ball' },
-    { id: 'baseball', label: 'Baseball', icon: 'fas fa-baseball' },
-    { id: 'afl', label: 'AFL', icon: 'fas fa-football-ball' },
-    { id: 'formula-1', label: 'Formula-1', icon: 'fas fa-flag-checkered' },
-    { id: 'handball', label: 'Handball', icon: 'fas fa-hand-paper' },
-    { id: 'mma', label: 'MMA', icon: 'fas fa-fist-raised' }
+    { id: 'baseball', label: 'Baseball', icon: 'fas fa-baseball' }
   ];
 
   return (
