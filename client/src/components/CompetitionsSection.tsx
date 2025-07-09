@@ -1384,7 +1384,166 @@ const footballCompetitions = [
       "Reserve League",
       "Super Cup",
       "Tweede Divisie",
-      "U18 Divisie 1"
+      "U18 Divisie 1",
+      "U19 Divisie 1",
+      "U21 Divisie 1"
+    ]
+  },
+  {
+    country: "New-Zealand",
+    flag: "🇳🇿",
+    leagues: [
+      "Chatham Cup",
+      "National League - Central",
+      "National League - Championship - Final",
+      "National League - National",
+      "National League - Northern",
+      "National League - Southern",
+      "Premiership"
+    ]
+  },
+  {
+    country: "Nicaragua",
+    flag: "🇳🇮",
+    leagues: [
+      "Copa Nicaragua",
+      "Liga Primera U20",
+      "Primera Division"
+    ]
+  },
+  {
+    country: "Nigeria",
+    flag: "🇳🇬",
+    leagues: [
+      "NPFL"
+    ]
+  },
+  {
+    country: "Northern-Ireland",
+    flag: "🇬🇧",
+    leagues: [
+      "Championship",
+      "Charity Shield",
+      "Irish Cup",
+      "League Cup",
+      "Premier Intermediate League",
+      "Premiership",
+      "Premiership Women"
+    ]
+  },
+  {
+    country: "Norway",
+    flag: "🇳🇴",
+    leagues: [
+      "1. Division",
+      "1. Division Women",
+      "2. Division - Group 1",
+      "2. Division - Group 2",
+      "2. Division - Play-offs",
+      "3. Division - Girone 1",
+      "3. Division - Girone 2",
+      "3. Division - Girone 3",
+      "3. Division - Girone 4",
+      "3. Division - Girone 5",
+      "3. Division - Girone 6",
+      "Eliteserien",
+      "Nasjonal U19 Champions League",
+      "NM Cupen",
+      "Super Cup",
+      "Toppserien"
+    ]
+  },
+  {
+    country: "Oman",
+    flag: "🇴🇲",
+    leagues: [
+      "Professional League",
+      "Sultan Cup",
+      "Super Cup"
+    ]
+  },
+  {
+    country: "Pakistan",
+    flag: "🇵🇰",
+    leagues: [
+      "Premier League"
+    ]
+  },
+  {
+    country: "Palestine",
+    flag: "🇵🇸",
+    leagues: [
+      "West Bank Premier League"
+    ]
+  },
+  {
+    country: "Panama",
+    flag: "🇵🇦",
+    leagues: [
+      "Liga Panameña de Fútbol"
+    ]
+  },
+  {
+    country: "Paraguay",
+    flag: "🇵🇾",
+    leagues: [
+      "Copa Paraguay",
+      "Division Intermedia",
+      "Division Profesional - Apertura",
+      "Division Profesional - Clausura",
+      "Supercopa"
+    ]
+  },
+  {
+    country: "Peru",
+    flag: "🇵🇪",
+    leagues: [
+      "Copa Bicentenario",
+      "Copa Perú",
+      "Primera División",
+      "Segunda División",
+      "Supercopa"
+    ]
+  },
+  {
+    country: "Philippines",
+    flag: "🇵🇭",
+    leagues: [
+      "Copa Paulino Alcantara",
+      "PFL"
+    ]
+  },
+  {
+    country: "Poland",
+    flag: "🇵🇱",
+    leagues: [
+      "Central Youth League",
+      "Cup",
+      "Ekstraklasa",
+      "Ekstraliga Women",
+      "I Liga",
+      "II Liga - East",
+      "III Liga - Group 1",
+      "III Liga - Group 2",
+      "III Liga - Group 3",
+      "III Liga - Group 4",
+      "Super Cup"
+    ]
+  },
+  {
+    country: "Portugal",
+    flag: "🇵🇹",
+    leagues: [
+      "1a Divisão - Women",
+      "Campeonato de Portugal Prio - Group A",
+      "Campeonato de Portugal Prio - Group B",
+      "Campeonato de Portugal Prio - Group C",
+      "Campeonato de Portugal Prio - Group D",
+      "Campeonato de Portugal Prio - Group E",
+      "Campeonato de Portugal Prio - Group F",
+      "Campeonato de Portugal Prio - Group G",
+      "Campeonato de Portugal Prio - Group H",
+      "Campeonato de Portugal Prio - Promotion Round"
     ]
   },
   {
