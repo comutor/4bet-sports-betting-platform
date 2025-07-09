@@ -3640,7 +3640,25 @@ const hockeyCompetitions = [
       "International Tournament (Romania)",
       "International Tournament (Slovakia)",
       "International Tournament (Slovenia)",
-      "International Tournament (Switzerland)"
+      "International Tournament (Switzerland)",
+      "International Tournament (Ukraine)",
+      "Karjala Cup",
+      "Lada Cup",
+      "LDZ Price",
+      "Memorial Cup",
+      "Memorial P. Zabojnika",
+      "Prague Hockey Cup",
+      "President Cup",
+      "Red Bulls Salute",
+      "Rona Cup",
+      "Spengler Cup (Davos)",
+      "Summer IHT (Basel)",
+      "Sweden Hockey Games",
+      "Tatra Cup",
+      "U20 Super Challenge",
+      "Visegrad Cup",
+      "Wurmberg Cup",
+      "Zbynek Kusy Memorial"
     ]
   },
   {
@@ -3648,7 +3666,13 @@ const hockeyCompetitions = [
     flag: "🇫🇮",
     leagues: [
       "Liiga",
+      "Liiga Women",
       "Mestis",
+      "Naisten Liiga",
+      "Nuorten SM-Liiga",
+      "Pitsiturnaus",
+      "SM-sarja U20",
+      "Suomen Cup",
       "Suomi-sarja"
     ]
   },
@@ -3656,9 +3680,11 @@ const hockeyCompetitions = [
     country: "France",
     flag: "🇫🇷",
     leagues: [
+      "D1",
+      "French Cup",
+      "League Cup",
       "Ligue Magnus",
-      "Division 1",
-      "Division 2"
+      "Super Cup"
     ]
   },
   {
@@ -3666,63 +3692,103 @@ const hockeyCompetitions = [
     flag: "🇩🇪",
     leagues: [
       "DEL",
-      "DEL2",
-      "Oberliga"
+      "DEL 2",
+      "German Cup",
+      "MagentaSport Cup",
+      "Oberliga",
+      "Oberliga East",
+      "Oberliga North",
+      "Oberliga South",
+      "Oberliga West"
+    ]
+  },
+  {
+    country: "Hungary",
+    flag: "🇭🇺",
+    leagues: [
+      "Erste Liga",
+      "Hungarian Cup",
+      "Super Cup"
     ]
   },
   {
     country: "Italy",
     flag: "🇮🇹",
     leagues: [
+      "IHL",
+      "Italian Cup",
+      "League Cup",
       "Serie A",
-      "Alps Hockey League"
+      "Super Cup"
+    ]
+  },
+  {
+    country: "Japan",
+    flag: "🇯🇵",
+    leagues: [
+      "Japan Cup"
+    ]
+  },
+  {
+    country: "Kazakhstan",
+    flag: "🇰🇿",
+    leagues: [
+      "Championship",
+      "Kazakhstan Cup"
     ]
   },
   {
     country: "Latvia",
     flag: "🇱🇻",
     leagues: [
-      "OHL",
-      "Latvian Cup"
+      "Optibet Hokeja Liga",
+      "UHL"
     ]
   },
   {
     country: "Lithuania",
     flag: "🇱🇹",
     leagues: [
-      "LLHL",
-      "Lithuanian Cup"
+      "Lietuvos Cempionatas"
     ]
   },
   {
     country: "Netherlands",
     flag: "🇳🇱",
     leagues: [
-      "BeNe League",
-      "Eredivisie"
+      "Dutch Cup"
+    ]
+  },
+  {
+    country: "New Zealand",
+    flag: "🇳🇿",
+    leagues: [
+      "NZIHL"
     ]
   },
   {
     country: "Norway",
     flag: "🇳🇴",
     leagues: [
-      "Eliteserien",
-      "1. divisjon"
+      "Division 1",
+      "Fjordkraft-ligaen",
+      "Get-ligaen"
     ]
   },
   {
     country: "Poland",
     flag: "🇵🇱",
     leagues: [
-      "Polska Hokej Liga",
-      "1. Liga"
+      "Polish Cup",
+      "Polish Hockey League",
+      "Super Cup"
     ]
   },
   {
     country: "Romania",
     flag: "🇷🇴",
     leagues: [
-      "Liga Națională",
+      "Campionatul National",
       "Romanian Cup"
     ]
   },
@@ -3730,16 +3796,27 @@ const hockeyCompetitions = [
     country: "Russia",
     flag: "🇷🇺",
     leagues: [
+      "Comet Division - Short Hockey",
       "KHL",
+      "Liga Pro - Short Hockey",
+      "MHL",
+      "NMHL",
       "VHL",
-      "MHL"
+      "VHL-B",
+      "WHL Women"
+    ]
+  },
+  {
+    country: "Serbia",
+    flag: "🇷🇸",
+    leagues: [
+      "hockey League"
     ]
   },
   {
     country: "Slovakia",
     flag: "🇸🇰",
     leagues: [
-      "Tipos Extraliga",
       "1. Liga"
     ]
   },
