@@ -2152,7 +2152,72 @@ const footballCompetitions = [
       "Premier League International Cup",
       "Qatar-UAE Super Cup",
       "SAFF Championship",
-      "SheBelieves Cup"
+      "SheBelieves Cup",
+      "South American Youth Games",
+      "Southeast Asian Games",
+      "Sudamericano U20",
+      "The Atlantic Cup",
+      "Tipsport Malta Cup",
+      "Tournoi Maurice Revello",
+      "U20 Elite League",
+      "UAE-Qatar - Super Shield",
+      "UEFA - CONMEBOL - Club Challenge",
+      "UEFA Champions League",
+      "UEFA Champions League Women",
+      "UEFA Championship - Women",
+      "UEFA Championship - Women - Qualification",
+      "UEFA Europa Conference League",
+      "UEFA Europa League",
+      "UEFA Nations League",
+      "UEFA Nations League - Women",
+      "UEFA Super Cup",
+      "UEFA U17 Championship",
+      "UEFA U17 Championship - Qualification",
+      "UEFA U17 Championship - Women",
+      "UEFA U19 Championship",
+      "UEFA U19 Championship - Qualification",
+      "UEFA U19 Championship - Women",
+      "UEFA U21 Championship",
+      "UEFA U21 Championship - Qualification",
+      "UEFA Youth League",
+      "WAFF Championship U23",
+      "World Cup",
+      "World Cup - Qualification Africa",
+      "World Cup - Qualification Asia",
+      "World Cup - Qualification CONCACAF",
+      "World Cup - Qualification Europe",
+      "World Cup - Qualification Intercontinental Play-offs",
+      "World Cup - Qualification Oceania",
+      "World Cup - Qualification South America",
+      "World Cup - U17",
+      "World Cup - U17 - Women",
+      "World Cup - U20",
+      "World Cup - U20 - Women",
+      "World Cup - Women",
+      "World Cup - Women - Qualification Concacaf",
+      "World Cup - Women - Qualification Europe",
+      "Youth Viareggio Cup"
+    ]
+  },
+  {
+    country: "Yemen",
+    flag: "🇾🇪",
+    leagues: [
+      "Yemeni League"
+    ]
+  },
+  {
+    country: "Zambia",
+    flag: "🇿🇲",
+    leagues: [
+      "Super League"
+    ]
+  },
+  {
+    country: "Zimbabwe",
+    flag: "🇿🇼",
+    leagues: [
+      "Premier Soccer League"
     ]
   },
 
