@@ -2532,27 +2532,65 @@ const basketballCompetitions = [
       "European Championship U16 C Women",
       "European Championship U16 Women",
       "European Championship U18 B Women",
-      "European Championship U18 C Women"
+      "European Championship U18 C Women",
+      "European Championship U18 Women",
+      "European Championship U20 B Women",
+      "European Championship U20 Women",
+      "European Championship Women",
+      "EWBL Women",
+      "Federal Cup",
+      "Federal Cup Women",
+      "FIBA Europe Cup",
+      "Games of the Small States of Europe",
+      "Games of the Small States of Europe Women",
+      "Gomelsky Cup",
+      "Latvia-Estonian League",
+      "Liga Unike",
+      "Liga Unike Women",
+      "MZRKL Women",
+      "Small Countries European Championship",
+      "Small Countries European Championship Women",
+      "SuperCup Women",
+      "WBBL Women"
     ]
   },
   {
     country: "Finland",
     flag: "🇫🇮",
     leagues: [
+      "I Divisioona A",
+      "I Divisioona Women",
       "Korisliiga",
-      "Korisliiga Women",
-      "Korisliiga Cup"
+      "Korisliiga W",
+      "Suomen Cup",
+      "Suomen Cup Women"
     ]
   },
   {
     country: "France",
     flag: "🇫🇷",
     leagues: [
+      "All Stars",
       "Betclic Elite",
-      "LFB Women",
+      "Espoirs U21",
+      "French Cup",
+      "French Cup Women",
+      "Leaders Cup",
+      "LFB Super Cup Women",
+      "LFB W",
+      "Ligue 2 Women",
+      "LNB",
+      "LNB Super Cup",
       "Pro A",
-      "Pro B",
-      "Leaders Cup"
+      "Pro B"
+    ]
+  },
+  {
+    country: "Georgia",
+    flag: "🇬🇪",
+    leagues: [
+      "Georgian Cup",
+      "Superleague"
     ]
   },
   {
@@ -2561,57 +2599,91 @@ const basketballCompetitions = [
     leagues: [
       "BBL",
       "DBBL Women",
-      "ProA",
-      "ProB",
-      "BBL Cup"
+      "German Cup",
+      "Pro A",
+      "Pro B",
+      "Super Cup"
     ]
   },
   {
     country: "Greece",
     flag: "🇬🇷",
     leagues: [
+      "A1",
+      "A1 Women",
+      "A2",
+      "A2 Women",
       "Basket League",
-      "A2 League",
       "Greek Cup",
       "Greek Cup Women",
-      "A1 Women"
+      "Super Cup"
     ]
   },
   {
     country: "Hungary",
     flag: "🇭🇺",
     leagues: [
-      "NB I",
-      "NB I Women",
-      "Hungarian Cup"
+      "Hungarian Cup",
+      "Hungarian Cup Women",
+      "NB I A",
+      "NB I A W"
     ]
   },
   {
     country: "Iceland",
     flag: "🇮🇸",
     leagues: [
-      "Dominos League",
-      "Dominos League Women"
+      "Icelandic Cup",
+      "Premier league",
+      "Premier League W"
+    ]
+  },
+  {
+    country: "Indonesia",
+    flag: "🇮🇩",
+    leagues: [
+      "IBL"
+    ]
+  },
+  {
+    country: "Iran",
+    flag: "🇮🇷",
+    leagues: [
+      "Super League"
+    ]
+  },
+  {
+    country: "Ireland",
+    flag: "🇮🇪",
+    leagues: [
+      "Super League"
     ]
   },
   {
     country: "Israel",
     flag: "🇮🇱",
     leagues: [
-      "Winner League",
-      "Winner League Women",
-      "State Cup"
+      "Chance Cup",
+      "Israel Cup",
+      "Liga Leumit",
+      "Super League",
+      "WBL Women"
     ]
   },
   {
     country: "Italy",
     flag: "🇮🇹",
     leagues: [
+      "A2 - Play Offs",
+      "A2 - Play Out",
+      "A2 - West",
+      "A2 East",
+      "Coppa Italia Women",
+      "Italian Cup",
+      "Lega A",
+      "Lega A - Super Cup",
       "Lega Basket Serie A",
-      "Serie A2",
-      "Serie B",
-      "Lega Basket Femminile",
-      "Italian Cup"
+      "Serie A1 W"
     ]
   },
   {
