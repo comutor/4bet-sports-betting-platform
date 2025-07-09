@@ -577,25 +577,118 @@ const footballCompetitions = [
       "4. liga - Divizie E",
       "4. liga - Divizie F",
       "Cup",
-      "Czech Liga"
+      "Czech Liga",
+      "FNL",
+      "Super Cup"
+    ]
+  },
+  {
+    country: "Denmark",
+    flag: "🇩🇰",
+    leagues: [
+      "1. Division",
+      "2. Division",
+      "2nd Division - Group 2",
+      "3. Division",
+      "DBU Pokalen",
+      "Denmark Series - Group 1",
+      "Denmark Series - Group 2",
+      "Denmark Series - Group 3",
+      "Denmark Series - Group 4",
+      "Denmark Series - Promotion Round",
+      "Denmark Series - Relegation Round",
+      "Kvindeliga",
+      "Superliga"
+    ]
+  },
+  {
+    country: "Dominican-Republic",
+    flag: "🇩🇴",
+    leagues: [
+      "Copa LDF",
+      "Liga Mayor"
+    ]
+  },
+  {
+    country: "Ecuador",
+    flag: "🇪🇨",
+    leagues: [
+      "Copa Ecuador",
+      "Liga Pro",
+      "Liga Pro Serie B",
+      "Supercopa de Ecuador"
+    ]
+  },
+  {
+    country: "Egypt",
+    flag: "🇪🇬",
+    leagues: [
+      "Cup",
+      "League Cup",
+      "Premier League",
+      "Second League",
+      "Second League - Group B",
+      "Second League - Group C",
+      "Second League - Play-offs",
+      "Super Cup"
+    ]
+  },
+  {
+    country: "El-Salvador",
+    flag: "🇸🇻",
+    leagues: [
+      "Primera Division"
     ]
   },
   {
     country: "England",
     flag: "🏴󠁧󠁢󠁥󠁮󠁧󠁿",
     leagues: [
-      "Premier League",
       "Championship",
+      "Community Shield",
+      "Community Shield Women",
+      "EFL Trophy",
+      "FA Cup",
+      "FA Trophy",
+      "FA Women's Cup",
+      "FA WSL",
+      "FA Youth Cup",
+      "League Cup",
       "League One",
       "League Two",
-      "FA Cup",
-      "EFL Cup",
-      "Community Shield",
       "National League",
-      "National League North",
-      "National League South",
-      "FA Trophy",
-      "FA Vase"
+      "National League - North",
+      "National League - North - Play-offs",
+      "National League - Play-offs",
+      "National League - South",
+      "National League - South - Play-offs",
+      "National League Cup",
+      "Non League Div One - Isthmian North",
+      "Non League Div One - Isthmian South Central",
+      "Non League Div One - Isthmian South East",
+      "Non League Div One - Northern East",
+      "Non League Div One - Northern Midlands",
+      "Non League Div One - Northern West",
+      "Non League Div One - Play-offs",
+      "Non League Div One - Southern Central",
+      "Non League Div One - Southern South",
+      "Non League Premier - Isthmian",
+      "Non League Premier - Isthmian - Play-offs",
+      "Non League Premier - Northern",
+      "Non League Premier - Northern - Play-offs",
+      "Non League Premier - Southern Central",
+      "Non League Premier - Southern Central - Play-offs",
+      "Non League Premier - Southern South",
+      "Non League Premier - Southern South - Play-offs",
+      "Premier League",
+      "Premier League - Summer Series",
+      "Premier League 2 Division One",
+      "Premier League Cup",
+      "Professional Development League",
+      "U18 Premier League - Championship",
+      "U18 Premier League - North",
+      "U18 Premier League - South",
+      "Women's Championship"
     ]
   },
   {
