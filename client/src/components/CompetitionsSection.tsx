@@ -3192,10 +3192,304 @@ const cricketCompetitions = [
 
 const tennisCompetitions = [
   {
+    country: "Australia",
+    flag: "🇦🇺",
+    leagues: [
+      "Adelaide",
+      "Adelaide, Doubles",
+      "Auckland",
+      "Auckland, Doubles",
+      "Australian Open",
+      "Australian Open, Doubles",
+      "Australian Open, Mixed Doubles",
+      "Brisbane",
+      "Brisbane, Doubles"
+    ]
+  },
+  {
+    country: "France",
+    flag: "🇫🇷",
+    leagues: [
+      "Montpellier",
+      "Montpellier, Doubles",
+      "Marseille",
+      "Marseille, Doubles",
+      "Metz",
+      "Metz, Doubles",
+      "Paris",
+      "Paris, Doubles",
+      "Roland Garros",
+      "Roland Garros, Doubles",
+      "Roland Garros, Mixed Doubles"
+    ]
+  },
+  {
+    country: "United States",
+    flag: "🇺🇸",
+    leagues: [
+      "Dallas",
+      "Dallas, Doubles",
+      "Delray Beach",
+      "Delray Beach, Doubles",
+      "Indian Wells",
+      "Indian Wells, Doubles",
+      "Indian Wells, Mixed Doubles",
+      "Miami",
+      "Miami, Doubles",
+      "Houston",
+      "Houston, Doubles",
+      "San Diego",
+      "San Diego, Doubles",
+      "Cincinnati",
+      "Cincinnati, Doubles",
+      "Winston Salem",
+      "Winston Salem, Doubles",
+      "US Open",
+      "US Open, Doubles",
+      "US Open, Mixed Doubles"
+    ]
+  },
+  {
+    country: "Argentina",
+    flag: "🇦🇷",
+    leagues: [
+      "Buenos Aires",
+      "Buenos Aires, Doubles"
+    ]
+  },
+  {
+    country: "Austria",
+    flag: "🇦🇹",
+    leagues: [
+      "Kitzbuhel",
+      "Kitzbuhel, Doubles",
+      "Vienna",
+      "Vienna, Doubles"
+    ]
+  },
+  {
+    country: "Belgium",
+    flag: "🇧🇪",
+    leagues: [
+      "Antwerp",
+      "Antwerp, Doubles"
+    ]
+  },
+  {
+    country: "Brazil",
+    flag: "🇧🇷",
+    leagues: [
+      "Rio de Janeiro",
+      "Rio de Janeiro, Doubles"
+    ]
+  },
+  {
+    country: "Canada",
+    flag: "🇨🇦",
+    leagues: [
+      "Toronto",
+      "Toronto, Doubles",
+      "Washington",
+      "Washington, Doubles"
+    ]
+  },
+  {
+    country: "Chile",
+    flag: "🇨🇱",
+    leagues: [
+      "Santiago",
+      "Santiago, Doubles"
+    ]
+  },
+  {
+    country: "China",
+    flag: "🇨🇳",
+    leagues: [
+      "Chengdu",
+      "Chengdu, Doubles",
+      "Hangzhou",
+      "Hangzhou, Doubles",
+      "Beijing",
+      "Beijing, Doubles",
+      "Shanghai",
+      "Shanghai, Doubles"
+    ]
+  },
+  {
+    country: "Croatia",
+    flag: "🇭🇷",
+    leagues: [
+      "Umag",
+      "Umag, Doubles"
+    ]
+  },
+  {
+    country: "Germany",
+    flag: "🇩🇪",
+    leagues: [
+      "Munich",
+      "Munich, Doubles",
+      "Hamburg",
+      "Hamburg, Doubles",
+      "Stuttgart",
+      "Stuttgart, Doubles",
+      "Halle",
+      "Halle, Doubles"
+    ]
+  },
+  {
+    country: "Hong Kong",
+    flag: "🇭🇰",
+    leagues: [
+      "Hong Kong Men Singles",
+      "Hong Kong Men Doubles"
+    ]
+  },
+  {
+    country: "Italy",
+    flag: "🇮🇹",
+    leagues: [
+      "Rome",
+      "Rome, Doubles"
+    ]
+  },
+  {
+    country: "Japan",
+    flag: "🇯🇵",
+    leagues: [
+      "Tokyo",
+      "Tokyo, Doubles"
+    ]
+  },
+  {
+    country: "Kazakhstan",
+    flag: "🇰🇿",
+    leagues: [
+      "Almaty",
+      "Almaty, Doubles"
+    ]
+  },
+  {
+    country: "Mexico",
+    flag: "🇲🇽",
+    leagues: [
+      "Acapulco",
+      "Acapulco, Doubles",
+      "Los Cabos",
+      "Los Cabos, Doubles"
+    ]
+  },
+  {
+    country: "Monaco",
+    flag: "🇲🇨",
+    leagues: [
+      "Monte Carlo",
+      "Monte Carlo, Doubles"
+    ]
+  },
+  {
+    country: "Morocco",
+    flag: "🇲🇦",
+    leagues: [
+      "Marrakech",
+      "Marrakech, Doubles"
+    ]
+  },
+  {
+    country: "Netherlands",
+    flag: "🇳🇱",
+    leagues: [
+      "Rotterdam",
+      "Rotterdam, Doubles",
+      "'s-Hertogenbosch",
+      "'s-Hertogenbosch, Doubles"
+    ]
+  },
+  {
+    country: "Qatar",
+    flag: "🇶🇦",
+    leagues: [
+      "Doha",
+      "Doha, Doubles"
+    ]
+  },
+  {
+    country: "Romania",
+    flag: "🇷🇴",
+    leagues: [
+      "Bucharest",
+      "Bucharest, Doubles"
+    ]
+  },
+  {
+    country: "Serbia",
+    flag: "🇷🇸",
+    leagues: [
+      "Belgrade",
+      "Belgrade, Doubles"
+    ]
+  },
+  {
+    country: "Spain",
+    flag: "🇪🇸",
+    leagues: [
+      "Barcelona",
+      "Barcelona, Doubles",
+      "Madrid",
+      "Madrid, Doubles",
+      "Mallorca",
+      "Mallorca, Doubles"
+    ]
+  },
+  {
+    country: "Sweden",
+    flag: "🇸🇪",
+    leagues: [
+      "Bastad",
+      "Bastad, Doubles",
+      "Stockholm",
+      "Stockholm, Doubles"
+    ]
+  },
+  {
+    country: "Switzerland",
+    flag: "🇨🇭",
+    leagues: [
+      "Gstaad",
+      "Gstaad, Doubles",
+      "Geneva",
+      "Geneva, Doubles",
+      "Basel, Doubles"
+    ]
+  },
+  {
+    country: "United Arab Emirates",
+    flag: "🇦🇪",
+    leagues: [
+      "Dubai",
+      "Dubai, Doubles"
+    ]
+  },
+  {
+    country: "United Kingdom",
+    flag: "🇬🇧",
+    leagues: [
+      "London",
+      "London, Doubles",
+      "Eastbourne",
+      "Eastbourne, Doubles",
+      "Wimbledon",
+      "Wimbledon, Doubles",
+      "Wimbledon, Mixed Doubles"
+    ]
+  },
+  {
     country: "World",
     flag: "🌍",
     leagues: [
-      "ATP",
+      "ATP Finals",
+      "ATP Finals, Doubles",
+      "Next Gen Finals",
       "Billie Jean King Cup",
       "Challenger",
       "Davis Cup",
