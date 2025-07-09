@@ -4745,6 +4745,228 @@ const volleyballCompetitions = [
   }
 ];
 
+const rugbyCompetitions = [
+  {
+    country: "Argentina",
+    flag: "🇦🇷",
+    leagues: [
+      "Top 12"
+    ]
+  },
+  {
+    country: "Australia",
+    flag: "🇦🇺",
+    leagues: [
+      "NRC",
+      "Shute Shield",
+      "Super W Women"
+    ]
+  },
+  {
+    country: "Australia-Oceania",
+    flag: "🇦🇺",
+    leagues: [
+      "Oceania Cup",
+      "Oceania Sevens Championships"
+    ]
+  },
+  {
+    country: "Austria",
+    flag: "🇦🇹",
+    leagues: [
+      "Premiership"
+    ]
+  },
+  {
+    country: "Canada",
+    flag: "🇨🇦",
+    leagues: [
+      "CRC"
+    ]
+  },
+  {
+    country: "Czech Republic",
+    flag: "🇨🇿",
+    leagues: [
+      "1. Liga",
+      "CSRU Cup",
+      "Extraliga"
+    ]
+  },
+  {
+    country: "England",
+    flag: "🏴󠁧󠁢󠁥󠁮󠁧󠁿",
+    leagues: [
+      "Championship Cup",
+      "Greene King IPA Championship",
+      "Premier 15s Women",
+      "Premiership Rugby",
+      "Premiership Rugby Cup",
+      "Varsity Match"
+    ]
+  },
+  {
+    country: "Europe",
+    flag: "🇪🇺",
+    leagues: [
+      "Anglo-Welsh Cup",
+      "British and Irish Cup",
+      "Celtic Cup",
+      "Challenge Cup",
+      "Continental Shield",
+      "Europe Super Cup",
+      "European Rugby Champions Cup",
+      "Rugby Europe Championship",
+      "Rugby Europe Conference",
+      "Rugby Europe Trophy",
+      "Sevens Europe Series - England",
+      "Sevens Europe Series - France",
+      "Sevens Europe Series - Poland",
+      "Sevens Europe Series - Portugal",
+      "Sevens Europe Series - Russia",
+      "Sevens Europe Series Women - France",
+      "Sevens Europe Series Women - Portugal",
+      "Sevens Europe Series Women - Russia",
+      "Sevens Europe Series Women - Ukraine",
+      "Six Nations",
+      "Six Nations Summer Series U20",
+      "Six Nations U20",
+      "Six Nations Women"
+    ]
+  },
+  {
+    country: "France",
+    flag: "🇫🇷",
+    leagues: [
+      "Elite 1 Women",
+      "Nationale",
+      "Pro D2",
+      "Supersevens",
+      "Supersevens 2",
+      "Supersevens 3",
+      "Top 14"
+    ]
+  },
+  {
+    country: "Georgia",
+    flag: "🇬🇪",
+    leagues: [
+      "Didi 10"
+    ]
+  },
+  {
+    country: "Germany",
+    flag: "🇩🇪",
+    leagues: [
+      "1. Bundesliga"
+    ]
+  },
+  {
+    country: "Ireland",
+    flag: "🇮🇪",
+    leagues: [
+      "All Ireland League"
+    ]
+  },
+  {
+    country: "Italy",
+    flag: "🇮🇹",
+    leagues: [
+      "Coppa Italia",
+      "Eccellenza",
+      "Top10",
+      "Top12",
+      "Trofeo Eccellenza"
+    ]
+  },
+  {
+    country: "Japan",
+    flag: "🇯🇵",
+    leagues: [
+      "Top League"
+    ]
+  },
+  {
+    country: "Kenya",
+    flag: "🇰🇪",
+    leagues: [
+      "Kenya Cup"
+    ]
+  },
+  {
+    country: "Netherlands",
+    flag: "🇳🇱",
+    leagues: [
+      "Ereklasse"
+    ]
+  },
+  {
+    country: "New Zealand",
+    flag: "🇳🇿",
+    leagues: [
+      "Bunnings NPC",
+      "Heartland Championships",
+      "Mitre 10 Cup",
+      "Super Rugby Aupiki Women"
+    ]
+  },
+  {
+    country: "Poland",
+    flag: "🇵🇱",
+    leagues: [
+      "Ekstraliga"
+    ]
+  },
+  {
+    country: "Portugal",
+    flag: "🇵🇹",
+    leagues: [
+      "CN Honra"
+    ]
+  },
+  {
+    country: "Romania",
+    flag: "🇷🇴",
+    leagues: [
+      "SuperLiga"
+    ]
+  },
+  {
+    country: "Russia",
+    flag: "🇷🇺",
+    leagues: [
+      "Premier League"
+    ]
+  },
+  {
+    country: "Scotland",
+    flag: "🏴󠁧󠁢󠁳󠁣󠁴󠁿",
+    leagues: [
+      "BT Premiership",
+      "Super 6",
+      "Tennent's Premiership"
+    ]
+  },
+  {
+    country: "South Africa",
+    flag: "🇿🇦",
+    leagues: [
+      "7s Premier League",
+      "Currie Cup",
+      "Super Liga Americana",
+      "SuperSport Rugby Challenge",
+      "Vodacom Cup"
+    ]
+  },
+  {
+    country: "Spain",
+    flag: "🇪🇸",
+    leagues: [
+      "Division de Honor"
+    ]
+  }
+];
+
 export function CompetitionsSection({ sport }: CompetitionsSectionProps) {
   const [expandedCountries, setExpandedCountries] = useState<Set<string>>(new Set());
 
@@ -4764,6 +4986,8 @@ export function CompetitionsSection({ sport }: CompetitionsSectionProps) {
         return baseballCompetitions;
       case 'volleyball':
         return volleyballCompetitions;
+      case 'rugby':
+        return rugbyCompetitions;
       default:
         return [];
     }
