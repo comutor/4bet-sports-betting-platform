@@ -688,34 +688,148 @@ const footballCompetitions = [
       "U18 Premier League - Championship",
       "U18 Premier League - North",
       "U18 Premier League - South",
-      "Women's Championship"
+      "Women's Championship",
+      "WSL Cup"
+    ]
+  },
+  {
+    country: "Estonia",
+    flag: "🇪🇪",
+    leagues: [
+      "Cup",
+      "Esiliiga A",
+      "Esiliiga B",
+      "Meistriliiga"
+    ]
+  },
+  {
+    country: "Eswatini",
+    flag: "🇸🇿",
+    leagues: [
+      "Premier League"
+    ]
+  },
+  {
+    country: "Ethiopia",
+    flag: "🇪🇹",
+    leagues: [
+      "Premier League"
+    ]
+  },
+  {
+    country: "Faroe-Islands",
+    flag: "🇫🇴",
+    leagues: [
+      "1. Deild",
+      "Løgmanssteypid",
+      "Meistaradeildin",
+      "Super Cup"
+    ]
+  },
+  {
+    country: "Fiji",
+    flag: "🇫🇯",
+    leagues: [
+      "National Football League"
+    ]
+  },
+  {
+    country: "Finland",
+    flag: "🇫🇮",
+    leagues: [
+      "Kakkonen - Lohko A",
+      "Kakkonen - Lohko B",
+      "Kakkonen - Lohko C",
+      "Kakkonen - Play-offs",
+      "Kakkosen Cup",
+      "Kansallinen Liiga",
+      "League Cup",
+      "Suomen Cup",
+      "Veikkausliiga",
+      "Ykkönen",
+      "Ykkösscup",
+      "Ykkösliiga"
     ]
   },
   {
     country: "France",
     flag: "🇫🇷",
     leagues: [
-      "Ligue 1",
-      "Ligue 2",
       "Coupe de France",
       "Coupe de la Ligue",
-      "Trophée des Champions",
-      "National",
-      "National 2",
-      "National 3"
+      "Feminine Division 1",
+      "Ligue 1",
+      "Ligue 2",
+      "National 1",
+      "National 2 - Group A",
+      "National 2 - Group B",
+      "National 2 - Group C",
+      "National 2 - Group D",
+      "National 3 - Group A",
+      "National 3 - Group B",
+      "National 3 - Group C",
+      "National 3 - Group D",
+      "National 3 - Group E",
+      "National 3 - Group F",
+      "National 3 - Group G",
+      "National 3 - Group H",
+      "National 3 - Group I",
+      "National 3 - Group J",
+      "National 3 - Group K",
+      "National 3 - Group L",
+      "National 3 - Group M",
+      "Trophée des Champions"
+    ]
+  },
+  {
+    country: "Gabon",
+    flag: "🇬🇦",
+    leagues: [
+      "Championnat D1"
+    ]
+  },
+  {
+    country: "Gambia",
+    flag: "🇬🇲",
+    leagues: [
+      "GFA League"
+    ]
+  },
+  {
+    country: "Georgia",
+    flag: "🇬🇪",
+    leagues: [
+      "David Kipiani Cup",
+      "Erovnuli Liga",
+      "Erovnuli Liga 2",
+      "Liga 3",
+      "Super Cup"
     ]
   },
   {
     country: "Germany",
     flag: "🇩🇪",
     leagues: [
-      "Bundesliga",
       "2. Bundesliga",
+      "2. Frauen Bundesliga",
       "3. Liga",
-      "DFB-Pokal",
-      "DFL-Supercup",
-      "Regionalliga",
-      "Oberliga"
+      "Bundesliga",
+      "DFB Junioren Pokal",
+      "DFB Pokal",
+      "DFB Pokal - Women",
+      "Frauen Bundesliga",
+      "Oberliga - Baden-Württemberg",
+      "Oberliga - Bayern Nord",
+      "Oberliga - Bayern Süd",
+      "Oberliga - Bremen",
+      "Oberliga - Hamburg",
+      "Oberliga - Hessen",
+      "Oberliga - Mittelrhein",
+      "Oberliga - Niederrhein",
+      "Oberliga - Niedersachsen",
+      "Oberliga - Nordost-Nord",
+      "Oberliga - Nordost-Süd",
+      "Oberliga - Promotion Round"
     ]
   },
   {
