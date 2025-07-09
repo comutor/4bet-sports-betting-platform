@@ -829,7 +829,166 @@ const footballCompetitions = [
       "Oberliga - Niedersachsen",
       "Oberliga - Nordost-Nord",
       "Oberliga - Nordost-Süd",
-      "Oberliga - Promotion Round"
+      "Oberliga - Promotion Round",
+      "Oberliga - Relegation Round",
+      "Oberliga - Rheinland-Pfalz / Saar",
+      "Oberliga - Schleswig-Holstein",
+      "Oberliga - Westfalen",
+      "Regionalliga - Bayern",
+      "Regionalliga - Nord",
+      "Regionalliga - Nordost",
+      "Regionalliga - Promotion Play-offs",
+      "Regionalliga - Relegation Round",
+      "Regionalliga - SudWest",
+      "Regionalliga - West",
+      "Super Cup",
+      "Supercup der Frauen",
+      "U19 Bundesliga"
+    ]
+  },
+  {
+    country: "Ghana",
+    flag: "🇬🇭",
+    leagues: [
+      "Cup",
+      "Premier League",
+      "Super Cup"
+    ]
+  },
+  {
+    country: "Gibraltar",
+    flag: "🇬🇮",
+    leagues: [
+      "Premier Division",
+      "Rock Cup",
+      "Super Cup"
+    ]
+  },
+  {
+    country: "Greece",
+    flag: "🇬🇷",
+    leagues: [
+      "Cup",
+      "Football League",
+      "Gamma Ethniki - Group 1",
+      "Gamma Ethniki - Group 2",
+      "Gamma Ethniki - Group 3",
+      "Gamma Ethniki - Group 4",
+      "Gamma Ethniki - Group 5",
+      "Gamma Ethniki - Group 6",
+      "Gamma Ethniki - Group 7",
+      "Gamma Ethniki - Group 8",
+      "Gamma Ethniki - Group 9",
+      "Gamma Ethniki - Group 10",
+      "Gamma Ethniki - Promotion Group",
+      "Gamma Ethniki - Relegation Play-offs",
+      "Super League 1",
+      "Super League 2"
+    ]
+  },
+  {
+    country: "Grenada",
+    flag: "🇬🇩",
+    leagues: [
+      "Premier Division"
+    ]
+  },
+  {
+    country: "Guadeloupe",
+    flag: "🇬🇵",
+    leagues: [
+      "Division d'Honneur"
+    ]
+  },
+  {
+    country: "Guatemala",
+    flag: "🇬🇹",
+    leagues: [
+      "Liga Nacional",
+      "Primera Division"
+    ]
+  },
+  {
+    country: "Guinea",
+    flag: "🇬🇳",
+    leagues: [
+      "Ligue 1"
+    ]
+  },
+  {
+    country: "Haiti",
+    flag: "🇭🇹",
+    leagues: [
+      "Ligue Haïtienne"
+    ]
+  },
+  {
+    country: "Honduras",
+    flag: "🇭🇳",
+    leagues: [
+      "Liga Nacional"
+    ]
+  },
+  {
+    country: "Hong-Kong",
+    flag: "🇭🇰",
+    leagues: [
+      "FA Cup",
+      "HKFA 1st Division",
+      "HKPL Cup",
+      "Premier League",
+      "Sapling Cup",
+      "Senior Shield"
+    ]
+  },
+  {
+    country: "Hungary",
+    flag: "🇭🇺",
+    leagues: [
+      "Magyar Kupa",
+      "NB I",
+      "NB II",
+      "NB III - Northeast",
+      "NB III - Northwest",
+      "NB III - Promotion Play-offs",
+      "NB III - Southeast",
+      "NB III - Southwest"
+    ]
+  },
+  {
+    country: "Iceland",
+    flag: "🇮🇸",
+    leagues: [
+      "1. Deild",
+      "2. Deild",
+      "Cup",
+      "Fotbolti.net Cup A",
+      "League Cup",
+      "Reykjavik Cup",
+      "Super Cup",
+      "Úrvalsdeild",
+      "Úrvalsdeild Women"
+    ]
+  },
+  {
+    country: "India",
+    flag: "🇮🇳",
+    leagues: [
+      "AIFF Super Cup",
+      "Calcutta Premier Division",
+      "I-League",
+      "I-League - 2nd Division",
+      "Indian Super League",
+      "Santosh Trophy"
+    ]
+  },
+  {
+    country: "Indonesia",
+    flag: "🇮🇩",
+    leagues: [
+      "Liga 1",
+      "Liga 2",
+      "Piala Indonesia"
     ]
   },
   {
