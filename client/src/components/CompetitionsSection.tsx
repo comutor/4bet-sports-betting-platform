@@ -1672,47 +1672,145 @@ const footballCompetitions = [
       "Srpska Liga - Belgrade",
       "Srpska Liga - East",
       "Srpska Liga - Vojvodina",
-      "Srpska Liga - West"
+      "Srpska Liga - West",
+      "Super Liga"
     ]
   },
   {
-    country: "Netherlands",
-    flag: "🇳🇱",
+    country: "Singapore",
+    flag: "🇸🇬",
     leagues: [
-      "Eredivisie",
-      "Eerste Divisie",
-      "KNVB Cup",
-      "Johan Cruyff Shield",
-      "Tweede Divisie",
-      "Derde Divisie"
+      "Cup",
+      "League Cup",
+      "Premier League"
     ]
   },
   {
-    country: "Portugal",
-    flag: "🇵🇹",
+    country: "Slovakia",
+    flag: "🇸🇰",
     leagues: [
-      "Primeira Liga",
-      "Segunda Liga",
-      "Taça de Portugal",
-      "Taça da Liga",
-      "Supertaça",
-      "Liga 3",
-      "Campeonato de Portugal"
+      "2. liga",
+      "3. liga - Bratislava",
+      "3. liga - Center",
+      "3. liga - East",
+      "3. liga - Play-offs",
+      "3. liga - West",
+      "Cup",
+      "I Liga - Women",
+      "Super Liga"
+    ]
+  },
+  {
+    country: "Slovenia",
+    flag: "🇸🇮",
+    leagues: [
+      "1. SNL",
+      "2. SNL",
+      "3. SNL - East",
+      "3. SNL - West",
+      "Cup"
+    ]
+  },
+  {
+    country: "Somalia",
+    flag: "🇸🇴",
+    leagues: [
+      "Somali Premier League"
+    ]
+  },
+  {
+    country: "South-Africa",
+    flag: "🇿🇦",
+    leagues: [
+      "1st Division",
+      "8 Cup",
+      "Cup",
+      "Diski Challenge",
+      "Diski Shield",
+      "League Cup",
+      "Premier Soccer League"
+    ]
+  },
+  {
+    country: "South-Korea",
+    flag: "🇰🇷",
+    leagues: [
+      "FA Cup",
+      "K League 1",
+      "K League 2",
+      "K3 League",
+      "WK-League"
     ]
   },
   {
     country: "Spain",
     flag: "🇪🇸",
     leagues: [
-      "La Liga",
-      "Segunda División",
       "Copa del Rey",
-      "Supercopa de España",
-      "Primera Federación",
-      "Segunda Federación",
-      "Tercera Federación"
+      "Copa Federacion",
+      "La Liga",
+      "Primera División Femenina",
+      "Primera División RFEF - Group 1",
+      "Primera División RFEF - Group 2",
+      "Primera División RFEF - Group 3",
+      "Primera División RFEF - Group 4",
+      "Primera División RFEF - Group 5",
+      "Primera División RFEF - Play Offs",
+      "Segunda División",
+      "Segunda División RFEF - Group 1",
+      "Segunda División RFEF - Group 2",
+      "Segunda División RFEF - Group 3",
+      "Segunda División RFEF - Group 4",
+      "Segunda División RFEF - Group 5",
+      "Segunda División RFEF - Play-offs",
+      "Super Cup",
+      "Supercopa Femenina",
+      "Tercera División RFEF - Group 1",
+      "Tercera División RFEF - Group 10",
+      "Tercera División RFEF - Group 11",
+      "Tercera División RFEF - Group 12",
+      "Tercera División RFEF - Group 13",
+      "Tercera División RFEF - Group 14",
+      "Tercera División RFEF - Group 15",
+      "Tercera División RFEF - Group 16",
+      "Tercera División RFEF - Group 17",
+      "Tercera División RFEF - Group 18",
+      "Tercera División RFEF - Group 2",
+      "Tercera División RFEF - Group 3",
+      "Tercera División RFEF - Group 4",
+      "Tercera División RFEF - Group 5",
+      "Tercera División RFEF - Group 6",
+      "Tercera División RFEF - Group 7",
+      "Tercera División RFEF - Group 8",
+      "Tercera División RFEF - Group 9",
+      "Tercera División RFEF - Promotion - Play-offs"
     ]
   },
+  {
+    country: "Sudan",
+    flag: "🇸🇩",
+    leagues: [
+      "Sudani Premier League"
+    ]
+  },
+  {
+    country: "Suriname",
+    flag: "🇸🇷",
+    leagues: [
+      "Eerste Divisie"
+    ]
+  },
+  {
+    country: "Sweden",
+    flag: "🇸🇪",
+    leagues: [
+      "Allsvenskan",
+      "Damallsvenskan",
+      "Division 2 - Norra Götaland",
+      "Division 2 - Norra Svealand"
+    ]
+  },
+
   {
     country: "International",
     flag: "🌍",
