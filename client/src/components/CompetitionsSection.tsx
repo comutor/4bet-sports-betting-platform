@@ -3507,6 +3507,298 @@ const tennisCompetitions = [
   }
 ];
 
+const hockeyCompetitions = [
+  {
+    country: "Asia",
+    flag: "🌏",
+    leagues: [
+      "Asia Challenge Cup",
+      "Asia Challenge Cup Div. I",
+      "Asia League",
+      "Asian Games",
+      "Asian Games Women",
+      "Southeast Asian Games"
+    ]
+  },
+  {
+    country: "Australia",
+    flag: "🇦🇺",
+    leagues: [
+      "AIHL"
+    ]
+  },
+  {
+    country: "Austria",
+    flag: "🇦🇹",
+    leagues: [
+      "Alps Hockey League",
+      "EBEL",
+      "ICE Hockey League"
+    ]
+  },
+  {
+    country: "Belarus",
+    flag: "🇧🇾",
+    leagues: [
+      "Belarusian Cup",
+      "Extraleague",
+      "Minsk Championship"
+    ]
+  },
+  {
+    country: "Belgium",
+    flag: "🇧🇪",
+    leagues: [
+      "Belgian Cup"
+    ]
+  },
+  {
+    country: "Canada",
+    flag: "🇨🇦",
+    leagues: [
+      "CWHL Women",
+      "LNAH",
+      "Memorial Cup",
+      "OHL",
+      "QMJHL",
+      "Top Prospects Game",
+      "U Sports",
+      "WHL"
+    ]
+  },
+  {
+    country: "Czech Republic",
+    flag: "🇨🇿",
+    leagues: [
+      "2. Liga",
+      "2. Liga - Central",
+      "2. Liga - East",
+      "2. Liga - North",
+      "2. Liga - Promotion Group",
+      "2. Liga - Relegation Group",
+      "2. Liga - South",
+      "2. Liga - West",
+      "Chance Liga",
+      "DHL Super Cup",
+      "ELJ",
+      "Extraliga",
+      "Generali Ceska Cup",
+      "JLA",
+      "ULLH",
+      "WSM Liga"
+    ]
+  },
+  {
+    country: "Denmark",
+    flag: "🇩🇰",
+    leagues: [
+      "Danish Cup",
+      "Metal Ligaen"
+    ]
+  },
+  {
+    country: "Estonia",
+    flag: "🇪🇪",
+    leagues: [
+      "Hokiliiga"
+    ]
+  },
+  {
+    country: "Europe",
+    flag: "🇪🇺",
+    leagues: [
+      "All Star Cup",
+      "Baltic League",
+      "Beijer Hockey Games",
+      "BeNe League",
+      "Carlson Hockey Games",
+      "Champions Cup Women",
+      "Champions League",
+      "Channel One Cup",
+      "Continental Cup",
+      "Czech Hockey Games",
+      "Dolomiten Cup",
+      "EHT Czech Republic Women",
+      "EHT Final Women",
+      "EHT Finland Women",
+      "EHT Sweden Women",
+      "EHT Switzerland",
+      "Euro Hockey Tour",
+      "European Cup U16 Women",
+      "European Trophy",
+      "Hockeyades (Vallé de Joux)",
+      "International Tournament (Austria)",
+      "International Tournament (Belarus)",
+      "International Tournament (Denmark)",
+      "International Tournament (France)",
+      "International Tournament (Hungary)",
+      "International Tournament (Italy)",
+      "International Tournament (Latvia)",
+      "International Tournament (Lithuania)",
+      "International Tournament (Norway)",
+      "International Tournament (Poland)",
+      "International Tournament (Romania)",
+      "International Tournament (Slovakia)",
+      "International Tournament (Slovenia)",
+      "International Tournament (Switzerland)"
+    ]
+  },
+  {
+    country: "Finland",
+    flag: "🇫🇮",
+    leagues: [
+      "Liiga",
+      "Mestis",
+      "Suomi-sarja"
+    ]
+  },
+  {
+    country: "France",
+    flag: "🇫🇷",
+    leagues: [
+      "Ligue Magnus",
+      "Division 1",
+      "Division 2"
+    ]
+  },
+  {
+    country: "Germany",
+    flag: "🇩🇪",
+    leagues: [
+      "DEL",
+      "DEL2",
+      "Oberliga"
+    ]
+  },
+  {
+    country: "Italy",
+    flag: "🇮🇹",
+    leagues: [
+      "Serie A",
+      "Alps Hockey League"
+    ]
+  },
+  {
+    country: "Latvia",
+    flag: "🇱🇻",
+    leagues: [
+      "OHL",
+      "Latvian Cup"
+    ]
+  },
+  {
+    country: "Lithuania",
+    flag: "🇱🇹",
+    leagues: [
+      "LLHL",
+      "Lithuanian Cup"
+    ]
+  },
+  {
+    country: "Netherlands",
+    flag: "🇳🇱",
+    leagues: [
+      "BeNe League",
+      "Eredivisie"
+    ]
+  },
+  {
+    country: "Norway",
+    flag: "🇳🇴",
+    leagues: [
+      "Eliteserien",
+      "1. divisjon"
+    ]
+  },
+  {
+    country: "Poland",
+    flag: "🇵🇱",
+    leagues: [
+      "Polska Hokej Liga",
+      "1. Liga"
+    ]
+  },
+  {
+    country: "Romania",
+    flag: "🇷🇴",
+    leagues: [
+      "Liga Națională",
+      "Romanian Cup"
+    ]
+  },
+  {
+    country: "Russia",
+    flag: "🇷🇺",
+    leagues: [
+      "KHL",
+      "VHL",
+      "MHL"
+    ]
+  },
+  {
+    country: "Slovakia",
+    flag: "🇸🇰",
+    leagues: [
+      "Tipos Extraliga",
+      "1. Liga"
+    ]
+  },
+  {
+    country: "Slovenia",
+    flag: "🇸🇮",
+    leagues: [
+      "ALPS Hockey League",
+      "Slovenian Championship"
+    ]
+  },
+  {
+    country: "Sweden",
+    flag: "🇸🇪",
+    leagues: [
+      "SHL",
+      "HockeyAllsvenskan",
+      "Division 1"
+    ]
+  },
+  {
+    country: "Switzerland",
+    flag: "🇨🇭",
+    leagues: [
+      "National League",
+      "Swiss League",
+      "MySports League"
+    ]
+  },
+  {
+    country: "United States",
+    flag: "🇺🇸",
+    leagues: [
+      "NHL",
+      "AHL",
+      "ECHL",
+      "NCAA Division I",
+      "NWHL"
+    ]
+  },
+  {
+    country: "World",
+    flag: "🌍",
+    leagues: [
+      "IIHF World Championship",
+      "IIHF World Junior Championship",
+      "IIHF World U18 Championship",
+      "Winter Olympics",
+      "World Cup of Hockey",
+      "Champions Hockey League",
+      "Spengler Cup",
+      "Deutschland Cup",
+      "Karjala Tournament",
+      "World Championship Women",
+      "World Junior Championship Women"
+    ]
+  }
+];
+
 export function CompetitionsSection({ sport }: CompetitionsSectionProps) {
   const [expandedCountries, setExpandedCountries] = useState<Set<string>>(new Set());
 
@@ -3520,6 +3812,8 @@ export function CompetitionsSection({ sport }: CompetitionsSectionProps) {
         return cricketCompetitions;
       case 'tennis':
         return tennisCompetitions;
+      case 'hockey':
+        return hockeyCompetitions;
       default:
         return [];
     }
