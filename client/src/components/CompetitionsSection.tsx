@@ -205,25 +205,130 @@ const footballCompetitions = [
       "Provincial - Hainaut",
       "Provincial - Liege",
       "Provincial - Limburg",
-      "Provincial - Luxembourg"
+      "Provincial - Luxembourg",
+      "Provincial - Namur",
+      "Provincial - Oost-Vlaanderen",
+      "Provincial - Play-offs ACFF",
+      "Provincial - Play-offs VV",
+      "Provincial - West-Vlaanderen",
+      "Reserve Pro League",
+      "Second Amateur Division - ACFF",
+      "Second Amateur Division - Play-offs",
+      "Second Amateur Division - VFV A",
+      "Second Amateur Division - VFV B",
+      "Super Cup",
+      "Super League Women",
+      "Third Amateur Division - ACFF A",
+      "Third Amateur Division - ACFF B",
+      "Third Amateur Division - Play-offs",
+      "Third Amateur Division - VFV A",
+      "Third Amateur Division - VFV B"
+    ]
+  },
+  {
+    country: "Belize",
+    flag: "🇧🇿",
+    leagues: [
+      "Premier League"
+    ]
+  },
+  {
+    country: "Benin",
+    flag: "🇧🇯",
+    leagues: [
+      "Championnat National"
+    ]
+  },
+  {
+    country: "Bermuda",
+    flag: "🇧🇲",
+    leagues: [
+      "Premier League"
+    ]
+  },
+  {
+    country: "Bhutan",
+    flag: "🇧🇹",
+    leagues: [
+      "Premier League",
+      "Super League"
+    ]
+  },
+  {
+    country: "Bolivia",
+    flag: "🇧🇴",
+    leagues: [
+      "Copa de la División Profesional",
+      "Nacional B",
+      "Primera División",
+      "Torneo Amistoso de Verano"
+    ]
+  },
+  {
+    country: "Bosnia",
+    flag: "🇧🇦",
+    leagues: [
+      "1st League - FBiH",
+      "1st League - RS",
+      "Cup",
+      "Premijer Liga"
+    ]
+  },
+  {
+    country: "Botswana",
+    flag: "🇧🇼",
+    leagues: [
+      "Premier League"
     ]
   },
   {
     country: "Brazil",
     flag: "🇧🇷",
     leagues: [
-      "Série A",
-      "Série B",
-      "Série C",
-      "Série D",
-      "Copa do Brasil",
-      "Supercopa do Brasil",
-      "Copa Verde",
+      "Acreano",
+      "Alagoano",
+      "Alagoano - 2",
+      "Alagoano U20",
+      "Amapaense",
+      "Amazonense",
+      "Amazonense - 2",
+      "Baiano - 1",
+      "Baiano - 2",
+      "Baiano U20",
+      "Brasileiro de Aspirantes",
+      "Brasileiro U17",
+      "Brasileiro U20 A",
+      "Brasileiro U20 B",
+      "Brasileiro Women",
+      "Brasiliense",
+      "Brasiliense B",
+      "Brasiliense U20",
+      "Capixaba",
+      "Capixaba B",
+      "Carioca - 1",
+      "Carioca - 2",
+      "Carioca A2",
+      "Carioca B2",
+      "Carioca C",
+      "Carioca U20",
+      "Catarinense - 1",
+      "Catarinense - 2",
+      "Catarinense - 3",
+      "Catarinense U20",
+      "Cearense - 1",
+      "Cearense - 2",
+      "Cearense - 3",
+      "Cearense U20",
+      "Copa Alagoas",
+      "Copa Do Brasil",
+      "Copa do Brasil U17",
+      "Copa do Brasil U20",
       "Copa do Nordeste",
-      "Campeonato Paulista",
-      "Campeonato Carioca",
-      "Campeonato Mineiro",
-      "Campeonato Gaúcho"
+      "Copa Espirito Santo",
+      "Copa Fares Lopes",
+      "Copa Gaúcha",
+      "Copa Grão Pará",
+      "Copa Paulista"
     ]
   },
   {
