@@ -1807,7 +1807,172 @@ const footballCompetitions = [
       "Allsvenskan",
       "Damallsvenskan",
       "Division 2 - Norra Götaland",
-      "Division 2 - Norra Svealand"
+      "Division 2 - Norra Svealand",
+      "Division 2 - Norrland",
+      "Division 2 - Östra Götaland",
+      "Division 2 - Play-offs",
+      "Division 2 - Södra Svealand",
+      "Division 2 - Västra Götaland",
+      "Elitettan",
+      "Ettan - Norra",
+      "Ettan - Relegation Round",
+      "Ettan - Södra",
+      "Superettan",
+      "Svenska Cupen",
+      "Svenska Cupen - Women"
+    ]
+  },
+  {
+    country: "Switzerland",
+    flag: "🇨🇭",
+    leagues: [
+      "1. Liga Classic - Group 1",
+      "1. Liga Classic - Group 2",
+      "1. Liga Classic - Group 3",
+      "1. Liga Classic - Play-offs",
+      "1. Liga Promotion",
+      "2. Liga Interregional - Group 1",
+      "2. Liga Interregional - Group 2",
+      "2. Liga Interregional - Group 3",
+      "2. Liga Interregional - Group 4",
+      "2. Liga Interregional - Group 5",
+      "2. Liga Interregional - Group 6",
+      "AXA Women's Super League",
+      "Challenge League",
+      "Erste Liga Cup",
+      "Schweizer Cup",
+      "Super League"
+    ]
+  },
+  {
+    country: "Syria",
+    flag: "🇸🇾",
+    leagues: [
+      "Premier League"
+    ]
+  },
+  {
+    country: "Tajikistan",
+    flag: "🇹🇯",
+    leagues: [
+      "Vysshaya Liga"
+    ]
+  },
+  {
+    country: "Tanzania",
+    flag: "🇹🇿",
+    leagues: [
+      "Ligi kuu Bara"
+    ]
+  },
+  {
+    country: "Thailand",
+    flag: "🇹🇭",
+    leagues: [
+      "FA Cup",
+      "League Cup",
+      "Thai Champions Cup",
+      "Thai League 1",
+      "Thai League 2"
+    ]
+  },
+  {
+    country: "Togo",
+    flag: "🇹🇬",
+    leagues: [
+      "Championnat National"
+    ]
+  },
+  {
+    country: "Trinidad-And-Tobago",
+    flag: "🇹🇹",
+    leagues: [
+      "Pro League"
+    ]
+  },
+  {
+    country: "Tunisia",
+    flag: "🇹🇳",
+    leagues: [
+      "Cup",
+      "Ligue 1",
+      "Ligue 2"
+    ]
+  },
+  {
+    country: "Turkey",
+    flag: "🇹🇷",
+    leagues: [
+      "1. Lig",
+      "2. Lig",
+      "3. Lig - Group 1",
+      "3. Lig - Group 2",
+      "3. Lig - Group 3",
+      "3. Lig - Group 4",
+      "3. Lig - Play-offs",
+      "Cup",
+      "Super Cup",
+      "Süper Lig"
+    ]
+  },
+  {
+    country: "Turkmenistan",
+    flag: "🇹🇲",
+    leagues: [
+      "Yokary Liga",
+      "Youth League"
+    ]
+  },
+  {
+    country: "Uganda",
+    flag: "🇺🇬",
+    leagues: [
+      "Premier League"
+    ]
+  },
+  {
+    country: "Ukraine",
+    flag: "🇺🇦",
+    leagues: [
+      "Cup",
+      "Druha Liga",
+      "Druha Liga - Group B",
+      "Persha Liga",
+      "Premier League",
+      "Super Cup",
+      "U19 League",
+      "U21 League"
+    ]
+  },
+  {
+    country: "United-Arab-Emirates",
+    flag: "🇦🇪",
+    leagues: [
+      "Division 1",
+      "League Cup",
+      "Presidents Cup",
+      "Pro League",
+      "Super Cup"
+    ]
+  },
+  {
+    country: "Uruguay",
+    flag: "🇺🇾",
+    leagues: [
+      "Copa Uruguay",
+      "Primera División - Apertura",
+      "Primera División - Clausura",
+      "Segunda División",
+      "Super Copa"
+    ]
+  },
+  {
+    country: "USA",
+    flag: "🇺🇸",
+    leagues: [
+      "Major League Soccer",
+      "MLS All-Star",
+      "MLS Next Pro"
     ]
   },
 
