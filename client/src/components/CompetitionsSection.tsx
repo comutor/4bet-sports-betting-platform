@@ -125,25 +125,87 @@ const footballCompetitions = [
     country: "Austria",
     flag: "🇦🇹",
     leagues: [
-      "Bundesliga",
       "2. Liga",
-      "ÖFB Cup",
-      "Supercup",
-      "Regional Liga East",
-      "Regional Liga Central",
-      "Regional Liga West"
+      "Bundesliga",
+      "Cup",
+      "Frauenliga",
+      "Landesliga - Burgenland",
+      "Landesliga - Karnten",
+      "Landesliga - Niederosterreich",
+      "Landesliga - Oberosterreich",
+      "Landesliga - Salzburg",
+      "Landesliga - Steiermark",
+      "Landesliga - Tirol",
+      "Landesliga - Vorarlbergliga",
+      "Landesliga - Wien",
+      "Regionalliga - Mitte",
+      "Regionalliga - Ost",
+      "Regionalliga - Salzburg",
+      "Regionalliga - Tirol",
+      "Regionalliga - West"
+    ]
+  },
+  {
+    country: "Azerbaijan",
+    flag: "🇦🇿",
+    leagues: [
+      "Birinci Dasta",
+      "Cup",
+      "Premyer Liqa"
+    ]
+  },
+  {
+    country: "Bahrain",
+    flag: "🇧🇭",
+    leagues: [
+      "Federation Cup",
+      "King's Cup",
+      "Premier League",
+      "Super Cup"
+    ]
+  },
+  {
+    country: "Bangladesh",
+    flag: "🇧🇩",
+    leagues: [
+      "Federation Cup",
+      "Premier League"
+    ]
+  },
+  {
+    country: "Barbados",
+    flag: "🇧🇧",
+    leagues: [
+      "Premier League"
+    ]
+  },
+  {
+    country: "Belarus",
+    flag: "🇧🇾",
+    leagues: [
+      "1. Division",
+      "2. Division",
+      "Coppa",
+      "Premier League",
+      "Reserve League",
+      "Super Cup"
     ]
   },
   {
     country: "Belgium",
     flag: "🇧🇪",
     leagues: [
-      "Pro League",
       "Challenger Pro League",
-      "Belgian Cup",
-      "Super Cup",
+      "Cup",
       "First Amateur Division",
-      "Second Amateur Division"
+      "Jupiler Pro League",
+      "Provincial - Antwerpen",
+      "Provincial - Brabant ACFF",
+      "Provincial - Brabant VFV",
+      "Provincial - Hainaut",
+      "Provincial - Liege",
+      "Provincial - Limburg",
+      "Provincial - Luxembourg"
     ]
   },
   {
