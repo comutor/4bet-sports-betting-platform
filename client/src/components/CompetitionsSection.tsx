@@ -3074,14 +3074,74 @@ const basketballCompetitions = [
     flag: "🇺🇸",
     leagues: [
       "BIG3",
+      "California Classic",
+      "CBI",
+      "CIT",
+      "IBL",
       "NBA",
-      "WNBA",
-      "NBA G League",
-      "NCAA Division I",
-      "NCAA Division II",
-      "NCAA Division III",
-      "NBA Summer League",
-      "The Basketball Tournament"
+      "NBA - D League",
+      "NBA - Las Vegas Summer League",
+      "NBA - Sacramento Summer League",
+      "NBA - Utah Summer League",
+      "NBA Cup",
+      "NBA In-Season Tournament",
+      "NBA Orlando Summer League",
+      "NBA Salt Lake City Summer League",
+      "NBA W",
+      "NCAA",
+      "NCAA Women",
+      "NIT",
+      "Vegas 16"
+    ]
+  },
+  {
+    country: "Venezuela",
+    flag: "🇻🇪",
+    leagues: [
+      "LPB",
+      "Superliga"
+    ]
+  },
+  {
+    country: "Vietnam",
+    flag: "🇻🇳",
+    leagues: [
+      "VBA"
+    ]
+  },
+  {
+    country: "World",
+    flag: "🌍",
+    leagues: [
+      "Albert Schweitzer Tournament",
+      "Americas Championship",
+      "Americas Championship U16",
+      "Americas Championship U16 Women",
+      "Americas Championship U18",
+      "Americas Championship U18 Women",
+      "Americas Championship Women",
+      "Americas League",
+      "Champions League Americas",
+      "Commonwealth Games",
+      "Commonwealth Games Women",
+      "Friendly International",
+      "Friendly International Women",
+      "Intercontinental Cup",
+      "Olympic Games",
+      "Olympic Games Women",
+      "Pan American Games",
+      "Pan American Games Women",
+      "Stankovic Continental Cup",
+      "Universiade",
+      "Universiade Women",
+      "WBLA Women",
+      "World Championship U17",
+      "World Championship U17 Women",
+      "World Championship U19",
+      "World Championship U19 Women",
+      "World Championship Women",
+      "World Cup",
+      "World Cup Women"
     ]
   }
 ];
