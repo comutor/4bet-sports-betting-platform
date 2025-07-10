@@ -5,6 +5,7 @@ import session from "express-session";
 import { storage } from "./storage";
 import { oddsApiService } from "./services/oddsApi";
 import { apiSportsService } from "./services/apiSports";
+import { sportMonkService } from "./services/sportMonk";
 import { aviatorGame } from "./services/aviatorGame";
 import { spribeService } from "./services/spribeService";
 import { insertBetslipItemSchema, insertUserSchema, insertUserBetSchema } from "@shared/schema";
@@ -457,9 +458,13 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const topLeagueMatches: any[] = [];
       let eventId = 1;
 
-      // Get sport-specific data from Odds API
+      // Get sport-specific data from multiple APIs
       if (sport === 'football') {
-        const footballData = await oddsApiService.getFootballGamesByCountryPriority();
+        // Get data from both Odds API and SportMonk
+        const [footballData, sportMonkData] = await Promise.all([
+          oddsApiService.getFootballGamesByCountryPriority().catch(() => []),
+          sportMonkService.isEnabled() ? sportMonkService.getTopLeagues().catch(() => []) : []
+        ]);
         
         // Top leagues available in Odds API
         const topLeagues = [
@@ -470,6 +475,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
           'Premiership', 'Egyptian Premier League'
         ];
         
+        // Process Odds API data
         if (footballData && footballData.length > 0) {
           footballData.forEach(country => {
             if (country.games && country.games.length > 0) {
@@ -502,6 +508,42 @@ export async function registerRoutes(app: Express): Promise<Server> {
                     }
                   });
                 }
+              });
+            }
+          });
+        }
+
+        // Process SportMonk data (includes MLS and other missing leagues)
+        if (sportMonkData && sportMonkData.length > 0) {
+          sportMonkData.forEach(leagueData => {
+            if (leagueData.fixtures && leagueData.fixtures.length > 0) {
+              leagueData.fixtures.forEach(match => {
+                const homeTeam = match.participants?.find(p => p.meta.position === 'home')?.name || 'Home Team';
+                const awayTeam = match.participants?.find(p => p.meta.position === 'away')?.name || 'Away Team';
+                
+                // Extract odds from SportMonk format
+                const homeOdds = match.odds?.[0]?.markets?.find(m => m.key === 'fulltime_result')?.outcomes?.find(o => o.type === '1')?.odds || 2.0;
+                const drawOdds = match.odds?.[0]?.markets?.find(m => m.key === 'fulltime_result')?.outcomes?.find(o => o.type === 'X')?.odds || 3.0;
+                const awayOdds = match.odds?.[0]?.markets?.find(m => m.key === 'fulltime_result')?.outcomes?.find(o => o.type === '2')?.odds || 2.5;
+
+                topLeagueMatches.push({
+                  id: eventId++,
+                  sport: 'Football',
+                  status: match.state.finished ? 'finished' : (new Date(match.starting_at) > new Date() ? 'upcoming' : 'live'),
+                  homeTeam,
+                  awayTeam,
+                  homeScore: match.scores?.find(s => s.score.participant === homeTeam)?.score.goals || null,
+                  awayScore: match.scores?.find(s => s.score.participant === awayTeam)?.score.goals || null,
+                  league: leagueData.league.name,
+                  country: leagueData.league.country.name,
+                  startTime: new Date(match.starting_at),
+                  currentTime: null,
+                  odds: {
+                    home: homeOdds,
+                    draw: drawOdds,
+                    away: awayOdds
+                  }
+                });
               });
             }
           });
