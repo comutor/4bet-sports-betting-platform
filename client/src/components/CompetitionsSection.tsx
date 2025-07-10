@@ -4964,6 +4964,91 @@ const rugbyCompetitions = [
     leagues: [
       "Division de Honor"
     ]
+  },
+  {
+    country: "USA",
+    flag: "🇺🇸",
+    leagues: [
+      "Major League Rugby",
+      "PRO Rugby"
+    ]
+  },
+  {
+    country: "Wales",
+    flag: "🏴󠁧󠁢󠁷󠁬󠁳󠁿",
+    leagues: [
+      "Challenge Cup",
+      "Premiership",
+      "Principality Premiership"
+    ]
+  },
+  {
+    country: "World",
+    flag: "🌍",
+    leagues: [
+      "Americas Championship",
+      "Americas Pacific Challenge",
+      "Autumn Nations Cup",
+      "Club Friendly",
+      "Commonwealth Games 7's",
+      "Commonwealth Games 7's Women",
+      "Friendly International",
+      "Friendly International Women",
+      "IRB Tbilisi Cup",
+      "Lions Tour",
+      "Middlesex 7's",
+      "Nations Cup",
+      "Olympic Games 7's",
+      "Olympic Games 7's Women",
+      "Pacific Challenge",
+      "Pacific Nations Cup",
+      "Pan American Games 7's",
+      "Pan American Games 7's Women",
+      "Pro14 Rainbow Cup",
+      "Rugby Championship",
+      "Seven's World Series - Australia",
+      "Seven's World Series - Canada",
+      "Seven's World Series - Canada 2",
+      "Seven's World Series - Dubai",
+      "Seven's World Series - Dubai 2",
+      "Seven's World Series - England",
+      "Seven's World Series - France",
+      "Seven's World Series - Hong Kong",
+      "Seven's World Series - Japan",
+      "Seven's World Series - New Zealand",
+      "Seven's World Series - Scotland",
+      "Seven's World Series - Singapore",
+      "Seven's World Series - South Africa",
+      "Seven's World Series - Spain",
+      "Seven's World Series - USA",
+      "Seven's World Series Women - Australia",
+      "Seven's World Series Women - Canada",
+      "Seven's World Series Women - Canada 2",
+      "Seven's World Series Women - Dubai",
+      "Seven's World Series Women - Dubai 2",
+      "Seven's World Series Women - France",
+      "Seven's World Series Women - Japan",
+      "Seven's World Series Women - New Zealand",
+      "Seven's World Series Women - South Africa",
+      "Seven's World Series Women - Spain",
+      "Seven's World Series Women - USA",
+      "Sevens World Cup",
+      "Sevens World Cup Women",
+      "Super Rugby",
+      "Super Series Women",
+      "Supersevens Finals",
+      "U20 Trophy",
+      "United Rugby Championship",
+      "Universiade 7's",
+      "Universiade 7's Women",
+      "World Championship U20",
+      "World Club 7's",
+      "World Cup",
+      "World Cup Women",
+      "WXV 1 Women",
+      "WXV 2 Women",
+      "WXV 3 Women"
+    ]
   }
 ];
 
