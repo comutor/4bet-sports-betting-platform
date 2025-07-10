@@ -116,13 +116,9 @@ export class ApiSportsService {
 
   constructor() {
     this.apiKey = process.env.API_SPORTS_KEY || '';
-    if (!this.apiKey) {
-      console.log('API_SPORTS_KEY not found, using fallback to Odds API');
-      this.apiEnabled = false;
-    } else {
-      this.apiEnabled = true;
-      console.log('API Sports service initialized with new key');
-    }
+    // Disable API Sports due to access issues
+    this.apiEnabled = false;
+    console.log('API Sports service disabled - using Odds API instead');
     
     // Run cache cleanup every hour
     setInterval(() => {

@@ -438,21 +438,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Football games by country priority - fallback to Odds API temporarily
+  // Football games by country priority - Using Odds API
   app.get("/api/football/countries", async (req, res) => {
     try {
-      // Try API Sports first, fallback to Odds API
-      try {
-        const footballData = await apiSportsService.getCompetitionsByCountry();
-        if (footballData && footballData.length > 0) {
-          res.json(footballData);
-          return;
-        }
-      } catch (apiSportsError) {
-        console.log("API Sports failed, falling back to Odds API");
-      }
-      
-      // Fallback to Odds API
+      // Use Odds API directly since API Sports is disabled
       const footballData = await oddsApiService.getFootballGamesByCountryPriority();
       res.json(footballData);
     } catch (error) {
@@ -461,81 +450,61 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Top Leagues endpoint - Now using API Sports for football
+  // Top Leagues endpoint - Using Odds API with comprehensive league database
   app.get('/api/top-leagues/:sport', async (req, res) => {
     try {
       const { sport } = req.params;
       const topLeagueMatches: any[] = [];
       let eventId = 1;
 
+      // Get sport-specific data from Odds API
       if (sport === 'football') {
-        // Try API Sports first, fallback to Odds API
-        try {
-          const footballData = await apiSportsService.getTopEuropeanLeagues();
-          
-          if (footballData && footballData.length > 0) {
-            footballData.forEach(league => {
-              if (league.fixtures && league.fixtures.length > 0) {
-                league.fixtures.forEach(match => {
+        const footballData = await oddsApiService.getFootballGamesByCountryPriority();
+        
+        // Top leagues that match our comprehensive database
+        const topLeagues = [
+          'Premier League', 'La Liga', 'Bundesliga', 'Serie A', 'Ligue 1', 
+          'Champions League', 'Europa League', 'Conference League',
+          'Brasileirão', 'Primera División', 'MLS', 'Liga MX',
+          'J.League', 'K League', 'Chinese Super League', 'A-League',
+          'Premiership', 'Egyptian Premier League', 'Copa Libertadores'
+        ];
+        
+        if (footballData && footballData.length > 0) {
+          footballData.forEach(country => {
+            if (country.games && country.games.length > 0) {
+              country.games.forEach(match => {
+                if (topLeagues.some(league => 
+                  match.league_name?.includes(league) || 
+                  match.sport_title?.includes(league) ||
+                  match.league_name?.includes('Premier') ||
+                  match.league_name?.includes('Liga') ||
+                  match.league_name?.includes('Bundesliga') ||
+                  match.league_name?.includes('Serie A') ||
+                  match.league_name?.includes('Ligue 1')
+                )) {
                   topLeagueMatches.push({
                     id: eventId++,
                     sport: 'Football',
-                    status: new Date(match.fixture.date) > new Date() ? 'upcoming' : 'live',
-                    homeTeam: match.teams.home.name,
-                    awayTeam: match.teams.away.name,
-                    homeScore: match.goals.home,
-                    awayScore: match.goals.away,
-                    league: match.league.name,
-                    country: match.league.country,
-                    startTime: new Date(match.fixture.date),
+                    status: new Date(match.commence_time) > new Date() ? 'upcoming' : 'live',
+                    homeTeam: match.home_team,
+                    awayTeam: match.away_team,
+                    homeScore: null,
+                    awayScore: null,
+                    league: match.league_name || match.sport_title,
+                    country: country.country,
+                    startTime: new Date(match.commence_time),
                     currentTime: null,
                     odds: {
-                      home: 2.0,
-                      draw: 3.0,
-                      away: 2.5
+                      home: match.bookmakers?.[0]?.markets?.[0]?.outcomes?.find((o: any) => o.name === match.home_team)?.price || 2.0,
+                      draw: match.bookmakers?.[0]?.markets?.[0]?.outcomes?.find((o: any) => o.name === 'Draw')?.price || 3.0,
+                      away: match.bookmakers?.[0]?.markets?.[0]?.outcomes?.find((o: any) => o.name === match.away_team)?.price || 2.5
                     }
                   });
-                });
-              }
-            });
-          }
-        } catch (apiSportsError) {
-          console.log("API Sports failed for top leagues, falling back to Odds API");
-          
-          // Fallback to Odds API
-          const footballData = await oddsApiService.getFootballGamesByCountryPriority();
-          
-          // Filter only top leagues
-          const topLeagues = ['Premier League', 'La Liga', 'Bundesliga', 'Serie A', 'Ligue 1', 'Champions League', 'Europa League'];
-          
-          if (footballData && footballData.length > 0) {
-            footballData.forEach(country => {
-              if (country.games && country.games.length > 0) {
-                country.games.forEach(match => {
-                  if (topLeagues.some(league => match.league_name?.includes(league) || match.sport_title?.includes(league))) {
-                    topLeagueMatches.push({
-                      id: eventId++,
-                      sport: 'Football',
-                      status: new Date(match.commence_time) > new Date() ? 'upcoming' : 'live',
-                      homeTeam: match.home_team,
-                      awayTeam: match.away_team,
-                      homeScore: null,
-                      awayScore: null,
-                      league: match.league_name || match.sport_title,
-                      country: country.country,
-                      startTime: new Date(match.commence_time),
-                      currentTime: null,
-                      odds: {
-                        home: match.bookmakers?.[0]?.markets?.[0]?.outcomes?.find((o: any) => o.name === match.home_team)?.price || 2.0,
-                        draw: match.bookmakers?.[0]?.markets?.[0]?.outcomes?.find((o: any) => o.name === 'Draw')?.price || 3.0,
-                        away: match.bookmakers?.[0]?.markets?.[0]?.outcomes?.find((o: any) => o.name === match.away_team)?.price || 2.5
-                      }
-                    });
-                  }
-                });
-              }
-            });
-          }
+                }
+              });
+            }
+          });
         }
       }
 
@@ -626,7 +595,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         }
       }
 
-      if (sport === 'ice-hockey') {
+      if (sport === 'ice-hockey' || sport === 'hockey') {
         const hockeyData = await oddsApiService.getIceHockeyGamesByPriority();
         
         if (hockeyData && hockeyData.length > 0) {
@@ -635,7 +604,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
               league.games.forEach(match => {
                 topLeagueMatches.push({
                   id: eventId++,
-                  sport: 'Ice Hockey',
+                  sport: 'Hockey',
                   status: new Date(match.commence_time) > new Date() ? 'upcoming' : 'live',
                   homeTeam: match.home_team,
                   awayTeam: match.away_team,
@@ -654,6 +623,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
             }
           });
         }
+      }
+
+      // For sports without current Odds API support, return empty array to show league structure
+      if (sport === 'volleyball' || sport === 'rugby' || sport === 'baseball') {
+        // These sports will show the comprehensive league structure with data availability notice
+        // Future enhancement: Add specific API endpoints for these sports
       }
 
       // Sort by start time
