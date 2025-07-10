@@ -76,15 +76,174 @@ export function TopLeaguesSection({ onBetClick, onLeagueClick, sport = 'football
       { id: 'afc-champions-league', name: 'AFC Champions League', country: 'Asia', flag: '🇯🇵', apiKey: 'soccer_afc_champions_league' }
     ],
     basketball: [
+      // North American Top Leagues
       { id: 'nba', name: 'NBA', country: 'USA', flag: '🇺🇸', apiKey: 'basketball_nba' },
-      { id: 'euroleague', name: 'EuroLeague', country: 'Europe', flag: '🇪🇺', apiKey: 'basketball_euroleague' }
+      { id: 'wnba', name: 'WNBA', country: 'USA', flag: '🇺🇸', apiKey: 'basketball_wnba' },
+      { id: 'g-league', name: 'G League', country: 'USA', flag: '🇺🇸', apiKey: 'basketball_g_league' },
+      { id: 'ncaa', name: 'NCAA Division I', country: 'USA', flag: '🇺🇸', apiKey: 'basketball_ncaa' },
+      { id: 'nbl-canada', name: 'NBL Canada', country: 'Canada', flag: '🇨🇦', apiKey: 'basketball_nbl_canada' },
+      
+      // European Top Leagues
+      { id: 'euroleague', name: 'EuroLeague', country: 'Europe', flag: '🇪🇺', apiKey: 'basketball_euroleague' },
+      { id: 'eurocup', name: 'EuroCup', country: 'Europe', flag: '🇪🇺', apiKey: 'basketball_eurocup' },
+      { id: 'bbl', name: 'BBL', country: 'Germany', flag: '🇩🇪', apiKey: 'basketball_bbl' },
+      { id: 'liga-acb', name: 'Liga ACB', country: 'Spain', flag: '🇪🇸', apiKey: 'basketball_liga_acb' },
+      { id: 'lega-basket', name: 'Lega Basket Serie A', country: 'Italy', flag: '🇮🇹', apiKey: 'basketball_lega_basket' },
+      { id: 'pro-a', name: 'Pro A', country: 'France', flag: '🇫🇷', apiKey: 'basketball_pro_a' },
+      { id: 'vtb-league', name: 'VTB United League', country: 'Russia', flag: '🇷🇺', apiKey: 'basketball_vtb' },
+      { id: 'greek-basket', name: 'Greek Basket League', country: 'Greece', flag: '🇬🇷', apiKey: 'basketball_greek' },
+      
+      // Asia-Pacific Top Leagues
+      { id: 'nbl-australia', name: 'NBL', country: 'Australia', flag: '🇦🇺', apiKey: 'basketball_nbl' },
+      { id: 'b-league', name: 'B.League', country: 'Japan', flag: '🇯🇵', apiKey: 'basketball_b_league' },
+      { id: 'kbl', name: 'KBL', country: 'South Korea', flag: '🇰🇷', apiKey: 'basketball_kbl' },
+      { id: 'cba', name: 'CBA', country: 'China', flag: '🇨🇳', apiKey: 'basketball_cba' },
+      
+      // South American Top Leagues
+      { id: 'nbb', name: 'NBB', country: 'Brazil', flag: '🇧🇷', apiKey: 'basketball_nbb' },
+      { id: 'liga-nacional', name: 'Liga Nacional', country: 'Argentina', flag: '🇦🇷', apiKey: 'basketball_liga_nacional' }
+    ],
+    cricket: [
+      // International Competitions
+      { id: 'icc-world-cup', name: 'ICC Cricket World Cup', country: 'World', flag: '🌍', apiKey: 'cricket_world_cup' },
+      { id: 'icc-t20-world-cup', name: 'ICC T20 World Cup', country: 'World', flag: '🌍', apiKey: 'cricket_t20_world_cup' },
+      { id: 'champions-trophy', name: 'ICC Champions Trophy', country: 'World', flag: '🌍', apiKey: 'cricket_champions_trophy' },
+      { id: 'world-test-championship', name: 'World Test Championship', country: 'World', flag: '🌍', apiKey: 'cricket_test_championship' },
+      
+      // Premier T20 Leagues
+      { id: 'ipl', name: 'Indian Premier League', country: 'India', flag: '🇮🇳', apiKey: 'cricket_ipl' },
+      { id: 'big-bash', name: 'Big Bash League', country: 'Australia', flag: '🇦🇺', apiKey: 'cricket_big_bash' },
+      { id: 'psl', name: 'Pakistan Super League', country: 'Pakistan', flag: '🇵🇰', apiKey: 'cricket_psl' },
+      { id: 'cpl', name: 'Caribbean Premier League', country: 'West Indies', flag: '🇼🇸', apiKey: 'cricket_cpl' },
+      { id: 'hundred', name: 'The Hundred', country: 'England', flag: '🏴󠁧󠁢󠁥󠁮󠁧󠁿', apiKey: 'cricket_hundred' },
+      { id: 'vitality-blast', name: 'Vitality Blast', country: 'England', flag: '🏴󠁧󠁢󠁥󠁮󠁧󠁿', apiKey: 'cricket_blast' },
+      
+      // International Test/ODI/T20 Series
+      { id: 'test-matches', name: 'Test Matches', country: 'World', flag: '🌍', apiKey: 'cricket_test_match' },
+      { id: 'odi-series', name: 'ODI Series', country: 'World', flag: '🌍', apiKey: 'cricket_odi' },
+      { id: 't20-internationals', name: 'T20 Internationals', country: 'World', flag: '🌍', apiKey: 'cricket_t20' },
+      
+      // Domestic First-Class Competitions
+      { id: 'county-championship', name: 'County Championship', country: 'England', flag: '🏴󠁧󠁢󠁥󠁮󠁧󠁿', apiKey: 'cricket_county_championship' },
+      { id: 'sheffield-shield', name: 'Sheffield Shield', country: 'Australia', flag: '🇦🇺', apiKey: 'cricket_sheffield_shield' },
+      { id: 'ranji-trophy', name: 'Ranji Trophy', country: 'India', flag: '🇮🇳', apiKey: 'cricket_ranji_trophy' }
     ],
     tennis: [
-      { id: 'atp-masters', name: 'ATP Masters', country: 'World', flag: '🌍', apiKey: 'tennis_atp' },
-      { id: 'wta-tour', name: 'WTA Tour', country: 'World', flag: '🌍', apiKey: 'tennis_wta' }
+      // Grand Slams
+      { id: 'australian-open', name: 'Australian Open', country: 'Australia', flag: '🇦🇺', apiKey: 'tennis_australian_open' },
+      { id: 'french-open', name: 'French Open', country: 'France', flag: '🇫🇷', apiKey: 'tennis_french_open' },
+      { id: 'wimbledon', name: 'Wimbledon', country: 'England', flag: '🏴󠁧󠁢󠁥󠁮󠁧󠁿', apiKey: 'tennis_wimbledon' },
+      { id: 'us-open', name: 'US Open', country: 'USA', flag: '🇺🇸', apiKey: 'tennis_us_open' },
+      
+      // ATP Masters 1000
+      { id: 'indian-wells', name: 'Indian Wells Masters', country: 'USA', flag: '🇺🇸', apiKey: 'tennis_indian_wells' },
+      { id: 'miami-open', name: 'Miami Open', country: 'USA', flag: '🇺🇸', apiKey: 'tennis_miami' },
+      { id: 'monte-carlo', name: 'Monte Carlo Masters', country: 'Monaco', flag: '🇲🇨', apiKey: 'tennis_monte_carlo' },
+      { id: 'madrid-open', name: 'Madrid Open', country: 'Spain', flag: '🇪🇸', apiKey: 'tennis_madrid' },
+      { id: 'rome-masters', name: 'Italian Open', country: 'Italy', flag: '🇮🇹', apiKey: 'tennis_rome' },
+      { id: 'canada-masters', name: 'Canada Masters', country: 'Canada', flag: '🇨🇦', apiKey: 'tennis_canada' },
+      { id: 'cincinnati', name: 'Cincinnati Masters', country: 'USA', flag: '🇺🇸', apiKey: 'tennis_cincinnati' },
+      { id: 'shanghai', name: 'Shanghai Masters', country: 'China', flag: '🇨🇳', apiKey: 'tennis_shanghai' },
+      { id: 'paris-masters', name: 'Paris Masters', country: 'France', flag: '🇫🇷', apiKey: 'tennis_paris' },
+      
+      // ATP/WTA Tours
+      { id: 'atp-finals', name: 'ATP Finals', country: 'World', flag: '🌍', apiKey: 'tennis_atp_finals' },
+      { id: 'wta-finals', name: 'WTA Finals', country: 'World', flag: '🌍', apiKey: 'tennis_wta_finals' },
+      { id: 'davis-cup', name: 'Davis Cup', country: 'World', flag: '🌍', apiKey: 'tennis_davis_cup' },
+      { id: 'billie-jean-king-cup', name: 'Billie Jean King Cup', country: 'World', flag: '🌍', apiKey: 'tennis_bjk_cup' }
     ],
-    'ice-hockey': [
-      { id: 'nhl', name: 'NHL', country: 'North America', flag: '🇺🇸', apiKey: 'icehockey_nhl' }
+    hockey: [
+      // North American Top Leagues
+      { id: 'nhl', name: 'NHL', country: 'North America', flag: '🇺🇸', apiKey: 'icehockey_nhl' },
+      { id: 'ahl', name: 'AHL', country: 'North America', flag: '🇺🇸', apiKey: 'icehockey_ahl' },
+      { id: 'echl', name: 'ECHL', country: 'USA', flag: '🇺🇸', apiKey: 'icehockey_echl' },
+      { id: 'pwhl', name: 'PWHL', country: 'North America', flag: '🇺🇸', apiKey: 'icehockey_pwhl' },
+      
+      // European Top Leagues
+      { id: 'khl', name: 'KHL', country: 'Russia', flag: '🇷🇺', apiKey: 'icehockey_khl' },
+      { id: 'shl', name: 'SHL', country: 'Sweden', flag: '🇸🇪', apiKey: 'icehockey_sweden_hockey_league' },
+      { id: 'liiga', name: 'Liiga', country: 'Finland', flag: '🇫🇮', apiKey: 'icehockey_finland_liiga' },
+      { id: 'del', name: 'DEL', country: 'Germany', flag: '🇩🇪', apiKey: 'icehockey_del' },
+      { id: 'nla', name: 'National League', country: 'Switzerland', flag: '🇨🇭', apiKey: 'icehockey_nla' },
+      { id: 'extraliga', name: 'Extraliga', country: 'Czech Republic', flag: '🇨🇿', apiKey: 'icehockey_extraliga' },
+      { id: 'extraliga-slovakia', name: 'Extraliga', country: 'Slovakia', flag: '🇸🇰', apiKey: 'icehockey_slovakia_extraliga' },
+      { id: 'get-ligaen', name: 'GET-ligaen', country: 'Norway', flag: '🇳🇴', apiKey: 'icehockey_get_ligaen' },
+      { id: 'metal-ligaen', name: 'Metal Ligaen', country: 'Denmark', flag: '🇩🇰', apiKey: 'icehockey_metal_ligaen' },
+      
+      // International Competitions
+      { id: 'iihf-world-championship', name: 'IIHF World Championship', country: 'World', flag: '🌍', apiKey: 'icehockey_world_championship' },
+      { id: 'world-juniors', name: 'World Junior Championship', country: 'World', flag: '🌍', apiKey: 'icehockey_world_juniors' },
+      { id: 'champions-hockey-league', name: 'Champions Hockey League', country: 'Europe', flag: '🇪🇺', apiKey: 'icehockey_chl' }
+    ],
+    volleyball: [
+      // European Top Leagues
+      { id: 'cev-champions-league', name: 'CEV Champions League', country: 'Europe', flag: '🇪🇺', apiKey: 'volleyball_cev_champions' },
+      { id: 'cev-cup', name: 'CEV Cup', country: 'Europe', flag: '🇪🇺', apiKey: 'volleyball_cev_cup' },
+      { id: 'serie-a1', name: 'Serie A1', country: 'Italy', flag: '🇮🇹', apiKey: 'volleyball_serie_a1' },
+      { id: 'bundesliga', name: 'Bundesliga', country: 'Germany', flag: '🇩🇪', apiKey: 'volleyball_bundesliga' },
+      { id: 'plusliga', name: 'PlusLiga', country: 'Poland', flag: '🇵🇱', apiKey: 'volleyball_plusliga' },
+      { id: 'tauron-liga', name: 'Tauron Liga', country: 'Poland', flag: '🇵🇱', apiKey: 'volleyball_tauron_liga' },
+      { id: 'superliga', name: 'Superliga', country: 'Russia', flag: '🇷🇺', apiKey: 'volleyball_superliga' },
+      { id: 'ligue-am', name: 'Ligue A Masculine', country: 'France', flag: '🇫🇷', apiKey: 'volleyball_ligue_am' },
+      { id: 'ligue-af', name: 'Ligue A Féminine', country: 'France', flag: '🇫🇷', apiKey: 'volleyball_ligue_af' },
+      
+      // Asian Top Leagues
+      { id: 'v-league', name: 'V.League', country: 'Japan', flag: '🇯🇵', apiKey: 'volleyball_v_league' },
+      { id: 'kovo', name: 'KOVO', country: 'South Korea', flag: '🇰🇷', apiKey: 'volleyball_kovo' },
+      { id: 'chinese-league', name: 'Chinese Volleyball League', country: 'China', flag: '🇨🇳', apiKey: 'volleyball_chinese' },
+      
+      // International Competitions
+      { id: 'vnl', name: 'Volleyball Nations League', country: 'World', flag: '🌍', apiKey: 'volleyball_vnl' },
+      { id: 'world-championship', name: 'FIVB World Championship', country: 'World', flag: '🌍', apiKey: 'volleyball_world_championship' },
+      { id: 'olympic-games', name: 'Olympic Games', country: 'World', flag: '🌍', apiKey: 'volleyball_olympics' }
+    ],
+    rugby: [
+      // International Competitions
+      { id: 'six-nations', name: 'Six Nations', country: 'Europe', flag: '🇪🇺', apiKey: 'rugby_six_nations' },
+      { id: 'rugby-championship', name: 'Rugby Championship', country: 'World', flag: '🌍', apiKey: 'rugby_championship' },
+      { id: 'world-cup', name: 'Rugby World Cup', country: 'World', flag: '🌍', apiKey: 'rugby_world_cup' },
+      { id: 'sevens-world-series', name: "Seven's World Series", country: 'World', flag: '🌍', apiKey: 'rugby_sevens_world_series' },
+      
+      // Club Competitions
+      { id: 'champions-cup', name: 'European Rugby Champions Cup', country: 'Europe', flag: '🇪🇺', apiKey: 'rugby_champions_cup' },
+      { id: 'challenge-cup', name: 'Challenge Cup', country: 'Europe', flag: '🇪🇺', apiKey: 'rugby_challenge_cup' },
+      { id: 'urc', name: 'United Rugby Championship', country: 'Europe', flag: '🇪🇺', apiKey: 'rugby_urc' },
+      
+      // Domestic Top Leagues
+      { id: 'premiership', name: 'Premiership Rugby', country: 'England', flag: '🏴󠁧󠁢󠁥󠁮󠁧󠁿', apiKey: 'rugby_premiership' },
+      { id: 'top-14', name: 'Top 14', country: 'France', flag: '🇫🇷', apiKey: 'rugby_top_14' },
+      { id: 'pro-d2', name: 'Pro D2', country: 'France', flag: '🇫🇷', apiKey: 'rugby_pro_d2' },
+      { id: 'super-rugby', name: 'Super Rugby', country: 'World', flag: '🌍', apiKey: 'rugby_super_rugby' },
+      { id: 'currie-cup', name: 'Currie Cup', country: 'South Africa', flag: '🇿🇦', apiKey: 'rugby_currie_cup' },
+      { id: 'major-league-rugby', name: 'Major League Rugby', country: 'USA', flag: '🇺🇸', apiKey: 'rugby_mlr' }
+    ],
+    baseball: [
+      // North American Top Leagues
+      { id: 'mlb', name: 'MLB', country: 'USA', flag: '🇺🇸', apiKey: 'baseball_mlb' },
+      { id: 'triple-a', name: 'Triple-A', country: 'USA', flag: '🇺🇸', apiKey: 'baseball_triple_a' },
+      { id: 'double-a', name: 'Double-A', country: 'USA', flag: '🇺🇸', apiKey: 'baseball_double_a' },
+      { id: 'ncaa-baseball', name: 'NCAA Baseball', country: 'USA', flag: '🇺🇸', apiKey: 'baseball_ncaa' },
+      { id: 'mlb-draft', name: 'MLB Draft League', country: 'USA', flag: '🇺🇸', apiKey: 'baseball_draft_league' },
+      
+      // Asian Top Leagues
+      { id: 'npb', name: 'NPB', country: 'Japan', flag: '🇯🇵', apiKey: 'baseball_npb' },
+      { id: 'kbo', name: 'KBO League', country: 'South Korea', flag: '🇰🇷', apiKey: 'baseball_kbo' },
+      { id: 'cpbl', name: 'CPBL', country: 'Taiwan', flag: '🇹🇼', apiKey: 'baseball_cpbl' },
+      
+      // Latin American Top Leagues
+      { id: 'liga-mexicana', name: 'Liga Mexicana de Beisbol', country: 'Mexico', flag: '🇲🇽', apiKey: 'baseball_liga_mexicana' },
+      { id: 'lidom', name: 'LIDOM', country: 'Dominican Republic', flag: '🇩🇴', apiKey: 'baseball_lidom' },
+      { id: 'lvbp', name: 'LVBP', country: 'Venezuela', flag: '🇻🇪', apiKey: 'baseball_lvbp' },
+      
+      // European Top Leagues
+      { id: 'bundesliga-baseball', name: 'Baseball Bundesliga', country: 'Germany', flag: '🇩🇪', apiKey: 'baseball_bundesliga' },
+      { id: 'serie-a-baseball', name: 'Serie A Baseball', country: 'Italy', flag: '🇮🇹', apiKey: 'baseball_serie_a' },
+      { id: 'hoofdklasse', name: 'Hoofdklasse', country: 'Netherlands', flag: '🇳🇱', apiKey: 'baseball_hoofdklasse' },
+      
+      // International Competitions
+      { id: 'world-baseball-classic', name: 'World Baseball Classic', country: 'World', flag: '🌍', apiKey: 'baseball_wbc' },
+      { id: 'premier-12', name: 'WBSC Premier12', country: 'World', flag: '🌍', apiKey: 'baseball_premier12' },
+      { id: 'olympic-baseball', name: 'Olympic Games', country: 'World', flag: '🌍', apiKey: 'baseball_olympics' }
     ]
   };
 
@@ -101,8 +260,11 @@ export function TopLeaguesSection({ onBetClick, onLeagueClick, sport = 'football
       football: 'Football',
       basketball: 'Basketball', 
       tennis: 'Tennis',
-      'ice-hockey': 'Ice Hockey',
-      'american-football': 'American Football',
+      hockey: 'Hockey',
+      'ice-hockey': 'Hockey',
+      cricket: 'Cricket',
+      volleyball: 'Volleyball',
+      rugby: 'Rugby',
       baseball: 'Baseball'
     };
     return names[sport] || 'Football';
@@ -154,18 +316,34 @@ export function TopLeaguesSection({ onBetClick, onLeagueClick, sport = 'football
   // Group leagues by region
   const groupedLeagues = currentSportLeagues.reduce((acc, league) => {
     let region = 'Other';
-    if (['England', 'Spain', 'Germany', 'Italy', 'France', 'Netherlands', 'Portugal', 'Scotland', 'Austria', 'Belgium', 'Czech Republic', 'Denmark', 'Finland', 'Greece', 'Hungary', 'Ireland', 'Sweden', 'Switzerland', 'Turkey'].includes(league.country)) {
+    
+    // European countries
+    if (['England', 'Spain', 'Germany', 'Italy', 'France', 'Netherlands', 'Portugal', 'Scotland', 'Austria', 'Belgium', 'Czech Republic', 'Denmark', 'Finland', 'Greece', 'Hungary', 'Ireland', 'Sweden', 'Switzerland', 'Turkey', 'Norway', 'Slovakia', 'Russia', 'Poland', 'Monaco'].includes(league.country)) {
       region = 'Europe';
-    } else if (['Brazil', 'Argentina', 'Chile', 'Colombia', 'Uruguay'].includes(league.country)) {
+    } 
+    // South American countries
+    else if (['Brazil', 'Argentina', 'Uruguay', 'Chile', 'Colombia', 'Paraguay', 'Peru', 'Venezuela', 'Ecuador', 'Bolivia'].includes(league.country)) {
       region = 'South America';
-    } else if (['USA', 'Mexico', 'Canada'].includes(league.country)) {
+    } 
+    // North American countries
+    else if (['USA', 'Canada', 'Mexico', 'North America'].includes(league.country)) {
       region = 'North America';
-    } else if (['Japan', 'South Korea', 'China', 'Australia', 'India'].includes(league.country)) {
+    } 
+    // Asia-Pacific countries
+    else if (['Japan', 'South Korea', 'Australia', 'China', 'India', 'Thailand', 'Singapore', 'New Zealand', 'Pakistan', 'Taiwan'].includes(league.country)) {
       region = 'Asia-Pacific';
-    } else if (['South Africa', 'Egypt', 'Nigeria'].includes(league.country)) {
+    } 
+    // African countries
+    else if (['South Africa', 'Nigeria', 'Egypt', 'Kenya', 'Ghana', 'Morocco', 'Tunisia', 'Algeria'].includes(league.country)) {
       region = 'Africa';
-    } else if (league.country === 'Europe' || league.country === 'South America' || league.country === 'North America' || league.country === 'Asia' || league.country === 'Africa' || league.country === 'World') {
-      region = 'Continental';
+    }
+    // Caribbean and Other regions
+    else if (['West Indies', 'Dominican Republic'].includes(league.country)) {
+      region = 'Caribbean';
+    }
+    // Continental/International competitions
+    else if (['Europe', 'World'].includes(league.country)) {
+      region = 'International';
     }
     
     if (!acc[region]) {
