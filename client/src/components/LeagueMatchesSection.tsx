@@ -22,6 +22,7 @@ export function LeagueMatchesSection({
   // Fetch matches for the specific league using the new league-specific endpoint
   const { data: matches = [], isLoading } = useQuery<any[]>({
     queryKey: ['/api/league', leagueId, 'matches'],
+    queryFn: () => fetch(`/api/league/${leagueId}/matches`).then(res => res.json()),
     enabled: !!leagueId,
   });
 
