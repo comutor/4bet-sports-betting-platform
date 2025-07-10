@@ -400,7 +400,7 @@ export function TopLeaguesSection({ onBetClick, onLeagueClick, sport = 'football
                       <Button
                         key={league.id}
                         variant="ghost"
-                        onClick={() => hasMatches && toggleLeague(league.name)}
+                        onClick={() => hasMatches && onLeagueClick(league.id, league.name)}
                         className={`w-full flex items-center justify-between p-4 rounded-lg text-left border border-gray-700/30 ${
                           hasMatches ? 'hover:bg-gray-800/50 cursor-pointer' : 'opacity-60 cursor-not-allowed'
                         }`}
@@ -423,41 +423,7 @@ export function TopLeaguesSection({ onBetClick, onLeagueClick, sport = 'football
                   })}
                 </div>
 
-                {/* Show expanded matches if any league is expanded */}
-                {Object.entries(groupedMatches).map(([leagueName, leagueMatches]) => {
-                  if (!expandedLeagues.has(leagueName)) return null;
-                  
-                  return (
-                    <div key={leagueName} className="mt-6 bg-gray-800/30 rounded-lg p-4">
-                      <h3 className="text-lg font-bold text-white mb-4 flex items-center gap-2">
-                        <Trophy className="w-5 h-5 text-yellow-400" />
-                        {leagueName} Matches
-                      </h3>
-                      <div className="space-y-3">
-                        {(leagueMatches as any[]).map((match: any, index: number) => (
-                          <div key={match.id}>
-                            <MatchCard
-                              eventId={match.id.toString()}
-                              homeTeam={match.homeTeam}
-                              awayTeam={match.awayTeam}
-                              league={match.league}
-                              time={new Date(match.startTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-                              commenceTime={match.startTime}
-                              homeOdds={match.odds?.home ? parseFloat(match.odds.home.toString()).toFixed(2) : '1.00'}
-                              drawOdds={match.odds?.draw ? parseFloat(match.odds.draw.toString()).toFixed(2) : undefined}
-                              awayOdds={match.odds?.away ? parseFloat(match.odds.away.toString()).toFixed(2) : '1.00'}
-                              onBetClick={onBetClick}
-                              sport={getSportName(sport)}
-                            />
-                            {index < (leagueMatches as any[]).length - 1 && (
-                              <div className="my-3 border-b border-gray-700/20"></div>
-                            )}
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  );
-                })}
+
               </div>
             ))}
           </div>

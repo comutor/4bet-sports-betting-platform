@@ -19,33 +19,9 @@ export function LeagueMatchesSection({
 }: LeagueMatchesSectionProps) {
   const [selectedDate, setSelectedDate] = useState(new Date());
 
-  // Map league IDs to sport keys for API calls
-  const getLeagueSportKey = (leagueId: string) => {
-    const leagueMapping: { [key: string]: string } = {
-      'premier-league': 'soccer_epl',
-      'la-liga': 'soccer_spain_la_liga',
-      'bundesliga': 'soccer_germany_bundesliga',
-      'serie-a': 'soccer_italy_serie_a',
-      'ligue-1': 'soccer_france_ligue_one',
-      'nba': 'basketball_nba',
-      'euroleague': 'basketball_euroleague',
-      'wimbledon': 'tennis_atp',
-      'us-open': 'tennis_atp',
-      'french-open': 'tennis_atp',
-      'australian-open': 'tennis_atp',
-      'nhl': 'icehockey_nhl',
-      'khl': 'icehockey_khl',
-      'nfl': 'americanfootball_nfl',
-      'mlb': 'baseball_mlb'
-    };
-    return leagueMapping[leagueId] || 'soccer_epl';
-  };
-
-  const sportKey = getLeagueSportKey(leagueId);
-
-  // Fetch matches for the specific league
+  // Fetch matches for the specific league using the new league-specific endpoint
   const { data: matches = [], isLoading } = useQuery<any[]>({
-    queryKey: ['/api/odds', sportKey],
+    queryKey: ['/api/league', leagueId, 'matches'],
     enabled: !!leagueId,
   });
 

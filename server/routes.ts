@@ -509,6 +509,102 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // League-specific matches endpoint
+  app.get("/api/league/:leagueKey/matches", async (req, res) => {
+    try {
+      const { leagueKey } = req.params;
+      
+      // Map frontend league IDs to actual API keys
+      const leagueApiKeyMap: { [key: string]: string } = {
+        'premier-league': 'soccer_epl',
+        'la-liga': 'soccer_spain_la_liga',
+        'bundesliga': 'soccer_germany_bundesliga',
+        'serie-a': 'soccer_italy_serie_a',
+        'ligue-1': 'soccer_france_ligue_one',
+        'brasileirao': 'soccer_brazil_campeonato',
+        'primera-division-argentina': 'soccer_argentina_primera_division',
+        'a-league': 'soccer_australia_aleague',
+        'mls': 'soccer_usa_mls',
+        'eredivisie': 'soccer_netherlands_eredivisie',
+        'primeira-liga': 'soccer_portugal_primeira_liga',
+        'bundesliga-austria': 'soccer_austria_bundesliga',
+        'nba': 'basketball_nba',
+        'wnba': 'basketball_wnba',
+        'nbl-australia': 'basketball_nbl',
+        'euroleague': 'basketball_euroleague',
+        'nhl': 'icehockey_nhl',
+        'champions-league': 'soccer_uefa_champions_league',
+        'europa-league': 'soccer_uefa_europa_league',
+        'conference-league': 'soccer_uefa_conference_league'
+      };
+
+      const apiKey = leagueApiKeyMap[leagueKey];
+      if (!apiKey) {
+        return res.status(404).json({ error: `League ${leagueKey} not found` });
+      }
+
+      // Fetch matches for the specific league
+      const matches = await oddsApiService.getOdds(apiKey);
+      
+      // Transform matches to our standard format
+      const transformedMatches = matches.map((match, index) => ({
+        id: `${leagueKey}-${index + 1}`,
+        sport: apiKey.includes('soccer') ? 'Football' : 
+               apiKey.includes('basketball') ? 'Basketball' : 
+               apiKey.includes('icehockey') ? 'Hockey' : 'Sport',
+        status: new Date(match.commence_time) > new Date() ? 'upcoming' : 'live',
+        homeTeam: match.home_team,
+        awayTeam: match.away_team,
+        homeScore: null,
+        awayScore: null,
+        league: match.sport_title || leagueKey,
+        country: getCountryFromApiKey(apiKey),
+        startTime: new Date(match.commence_time),
+        currentTime: null,
+        odds: {
+          home: match.bookmakers?.[0]?.markets?.[0]?.outcomes?.find((o: any) => o.name === match.home_team)?.price || 2.0,
+          draw: match.bookmakers?.[0]?.markets?.[0]?.outcomes?.find((o: any) => o.name === 'Draw')?.price || 3.0,
+          away: match.bookmakers?.[0]?.markets?.[0]?.outcomes?.find((o: any) => o.name === match.away_team)?.price || 2.5
+        }
+      }));
+
+      // Sort by start time
+      transformedMatches.sort((a, b) => new Date(a.startTime).getTime() - new Date(b.startTime).getTime());
+
+      res.json(transformedMatches);
+    } catch (error) {
+      console.error(`Error fetching matches for league ${req.params.leagueKey}:`, error);
+      res.status(500).json({ error: 'Failed to fetch league matches' });
+    }
+  });
+
+  // Helper function to get country from API key
+  function getCountryFromApiKey(apiKey: string): string {
+    const countryMap: { [key: string]: string } = {
+      'soccer_epl': 'England',
+      'soccer_spain_la_liga': 'Spain',
+      'soccer_germany_bundesliga': 'Germany',
+      'soccer_italy_serie_a': 'Italy',
+      'soccer_france_ligue_one': 'France',
+      'soccer_brazil_campeonato': 'Brazil',
+      'soccer_argentina_primera_division': 'Argentina',
+      'soccer_australia_aleague': 'Australia',
+      'soccer_usa_mls': 'USA',
+      'soccer_netherlands_eredivisie': 'Netherlands',
+      'soccer_portugal_primeira_liga': 'Portugal',
+      'soccer_austria_bundesliga': 'Austria',
+      'basketball_nba': 'USA',
+      'basketball_wnba': 'USA',
+      'basketball_nbl': 'Australia',
+      'basketball_euroleague': 'Europe',
+      'icehockey_nhl': 'North America',
+      'soccer_uefa_champions_league': 'Europe',
+      'soccer_uefa_europa_league': 'Europe',
+      'soccer_uefa_conference_league': 'Europe'
+    };
+    return countryMap[apiKey] || 'International';
+  }
+
   // Top Leagues endpoint - Using Odds API with comprehensive league database
   app.get('/api/top-leagues/:sport', async (req, res) => {
     try {
