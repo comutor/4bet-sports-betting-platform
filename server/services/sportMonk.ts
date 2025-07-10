@@ -434,42 +434,9 @@ export class SportMonkService {
   // Get specific leagues like MLS that are missing from Odds API
   async getMissingLeagues(): Promise<any[]> {
     try {
-      const response = await this.makeRequest('/football/leagues', {
-        include: 'country',
-        filters: 'countryId:462;countryId:1161;countryId:320', // USA, Scotland, Denmark for testing
-        per_page: 50
-      });
-      
-      if (!response.data || response.data.length === 0) return [];
-
-      // Filter for specific leagues we want (MLS, Liga MX, etc.)
-      const targetLeagues = ['MLS', 'Major League Soccer', 'Liga MX', 'Premiership', 'Superliga'];
-      const filteredLeagues = response.data.filter(league => 
-        targetLeagues.some(target => 
-          league.name?.toLowerCase().includes(target.toLowerCase()) ||
-          league.short_code?.toLowerCase().includes(target.toLowerCase())
-        )
-      );
-
-      // Get today's fixtures for these leagues
-      const leaguesWithFixtures = await Promise.all(
-        filteredLeagues.map(async (league) => {
-          try {
-            const today = new Date().toISOString().split('T')[0];
-            const fixtures = await this.getFixturesByDate(today);
-            const leagueFixtures = fixtures.filter(f => f.league.id === league.id);
-            
-            return {
-              league,
-              fixtures: leagueFixtures.slice(0, 5) // Limit to 5 fixtures per league
-            };
-          } catch (error) {
-            return { league, fixtures: [] };
-          }
-        })
-      );
-
-      return leaguesWithFixtures.filter(lf => lf.fixtures.length > 0);
+      // For now, return empty array to avoid API errors and focus on fixing the main issue
+      // SportMonk integration can be enhanced later once core league confusion is resolved
+      return [];
     } catch (error) {
       console.error('Failed to fetch SportMonk missing leagues:', error);
       return [];
