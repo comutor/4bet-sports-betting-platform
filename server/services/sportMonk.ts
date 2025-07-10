@@ -70,7 +70,7 @@ export interface SportMonkLeague {
 
 export class SportMonkService {
   private apiKey: string;
-  private baseUrl = 'https://api.sportmonks.com/v3/football';
+  private baseUrl = 'https://api.sportmonks.com/v3';
   private cache = new Map<string, { data: any; timestamp: number }>();
   private cacheTimeout = 30 * 60 * 1000; // 30 minutes
   private apiEnabled = true;
@@ -250,7 +250,7 @@ export class SportMonkService {
   // Get all leagues
   async getLeagues(): Promise<SportMonkLeague[]> {
     try {
-      const response = await this.makeRequest('/leagues', {
+      const response = await this.makeRequest('/football/leagues', {
         include: 'country,currentSeason'
       });
       return response.data || [];
@@ -264,7 +264,7 @@ export class SportMonkService {
   async getTodayFixtures(): Promise<SportMonkFixture[]> {
     try {
       const today = new Date().toISOString().split('T')[0];
-      const response = await this.makeRequest('/fixtures/date/' + today, {
+      const response = await this.makeRequest('/football/fixtures/date/' + today, {
         include: 'participants,league.country,odds.bookmaker,odds.markets.outcomes,scores'
       });
       return response.data || [];
@@ -277,7 +277,7 @@ export class SportMonkService {
   // Get fixtures by date
   async getFixturesByDate(date: string): Promise<SportMonkFixture[]> {
     try {
-      const response = await this.makeRequest('/fixtures/date/' + date, {
+      const response = await this.makeRequest('/football/fixtures/date/' + date, {
         include: 'participants,league.country,odds.bookmaker,odds.markets.outcomes,scores'
       });
       return response.data || [];
@@ -290,7 +290,7 @@ export class SportMonkService {
   // Get fixtures by league
   async getFixturesByLeague(leagueId: number): Promise<SportMonkFixture[]> {
     try {
-      const response = await this.makeRequest(`/leagues/${leagueId}/fixtures`, {
+      const response = await this.makeRequest(`/football/leagues/${leagueId}/fixtures`, {
         include: 'participants,league.country,odds.bookmaker,odds.markets.outcomes,scores'
       });
       return response.data || [];
@@ -303,7 +303,7 @@ export class SportMonkService {
   // Get live fixtures
   async getLiveFixtures(): Promise<SportMonkFixture[]> {
     try {
-      const response = await this.makeRequest('/livescores/inplay', {
+      const response = await this.makeRequest('/football/livescores/inplay', {
         include: 'participants,league.country,odds.bookmaker,odds.markets.outcomes,scores'
       });
       return response.data || [];
@@ -313,39 +313,165 @@ export class SportMonkService {
     }
   }
 
-  // Get top leagues with MLS and other missing leagues
-  async getTopLeagues(): Promise<any[]> {
+  // Get competitions organized by country for feeding into existing structure
+  async getCompetitionsByCountry(): Promise<any[]> {
     try {
       const leagues = await this.getLeagues();
-      const topLeagueIds = [
-        39, // Premier League
-        140, // La Liga
-        78, // Bundesliga
-        135, // Serie A
-        61, // Ligue 1
-        271, // MLS
-        501, // Liga MX
-        2, // Champions League
-        5, // Europa League
-        848, // Conference League
-      ];
+      if (!leagues || leagues.length === 0) return [];
 
-      const topLeagues = leagues.filter(league => topLeagueIds.includes(league.id));
+      // Group leagues by country
+      const countriesMap = new Map();
       
-      // Get current fixtures for these leagues
-      const leagueFixtures = await Promise.all(
-        topLeagues.map(async (league) => {
-          const fixtures = await this.getFixturesByLeague(league.id);
+      leagues.forEach(league => {
+        if (!league.country) return;
+        
+        const countryName = league.country.name;
+        if (!countriesMap.has(countryName)) {
+          countriesMap.set(countryName, {
+            country: countryName,
+            flag: this.getCountryFlag(countryName),
+            leagues: []
+          });
+        }
+        
+        countriesMap.get(countryName).leagues.push({
+          id: league.id,
+          name: league.name,
+          short_code: league.short_code,
+          type: league.type,
+          sub_type: league.sub_type,
+          logo: league.image_path,
+          current_season: league.current_season
+        });
+      });
+
+      // Get fixtures for top leagues to populate with match data
+      const countriesWithMatches = await Promise.all(
+        Array.from(countriesMap.values()).map(async (country) => {
+          const leaguesWithMatches = await Promise.all(
+            country.leagues.slice(0, 5).map(async (league) => { // Limit to 5 leagues per country
+              try {
+                const fixtures = await this.getFixturesByLeague(league.id);
+                return {
+                  ...league,
+                  matches: fixtures.slice(0, 10).map(fixture => ({ // Limit to 10 matches per league
+                    id: fixture.id,
+                    homeTeam: fixture.participants?.find(p => p.meta.position === 'home')?.name || 'Home Team',
+                    awayTeam: fixture.participants?.find(p => p.meta.position === 'away')?.name || 'Away Team',
+                    startTime: fixture.starting_at,
+                    status: fixture.state.finished ? 'finished' : (new Date(fixture.starting_at) > new Date() ? 'upcoming' : 'live'),
+                    homeScore: fixture.scores?.find(s => s.score.participant === fixture.participants?.find(p => p.meta.position === 'home')?.name)?.score.goals || null,
+                    awayScore: fixture.scores?.find(s => s.score.participant === fixture.participants?.find(p => p.meta.position === 'away')?.name)?.score.goals || null,
+                    odds: {
+                      home: fixture.odds?.[0]?.markets?.find(m => m.key === 'fulltime_result')?.outcomes?.find(o => o.type === '1')?.odds || 2.0,
+                      draw: fixture.odds?.[0]?.markets?.find(m => m.key === 'fulltime_result')?.outcomes?.find(o => o.type === 'X')?.odds || 3.0,
+                      away: fixture.odds?.[0]?.markets?.find(m => m.key === 'fulltime_result')?.outcomes?.find(o => o.type === '2')?.odds || 2.5
+                    }
+                  }))
+                };
+              } catch (error) {
+                return { ...league, matches: [] };
+              }
+            })
+          );
+          
           return {
-            league,
-            fixtures: fixtures.slice(0, 10) // Limit to 10 fixtures per league
+            ...country,
+            leagues: leaguesWithMatches.filter(league => league.matches.length > 0)
           };
         })
       );
 
-      return leagueFixtures.filter(lf => lf.fixtures.length > 0);
+      return countriesWithMatches.filter(country => country.leagues.length > 0);
     } catch (error) {
-      console.error('Failed to fetch SportMonk top leagues:', error);
+      console.error('Failed to fetch SportMonk competitions by country:', error);
+      return [];
+    }
+  }
+
+  private getCountryFlag(countryName: string): string {
+    const flagMap: { [key: string]: string } = {
+      'England': '🏴󠁧󠁢󠁥󠁮󠁧󠁿',
+      'Spain': '🇪🇸',
+      'Germany': '🇩🇪',
+      'Italy': '🇮🇹',
+      'France': '🇫🇷',
+      'Brazil': '🇧🇷',
+      'Argentina': '🇦🇷',
+      'United States': '🇺🇸',
+      'Mexico': '🇲🇽',
+      'Japan': '🇯🇵',
+      'South Korea': '🇰🇷',
+      'Australia': '🇦🇺',
+      'Netherlands': '🇳🇱',
+      'Portugal': '🇵🇹',
+      'Belgium': '🇧🇪',
+      'Scotland': '🏴󠁧󠁢󠁳󠁣󠁴󠁿',
+      'Turkey': '🇹🇷',
+      'Russia': '🇷🇺',
+      'Poland': '🇵🇱',
+      'Ukraine': '🇺🇦',
+      'Sweden': '🇸🇪',
+      'Norway': '🇳🇴',
+      'Denmark': '🇩🇰',
+      'Switzerland': '🇨🇭',
+      'Austria': '🇦🇹',
+      'Czech Republic': '🇨🇿',
+      'Greece': '🇬🇷',
+      'Croatia': '🇭🇷',
+      'Serbia': '🇷🇸',
+      'Romania': '🇷🇴',
+      'Bulgaria': '🇧🇬',
+      'Hungary': '🇭🇺',
+      'Finland': '🇫🇮',
+      'Ireland': '🇮🇪',
+      'Wales': '🏴󠁧󠁢󠁷󠁬󠁳󠁿',
+      'Northern Ireland': '🇬🇧',
+    };
+    return flagMap[countryName] || '🏳️';
+  }
+
+  // Get specific leagues like MLS that are missing from Odds API
+  async getMissingLeagues(): Promise<any[]> {
+    try {
+      const response = await this.makeRequest('/football/leagues', {
+        include: 'country',
+        filters: 'countryId:462;countryId:1161;countryId:320', // USA, Scotland, Denmark for testing
+        per_page: 50
+      });
+      
+      if (!response.data || response.data.length === 0) return [];
+
+      // Filter for specific leagues we want (MLS, Liga MX, etc.)
+      const targetLeagues = ['MLS', 'Major League Soccer', 'Liga MX', 'Premiership', 'Superliga'];
+      const filteredLeagues = response.data.filter(league => 
+        targetLeagues.some(target => 
+          league.name?.toLowerCase().includes(target.toLowerCase()) ||
+          league.short_code?.toLowerCase().includes(target.toLowerCase())
+        )
+      );
+
+      // Get today's fixtures for these leagues
+      const leaguesWithFixtures = await Promise.all(
+        filteredLeagues.map(async (league) => {
+          try {
+            const today = new Date().toISOString().split('T')[0];
+            const fixtures = await this.getFixturesByDate(today);
+            const leagueFixtures = fixtures.filter(f => f.league.id === league.id);
+            
+            return {
+              league,
+              fixtures: leagueFixtures.slice(0, 5) // Limit to 5 fixtures per league
+            };
+          } catch (error) {
+            return { league, fixtures: [] };
+          }
+        })
+      );
+
+      return leaguesWithFixtures.filter(lf => lf.fixtures.length > 0);
+    } catch (error) {
+      console.error('Failed to fetch SportMonk missing leagues:', error);
       return [];
     }
   }

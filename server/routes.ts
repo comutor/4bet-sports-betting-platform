@@ -439,15 +439,73 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Football games by country priority - Using Odds API
+  // Football games by country priority - Enhanced with SportMonk data
   app.get("/api/football/countries", async (req, res) => {
     try {
-      // Use Odds API directly since API Sports is disabled
-      const footballData = await oddsApiService.getFootballGamesByCountryPriority();
-      res.json(footballData);
+      // Get data from both APIs
+      const [oddsApiData, sportMonkData] = await Promise.all([
+        oddsApiService.getFootballGamesByCountryPriority().catch(() => []),
+        sportMonkService.isEnabled() ? sportMonkService.getCompetitionsByCountry().catch(() => []) : []
+      ]);
+
+      // If SportMonk has data, use it as primary source with enhanced structure
+      if (sportMonkData && sportMonkData.length > 0) {
+        // Merge with Odds API data to fill gaps
+        const enhancedData = sportMonkData.map(country => {
+          // Find corresponding Odds API data for this country
+          const oddsCountry = oddsApiData.find(c => 
+            c.country?.toLowerCase() === country.country?.toLowerCase()
+          );
+          
+          return {
+            ...country,
+            leagues: country.leagues.map(league => ({
+              ...league,
+              // Add games from SportMonk matches
+              games: league.matches?.map(match => ({
+                id: match.id,
+                home_team: match.homeTeam,
+                away_team: match.awayTeam,
+                commence_time: match.startTime,
+                sport_title: league.name,
+                league_name: league.name,
+                bookmakers: [{
+                  markets: [{
+                    outcomes: [
+                      { name: match.homeTeam, price: match.odds.home },
+                      { name: 'Draw', price: match.odds.draw },
+                      { name: match.awayTeam, price: match.odds.away }
+                    ]
+                  }]
+                }]
+              })) || []
+            }))
+          };
+        });
+
+        res.json(enhancedData);
+      } else {
+        // Fallback to Odds API data
+        res.json(oddsApiData);
+      }
     } catch (error) {
       console.error("Error fetching football data:", error);
       res.status(500).json({ error: "Failed to fetch football data" });
+    }
+  });
+
+  // SportMonk competitions endpoint for feeding data into existing structure
+  app.get("/api/sportmonk/competitions", async (req, res) => {
+    try {
+      if (!sportMonkService.isEnabled()) {
+        return res.json({ message: "SportMonk service not available", data: [] });
+      }
+
+      const competitionsData = await sportMonkService.getCompetitionsByCountry();
+      res.json(competitionsData);
+    } catch (error) {
+      console.error("Error fetching SportMonk competitions:", error);
+      res.status(500).json({ error: "Failed to fetch SportMonk competitions" });
     }
   });
 
@@ -463,7 +521,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         // Get data from both Odds API and SportMonk
         const [footballData, sportMonkData] = await Promise.all([
           oddsApiService.getFootballGamesByCountryPriority().catch(() => []),
-          sportMonkService.isEnabled() ? sportMonkService.getTopLeagues().catch(() => []) : []
+          sportMonkService.isEnabled() ? sportMonkService.getMissingLeagues().catch(() => []) : []
         ]);
         
         // Top leagues available in Odds API
@@ -673,10 +731,19 @@ export async function registerRoutes(app: Express): Promise<Server> {
         // Future enhancement: Add specific API endpoints for these sports
       }
 
-      // Sort by start time
-      topLeagueMatches.sort((a, b) => new Date(a.startTime).getTime() - new Date(b.startTime).getTime());
+      // Remove duplicates based on team names and start time
+      const uniqueMatches = topLeagueMatches.filter((match, index, self) => 
+        index === self.findIndex((m) => 
+          m.homeTeam === match.homeTeam && 
+          m.awayTeam === match.awayTeam && 
+          new Date(m.startTime).getTime() === new Date(match.startTime).getTime()
+        )
+      );
 
-      res.json(topLeagueMatches);
+      // Sort by start time
+      uniqueMatches.sort((a, b) => new Date(a.startTime).getTime() - new Date(b.startTime).getTime());
+
+      res.json(uniqueMatches);
     } catch (error) {
       console.error('Error fetching top leagues:', error);
       res.status(500).json({ message: 'Failed to fetch top leagues data' });
