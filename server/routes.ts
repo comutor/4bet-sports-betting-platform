@@ -461,13 +461,13 @@ export async function registerRoutes(app: Express): Promise<Server> {
       if (sport === 'football') {
         const footballData = await oddsApiService.getFootballGamesByCountryPriority();
         
-        // Top leagues that match our comprehensive database
+        // Top leagues available in Odds API
         const topLeagues = [
           'Premier League', 'La Liga', 'Bundesliga', 'Serie A', 'Ligue 1', 
           'Champions League', 'Europa League', 'Conference League',
-          'Brasileirão', 'Primera División', 'MLS', 'Liga MX',
-          'J.League', 'K League', 'Chinese Super League', 'A-League',
-          'Premiership', 'Egyptian Premier League', 'Copa Libertadores'
+          'Brasileirão', 'Primera División', 'Liga MX',
+          'J.League', 'K League', 'A-League',
+          'Premiership', 'Egyptian Premier League'
         ];
         
         if (footballData && footballData.length > 0) {
