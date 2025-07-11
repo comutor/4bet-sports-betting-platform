@@ -20,10 +20,20 @@ export function LeagueMatchesSection({
   const [selectedDate, setSelectedDate] = useState(new Date());
 
   // Fetch matches for the specific league using the new league-specific endpoint
-  const { data: matches = [], isLoading } = useQuery<any[]>({
+  const { data: matches = [], isLoading, error } = useQuery<any[]>({
     queryKey: ['/api/league', leagueId, 'matches'],
-    queryFn: () => fetch(`/api/league/${leagueId}/matches`).then(res => res.json()),
+    queryFn: async () => {
+      const response = await fetch(`/api/league/${leagueId}/matches`);
+      if (!response.ok) {
+        if (response.status === 404) {
+          throw new Error(`League "${leagueName}" is not yet available. We're working to add more leagues soon.`);
+        }
+        throw new Error('Failed to fetch league matches');
+      }
+      return response.json();
+    },
     enabled: !!leagueId,
+    retry: false, // Don't retry on 404 errors
   });
 
   const formatDate = (date: Date) => {
@@ -54,6 +64,47 @@ export function LeagueMatchesSection({
     );
   }
 
+  if (error) {
+    return (
+      <div className="w-full bg-background">
+        {/* Header with Back Button */}
+        <div className="px-4 py-4 border-b border-gray-700/30">
+          <div className="flex items-center gap-3 mb-2">
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={onBack}
+              className="p-2 hover:bg-slate-700"
+            >
+              <ArrowLeft className="w-4 h-4" />
+            </Button>
+            <h1 className="text-2xl font-bold text-white">
+              {leagueName}
+            </h1>
+          </div>
+        </div>
+
+        {/* Error Message */}
+        <div className="px-4 py-8">
+          <div className="text-center py-12">
+            <div className="bg-yellow-900/20 border border-yellow-500/30 rounded-lg p-6 mb-6">
+              <h3 className="text-yellow-300 font-semibold mb-2">League Not Available</h3>
+              <p className="text-yellow-200 text-sm">
+                {error.message}
+              </p>
+            </div>
+            <Button 
+              onClick={onBack}
+              className="bg-blue-600 hover:bg-blue-700 text-white"
+            >
+              Back to Top Leagues
+            </Button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="w-full bg-background">
       {/* Header with Back Button */}
@@ -72,13 +123,13 @@ export function LeagueMatchesSection({
           </h1>
         </div>
         <p className="text-gray-400">
-          {matches.length} matches available
+          {Array.isArray(matches) ? matches.length : 0} matches available
         </p>
       </div>
 
       {/* Matches List */}
       <div className="px-4 py-4">
-        {matches.length === 0 ? (
+        {!Array.isArray(matches) || matches.length === 0 ? (
           <div className="text-center py-12">
             <p className="text-gray-400">No matches available for {leagueName}</p>
           </div>
@@ -86,8 +137,8 @@ export function LeagueMatchesSection({
           <div className="space-y-4">
             {/* Group matches by date */}
             {Object.entries(
-              matches.reduce((groups: any, match: any) => {
-                const matchDate = new Date(match.commence_time);
+              (matches || []).reduce((groups: any, match: any) => {
+                const matchDate = new Date(match.startTime);
                 const dateKey = matchDate.toDateString();
                 if (!groups[dateKey]) {
                   groups[dateKey] = [];
@@ -109,18 +160,18 @@ export function LeagueMatchesSection({
                   {(dayMatches as any[]).map((match, index) => (
                     <div key={match.id || index}>
                       <MatchCard
-                        homeTeam={match.home_team}
-                        awayTeam={match.away_team}
+                        homeTeam={match.homeTeam}
+                        awayTeam={match.awayTeam}
                         league={leagueName}
-                        time={new Date(match.commence_time).toLocaleTimeString('en-US', {
+                        time={new Date(match.startTime).toLocaleTimeString('en-US', {
                           hour: '2-digit',
                           minute: '2-digit',
                           hour12: false
                         })}
-                        commenceTime={match.commence_time}
-                        homeOdds={match.bookmakers?.[0]?.markets?.[0]?.outcomes?.find((o: any) => o.name === match.home_team)?.price?.toFixed(2) || '0.00'}
-                        drawOdds={match.bookmakers?.[0]?.markets?.[0]?.outcomes?.find((o: any) => o.name === 'Draw')?.price?.toFixed(2)}
-                        awayOdds={match.bookmakers?.[0]?.markets?.[0]?.outcomes?.find((o: any) => o.name === match.away_team)?.price?.toFixed(2) || '0.00'}
+                        commenceTime={match.startTime}
+                        homeOdds={match.odds?.home?.toFixed(2) || '0.00'}
+                        drawOdds={match.odds?.draw?.toFixed(2)}
+                        awayOdds={match.odds?.away?.toFixed(2) || '0.00'}
                         onBetClick={onBetClick}
                         eventId={match.id}
                         sport="Football"
