@@ -47,77 +47,89 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // SportMonk Live Events Endpoint with 5-second cache refresh
   app.get("/api/live-events", async (req, res) => {
     try {
       const liveEvents: any[] = [];
-      let eventId = 1;
-
-      // Fetch live data from all sports
-      const [footballData, basketballData, cricketData, tennisData, hockeyData] = await Promise.all([
-        oddsApiService.getFootballGamesByCountryPriority(),
-        oddsApiService.getBasketballGamesByPriority(), 
-        oddsApiService.getCricketGamesByPriority(),
-        oddsApiService.getTennisGamesByPriority(),
-        oddsApiService.getIceHockeyGamesByPriority()
-      ]);
-
-      // Process Football events - simulate some as live
-      if (footballData && footballData.length > 0) {
-        footballData.slice(0, 2).forEach(country => {
-          if (country.games && country.games.length > 0) {
-            country.games.slice(0, 3).forEach(match => {
-              liveEvents.push({
-                id: eventId++,
-                sport: 'Football',
-                status: 'live',
-                homeTeam: match.home_team,
-                awayTeam: match.away_team,
-                homeScore: Math.floor(Math.random() * 3),
-                awayScore: Math.floor(Math.random() * 3),
-                league: match.league_name || match.sport_title,
-                country: country.country,
-                startTime: new Date(Date.now() - Math.floor(Math.random() * 90) * 60000), // Started within last 90 mins
-                currentTime: `${Math.floor(Math.random() * 90) + 1}'`,
-                odds: {
-                  home: match.bookmakers?.[0]?.markets?.[0]?.outcomes?.find((o: any) => o.name === match.home_team)?.price || 2.0,
-                  draw: match.bookmakers?.[0]?.markets?.[0]?.outcomes?.find((o: any) => o.name === 'Draw')?.price || 3.0,
-                  away: match.bookmakers?.[0]?.markets?.[0]?.outcomes?.find((o: any) => o.name === match.away_team)?.price || 2.5
-                }
-              });
-            });
-          }
-        });
+      
+      if (!sportMonkService.isEnabled()) {
+        console.log('SportMonk service not enabled, returning empty live events');
+        return res.json([]);
       }
 
-      // Process Basketball events - simulate some as live
-      if (basketballData && basketballData.length > 0) {
-        basketballData.slice(0, 1).forEach(league => {
-          if (league.games && league.games.length > 0) {
-            league.games.slice(0, 2).forEach(match => {
-              liveEvents.push({
-                id: eventId++,
-                sport: 'Basketball',
-                status: 'live',
-                homeTeam: match.home_team,
-                awayTeam: match.away_team,
-                homeScore: Math.floor(Math.random() * 120) + 60,
-                awayScore: Math.floor(Math.random() * 120) + 60,
-                league: league.league,
-                startTime: new Date(Date.now() - Math.floor(Math.random() * 180) * 60000), // Started within last 3 hours
-                currentTime: `Q${Math.floor(Math.random() * 4) + 1} ${Math.floor(Math.random() * 12) + 1}:${Math.floor(Math.random() * 60).toString().padStart(2, '0')}`,
-                odds: {
-                  home: match.bookmakers?.[0]?.markets?.[0]?.outcomes?.find((o: any) => o.name === match.home_team)?.price || 1.9,
-                  away: match.bookmakers?.[0]?.markets?.[0]?.outcomes?.find((o: any) => o.name === match.away_team)?.price || 1.9
-                }
-              });
-            });
-          }
-        });
+      // Get live fixtures from SportMonk
+      const liveFixtures = await sportMonkService.getLiveFixtures();
+      
+      if (!liveFixtures || liveFixtures.length === 0) {
+        console.log('No live fixtures from SportMonk');
+        return res.json([]);
       }
 
+      // Transform SportMonk live fixtures to our format
+      liveFixtures.forEach((fixture, index) => {
+        const homeTeam = fixture.participants?.find(p => p.meta.position === 'home');
+        const awayTeam = fixture.participants?.find(p => p.meta.position === 'away');
+        
+        if (!homeTeam || !awayTeam) return;
+
+        // Get scores from fixture
+        const homeScore = fixture.scores?.find(s => 
+          s.score.participant === homeTeam.name
+        )?.score.goals || 0;
+        
+        const awayScore = fixture.scores?.find(s => 
+          s.score.participant === awayTeam.name  
+        )?.score.goals || 0;
+
+        // Calculate current time (minutes elapsed)
+        const startTime = new Date(fixture.starting_at);
+        const now = new Date();
+        const minutesElapsed = Math.floor((now.getTime() - startTime.getTime()) / (1000 * 60));
+        
+        // Only include if actually live (not finished and started)
+        if (!fixture.state.finished && minutesElapsed > 0 && minutesElapsed < 120) {
+          liveEvents.push({
+            id: `live-${fixture.id}`,
+            sport: 'Football',
+            status: 'live',
+            homeTeam: homeTeam.name,
+            awayTeam: awayTeam.name,
+            homeScore: homeScore,
+            awayScore: awayScore,
+            league: fixture.league?.name || 'Football League',
+            country: fixture.league?.country?.name || 'International',
+            startTime: startTime,
+            currentTime: `${Math.min(minutesElapsed, 90)}'`,
+            isLive: true,
+            matchState: fixture.state.state,
+            odds: {
+              home: fixture.odds?.[0]?.markets?.find(m => m.key === 'fulltime_result')?.outcomes?.find(o => o.type === '1')?.odds || 2.0,
+              draw: fixture.odds?.[0]?.markets?.find(m => m.key === 'fulltime_result')?.outcomes?.find(o => o.type === 'X')?.odds || 3.0,
+              away: fixture.odds?.[0]?.markets?.find(m => m.key === 'fulltime_result')?.outcomes?.find(o => o.type === '2')?.odds || 2.5
+            }
+          });
+        }
+      });
+
+      // Sort by league importance and start time
+      liveEvents.sort((a, b) => {
+        // Premier League and top leagues first
+        const topLeagues = ['Premier League', 'La Liga', 'Bundesliga', 'Serie A', 'Ligue 1', 'Champions League'];
+        const aIsTop = topLeagues.includes(a.league);
+        const bIsTop = topLeagues.includes(b.league);
+        
+        if (aIsTop && !bIsTop) return -1;
+        if (!aIsTop && bIsTop) return 1;
+        
+        return new Date(a.startTime).getTime() - new Date(b.startTime).getTime();
+      });
+
+      // Set cache headers for 5-second refresh
+      res.setHeader('Cache-Control', 'public, max-age=5');
       res.json(liveEvents);
+      
     } catch (error) {
-      console.error("Error fetching live events:", error);
+      console.error("Error fetching live events from SportMonk:", error);
       res.status(500).json({ message: "Failed to fetch live events" });
     }
   });

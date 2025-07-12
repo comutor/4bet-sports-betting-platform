@@ -303,14 +303,43 @@ export class SportMonkService {
   // Get live fixtures
   async getLiveFixtures(): Promise<SportMonkFixture[]> {
     try {
-      const response = await this.makeRequest('/football/livescores/inplay', {
-        include: 'participants,league.country,odds.bookmaker,odds.markets.outcomes,scores'
-      });
+      const response = await this.makeRequest('/football/livescores');
       return response.data || [];
     } catch (error) {
       console.error('Failed to fetch SportMonk live fixtures:', error);
       return [];
     }
+  }
+
+  // Get live fixtures with shorter cache for real-time updates (5 seconds)
+  async getLiveFixturesRealTime(): Promise<SportMonkFixture[]> {
+    try {
+      // Bypass cache for live data to ensure freshness
+      const url = new URL(`${this.baseUrl}/football/livescores`);
+      url.searchParams.append('api_token', this.apiKey);
+
+      const response = await fetch(url.toString(), {
+        method: 'GET',
+        headers: {
+          'Accept': 'application/json'
+        }
+      });
+
+      if (!response.ok) {
+        throw new Error(`SportMonk live request failed: ${response.status}`);
+      }
+
+      const data = await response.json();
+      return data.data || [];
+    } catch (error) {
+      console.error('Failed to fetch SportMonk live fixtures real-time:', error);
+      return [];
+    }
+  }
+
+  // Override getLiveFixtures to use real-time method for better live data
+  async getLiveFixtures(): Promise<SportMonkFixture[]> {
+    return this.getLiveFixturesRealTime();
   }
 
   // Get competitions organized by country for feeding into existing structure
